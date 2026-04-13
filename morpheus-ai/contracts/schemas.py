@@ -1,13 +1,48 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import List, Optional, Any
 
-# TODO: Sostituire con i campi esatti che mi hai mostrato in precedenza
+
+# ==========================================
+# SCHEMA PER IL RULES AGENT (MEMBRO A)
+# ==========================================
+class DiceRoll(BaseModel):
+    type: str = Field(description="Tipo di dado tirato, es: 'd20'")
+    result: int = Field(description="Il risultato puro uscito sulla faccia del dado")
+    modifier: int = Field(description="Il modificatore aggiunto (es. 3)")
+    total: int = Field(description="Il totale finale (result + modifier)")
+
 class RulesResult(BaseModel):
-    is_valid: bool
-    explanation: str
+    valid: bool = Field(description="True se l'azione è permessa dalle regole")
+    roll: Optional[DiceRoll] = Field(default=None, description="Dettagli del tiro, nullo se non ci sono dadi")
+    hit: bool = Field(description="True se l'attacco va a segno (supera la CA)")
+    damage: Optional[int] = Field(default=0, description="Ammontare dei danni, usa 0 se l'attacco manca")
+    needs_clarification: bool = Field(description="True se l'azione è ambigua (HITL livello intermedio)")
+    needs_confirmation: bool = Field(description="True se l'azione è irreversibile/critica (HITL livello critico)")
+    narrative_hint: str = Field(description="Suggerimento breve per il DM Agent su come descrivere l'esito")
+
+
+# ==========================================
+# SCHEMI PER IL WORLD STATE (MEMBRO B)
+# ==========================================
+class Character(BaseModel):
+    """Rappresenta un singolo giocatore nel Couch Co-op"""
+    name: str
+    char_class: str
+    hp: int
+    max_hp: int
+    inventory: List[str] = []
+
+class Enemy(BaseModel):
+    """Rappresenta un nemico attualmente nella scena"""
+    name: str
+    hp: int
+    ac: int  # Classe Armatura (Armor Class)
+    status: str = "alive"
 
 class WorldState(BaseModel):
-    current_location: str
-    active_characters: List[str]
-    inventory: Optional[List[str]] = []
-    # Aggiungi altri campi necessari per il tracking
+    """Stato globale della partita salvato in JSON"""
+    theme: str = Field(default="Medievale", description="Il tema narrativo attuale")
+    current_location: str = Field(default="Sconosciuta", description="Dove si trova attualmente il party")
+    party: List[Character] = Field(default_factory=list, description="Lista dei giocatori (Couch Co-op)")
+    active_enemies: List[Enemy] = Field(default_factory=list, description="Nemici attualmente in combattimento")
+    turn_number: int = Field(default=1, description="Contatore dei turni della sessione")

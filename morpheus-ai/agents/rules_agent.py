@@ -1,5 +1,6 @@
 from agno.agent import Agent
-from agno.tools.function import FunctionTool
+#from agno.tools.function import FunctionTool
+from agno.models.google import Gemini
 from contracts.schemas import RulesResult
 import random
 
@@ -9,39 +10,41 @@ def roll_dice(dice_type: str) -> int:
     return random.randint(1, faces.get(dice_type, 20))
 
 MEDIEVAL_RULES = """
-Sei il Rules Agent. Validi azioni D&D 5e in un contesto medievale.
+    Sei il Rules Agent (nome in codice: ATHENA). Il tuo compito è agire come un arbitro meccanico.
+    NON sei un narratore. NON salutare. NON aggiungere testo fuori dal JSON.
 
-REGOLE COMBATTIMENTO:
-- Attacco melee: tira d20 + FOR modifier. Se >= CA nemico: colpisce.
-- Spada lunga: danno 1d8 + FOR modifier
-- Critico su 20 naturale: danno raddoppiato
-- Fallimento su 1 naturale
+    REGOLE DI ESECUZIONE:
+    1. Se l'utente dichiara un attacco, DEVI chiamare la funzione 'roll_dice' due volte: 
+    - Una volta per l'attacco (d20).
+    - Una volta per il danno (d8).
+    2. Calcola il totale: [Risultato Dado] + [Modificatore].
+    3. Determina 'hit': True se il totale attacco >= 13 (CA Scheletro).
+    4. Se l'azione è un attacco ma non specifichi chi o con cosa, imposta 'needs_clarification': true.
+    Se l'attacco manca o non c'è danno, imposta sempre damage: 0 (mai null).
 
-STATISTICHE DEFAULT PERSONAGGIO:
-- FOR: +3, DES: +1, CA: 16, HP: 24
+    STATISTICHE FISSE:
+    - Giocatore: FOR +3, CA 16.
+    - Nemico (Scheletro): CA 13.
 
-NEMICO DEFAULT (scheletro):
-- CA: 13, HP: 20
-
-Rispondi SEMPRE con JSON che rispetta questo schema esatto:
-{
-  "valid": true,
-  "roll": {"type": "d20", "result": N, "modifier": 3, "total": N},
-  "hit": true,
-  "damage": N,
-  "needs_clarification": false,
-  "needs_confirmation": false,
-  "narrative_hint": "breve hint per il DM"
-}
-Se l'azione e ambigua, setta needs_clarification: true e damage: 0.
-"""
+    FORMATO RISPOSTA:
+    Rispondi esclusivamente in formato JSON. 
+    Esempio di output per un attacco riuscito:
+    {
+    "valid": true,
+    "roll": {"type": "d20", "result": 15, "modifier": 3, "total": 18},
+    "hit": true,
+    "damage": 8,
+    "needs_clarification": false,
+    "needs_confirmation": false,
+    "narrative_hint": "Colpo netto allo sterno dello scheletro."
+    }
+    """
 
 from agno.models.google import Gemini
 
 rules_agent = Agent(
     name="Rules",
-    model=Gemini(id="gemini-2.0-flash-lite"),
+    model=Gemini(id="gemini-2.0-flash"), 
     instructions=MEDIEVAL_RULES,
-    tools=[FunctionTool(roll_dice)],
-    response_model=RulesResult,
+    #output_schema=RulesResult,
 )
