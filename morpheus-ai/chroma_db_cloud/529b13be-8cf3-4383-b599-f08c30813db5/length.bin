@@ -1,4 +1,0 @@
-TS embedding_metadata_string_value ON embedding_metadata (key, string_value) WHERE string_value IS NOT NULL;
-fb36603a45ee2cd0254cef3ef86585e8‚=SƒeMmetadb00003-full-text-tokenize.sqlite.sqlCREATE VIRTUAL TABLE embedding_fulltext_search USING fts5(string_value, tokenize='trigram');
-INSERT INTO embedding_fulltext_search (rowid, string_value) SELECT rowid, string_value FROM embedding_metadata;
-DR
