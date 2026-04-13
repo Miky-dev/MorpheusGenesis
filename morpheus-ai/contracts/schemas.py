@@ -47,3 +47,14 @@ class WorldState(BaseModel):
     party: List[Character] = Field(default_factory=list, description="Lista dei giocatori (Couch Co-op)")
     active_enemies: List[Enemy] = Field(default_factory=list, description="Nemici attualmente in combattimento")
     turn_number: int = Field(default=1, description="Contatore dei turni della sessione")
+
+class StoryScene(BaseModel):
+    narration: str = Field(description="La narrazione della scena")
+    choices: List[str] = Field(description="Lista di opzioni esplicite")
+    is_combat: bool = Field(description="True se c'è un nemico")
+    inventory_found: str = Field(default="nessuno")
+    
+    # LA NUOVA REGOLA:
+    allow_free_action: bool = Field(
+        description="True se il giocatore ha tempo per esplorare liberamente. False se è una situazione di emergenza in cui deve scegliere in fretta tra le opzioni fornite."
+    )

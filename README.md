@@ -53,3 +53,43 @@ cp .env.example .env
 
 # Avvia l'applicazione
 streamlit run app.py
+
+## 👥 Roadmap & Divisione del Lavoro
+
+---
+
+### 🔵 Membro A — Backend AI, Agenti Agno & Prompt Engineering
+
+| Stato | File / Componente | Descrizione |
+|-------|-------------------|-------------|
+| ✅ | `agents/dm_agent.py` | DM Agent Agno (Apollo) con persona narrativa |
+| ✅ | `agents/rules_agent.py` | Rules Agent (Athena) con validazione Pydantic e lancio dadi |
+| 🔲 | `agents/team.py` | Game Team Agno con logica HITL a 3 livelli |
+| 🔲 | `prompts/` | System prompt versionati (16 file: dm + rules per 8 temi) |
+| 🔲 | `themes/` | Dataclass `Theme` e 8 implementazioni complete |
+| ✅ | `knowledge/chroma_store.py` | Wrapper ChromaDB + indicizzazione eventi di gioco |
+| 🔲 | `tests/test_rules_agent.py` | 50 casi di test sul Rules Agent |
+
+---
+
+### 🟣 Membro B — Memory, UI, Valutazione & Deploy
+
+| Stato | File / Componente | Descrizione |
+|-------|-------------------|-------------|
+| 🔲 | `agents/memory_agent.py` | Memory Agent (Mnemosyne) con KnowledgeBase Agno |
+| ✅ | `contracts/schemas.py` | JSON state manager (WorldState, Character, Enemy, RulesResult) |
+| ✅ | `setup_page.py` | Schermata selezione tema con card interattive (look Cyberpunk) |
+| 🔲 | `ui/game_screen.py` | Schermata di gioco con HUD e Agentic UI completa |
+| ✅ | `app.py` | Entry point Streamlit, gestione session state e loop di turno |
+| 🔲 | `tests/test_memory.py` | Test precision/recall sul sistema RAG |
+| 🔲 | Relazione tecnica finale | Metriche, analisi critica e limiti documentati |
+
+---
+
+### 🤝 Punti di Collaborazione Obbligatoria
+
+| Stato | Settimana | Milestone |
+|-------|-----------|-----------|
+| ✅ | Settimana 1 | Definire lo schema JSON condiviso tra Rules Agent e DM Agent (`contracts/schemas.py`) |
+| ✅ | Settimana 1 | Definire la struttura `WorldState` usata da tutti i moduli |
+| 🔲 | Settimana 9 | Integration test end-to-end e preparazione demo orale |

@@ -6,7 +6,7 @@ import os
 from agents.rules_agent import rules_agent
 from agents.dm_agent import dm_agent
 from knowledge.chroma_store import DungeonMemory
-from contracts.schemas import WorldState, Character, Enemy
+from contracts.schemas import WorldState, Character, Enemy, StoryScene
 from setup_page import render_setup_page
 
 # Caricamento variabili d'ambiente
@@ -37,6 +37,9 @@ if "world_state" not in st.session_state:
 
 if "last_narrative" not in st.session_state:
     st.session_state.last_narrative = ""
+
+if "current_scene" not in st.session_state:
+    st.session_state.current_scene = None  # Conterrà l'ultimo StoryScene
 
 if "memory" not in st.session_state:
     st.session_state.memory = DungeonMemory(session_id="test_session_001")
@@ -148,53 +151,139 @@ with col_hp2:
 
 st.divider()
 
-user_input = st.text_input("Cosa vuoi fare?", placeholder="Esempio: Attacco lo scheletro con la spada")
+# --- SCENA INIZIALE: Apollo genera l'ambientazione al primo avvio ---
+if not st.session_state.last_narrative and st.session_state.current_scene is None:
+    world = st.session_state.world_state
+    player = world.party[0]
+    enemy = world.active_enemies[0] if world.active_enemies else None
+    
+    opening_context = f"""
+    INIZIO SESSIONE.
+    TEMA: {world.theme}
+    GIOCATORE: {player.name}, {player.char_class} ({player.hp}/{player.max_hp} HP).
+    SCENA: {world.current_location}.
+    {"NEMICO PRESENTE: " + enemy.name + " (" + str(enemy.hp) + " HP, CA " + str(enemy.ac) + ")." if enemy else "Nessun nemico in vista."}
+    
+    Descrivi l'ambientazione iniziale e dai al giocatore 2-3 scelte per cominciare.
+    """
+    
+    with st.spinner("Apollo sta preparando la scena..."):
+        import json as _json
+        dm_raw = dm_agent.run(opening_context)
+        try:
+            clean = dm_raw.content.replace('```json', '').replace('```', '').strip()
+            dm_data = _json.loads(clean)
+            st.session_state.current_scene = StoryScene(**dm_data)
+            st.session_state.last_narrative = st.session_state.current_scene.narration
+        except Exception:
+            st.session_state.last_narrative = dm_raw.content
+        st.rerun()
 
-# --- LOGICA DI GESTIONE TURNO (Membro A + B) ---
+# 3. Narrativa precedente + UI Dinamica derivata dalla scena
+if st.session_state.last_narrative:
+    st.markdown(f"""
+        <div class="narrative-box">
+            {st.session_state.last_narrative}
+        </div>
+    """, unsafe_allow_html=True)
 
-# Fase 1: Elaborazione Azione (Athena decide cosa serve)
-if st.button("Valuta Azione"):
-    if user_input:
+st.markdown("### 🧭 Cosa fai?")
+
+azione_scelta = None
+scene = st.session_state.current_scene
+
+# Bottoni dalle choices di Apollo (sempre visibili quando c'è una scena)
+if scene and scene.choices:
+    for option in scene.choices:
+        if st.button(f"👉 {option}", use_container_width=True):
+            azione_scelta = option
+
+# Scelta libera: visibile solo se Apollo lo permette
+if scene is None or scene.allow_free_action:
+    azione_libera = st.chat_input("Oppure fai di testa tua...")
+    if azione_libera:
+        azione_scelta = azione_libera
+else:
+    st.warning("⏳ Non c'è tempo per pensare! Devi scegliere una delle opzioni qui sopra.")
+
+# Prima partita: nessuna scena caricata, mostriamo solo la chat
+if scene is None and not st.session_state.last_narrative:
+    azione_libera = st.chat_input("Cosa vuoi fare? (es. Attacco lo scheletro con la spada)")
+    if azione_libera:
+        azione_scelta = azione_libera
+
+# --- LOGICA DI GESTIONE TURNO ---
+
+user_input = azione_scelta
+if user_input:
+    scene = st.session_state.current_scene
+    is_combat_action = scene.is_combat if scene else True  # Default: tratta come combattimento
+
+    if not is_combat_action:
+        # --- PERCORSO ESPLORAZIONE: direttamente ad Apollo, skip Athena ---
+        with st.spinner("Apollo sta narrando..."):
+            import json as _json_exp
+            exp_context = f"""
+            AZIONE GIOCATORE: {user_input}
+            GIOCATORE: {st.session_state.world_state.party[0].name}
+            SCENA PRECEDENTE: {st.session_state.last_narrative}
+            Non c'è combattimento. Narra l'esito dell'azione e proponi nuove scelte.
+            """
+            dm_raw = dm_agent.run(exp_context)
+            try:
+                clean = dm_raw.content.replace('```json', '').replace('```', '').strip()
+                dm_data = _json_exp.loads(clean)
+                st.session_state.current_scene = StoryScene(**dm_data)
+                st.session_state.last_narrative = st.session_state.current_scene.narration
+            except Exception:
+                st.session_state.last_narrative = dm_raw.content
+                st.session_state.current_scene = None
+            # Salva in memoria
+            turn_num = st.session_state.world_state.turn_number
+            st.session_state.memory.add_event(
+                text=f"Turno {turn_num}: {user_input}. Narrazione: {st.session_state.last_narrative}",
+                turn=turn_num, event_type="exploration"
+            )
+            st.session_state.world_state.turn_number += 1
+            st.rerun()
+    else:
+        # --- PERCORSO COMBATTIMENTO: passa ad Athena ---
         with st.spinner("Athena sta decidendo il destino..."):
             response = rules_agent.run(user_input)
-            
-            # --- PARSING ROBUSTO (Manteniamo la logica di gestione stringhe/errori) ---
-            content = response.content
-            if isinstance(content, str):
-                import json
-                try:
-                    clean_str = content.replace('```json', '').replace('```', '').strip()
-                    data = json.loads(clean_str)
-                    
-                    if "error" in data:
-                        error_msg = data["error"].get("message", "Errore sconosciuto")
-                        if data["error"].get("code") == 429:
-                            st.error("⏳ **Limite superato!** Google ti ha messo in pausa. Aspetta circa 60 secondi.")
-                        else:
-                            st.error(f"❌ Errore API: {error_msg}")
-                        st.stop()
-                    
-                    # --- PULIZIA DATI RESILIENTE ---
-                    if "damage" in data and isinstance(data["damage"], dict):
-                        # Estraiamo il numero se il modello ha mandato un oggetto invece di un int
-                        data["damage"] = data["damage"].get("result") or data["damage"].get("total") or 0
-                    
-                    from contracts.schemas import RulesResult
-                    result = RulesResult(**data)
-                except Exception as e:
-                    st.error(f"⚠️ Risposta non standard. Riprova tra poco.")
-                    with st.expander("Debug"):
-                        st.code(content)
+        
+        # --- PARSING ROBUSTO ---
+        content = response.content
+        if isinstance(content, str):
+            import json
+            try:
+                clean_str = content.replace('```json', '').replace('```', '').strip()
+                data = json.loads(clean_str)
+                
+                if "error" in data:
+                    error_msg = data["error"].get("message", "Errore sconosciuto")
+                    if data["error"].get("code") == 429:
+                        st.error("⏳ **Limite superato!** Aspetta circa 60 secondi.")
+                    else:
+                        st.error(f"❌ Errore API: {error_msg}")
                     st.stop()
-            else:
-                result = content
-            # --- FINE PARSING ---
-            
-            # Salviamo il verdetto di Athena nello stato della sessione
-            st.session_state.pending_action = result
-            st.session_state.current_user_input = user_input
-    else:
-        st.warning("Scrivi qualcosa!")
+                
+                # --- PULIZIA DATI RESILIENTE ---
+                if "damage" in data and isinstance(data["damage"], dict):
+                    data["damage"] = data["damage"].get("result") or data["damage"].get("total") or 0
+                
+                from contracts.schemas import RulesResult
+                result = RulesResult(**data)
+            except Exception as e:
+                st.error("⚠️ Risposta non standard. Riprova tra poco.")
+                with st.expander("Debug"):
+                    st.code(content)
+                st.stop()
+        else:
+            result = content
+        # --- FINE PARSING ---
+        
+        st.session_state.pending_action = result
+        st.session_state.current_user_input = user_input
 
 # Fase 2: Il Lancio del Dado (Manuale del giocatore)
 if st.session_state.pending_action:
@@ -249,8 +338,20 @@ if st.session_state.pending_action:
             """
             
             with st.spinner("Apollo sta narrando l'esito..."):
-                dm_response = dm_agent.run(dm_context)
-                st.session_state.last_narrative = dm_response.content
+                dm_raw = dm_agent.run(dm_context)
+                dm_content = dm_raw.content
+                
+                # --- PARSING StoryScene ---
+                import json as _json
+                try:
+                    clean_dm = dm_content.replace('```json', '').replace('```', '').strip()
+                    dm_data = _json.loads(clean_dm)
+                    st.session_state.current_scene = StoryScene(**dm_data)
+                    st.session_state.last_narrative = st.session_state.current_scene.narration
+                except Exception:
+                    # Fallback: salviamo il testo grezzo come narrazione
+                    st.session_state.current_scene = None
+                    st.session_state.last_narrative = dm_content
             
             # Salvataggio in Memoria
             turn_num = st.session_state.world_state.turn_number
@@ -271,11 +372,4 @@ if st.session_state.pending_action:
             st.session_state.pending_action = None
             st.session_state.current_user_input = ""
             st.rerun()
-
-# 3. Visualizzazione Narrativa (Precedente o Attuale)
-if st.session_state.last_narrative:
-    st.markdown(f"""
-        <div class="narrative-box">
-            {st.session_state.last_narrative}
-        </div>
-    """, unsafe_allow_html=True)
+
