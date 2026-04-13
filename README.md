@@ -1,4 +1,4 @@
-# Morpheus Genesis
+# Morpheus GenesisSSSSSSSs
 **Sistema Multi-Agent per Sessioni GDR Generative**
 
 Questo progetto è un'applicazione intelligente che genera e gestisce sessioni di gioco di ruolo (GDR) in modo autonomo, utilizzando un'architettura multi-agente basata sul framework **Agno**.
