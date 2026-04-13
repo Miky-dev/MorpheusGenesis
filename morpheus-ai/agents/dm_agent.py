@@ -1,5 +1,5 @@
 from agno.agent import Agent
-from agno.models.google import Gemini
+from agno.models.groq import Groq
 
 # Prompt per il DM Agent
 DM_INSTRUCTIONS = """
@@ -12,14 +12,13 @@ RICEVERAI:
 3. Lo stato attuale del mondo (HP nemici, ambiente).
 
 IL TUO COMPITO:
-- Narra l'esito dell'azione in modo dinamico.
-- Non limitarti a dire 'Hai colpito', ma descrivi il suono del metallo sulle ossa o il sibilo della spada che manca il bersaglio.
-- Mantieni i paragrafi brevi (massimo 3-4 frasi).
+- Narra l'esito in modo dinamico ed epico.
+- Sii estremamente CONCISO: scrivi al massimo 1 o 2 frasi d'impatto.
 - Se il nemico muore, descrivi la sua polverizzazione in modo epico.
 """
 
 dm_agent = Agent(
     name="DM",
-    model=Gemini(id="gemini-2.0-flash"), # Lo cambierai quando torni online
+    model=Groq(id="llama-3.3-70b-versatile"), 
     instructions=DM_INSTRUCTIONS,
 )

@@ -6,7 +6,7 @@ from chromadb.utils import embedding_functions
 class DungeonMemory:
     def __init__(self, session_id: str):
         import os
-        self.client = chromadb.PersistentClient(path="./chroma_db")
+        self.client = chromadb.PersistentClient(path="./chroma_db_cloud")
         self.ef = embedding_functions.GoogleGenerativeAiEmbeddingFunction(
             api_key=os.environ.get("GOOGLE_API_KEY", ""),
         )

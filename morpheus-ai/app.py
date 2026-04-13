@@ -4,22 +4,39 @@ import os
 
 # Import dei vostri moduli
 from agents.rules_agent import rules_agent
+from agents.dm_agent import dm_agent
 from knowledge.chroma_store import DungeonMemory
 from contracts.schemas import WorldState, Character, Enemy
+from setup_page import render_setup_page
 
 # Caricamento variabili d'ambiente
 load_dotenv()
 
+# Inizializzazione della pagina di defaut
+if "page" not in st.session_state:
+    st.session_state.page = "setup"
+
+if st.session_state.page == "setup":
+    render_setup_page()
+    st.stop() # Ferma l'esecuzione qui, non disegna il resto del gioco
+
 # 1. Inizializzazione Session State (Membro B)
 if "world_state" not in st.session_state:
-    # Creiamo uno stato iniziale di test
-    hero = Character(name="Valerius", char_class="Guerriero", hp=24, max_hp=24)
-    skeleton = Enemy(name="Scheletro", hp=20, ac=13)
+    # Recuperiamo i dati dalla Setup Page
+    p1_name = st.session_state.get("setup_p1_name", "Valerius")
+    p1_class = st.session_state.get("setup_p1_class", "Warrior")
+    
+    # Creiamo uno stato iniziale basato sull'input
+    hero = Character(name=p1_name, char_class=p1_class, hp=24, max_hp=24)
+    skeleton = Enemy(name="Scheletro", hp=20, max_hp=20, ac=13)
     
     st.session_state.world_state = WorldState(
         party=[hero],
         active_enemies=[skeleton]
     )
+
+if "last_narrative" not in st.session_state:
+    st.session_state.last_narrative = ""
 
 if "memory" not in st.session_state:
     st.session_state.memory = DungeonMemory(session_id="test_session_001")
@@ -29,6 +46,81 @@ if "pending_action" not in st.session_state:
 
 if "current_user_input" not in st.session_state:
     st.session_state.current_user_input = ""
+
+# --- UTILITY UI ---
+# Stili CSS per il look Cyberpunk
+st.markdown("""
+    <style>
+    .stApp {
+        background-color: #0d0d0d;
+        background-image: 
+            linear-gradient(to right, #1a1a1a 1px, transparent 1px),
+            linear-gradient(to bottom, #1a1a1a 1px, transparent 1px);
+        background-size: 40px 40px;
+    }
+    .narrative-box {
+        background: #111;
+        border-radius: 8px;
+        padding: 20px;
+        border-left: 4px solid #9d66ff;
+        margin: 20px 0;
+        font-style: italic;
+        color: #e0e0e0;
+    }
+    .hit-box {
+        background: rgba(0, 255, 136, 0.1);
+        border: 1px solid #00ff88;
+        padding: 10px;
+        border-radius: 4px;
+        color: #00ff88;
+        font-weight: bold;
+        text-align: center;
+    }
+    .miss-box {
+        background: rgba(255, 110, 132, 0.1);
+        border: 1px solid #ff6e84;
+        padding: 10px;
+        border-radius: 4px;
+        color: #ff6e84;
+        font-weight: bold;
+        text-align: center;
+    }
+    /* Input Fields */
+    .stTextInput input {
+        background-color: #000 !important;
+        border: 1px solid #333 !important;
+        color: white !important;
+    }
+
+    /* Pulsante Standard */
+    .stButton>button {
+        background: linear-gradient(90deg, #9d66ff, #6b4cff) !important;
+        color: white !important;
+        border: none !important;
+        padding: 10px 20px !important;
+        font-weight: bold !important;
+        border-radius: 8px !important;
+        text-transform: uppercase !important;
+        transition: 0.3s !important;
+    }
+    .stButton>button:hover {
+        transform: scale(1.02) !important;
+        box-shadow: 0 0 20px rgba(157, 102, 255, 0.4) !important;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+def draw_hp_bar(current_hp, max_hp, name):
+    pct = current_hp / max_hp
+    color = "#00ff88" if pct > 0.6 else "#ffaa00" if pct > 0.3 else "#ff6e84"
+    
+    st.markdown(f"<p style='margin-bottom:2px; font-weight:bold;'>{name.upper()}</p>", unsafe_allow_html=True)
+    st.markdown(f"""
+        <div style="background-color: #333; border-radius: 5px; height: 10px; width: 100%;">
+            <div style="background-color: {color}; height: 10px; width: {pct*100}%; border-radius: 5px; transition: 0.5s;"></div>
+        </div>
+        <p style='font-size: 0.8rem; color: #888;'>Salute: {current_hp} / {max_hp} HP</p>
+    """, unsafe_allow_html=True)
 
 # UI TITOLO
 st.title("⚔️ Project Morpheus — Test Sprint 1")
@@ -40,8 +132,21 @@ with st.sidebar:
     st.json(st.session_state.world_state.model_dump())
 
 # 2. Interfaccia di Gioco (Membro B)
-st.write(f"**Personaggio:** {st.session_state.world_state.party[0].name}")
-st.write(f"**Nemico:** {st.session_state.world_state.active_enemies[0].name} (HP: {st.session_state.world_state.active_enemies[0].hp})")
+col_hp1, col_hp2 = st.columns(2)
+with col_hp1:
+    draw_hp_bar(
+        st.session_state.world_state.party[0].hp, 
+        st.session_state.world_state.party[0].max_hp, 
+        st.session_state.world_state.party[0].name
+    )
+with col_hp2:
+    draw_hp_bar(
+        st.session_state.world_state.active_enemies[0].hp, 
+        st.session_state.world_state.active_enemies[0].max_hp, 
+        st.session_state.world_state.active_enemies[0].name
+    )
+
+st.divider()
 
 user_input = st.text_input("Cosa vuoi fare?", placeholder="Esempio: Attacco lo scheletro con la spada")
 
@@ -68,6 +173,11 @@ if st.button("Valuta Azione"):
                         else:
                             st.error(f"❌ Errore API: {error_msg}")
                         st.stop()
+                    
+                    # --- PULIZIA DATI RESILIENTE ---
+                    if "damage" in data and isinstance(data["damage"], dict):
+                        # Estraiamo il numero se il modello ha mandato un oggetto invece di un int
+                        data["damage"] = data["damage"].get("result") or data["damage"].get("total") or 0
                     
                     from contracts.schemas import RulesResult
                     result = RulesResult(**data)
@@ -128,11 +238,25 @@ if st.session_state.pending_action:
             else:
                 col2.info("🛡️ MANCATO!")
                 
+            # 7. CHIAMATA AL DM AGENT (Apollo)
+            dm_context = f"""
+            GIOCATORE: {st.session_state.world_state.party[0].name} ({st.session_state.world_state.party[0].char_class})
+            AZIONE TENTATA: {st.session_state.current_user_input}
+            ESITO TECNICO: {'Colpito' if hit else 'Mancato'} con un totale di {total}.
+            DANNI INFLITTI: {damage}
+            STATO NEMICO: {enemy.name} ha {enemy.hp}/{enemy.max_hp} HP rimanenti.
+            SCENA: {res.narrative_hint}
+            """
+            
+            with st.spinner("Apollo sta narrando l'esito..."):
+                dm_response = dm_agent.run(dm_context)
+                st.session_state.last_narrative = dm_response.content
+            
             # Salvataggio in Memoria
             turn_num = st.session_state.world_state.turn_number
             event_text = f"Turno {turn_num}: {st.session_state.current_user_input}. "
-            event_text += f"Tiro: {total} (Dado {d20_roll} + {modifier}). "
-            event_text += f"Esito: {'Colpito' if hit else 'Mancato'}. {res.narrative_hint}"
+            event_text += f"Esito: {'Colpito' if hit else 'Mancato'}. "
+            event_text += f"Narrazione: {st.session_state.last_narrative}"
             
             st.session_state.memory.add_event(
                 text=event_text, 
@@ -146,7 +270,12 @@ if st.session_state.pending_action:
             # Puliamo l'azione pendente per il prossimo turno
             st.session_state.pending_action = None
             st.session_state.current_user_input = ""
-            
-            # Visualizzazione rapida prima del rerun
-            st.write(f"**Suggerimento narrativo:** *{res.narrative_hint}*")
             st.rerun()
+
+# 3. Visualizzazione Narrativa (Precedente o Attuale)
+if st.session_state.last_narrative:
+    st.markdown(f"""
+        <div class="narrative-box">
+            {st.session_state.last_narrative}
+        </div>
+    """, unsafe_allow_html=True)

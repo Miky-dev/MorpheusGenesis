@@ -1,6 +1,6 @@
 from agno.agent import Agent
 #from agno.tools.function import FunctionTool
-from agno.models.google import Gemini
+from agno.models.groq import Groq
 from contracts.schemas import RulesResult
 import random
 
@@ -21,6 +21,7 @@ MEDIEVAL_RULES = """
     3. Determina 'hit': True se il totale attacco >= 13 (CA Scheletro).
     4. Se l'azione è un attacco ma non specifichi chi o con cosa, imposta 'needs_clarification': true.
     Se l'attacco manca o non c'è danno, imposta sempre damage: 0 (mai null).
+    IMPORTANTE: 'damage' deve essere un NUMERO INTERO semplice (es: 8), NON un oggetto JSON o una stringa.
 
     STATISTICHE FISSE:
     - Giocatore: FOR +3, CA 16.
@@ -40,11 +41,11 @@ MEDIEVAL_RULES = """
     }
     """
 
-from agno.models.google import Gemini
+from agno.models.groq import Groq
 
 rules_agent = Agent(
     name="Rules",
-    model=Gemini(id="gemini-2.0-flash"), 
+    model=Groq(id="llama-3.3-70b-versatile"), 
     instructions=MEDIEVAL_RULES,
     #output_schema=RulesResult,
 )

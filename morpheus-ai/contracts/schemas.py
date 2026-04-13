@@ -36,6 +36,7 @@ class Enemy(BaseModel):
     """Rappresenta un nemico attualmente nella scena"""
     name: str
     hp: int
+    max_hp: int  # Added for progress bar
     ac: int  # Classe Armatura (Armor Class)
     status: str = "alive"
 
