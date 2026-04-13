@@ -1,11 +1,14 @@
 import chromadb
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning, module="chromadb.utils.embedding_functions.google_embedding_function")
 from chromadb.utils import embedding_functions
 
 class DungeonMemory:
     def __init__(self, session_id: str):
+        import os
         self.client = chromadb.PersistentClient(path="./chroma_db")
-        self.ef = embedding_functions.OpenAIEmbeddingFunction(
-            model_name="text-embedding-3-small"
+        self.ef = embedding_functions.GoogleGenerativeAiEmbeddingFunction(
+            api_key=os.environ.get("GOOGLE_API_KEY", ""),
         )
         self.collection = self.client.get_or_create_collection(
             name=f"session_{session_id}",

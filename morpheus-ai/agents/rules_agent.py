@@ -36,8 +36,12 @@ Rispondi SEMPRE con JSON che rispetta questo schema esatto:
 Se l'azione e ambigua, setta needs_clarification: true e damage: 0.
 """
 
+from agno.models.google import Gemini
+
 rules_agent = Agent(
     name="Rules",
+    model=Gemini(id="gemini-2.0-flash-lite"),
     instructions=MEDIEVAL_RULES,
     tools=[FunctionTool(roll_dice)],
+    response_model=RulesResult,
 )
