@@ -22,6 +22,18 @@ Il sistema implementa tre livelli di controllo umano[cite: 223]:
 2.  **Intermedio:** Richiesta di disambiguazione per azioni non chiare[cite: 225].
 3.  **Critico:** Conferma obbligatoria per azioni irreversibili o fatali[cite: 227].
 
+## 📂 Struttura del Progetto
+
+Il repository è organizzato in modo modulare per separare i vari componenti del sistema:
+
+- **morpheus-ai/**: Root dell'applicazione Python.
+    - **agents/**: Definizione e istruzioni degli agenti (Athena, Apollo).
+    - **contracts/**: Schemi Pydantic per la validazione della logica di gioco.
+    - **knowledge/**: Gestione della memoria persistente e embeddings (ChromaDB).
+    - **app.py**: Entry point dell'applicazione Streamlit e gestione turni.
+    - **setup_page.py**: Modulo per l'interfaccia di configurazione iniziale.
+- **.vscode/**: Configurazioni IDE per l'attivazione automatica dell'ambiente virtuale.
+
 ## 🚀 Installazione e Avvio
 ```bash
 # Clona il repository
