@@ -66,11 +66,11 @@ RISPONDI ESCLUSIVAMENTE CON UN JSON VALIDO E MINIFICATO CHE RISPETTA QUESTO SCHE
   "opening_cinematic": "string",
   "quest_chain": [
     {
-      "quest_id": "string",
+      "id": "string",
       "title": "string",
       "status": "active|locked",
       "giver_npc": "string",
-      "target_location": "string",
+      "location_hint": "string",
       "description": "string",
       "narrative_purpose": "string"
     }

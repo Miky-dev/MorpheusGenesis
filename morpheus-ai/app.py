@@ -81,6 +81,30 @@ def normalize_agent_output(raw: str) -> str:
     return cleaned
 
 
+def activate_first_locked_quest_if_none():
+    if not st.session_state.get("story_bible"):
+        return
+    quest_chain = st.session_state.story_bible.quest_chain
+    if any(sq.status == "active" for sq in quest_chain):
+        return
+    next_locked = next((sq for sq in quest_chain if sq.status == "locked"), None)
+    if next_locked:
+        next_locked.status = "active"
+        st.toast(f"⚡ Missione attivata: {next_locked.title}")
+
+
+def complete_talk_quest_if_matching(user_input: str) -> bool:
+    if not user_input.lower().startswith("parlare con "):
+        return False
+    npc_name = user_input[len("parlare con "):].strip().lower()
+    for sq in st.session_state.story_bible.quest_chain:
+        if sq.status == "active" and sq.giver_npc.lower() == npc_name:
+            sq.status = "completed"
+            st.success(f"✅ Missione Completata: {sq.title}")
+            return True
+    return False
+
+
 def parse_json_response(raw: str, context: str = ""):
     if not isinstance(raw, str):
         return None
@@ -168,6 +192,7 @@ if "world_state" not in st.session_state:
             if story_bible is None:
                 st.stop()
             st.session_state.story_bible = story_bible
+            activate_first_locked_quest_if_none()
 
     # --- Generazione Mappa (Atlas) ---
     if "world_map" not in st.session_state:
@@ -407,6 +432,8 @@ if bible and not st.session_state.cinematic_seen:
 # UI TITOLO
 title_text = bible.title if bible else "Project Morpheus"
 st.title(f"⚔️ {title_text}")
+
+activate_first_locked_quest_if_none()
 
 # Sidebar — Quest Tracker
 with st.sidebar:
@@ -755,6 +782,8 @@ SCENA PRECEDENTE: {st.session_state.last_narrative}
                         if sq.id == scene.quest_completed_id and sq.status == "active":
                             sq.status = "completed"
                             st.success(f"✅ Missione Completata: {sq.title}")
+                elif complete_talk_quest_if_matching(user_input):
+                    pass
                 trigger_ares_if_needed(st.session_state.current_scene)
             # Salva in memoria
             turn_num = st.session_state.world_state.turn_number

@@ -110,7 +110,8 @@ class WorldMap(BaseModel):
 
 # SCHEMA STORY BIBLE
 class SubQuest(BaseModel):
-    id: str = Field(description="ID univoco, es: 'sq_01'")
+    model_config = {"populate_by_name": True}
+    id: str = Field(alias="quest_id", description="ID univoco, es: 'sq_01'")
     title: str = Field(description="Titolo breve della missione")
     description: str = Field(description="Cosa deve fare il giocatore (1 frase)")
     giver_npc: str = Field(description="Nome dell'NPC che assegna questa missione")
