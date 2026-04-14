@@ -55,7 +55,7 @@ class StoryScene(BaseModel):
     narration: str = Field(description="La narrazione della scena")
     choices: List[str] = Field(description="Lista di opzioni esplicite")
     is_combat: bool = Field(description="True se c'è un nemico")
-    inventory_found: str = Field(default="nessuno")
+    inventory_found: Optional[str] = Field(default="nessuno", description="Nome dell'oggetto trovato, 'nessuno' o null se non applicabile")
     
     # LA NUOVA REGOLA:
     allow_free_action: bool = Field(
@@ -131,8 +131,8 @@ class StoryBible(BaseModel):
     herald_location_id: str = Field(description="L'id_name della location dove si trova l'araldo")
     herald_npc_reveal: str = Field(description="La frase esatta e drammatica con cui l'araldo rivela la quest")
     quest_chain: List[SubQuest] = Field(description="La catena di almeno 10 sub-missioni da completare per arrivare all'obiettivo finale")
-    key_npcs: List[QuestCharacterBrief] = Field(description="Lista degli NPC più importanti della storia con i loro ruoli")
-    key_enemies: List[QuestCharacterBrief] = Field(description="Lista dei nemici/boss più importanti con i loro ruoli")
+    key_npcs: List[QuestCharacterBrief] = Field(default_factory=list, description="Lista degli NPC più importanti della storia con i loro ruoli")
+    key_enemies: List[QuestCharacterBrief] = Field(default_factory=list, description="Lista dei nemici/boss più importanti con i loro ruoli")
 
 #SCHEMA GENRAZIONE NPC
 class NPC(BaseModel):
