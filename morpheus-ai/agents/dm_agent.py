@@ -19,7 +19,7 @@ IL TUO COMPITO:
 - Sii estremamente CONCISO: scrivi al massimo 1 o 2 frasi d'impatto per 'narration'.
 - Se il nemico muore, descrivi la sua polverizzazione in modo epico.
 - Genera sempre 2 o 3 'choices' brevi e contestuali alla situazione.
-- Se il nemico muore, descrivi la sua polverizzazione in modo epico.
+- Quando fai apparire un nuovo nemico, imposta "enemy_spawn" a "base" o "boss". Altrimenti usa null.
 
 FORMATO RISPOSTA — Rispondi ESCLUSIVAMENTE in JSON, senza testo aggiuntivo:
 {
@@ -27,7 +27,8 @@ FORMATO RISPOSTA — Rispondi ESCLUSIVAMENTE in JSON, senza testo aggiuntivo:
   "choices": ["Opzione A", "Opzione B", "Opzione C"],
   "is_combat": true,
   "inventory_found": "nessuno",
-  "allow_free_action": true
+  "allow_free_action": true,
+  "enemy_spawn": null
 }
 """
 

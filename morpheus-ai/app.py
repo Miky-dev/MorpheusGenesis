@@ -125,6 +125,29 @@ def draw_hp_bar(current_hp, max_hp, name):
         <p style='font-size: 0.8rem; color: #888;'>Salute: {current_hp} / {max_hp} HP</p>
     """, unsafe_allow_html=True)
 
+def trigger_ares_if_needed(scene):
+    if scene and getattr(scene, 'enemy_spawn', None):
+        with st.spinner(f"Ares sta forgiando un nemico {scene.enemy_spawn.upper()}..."):
+            from agents.spawner_agent import spawner_agent
+            theme = st.session_state.world_state.theme
+            ares_prompt = f"Crea un nemico {scene.enemy_spawn.upper()} a tema {theme}"
+            ares_raw = spawner_agent.run(ares_prompt)
+            try:
+                clean_ares = ares_raw.content.replace('```json', '').replace('```', '').strip()
+                import json as _j
+                enemy_data = _j.loads(clean_ares)
+                from contracts.schemas import Enemy
+                new_enemy = Enemy(
+                    name=enemy_data.get("name", "Entità Sconosciuta"),
+                    hp=enemy_data["stats"]["hp"],
+                    max_hp=enemy_data["stats"]["hp"],
+                    ac=enemy_data["stats"]["ca"]
+                )
+                st.session_state.world_state.active_enemies = [new_enemy]
+                scene.enemy_spawn = None # avoid respawning on rerun
+            except Exception as e:
+                st.error(f"Errore nello spawn del nemico: {e}")
+
 # UI TITOLO
 st.title("⚔️ Project Morpheus — Test Sprint 1")
 st.subheader("Integrazione Rules Agent + World State + ChromaDB")
@@ -143,11 +166,14 @@ with col_hp1:
         st.session_state.world_state.party[0].name
     )
 with col_hp2:
-    draw_hp_bar(
-        st.session_state.world_state.active_enemies[0].hp, 
-        st.session_state.world_state.active_enemies[0].max_hp, 
-        st.session_state.world_state.active_enemies[0].name
-    )
+    if st.session_state.world_state.active_enemies:
+        draw_hp_bar(
+            st.session_state.world_state.active_enemies[0].hp, 
+            st.session_state.world_state.active_enemies[0].max_hp, 
+            st.session_state.world_state.active_enemies[0].name
+        )
+    else:
+        st.markdown("<p style='color:#888; font-style:italic;'>Nessun nemico in vista.</p>", unsafe_allow_html=True)
 
 st.divider()
 
@@ -175,6 +201,7 @@ if not st.session_state.last_narrative and st.session_state.current_scene is Non
             dm_data = _json.loads(clean)
             st.session_state.current_scene = StoryScene(**dm_data)
             st.session_state.last_narrative = st.session_state.current_scene.narration
+            trigger_ares_if_needed(st.session_state.current_scene)
         except Exception:
             st.session_state.last_narrative = dm_raw.content
         st.rerun()
@@ -235,6 +262,7 @@ if user_input:
                 dm_data = _json_exp.loads(clean)
                 st.session_state.current_scene = StoryScene(**dm_data)
                 st.session_state.last_narrative = st.session_state.current_scene.narration
+                trigger_ares_if_needed(st.session_state.current_scene)
             except Exception:
                 st.session_state.last_narrative = dm_raw.content
                 st.session_state.current_scene = None
@@ -273,10 +301,37 @@ if user_input:
                 
                 from contracts.schemas import RulesResult
                 result = RulesResult(**data)
+                
+                # --- CASO NON-ATTACCO: hit è null, non serve tiro dado ---
+                # Athena dice che non è un attacco: Apollo narra l'esito direttamente
+                if result.hit is None and not result.needs_clarification:
+                    import json as _json_na
+                    na_context = f"""
+                    AZIONE GIOCATORE: {user_input}
+                    GIOCATORE: {st.session_state.world_state.party[0].name}
+                    SCENA PRECEDENTE: {st.session_state.last_narrative}
+                    NOTA ARBITRO: {result.narrative_hint}
+                    Non c'è stato un attacco. Narra l'esito dell'azione e proponi nuove scelte.
+                    """
+                    with st.spinner("Apollo sta narrando..."):
+                        dm_raw = dm_agent.run(na_context)
+                        try:
+                            clean_na = dm_raw.content.replace('```json', '').replace('```', '').strip()
+                            dm_data = _json_na.loads(clean_na)
+                            st.session_state.current_scene = StoryScene(**dm_data)
+                            st.session_state.last_narrative = st.session_state.current_scene.narration
+                            trigger_ares_if_needed(st.session_state.current_scene)
+                        except Exception:
+                            st.session_state.last_narrative = result.narrative_hint
+                            st.session_state.current_scene = None
+                    st.session_state.world_state.turn_number += 1
+                    st.rerun()
+                    
             except Exception as e:
                 st.error("⚠️ Risposta non standard. Riprova tra poco.")
                 with st.expander("Debug"):
                     st.code(content)
+                    st.code(str(e))
                 st.stop()
         else:
             result = content
@@ -291,6 +346,10 @@ if st.session_state.pending_action:
     
     if res.needs_clarification:
         st.warning(f"🤔 {res.narrative_hint}")
+        st.session_state.pending_action = None
+    elif res.hit is None:
+        # Azione non è un attacco ma è pending: mostra il suggerimento narrativo
+        st.info(f"💬 {res.narrative_hint}")
         st.session_state.pending_action = None
     else:
         st.divider()
@@ -348,6 +407,7 @@ if st.session_state.pending_action:
                     dm_data = _json.loads(clean_dm)
                     st.session_state.current_scene = StoryScene(**dm_data)
                     st.session_state.last_narrative = st.session_state.current_scene.narration
+                    trigger_ares_if_needed(st.session_state.current_scene)
                 except Exception:
                     # Fallback: salviamo il testo grezzo come narrazione
                     st.session_state.current_scene = None

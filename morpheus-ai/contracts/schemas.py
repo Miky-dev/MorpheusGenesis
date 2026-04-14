@@ -14,7 +14,7 @@ class DiceRoll(BaseModel):
 class RulesResult(BaseModel):
     valid: bool = Field(description="True se l'azione è permessa dalle regole")
     roll: Optional[DiceRoll] = Field(default=None, description="Dettagli del tiro, nullo se non ci sono dadi")
-    hit: bool = Field(description="True se l'attacco va a segno (supera la CA)")
+    hit: Optional[bool] = Field(default=None, description="True se l'attacco va a segno (supera la CA), null se non c'è attacco")
     damage: Optional[int] = Field(default=0, description="Ammontare dei danni, usa 0 se l'attacco manca")
     needs_clarification: bool = Field(description="True se l'azione è ambigua (HITL livello intermedio)")
     needs_confirmation: bool = Field(description="True se l'azione è irreversibile/critica (HITL livello critico)")
@@ -58,3 +58,28 @@ class StoryScene(BaseModel):
     allow_free_action: bool = Field(
         description="True se il giocatore ha tempo per esplorare liberamente. False se è una situazione di emergenza in cui deve scegliere in fretta tra le opzioni fornite."
     )
+    enemy_spawn: Optional[str] = Field(
+        default=None,
+        description="Se la scena introduce un NUOVO nemico, scrivi 'base' o 'boss'. Altrimenti null."
+    )
+
+
+#schema per spawn e combattimento nemici
+
+class EntityStats(BaseModel):
+    hp: int = Field(description="Punti vita massimi del nemico")
+    ca: int = Field(description="Classe Armatura per difendersi")
+
+class EntityCombat(BaseModel):
+    weapon_name: str = Field(description="Nome dell'arma impugnata")
+    attack_modifier: int = Field(description="Bonus da sommare al d20 per colpire")
+    damage_dice: str = Field(description="Dado di danno (es. 1d6, 2d8)")
+    damage_bonus: int = Field(description="Danni fissi da sommare al risultato del dado")
+
+class EnemyEntity(BaseModel):
+    name: str = Field(description="Nome dell'entità")
+    enemy_type: str = Field(description="'base' o 'boss'")
+    appearance: str = Field(description="Descrizione fisica visiva")
+    personality: str = Field(description="Tratto caratteriale o stile di combattimento")
+    stats: EntityStats
+    combat: EntityCombat
