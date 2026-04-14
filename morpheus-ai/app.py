@@ -9,8 +9,9 @@ from agents.dm_agent import dm_agent
 from agents.map_agent import map_agent
 from agents.npc_agent import npc_agent
 from agents.spawner_agent import spawner_agent
+from agents.lore_agent import lore_agent
 from knowledge.chroma_store import DungeonMemory
-from contracts.schemas import WorldState, Character, Enemy, StoryScene, WorldMap, LocationPopulation
+from contracts.schemas import WorldState, Character, Enemy, StoryScene, WorldMap, LocationPopulation, StoryBible
 from setup_page import render_setup_page
 
 # Caricamento variabili d'ambiente
@@ -31,24 +32,28 @@ if "world_state" not in st.session_state:
     p1_class = st.session_state.get("setup_p1_class", "Warrior")
     theme = st.session_state.get("setup_theme", "Medievale")
     
+    # --- Generazione Story Bible (La Musa) PRIMA di tutto ---
+    if "story_bible" not in st.session_state:
+        with st.spinner("📖 La Musa sta scrivendo la storia del mondo..."):
+            lore_prompt = f"Tema: {theme}. Crea la Story Bible per questa avventura."
+            lore_res = lore_agent.run(lore_prompt)
+            raw_lore = lore_res.content
+            if isinstance(raw_lore, str):
+                clean_lore = raw_lore.strip().removeprefix("```json").removesuffix("```").strip()
+                st.session_state.story_bible = StoryBible.model_validate_json(clean_lore)
+            else:
+                st.session_state.story_bible = raw_lore
+
     # --- Generazione Mappa (Atlas) ---
     if "world_map" not in st.session_state:
         with st.spinner("Atlas sta disegnando i confini del mondo..."):
-            map_prompt = f"Genera una mappa per un'avventura a tema {theme}."
+            bible = st.session_state.story_bible
+            map_prompt = f"Tema: {theme}. Titolo avventura: {bible.title}. Araldo in posizione: {bible.herald_location_id}. Genera una mappa coerente."
             map_res = map_agent.run(map_prompt)
             
-            # 1. Prendiamo il contenuto grezzo (che ora sappiamo essere una stringa)
             raw_content = map_res.content
-            
-            # 2. Pulizia di sicurezza
             if isinstance(raw_content, str):
-                clean_content = raw_content.strip()
-                if clean_content.startswith("```json"):
-                    clean_content = clean_content[7:]
-                if clean_content.endswith("```"):
-                    clean_content = clean_content[:-3]
-                
-                # 3. Trasformiamo la stringa pulita nell'oggetto Pydantic
+                clean_content = raw_content.strip().removeprefix("```json").removesuffix("```").strip()
                 st.session_state.world_map = WorldMap.model_validate_json(clean_content)
             else:
                 st.session_state.world_map = raw_content
@@ -68,6 +73,14 @@ if "world_state" not in st.session_state:
         active_enemies=[],
         current_location=st.session_state.current_location_id
     )
+    
+    # Sblocco location iniziali: spawn + vicini diretti visibili
+    if st.session_state.world_map:
+        spawn_loc = next((l for l in st.session_state.world_map.locations 
+                          if l.id_name == st.session_state.current_location_id), None)
+        if spawn_loc:
+            initial_known = [spawn_loc.id_name] + spawn_loc.connected_to
+            st.session_state.world_state.known_locations = list(set(initial_known))
 
 if "last_narrative" not in st.session_state:
     st.session_state.last_narrative = ""
@@ -83,6 +96,19 @@ if "pending_action" not in st.session_state:
 
 if "current_user_input" not in st.session_state:
     st.session_state.current_user_input = ""
+
+def unlock_location_knowledge(location_ids: list):
+    """Aggiunge location_ids alla lista delle location conosciute dal giocatore."""
+    current_known = set(st.session_state.world_state.known_locations)
+    current_known.update(location_ids)
+    st.session_state.world_state.known_locations = list(current_known)
+
+def get_known_locations_names() -> str:
+    """Restituisce i nomi delle location conosciute per il prompt di Apollo."""
+    known_ids = st.session_state.world_state.known_locations
+    world_map = st.session_state.world_map
+    names = [l.name for l in world_map.locations if l.id_name in known_ids]
+    return ', '.join(names) if names else "Solo la tua posizione attuale"
 
 # --- UTILITY UI ---
 # Stili CSS per il look Cyberpunk
@@ -183,13 +209,37 @@ def trigger_ares_if_needed(scene):
                 st.error(f"Errore nello spawn del nemico: {e}")
 
 # UI TITOLO
-st.title("⚔️ Project Morpheus — Test Sprint 1")
-st.subheader("Integrazione Rules Agent + World State + ChromaDB")
+bible = st.session_state.get("story_bible", None)
+title_text = bible.title if bible else "Project Morpheus"
+st.title(f"⚔️ {title_text}")
 
-# Sidebar con lo Stato del Mondo (Visualizzazione per debug)
+# Sidebar — Quest Tracker
 with st.sidebar:
-    st.header("🌍 World State")
-    st.json(st.session_state.world_state.model_dump())
+    if bible:
+        st.markdown(f"### 📜 Missione Principale")
+        st.info(f"★ **{bible.main_objective}**")
+        
+        st.markdown("---")
+        st.markdown("### 🗺️ Sub-Missioni")
+        quest_chain = st.session_state.story_bible.quest_chain
+        for sq in quest_chain:
+            if sq.status == "completed":
+                badge = "✅"
+                label_style = "~~"
+            elif sq.status == "active":
+                badge = "⚡"
+                label_style = "**"
+            else:
+                badge = "🔒"
+                label_style = ""
+            st.markdown(f"{badge} {label_style}{sq.title}{label_style}  \n<small style='color:#888;'>{sq.description if sq.status != 'locked' else '???'}</small>", unsafe_allow_html=True)
+        
+        st.markdown("---")
+        with st.expander("📡 Debug World State"):
+            st.json(st.session_state.world_state.model_dump())
+    else:
+        st.header("🌍 World State")
+        st.json(st.session_state.world_state.model_dump())
 
 # 2. Interfaccia di Gioco (Membro B)
 col_hp1, col_hp2 = st.columns(2)
@@ -226,11 +276,23 @@ def ensure_location_population():
         ]
         
         with st.spinner("Ascoltando le voci del luogo..."):
+            bible = st.session_state.get("story_bible", None)
+            bible_context = ""
+            if bible:
+                active_subquests = [sq for sq in bible.quest_chain if sq.status == "active"]
+                bible_context = f"""
+CONTESTO NARRATIVO:
+- Obiettivo finale: {bible.main_objective}
+- NPC chiave: {[n.name + ' (' + n.role + ')' for n in bible.key_npcs]}
+- Missioni attive: {[sq.title for sq in active_subquests]}
+- Araldo della quest: {bible.herald_npc_name} (si trova a: {bible.herald_location_id})
+"""
             hermes_prompt = f"""
             Tema: {st.session_state.world_state.theme}. 
             Luogo: {luogo.name} ({luogo.description}). 
             Livello Pericolo: {luogo.difficulty_level}.
             Luoghi vicini: {', '.join(luoghi_vicini)}.
+            {bible_context}
             """
             popolazione_res = npc_agent.run(hermes_prompt)
             st.session_state.visited_locations[loc_id] = popolazione_res.content
@@ -247,12 +309,15 @@ if not st.session_state.last_narrative and st.session_state.current_scene is Non
         # --- ZONA SICURA (Livello 0) ---
         st.success(f"📍 Sei a {luogo_attuale.name}. È un luogo sicuro.")
         with st.spinner("Apollo sta preparando l'accoglienza..."):
+            bible = st.session_state.get("story_bible", None)
+            quest_hint = f"\nHINT NARRATIVO (non rivelare direttamente): Qualcuno di importante si trova nei dintorni. Un misterioso {bible.herald_npc_name} potrebbe avere informazioni vitali." if bible else ""
             dm_prompt = f"""
             GIOCATORE: {st.session_state.world_state.party[0].name}.
             LOCATION: {luogo_attuale.name} ({luogo_attuale.description}).
             NPC PRESENTI: {[n.name for n in pop.npcs]}.
             DICERIE: {pop.rumors}.
-            È una ZONA SICURA. Narra l'arrivo, presenta gli NPC e offri opzioni di dialogo o riposo.
+            {quest_hint}
+            È una ZONA SICURA. Narra l'arrivo, presenta atmosphere e NPC senza spoilerare la quest. Offri scelte di esplorazione.
             """
             dm_raw = dm_agent.run(dm_prompt)
             try:
@@ -307,26 +372,20 @@ if not st.session_state.last_narrative and st.session_state.current_scene is Non
                 st.session_state.last_narrative = dm_raw.content
     st.rerun()
 
-# 3. Interfaccia Lore e NPC (sempre visibile se ci sono dati)
+# 3. Solo Lore (senza lista NPC — gli NPC si incontrano attraverso la narrazione)
 if st.session_state.current_location_id in st.session_state.visited_locations:
     pop = st.session_state.visited_locations[st.session_state.current_location_id]
-    luogo = next(l for l in st.session_state.world_map.locations if l.id_name == st.session_state.current_location_id)
-    
-    with st.expander("📖 Conoscenza Locale", expanded=False):
-        st.markdown(f"**Lore:** {pop.location_lore}")
-        st.markdown("**Dicerie:**")
-        for r in pop.rumors:
-            st.markdown(f"- *{r}*")
-            
-    if pop.npcs:
-        st.markdown("### 👥 Incontri locali")
-        for npc in pop.npcs:
-            with st.expander(f"{npc.name} - {npc.role}"):
-                st.write(f"**Aspetto:** {npc.appearance}")
-                st.write(f"**Personalità:** {npc.personality}")
-                st.markdown(f"> *\"{npc.first_line}\"*")
+    with st.expander("📖 Lore del Luogo", expanded=False):
+        st.markdown(f"*{pop.location_lore}*")
+        if pop.rumors:
+            st.markdown("**Dicerie sentite in giro:**")
+            for r in pop.rumors:
+                st.markdown(f"- *{r}*")
 
-# 4. Narrativa precedente + UI Dinamica derivata dalla scena
+# Indicatore dialogo attivo
+if st.session_state.world_state.active_npc_name:
+    st.info(f"💬 Stai parlando con **{st.session_state.world_state.active_npc_name}**")
+
 if st.session_state.last_narrative:
     st.markdown(f"""
         <div class="narrative-box">
@@ -367,15 +426,51 @@ if user_input:
     is_combat_action = scene.is_combat if scene else True  # Default: tratta come combattimento
 
     if not is_combat_action:
-        # --- PERCORSO ESPLORAZIONE: direttamente ad Apollo, skip Athena ---
+        # --- PERCORSO ESPLORAZIONE / DIALOGO: direttamente ad Apollo ---
         with st.spinner("Apollo sta narrando..."):
             import json as _json_exp
+            
+            # Recuperiamo il contesto NPC del luogo corrente
+            loc_pop = st.session_state.visited_locations.get(st.session_state.current_location_id, None)
+            npc_context = ""
+            active_npc = st.session_state.world_state.active_npc_name
+            
+            # Gestiamo il caso "Congedarsi da [NPC]"
+            if user_input.lower().startswith("congedarsi"):
+                st.session_state.world_state.active_npc_name = None
+                active_npc = None
+            
+            # Aggiornamento dialogo attivo se il giocatore sceglie "Parlare con [Nome NPC]"
+            elif user_input.lower().startswith("parlare con ") and loc_pop:
+                npc_name_pressed = user_input[len("parlare con "):].strip()
+                match = next((n for n in loc_pop.npcs if n.name.lower() == npc_name_pressed.lower()), None)
+                if match:
+                    st.session_state.world_state.active_npc_name = match.name
+                    active_npc = match.name
+            
+            # Costruiamo il contesto NPC
+            if active_npc and loc_pop:
+                npc_data = next((n for n in loc_pop.npcs if n.name == active_npc), None)
+                if npc_data:
+                    npc_context = f"""
+DIALOGO ATTIVO CON: {npc_data.name}
+RUOLO: {npc_data.role}
+ASPETTO: {npc_data.appearance}
+PERSONALITÀ: {npc_data.personality}
+PRIMA BATTUTA (se prima interazione): {npc_data.first_line}
+"""
+            elif loc_pop and loc_pop.npcs:
+                npc_names = [n.name for n in loc_pop.npcs]
+                npc_context = f"NPC PRESENTI NEL LUOGO (non ancora in dialogo): {npc_names}\n"
+            
             exp_context = f"""
-            AZIONE GIOCATORE: {user_input}
-            GIOCATORE: {st.session_state.world_state.party[0].name}
-            SCENA PRECEDENTE: {st.session_state.last_narrative}
-            Non c'è combattimento. Narra l'esito dell'azione e proponi nuove scelte.
-            """
+AZIONE/RISPOSTA DEL GIOCATORE: {user_input}
+GIOCATORE: {st.session_state.world_state.party[0].name}
+LOCATION ATTUALE: {st.session_state.world_state.current_location}
+LOCATION CONOSCIUTE (il giocatore può raggiungere solo queste): {get_known_locations_names()}
+SCENA PRECEDENTE: {st.session_state.last_narrative}
+{npc_context}
+"""
             dm_raw = dm_agent.run(exp_context)
             try:
                 clean = dm_raw.content.replace('```json', '').replace('```', '').strip()

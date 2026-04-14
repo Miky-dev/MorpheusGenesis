@@ -47,6 +47,9 @@ class WorldState(BaseModel):
     party: List[Character] = Field(default_factory=list, description="Lista dei giocatori (Couch Co-op)")
     active_enemies: List[Enemy] = Field(default_factory=list, description="Nemici attualmente in combattimento")
     turn_number: int = Field(default=1, description="Contatore dei turni della sessione")
+    active_npc_name: Optional[str] = Field(default=None, description="Il nome dell'NPC con cui il giocatore sta dialogando, null se nessuno")
+    known_locations: List[str] = Field(default_factory=list, description="Lista degli id_name delle location che il giocatore conosce (visitato o sentito nominar)")
+
 
 class StoryScene(BaseModel):
     narration: str = Field(description="La narrazione della scena")
@@ -99,6 +102,31 @@ class WorldMap(BaseModel):
     region_name: str = Field(description="Nome dell'intera regione generata")
     locations: List[Location] = Field(description="Lista di tutte le località sulla mappa")
     spawn_location_id: str = Field(description="L'id_name del luogo esatto dove il giocatore si sveglia all'inizio")
+
+# SCHEMA STORY BIBLE
+class SubQuest(BaseModel):
+    id: str = Field(description="ID univoco, es: 'sq_01'")
+    title: str = Field(description="Titolo breve della missione")
+    description: str = Field(description="Cosa deve fare il giocatore (1 frase)")
+    giver_npc: str = Field(description="Nome dell'NPC che assegna questa missione")
+    location_hint: str = Field(description="Dove deve andare il giocatore")
+    status: str = Field(default="locked", description="'locked', 'active', o 'completed'")
+
+class QuestCharacterBrief(BaseModel):
+    name: str = Field(description="Nome del personaggio")
+    role: str = Field(description="Ruolo narrativo (es. 'Villain principale', 'Alleato chiave')")
+    location_hint: str = Field(description="Dove trovarlo nella regione")
+
+class StoryBible(BaseModel):
+    title: str = Field(description="Titolo epico dell'avventura")
+    main_objective: str = Field(description="L'obiettivo finale del giocatore in 1 frase chiara e motivante")
+    backstory: str = Field(description="Contesto narrativo del mondo: cosa è successo, perché è importante (2-3 frasi)")
+    herald_npc_name: str = Field(description="Il nome dell'NPC che rivela la quest principale al giocatore. NON si trova allo spawn.")
+    herald_location_id: str = Field(description="L'id_name della location dove si trova l'araldo")
+    herald_npc_reveal: str = Field(description="La frase esatta e drammatica con cui l'araldo rivela la quest")
+    quest_chain: List[SubQuest] = Field(description="La catena di almeno 10 sub-missioni da completare per arrivare all'obiettivo finale")
+    key_npcs: List[QuestCharacterBrief] = Field(description="Lista degli NPC più importanti della storia con i loro ruoli")
+    key_enemies: List[QuestCharacterBrief] = Field(description="Lista dei nemici/boss più importanti con i loro ruoli")
 
 #SCHEMA GENRAZIONE NPC
 class NPC(BaseModel):
