@@ -43,6 +43,20 @@ Crea una storia intensa e coerente seguendo questi principi:
    - Luogotenente (pericolo medio)
    - Boss Finale (pericolo estremo)
 
+7. OPENING CINEMATIC (opening_cinematic): Un lungo paragrafo narrativo in SECONDA PERSONA (rivolgiti al giocatore come "tu").
+   Deve contenere:
+   a) La LORE del mondo: dove sei, cosa è successo, perché questo posto è pericoloso e oscuro.
+   b) L'OBIETTIVO PRINCIPALE: detto in modo drammatico e urgente, come se fosse una missione impossibile.
+   c) Le REGOLE DEL MONDO (raccontate in-lore, non come un manuale):
+      - Puoi esplorare luoghi, ma solo quelli di cui hai avuto notizia o che hai già visitato.
+      - Nelle zone sicure incontrerai personaggi con cui parlare. Nelle zone pericolose troverai nemici da combattere.
+      - Quando attacchi, il dado decide il destino: un tiro alto colpisce, uno basso manca.
+      - Gli NPC ti daranno missioni e informazioni. Non tutti sono amici.
+   d) COSA PUOI TROVARE nell'avventura: oggetti rari, alleati nascosti, segreti, boss leggendari.
+   e) Un finale d'effetto che lascia il giocatore ansioso di iniziare.
+   
+   LUNGHEZZA MINIMA: 200 parole. STILE: epico, oscuro, cinematografico. NON usare elenchi puntati.
+
 Rispondi ESCLUSIVAMENTE con un JSON valido che rispetta lo schema StoryBible. Nessun testo extra.
 """
 

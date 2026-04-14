@@ -97,6 +97,10 @@ if "pending_action" not in st.session_state:
 if "current_user_input" not in st.session_state:
     st.session_state.current_user_input = ""
 
+if "cinematic_seen" not in st.session_state:
+    st.session_state.cinematic_seen = False
+
+
 def unlock_location_knowledge(location_ids: list):
     """Aggiunge location_ids alla lista delle location conosciute dal giocatore."""
     current_known = set(st.session_state.world_state.known_locations)
@@ -190,7 +194,12 @@ def trigger_ares_if_needed(scene):
         with st.spinner(f"Ares sta forgiando un nemico {scene.enemy_spawn.upper()}..."):
             from agents.spawner_agent import spawner_agent
             theme = st.session_state.world_state.theme
-            ares_prompt = f"Crea un nemico {scene.enemy_spawn.upper()} a tema {theme}"
+            bible = st.session_state.get("story_bible", None)
+            bible_context = ""
+            if bible:
+                bible_context = f"\nCONTESTO MISSIONE: {bible.main_objective}\nNEMICI CHIAVE: {[n.name for n in bible.key_enemies]}"
+            
+            ares_prompt = f"Crea un nemico {scene.enemy_spawn.upper()} a tema {theme}.{bible_context}"
             ares_raw = spawner_agent.run(ares_prompt)
             try:
                 clean_ares = ares_raw.content.replace('```json', '').replace('```', '').strip()
@@ -208,8 +217,51 @@ def trigger_ares_if_needed(scene):
             except Exception as e:
                 st.error(f"Errore nello spawn del nemico: {e}")
 
-# UI TITOLO
+# --- SCHERMATA CINEMATOGRAFICA INIZIALE ---
 bible = st.session_state.get("story_bible", None)
+
+if bible and not st.session_state.cinematic_seen:
+    st.markdown(f"""
+        <div style="
+            background: linear-gradient(180deg, #0a0a0a 0%, #1a0a2e 100%);
+            border: 1px solid #4a1a7a;
+            border-radius: 12px;
+            padding: 40px;
+            margin: 20px 0;
+            box-shadow: 0 0 40px rgba(100, 0, 200, 0.3);
+        ">
+            <h1 style="
+                text-align: center;
+                color: #c084fc;
+                font-family: 'Georgia', serif;
+                font-size: 2.2rem;
+                margin-bottom: 30px;
+                text-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+                letter-spacing: 3px;
+            ">⚔️ {bible.title} ⚔️</h1>
+            <div style="
+                color: #d1d5db;
+                font-size: 1.05rem;
+                line-height: 1.9;
+                font-family: 'Georgia', serif;
+                font-style: italic;
+                text-align: justify;
+                border-left: 3px solid #7c3aed;
+                padding-left: 24px;
+            ">
+                {bible.opening_cinematic}
+            </div>
+        </div>
+    """, unsafe_allow_html=True)
+
+    col_center = st.columns([1, 2, 1])[1]
+    with col_center:
+        if st.button("⚔️ INIZIA L'AVVENTURA", use_container_width=True):
+            st.session_state.cinematic_seen = True
+            st.rerun()
+    st.stop()
+
+# UI TITOLO
 title_text = bible.title if bible else "Project Morpheus"
 st.title(f"⚔️ {title_text}")
 
@@ -220,19 +272,14 @@ with st.sidebar:
         st.info(f"★ **{bible.main_objective}**")
         
         st.markdown("---")
-        st.markdown("### 🗺️ Sub-Missioni")
         quest_chain = st.session_state.story_bible.quest_chain
-        for sq in quest_chain:
-            if sq.status == "completed":
-                badge = "✅"
-                label_style = "~~"
-            elif sq.status == "active":
-                badge = "⚡"
-                label_style = "**"
-            else:
-                badge = "🔒"
-                label_style = ""
-            st.markdown(f"{badge} {label_style}{sq.title}{label_style}  \n<small style='color:#888;'>{sq.description if sq.status != 'locked' else '???'}</small>", unsafe_allow_html=True)
+        active_quests = [sq for sq in quest_chain if sq.status == "active"]
+        
+        if active_quests:
+            for sq in active_quests:
+                st.markdown(f"⚡ **{sq.title}**  \n<small style='color:#888;'>{sq.description}</small>", unsafe_allow_html=True)
+        else:
+            st.write("Nessuna missione attiva al momento.")
         
         st.markdown("---")
         with st.expander("📡 Debug World State"):
@@ -296,6 +343,17 @@ CONTESTO NARRATIVO:
             """
             popolazione_res = npc_agent.run(hermes_prompt)
             st.session_state.visited_locations[loc_id] = popolazione_res.content
+            
+            # UNLOCK AUTOMATICO LOCATION (Fog of War) dai rumors
+            if st.session_state.visited_locations[loc_id].rumors:
+                # Trova ID delle location citate nei rumors (confronto nomi)
+                lower_rumors = " ".join(st.session_state.visited_locations[loc_id].rumors).lower()
+                to_unlock = [
+                    l.id_name for l in st.session_state.world_map.locations 
+                    if l.name.lower() in lower_rumors
+                ]
+                if to_unlock:
+                    unlock_location_knowledge(to_unlock)
 
 # --- SCENA INIZIALE E GESTIONE LORE ---
 if not st.session_state.last_narrative and st.session_state.current_scene is None:
@@ -477,6 +535,21 @@ SCENA PRECEDENTE: {st.session_state.last_narrative}
                 dm_data = _json_exp.loads(clean)
                 st.session_state.current_scene = StoryScene(**dm_data)
                 st.session_state.last_narrative = st.session_state.current_scene.narration
+                
+                # --- LOGICA AGGIORNAMENTO MISSIONI ---
+                scene = st.session_state.current_scene
+                if scene.quest_unlocked_id:
+                    for sq in st.session_state.story_bible.quest_chain:
+                        if sq.id == scene.quest_unlocked_id and sq.status == "locked":
+                            sq.status = "active"
+                            st.toast(f"⚡ Nuova Missione: {sq.title}")
+                
+                if scene.quest_completed_id:
+                    for sq in st.session_state.story_bible.quest_chain:
+                        if sq.id == scene.quest_completed_id and sq.status == "active":
+                            sq.status = "completed"
+                            st.success(f"✅ Missione Completata: {sq.title}")
+
                 trigger_ares_if_needed(st.session_state.current_scene)
             except Exception:
                 st.session_state.last_narrative = dm_raw.content

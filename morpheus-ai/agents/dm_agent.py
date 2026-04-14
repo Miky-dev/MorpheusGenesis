@@ -58,6 +58,9 @@ Se il giocatore vuole andare in una location CONOSCIUTA: procedi normalmente app
 
 REGOLE GENERALI:
 - Quando fai apparire un nuovo nemico, imposta "enemy_spawn" a "base" o "boss". Altrimenti null.
+- GESTIONE MISSIONI:
+  * Quando il giocatore incontra l'NPC che assegna una missione (giver_npc) o scopre l'obiettivo, imposta 'quest_unlocked_id' con l'ID della missione (es. sq_01).
+  * Quando il giocatore risolve il compito descritto nella missione, imposta 'quest_completed_id' con l'ID della missione (es. sq_01).
 - Imposta 'allow_free_action' TRUE durante esplorazione/dialogo, FALSE durante eventi critici (trappole, QTE).
 - Sii CONCISO: la 'narration' è max 2 frasi. Senza fronzoli.
 
@@ -68,7 +71,9 @@ FORMATO RISPOSTA — Rispondi ESCLUSIVAMENTE in JSON, senza testo aggiuntivo:
   "is_combat": false,
   "inventory_found": "nessuno",
   "allow_free_action": true,
-  "enemy_spawn": null
+  "enemy_spawn": null,
+  "quest_unlocked_id": null,
+  "quest_completed_id": null
 }
 """
 

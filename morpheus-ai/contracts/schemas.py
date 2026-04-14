@@ -65,6 +65,11 @@ class StoryScene(BaseModel):
         default=None,
         description="Se la scena introduce un NUOVO nemico, scrivi 'base' o 'boss'. Altrimenti null."
     )
+    
+    # AGGIORNAMENTO MISSIONI
+    quest_unlocked_id: Optional[str] = Field(default=None, description="ID della missione da attivare (sq_XX)")
+    quest_completed_id: Optional[str] = Field(default=None, description="ID della missione completata (sq_XX)")
+
 
 
 #schema per spawn e combattimento nemici
@@ -121,6 +126,7 @@ class StoryBible(BaseModel):
     title: str = Field(description="Titolo epico dell'avventura")
     main_objective: str = Field(description="L'obiettivo finale del giocatore in 1 frase chiara e motivante")
     backstory: str = Field(description="Contesto narrativo del mondo: cosa è successo, perché è importante (2-3 frasi)")
+    opening_cinematic: str = Field(description="Un lungo paragrafo cinematografico (almeno 200 parole) che narra la lore completa, rivela l'obiettivo principale, spiega le regole del mondo (esplorazione, combattimento, NPC, oggetti) e cosa il giocatore può trovare nell'avventura. Deve essere epico, immersivo e in seconda persona.")
     herald_npc_name: str = Field(description="Il nome dell'NPC che rivela la quest principale al giocatore. NON si trova allo spawn.")
     herald_location_id: str = Field(description="L'id_name della location dove si trova l'araldo")
     herald_npc_reveal: str = Field(description="La frase esatta e drammatica con cui l'araldo rivela la quest")
