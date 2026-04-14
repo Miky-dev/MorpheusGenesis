@@ -1,12 +1,16 @@
 import streamlit as st
+import json
 from dotenv import load_dotenv
 import os
 
 # Import dei vostri moduli
 from agents.rules_agent import rules_agent
 from agents.dm_agent import dm_agent
+from agents.map_agent import map_agent
+from agents.npc_agent import npc_agent
+from agents.spawner_agent import spawner_agent
 from knowledge.chroma_store import DungeonMemory
-from contracts.schemas import WorldState, Character, Enemy, StoryScene
+from contracts.schemas import WorldState, Character, Enemy, StoryScene, WorldMap, LocationPopulation
 from setup_page import render_setup_page
 
 # Caricamento variabili d'ambiente
@@ -25,14 +29,44 @@ if "world_state" not in st.session_state:
     # Recuperiamo i dati dalla Setup Page
     p1_name = st.session_state.get("setup_p1_name", "Valerius")
     p1_class = st.session_state.get("setup_p1_class", "Warrior")
+    theme = st.session_state.get("setup_theme", "Medievale")
     
+    # --- Generazione Mappa (Atlas) ---
+    if "world_map" not in st.session_state:
+        with st.spinner("Atlas sta disegnando i confini del mondo..."):
+            map_prompt = f"Genera una mappa per un'avventura a tema {theme}."
+            map_res = map_agent.run(map_prompt)
+            
+            # 1. Prendiamo il contenuto grezzo (che ora sappiamo essere una stringa)
+            raw_content = map_res.content
+            
+            # 2. Pulizia di sicurezza
+            if isinstance(raw_content, str):
+                clean_content = raw_content.strip()
+                if clean_content.startswith("```json"):
+                    clean_content = clean_content[7:]
+                if clean_content.endswith("```"):
+                    clean_content = clean_content[:-3]
+                
+                # 3. Trasformiamo la stringa pulita nell'oggetto Pydantic
+                st.session_state.world_map = WorldMap.model_validate_json(clean_content)
+            else:
+                st.session_state.world_map = raw_content
+
+            st.session_state.current_location_id = st.session_state.world_map.spawn_location_id
+    
+    # Inizializziamo il registro delle location visitate
+    if "visited_locations" not in st.session_state:
+        st.session_state.visited_locations = {}
+
     # Creiamo uno stato iniziale basato sull'input
     hero = Character(name=p1_name, char_class=p1_class, hp=24, max_hp=24)
-    skeleton = Enemy(name="Scheletro", hp=20, max_hp=20, ac=13)
     
     st.session_state.world_state = WorldState(
+        theme=theme,
         party=[hero],
-        active_enemies=[skeleton]
+        active_enemies=[],
+        current_location=st.session_state.current_location_id
     )
 
 if "last_narrative" not in st.session_state:
@@ -177,36 +211,122 @@ with col_hp2:
 
 st.divider()
 
-# --- SCENA INIZIALE: Apollo genera l'ambientazione al primo avvio ---
-if not st.session_state.last_narrative and st.session_state.current_scene is None:
-    world = st.session_state.world_state
-    player = world.party[0]
-    enemy = world.active_enemies[0] if world.active_enemies else None
-    
-    opening_context = f"""
-    INIZIO SESSIONE.
-    TEMA: {world.theme}
-    GIOCATORE: {player.name}, {player.char_class} ({player.hp}/{player.max_hp} HP).
-    SCENA: {world.current_location}.
-    {"NEMICO PRESENTE: " + enemy.name + " (" + str(enemy.hp) + " HP, CA " + str(enemy.ac) + ")." if enemy else "Nessun nemico in vista."}
-    
-    Descrivi l'ambientazione iniziale e dai al giocatore 2-3 scelte per cominciare.
-    """
-    
-    with st.spinner("Apollo sta preparando la scena..."):
-        import json as _json
-        dm_raw = dm_agent.run(opening_context)
-        try:
-            clean = dm_raw.content.replace('```json', '').replace('```', '').strip()
-            dm_data = _json.loads(clean)
-            st.session_state.current_scene = StoryScene(**dm_data)
-            st.session_state.last_narrative = st.session_state.current_scene.narration
-            trigger_ares_if_needed(st.session_state.current_scene)
-        except Exception:
-            st.session_state.last_narrative = dm_raw.content
-        st.rerun()
+# --- LOGICA POPOLAZIONE LOCATION (Hermes) ---
+def ensure_location_population():
+    loc_id = st.session_state.current_location_id
+    if loc_id not in st.session_state.visited_locations:
+        # Recuperiamo i dati del luogo
+        world_map = st.session_state.world_map
+        luogo = next(l for l in world_map.locations if l.id_name == loc_id)
+        
+        # Troviamo i nomi dei luoghi vicini per i rumors
+        luoghi_vicini = [
+            l.name for l in world_map.locations 
+            if l.id_name in luogo.connected_to
+        ]
+        
+        with st.spinner("Ascoltando le voci del luogo..."):
+            hermes_prompt = f"""
+            Tema: {st.session_state.world_state.theme}. 
+            Luogo: {luogo.name} ({luogo.description}). 
+            Livello Pericolo: {luogo.difficulty_level}.
+            Luoghi vicini: {', '.join(luoghi_vicini)}.
+            """
+            popolazione_res = npc_agent.run(hermes_prompt)
+            st.session_state.visited_locations[loc_id] = popolazione_res.content
 
-# 3. Narrativa precedente + UI Dinamica derivata dalla scena
+# --- SCENA INIZIALE E GESTIONE LORE ---
+if not st.session_state.last_narrative and st.session_state.current_scene is None:
+    ensure_location_population()
+    
+    world_map = st.session_state.world_map
+    luogo_attuale = next(l for l in world_map.locations if l.id_name == st.session_state.current_location_id)
+    pop = st.session_state.visited_locations[luogo_attuale.id_name]
+    
+    if luogo_attuale.difficulty_level == 0:
+        # --- ZONA SICURA (Livello 0) ---
+        st.success(f"📍 Sei a {luogo_attuale.name}. È un luogo sicuro.")
+        with st.spinner("Apollo sta preparando l'accoglienza..."):
+            dm_prompt = f"""
+            GIOCATORE: {st.session_state.world_state.party[0].name}.
+            LOCATION: {luogo_attuale.name} ({luogo_attuale.description}).
+            NPC PRESENTI: {[n.name for n in pop.npcs]}.
+            DICERIE: {pop.rumors}.
+            È una ZONA SICURA. Narra l'arrivo, presenta gli NPC e offri opzioni di dialogo o riposo.
+            """
+            dm_raw = dm_agent.run(dm_prompt)
+            try:
+                clean = dm_raw.content.replace('```json', '').replace('```', '').strip()
+                import json as _j
+                dm_data = _j.loads(clean)
+                st.session_state.current_scene = StoryScene(**dm_data)
+                st.session_state.last_narrative = st.session_state.current_scene.narration
+            except Exception:
+                st.session_state.last_narrative = dm_raw.content
+    else:
+        # --- ZONA DI PERICOLO (Livello 1-5) ---
+        st.error(f"⚠️ Attenzione: {luogo_attuale.name} (Livello di Pericolo {luogo_attuale.difficulty_level})")
+        
+        # 1. Chiamiamo Ares per spawnare un nemico
+        if not st.session_state.world_state.active_enemies:
+            with st.spinner(f"Ares sta forgiando una minaccia..."):
+                ares_prompt = f"Genera un nemico per una location di livello {luogo_attuale.difficulty_level} a tema {st.session_state.world_state.theme}."
+                ares_res = spawner_agent.run(ares_prompt)
+                try:
+                    clean_ares = ares_res.content.replace('```json', '').replace('```', '').strip()
+                    import json as _j_ares
+                    enemy_data = _j_ares.loads(clean_ares)
+                    new_enemy = Enemy(
+                        name=enemy_data.get("name", "Minaccia"),
+                        hp=enemy_data["stats"]["hp"],
+                        max_hp=enemy_data["stats"]["hp"],
+                        ac=enemy_data["stats"]["ca"]
+                    )
+                    st.session_state.world_state.active_enemies = [new_enemy]
+                except Exception as e:
+                    st.error(f"Errore spawn: {e}")
+
+        # 2. Chiamiamo Apollo per narrare l'incontro
+        nemico = st.session_state.world_state.active_enemies[0] if st.session_state.world_state.active_enemies else None
+        with st.spinner("Apollo sta descrivendo il pericolo..."):
+            dm_prompt = f"""
+            GIOCATORE: {st.session_state.world_state.party[0].name}.
+            LOCATION: {luogo_attuale.name} ({luogo_attuale.description}).
+            NEMICO: {nemico.name if nemico else 'Sconosciuto'} - {nemico.status if nemico else ''}.
+            NPC PRESENTI: {[n.name for n in pop.npcs]}.
+            È una ZONA DI PERICOLO (Liv {luogo_attuale.difficulty_level}). Narra l'apparizione del nemico e l'atmosfera ostile.
+            """
+            dm_raw = dm_agent.run(dm_prompt)
+            try:
+                clean = dm_raw.content.replace('```json', '').replace('```', '').strip()
+                import json as _j2
+                dm_data = _j2.loads(clean)
+                st.session_state.current_scene = StoryScene(**dm_data)
+                st.session_state.last_narrative = st.session_state.current_scene.narration
+            except Exception:
+                st.session_state.last_narrative = dm_raw.content
+    st.rerun()
+
+# 3. Interfaccia Lore e NPC (sempre visibile se ci sono dati)
+if st.session_state.current_location_id in st.session_state.visited_locations:
+    pop = st.session_state.visited_locations[st.session_state.current_location_id]
+    luogo = next(l for l in st.session_state.world_map.locations if l.id_name == st.session_state.current_location_id)
+    
+    with st.expander("📖 Conoscenza Locale", expanded=False):
+        st.markdown(f"**Lore:** {pop.location_lore}")
+        st.markdown("**Dicerie:**")
+        for r in pop.rumors:
+            st.markdown(f"- *{r}*")
+            
+    if pop.npcs:
+        st.markdown("### 👥 Incontri locali")
+        for npc in pop.npcs:
+            with st.expander(f"{npc.name} - {npc.role}"):
+                st.write(f"**Aspetto:** {npc.appearance}")
+                st.write(f"**Personalità:** {npc.personality}")
+                st.markdown(f"> *\"{npc.first_line}\"*")
+
+# 4. Narrativa precedente + UI Dinamica derivata dalla scena
 if st.session_state.last_narrative:
     st.markdown(f"""
         <div class="narrative-box">

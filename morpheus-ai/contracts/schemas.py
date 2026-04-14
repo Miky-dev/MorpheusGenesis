@@ -83,3 +83,32 @@ class EnemyEntity(BaseModel):
     personality: str = Field(description="Tratto caratteriale o stile di combattimento")
     stats: EntityStats
     combat: EntityCombat
+
+
+#SCHEMA PER LA MAPPA DI GIOCO
+class Location(BaseModel):
+    id_name: str = Field(description="Un ID univoco in minuscolo, es: 'taverna_neon'")
+    name: str = Field(description="Il nome epico o tematico della località")
+    description: str = Field(description="Breve descrizione visiva del luogo")
+    x: int = Field(description="Coordinata X sulla mappa (da 0 a 100)")
+    y: int = Field(description="Coordinata Y sulla mappa (da 0 a 100)")
+    connected_to: List[str] = Field(description="Lista degli id_name dei luoghi raggiungibili da qui")
+    difficulty_level: int = Field(ge=0, le=5, description="0=Sicuro (NPC), 1-5=Pericolo crescente")
+
+class WorldMap(BaseModel):
+    region_name: str = Field(description="Nome dell'intera regione generata")
+    locations: List[Location] = Field(description="Lista di tutte le località sulla mappa")
+    spawn_location_id: str = Field(description="L'id_name del luogo esatto dove il giocatore si sveglia all'inizio")
+
+#SCHEMA GENRAZIONE NPC
+class NPC(BaseModel):
+    name: str = Field(description="Il nome dell'NPC")
+    role: str = Field(description="Il suo ruolo (es. 'Oste', 'Mercante', 'Sopravvissuto ferito')")
+    appearance: str = Field(description="Descrizione visiva (1 frase)")
+    personality: str = Field(description="Come si pone (es. 'Paranoico', 'Accogliente')")
+    first_line: str = Field(description="La primissima frase esatta che dice rivolgendosi al giocatore")
+
+class LocationPopulation(BaseModel):
+    location_lore: str = Field(description="La storia, il segreto o l'atmosfera di questo luogo specifico (1-2 frasi)")
+    npcs: List[NPC] = Field(description="Lista degli NPC presenti in questo luogo")
+    rumors: List[str] = Field(description="2 o 3 dicerie, consigli o avvertimenti sui nemici o sui luoghi vicini")
