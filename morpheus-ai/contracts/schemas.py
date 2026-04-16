@@ -1,5 +1,5 @@
 from pydantic import BaseModel, Field
-from typing import List, Optional, Any
+from typing import List, Optional, Any, Dict
 from dataclasses import dataclass, field
 
 
@@ -59,25 +59,20 @@ class WorldState:
     # Nuovo: Registro per i messaggi di combattimento
     combat_log: list[str] = field(default_factory=list)
 
-class StoryScene(BaseModel):
+    inventory: list[Item] = field(default_factory=list)
+    memory_summary: str = "" # Conterrà il 'summary_snapshot' di Mnemosine
+
+class StoryScene(BaseModel): 
     narration: str = Field(description="La narrazione della scena")
     choices: List[str] = Field(description="Lista di opzioni esplicite")
     is_combat: bool = Field(description="True se c'è un nemico")
-    inventory_found: Optional[str] = Field(default="nessuno", description="Nome dell'oggetto trovato, 'nessuno' o null se non applicabile")
-    
-    # LA NUOVA REGOLA:
     allow_free_action: bool = Field(
-        description="True se il giocatore ha tempo per esplorare liberamente. False se è una situazione di emergenza in cui deve scegliere in fretta tra le opzioni fornite."
+        description="True se il giocatore ha tempo per esplorare. False se è in emergenza."
     )
     enemy_spawn: Optional[str] = Field(
         default=None,
         description="Se la scena introduce un NUOVO nemico, scrivi 'base' o 'boss'. Altrimenti null."
     )
-    
-    # AGGIORNAMENTO MISSIONI
-    quest_unlocked_id: Optional[str] = Field(default=None, description="ID della missione da attivare (sq_XX)")
-    quest_completed_id: Optional[str] = Field(default=None, description="ID della missione completata (sq_XX)")
-
 
 
 #schema per spawn e combattimento nemici
@@ -156,3 +151,45 @@ class LocationPopulation(BaseModel):
     location_lore: str = Field(description="La storia, il segreto o l'atmosfera di questo luogo specifico (1-2 frasi)")
     npcs: List[NPC] = Field(description="Lista degli NPC presenti in questo luogo")
     rumors: List[str] = Field(description="2 o 3 dicerie, consigli o avvertimenti sui nemici o sui luoghi vicini")
+
+
+# ==========================================
+# SCHEMI PER I NUOVI AGENTI SPECIALIZZATI
+# ==========================================
+
+# --- ATLAS (Cartografo) ---
+class NavigationResult(BaseModel):
+    success: bool = Field(description="True se il movimento è valido, False se bloccato")
+    new_location_id: Optional[str] = Field(default=None, description="L'id_name della nuova location se success è True")
+    atlas_comment: str = Field(description="Breve nota tecnica per il DM sul perché il movimento è fallito o cosa si vede")
+    discovered_ids: List[str] = Field(default_factory=list, description="ID di nuovi luoghi citati nei dialoghi o appena scoperti")
+
+# --- CHRONOS (Quest Agent) ---
+class QuestUpdate(BaseModel):
+    completed_id: Optional[str] = Field(default=None, description="ID della missione appena completata")
+    unlocked_id: Optional[str] = Field(default=None, description="ID di una nuova missione sbloccata")
+    logic_reasoning: str = Field(description="Spiegazione logica del perché lo stato è cambiato o rimasto fermo")
+    objective_delta: Optional[str] = Field(default=None, description="Nota per il DM: come è cambiato l'obiettivo a breve termine")
+
+# --- HEPHAESTUS (Loot Agent) ---
+class Item(BaseModel):
+    name: str = Field(description="Nome evocativo dell'oggetto")
+    item_type: str = Field(description="'weapon', 'armor', 'consumable' o 'key_item'")
+    rarity: str = Field(description="'common', 'rare', 'epic', o 'legendary'")
+    description: str = Field(description="Descrizione estetica e sensoriale")
+    attack_bonus: Optional[int] = Field(default=None, description="Bonus all'attacco (se arma)")
+    ac_bonus: Optional[int] = Field(default=None, description="Bonus alla CA (se armatura)")
+    heal_amount: Optional[int] = Field(default=None, description="HP curati (se consumabile)")
+    value: int = Field(default=0, description="Valore in monete o crediti")
+    lore_snippet: str = Field(description="Una riga di storia o curiosità sull'oggetto")
+
+class LootResponse(BaseModel):
+    found_item: Optional[Item] = Field(default=None, description="L'oggetto trovato, nullo se non c'è nulla")
+    rarity_roll: int = Field(description="Valore generato (1-100) che ha determinato la rarità")
+    lore_hint: str = Field(description="Breve suggerimento per il DM su come descrivere il ritrovamento")
+
+# --- MNEMOSINE (Memory Agent) ---
+class MemorySnapshot(BaseModel):
+    summary_snapshot: str = Field(description="Riassunto denso e tecnico dell'intera storia finora (max 5 righe)")
+    npc_dispositions: Dict[str, str] = Field(default_factory=dict, description="Mappa del tipo {Nome NPC: Atteggiamento/Status}")
+    active_flags: List[str] = Field(default_factory=list, description="Eventi o stati persistenti (es. 'villaggio_in_fiamme')")
