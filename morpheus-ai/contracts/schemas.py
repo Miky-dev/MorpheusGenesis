@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import List, Optional, Any
+from dataclasses import dataclass, field
 
 
 # ==========================================
@@ -24,13 +25,19 @@ class RulesResult(BaseModel):
 # ==========================================
 # SCHEMI PER IL WORLD STATE (MEMBRO B)
 # ==========================================
-class Character(BaseModel):
-    """Rappresenta un singolo giocatore nel Couch Co-op"""
+@dataclass
+class Character:
     name: str
     char_class: str
     hp: int
     max_hp: int
-    inventory: List[str] = []
+    ac: int = 12  # Classe Armatura base
+    level: int = 1
+    # Bonus di attacco calcolati in base alla classe
+    @property
+    def attack_bonus(self) -> int:
+        bonuses = {"Warrior": 4, "Mage": 5, "Rogue": 6, "Cleric": 3}
+        return bonuses.get(self.char_class, 2)
 
 class Enemy(BaseModel):
     """Rappresenta un nemico attualmente nella scena"""
@@ -40,16 +47,17 @@ class Enemy(BaseModel):
     ac: int  # Classe Armatura (Armor Class)
     status: str = "alive"
 
-class WorldState(BaseModel):
-    """Stato globale della partita salvato in JSON"""
-    theme: str = Field(default="Medievale", description="Il tema narrativo attuale")
-    current_location: str = Field(default="Sconosciuta", description="Dove si trova attualmente il party")
-    party: List[Character] = Field(default_factory=list, description="Lista dei giocatori (Couch Co-op)")
-    active_enemies: List[Enemy] = Field(default_factory=list, description="Nemici attualmente in combattimento")
-    turn_number: int = Field(default=1, description="Contatore dei turni della sessione")
-    active_npc_name: Optional[str] = Field(default=None, description="Il nome dell'NPC con cui il giocatore sta dialogando, null se nessuno")
-    known_locations: List[str] = Field(default_factory=list, description="Lista degli id_name delle location che il giocatore conosce (visitato o sentito nominar)")
-
+@dataclass
+class WorldState:
+    theme: str
+    party: list[Character]
+    active_enemies: list[Enemy]
+    current_location: str
+    known_locations: list[str] = field(default_factory=list)
+    turn_number: int = 1
+    active_npc_name: Optional[str] = None
+    # Nuovo: Registro per i messaggi di combattimento
+    combat_log: list[str] = field(default_factory=list)
 
 class StoryScene(BaseModel):
     narration: str = Field(description="La narrazione della scena")

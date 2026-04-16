@@ -1,7 +1,5 @@
 import streamlit as st
-from agents.lore_agent import lore_agent
-from agents.map_agent import map_agent
-from contracts.schemas import StoryBible, WorldMap
+
 
 def init_session_state():
     if 'selected_theme' not in st.session_state:
@@ -303,7 +301,15 @@ def render_setup_page():
             </style>
         """, unsafe_allow_html=True)
         
+        
+
         if st.button("INIZIA AVVENTURA ➔", use_container_width=True, disabled=st.session_state.is_loading_game):
+            # --- AGGIUNGI QUESTI SALVATAGGI ---
+            st.session_state.setup_p1_name = st.session_state.get("p1_name", "Valerius")
+            st.session_state.setup_p1_class = st.session_state.get("p1_class", "Warrior")
+            st.session_state.setup_theme = st.session_state.selected_theme
+            # ----------------------------------
+            
             st.session_state.is_loading_game = True
             st.rerun()
 
@@ -321,30 +327,6 @@ def render_setup_page():
                 status_text.markdown("<h3 style='text-align: center; color: #9d66ff; margin-bottom: 20px;'>Morpheus Genesis sta chiamando i suoi agenti...</h3>", unsafe_allow_html=True)
                 
                 theme = st.session_state.selected_theme
-                
-                if "story_bible" not in st.session_state:
-                    status_text.markdown("<h3 style='text-align: center; color: #6b4cff; margin-bottom: 20px;'>Agente La Musa sta componendo la tessitura della Lore...</h3>", unsafe_allow_html=True)
-                    lore_prompt = f"Tema: {theme}. Crea la Story Bible per questa avventura."
-                    lore_res = lore_agent.run(lore_prompt)
-                    raw_lore = lore_res.content
-                    if isinstance(raw_lore, str):
-                        clean_lore = raw_lore.strip().removeprefix("```json").removesuffix("```").strip()
-                        st.session_state.story_bible = StoryBible.model_validate_json(clean_lore)
-                    else:
-                        st.session_state.story_bible = raw_lore
-
-                if "world_map" not in st.session_state:
-                    status_text.markdown("<h3 style='text-align: center; color: #00ff88; margin-bottom: 20px;'>Agente Atlante sta caricando le mappe e la geomorfologia...</h3>", unsafe_allow_html=True)
-                    bible = st.session_state.story_bible
-                    map_prompt = f"Tema: {theme}. Titolo avventura: {bible.title}. Araldo in posizione: {bible.herald_location_id}. Genera una mappa coerente."
-                    map_res = map_agent.run(map_prompt)
-                    raw_content = map_res.content
-                    if isinstance(raw_content, str):
-                        clean_content = raw_content.strip().removeprefix("```json").removesuffix("```").strip()
-                        st.session_state.world_map = WorldMap.model_validate_json(clean_content)
-                    else:
-                        st.session_state.world_map = raw_content
-                    st.session_state.current_location_id = st.session_state.world_map.spawn_location_id
                 
                 status_text.markdown("<h3 style='text-align: center; color: #bbb; margin-bottom: 20px;'>Agente Arbitro sta forgiando le regole dello scontro...</h3>", unsafe_allow_html=True)
                 import time
