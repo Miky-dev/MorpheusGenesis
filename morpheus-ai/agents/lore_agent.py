@@ -15,9 +15,10 @@ Il tuo output sarà la 'Story Bible', il testo sacro su cui si baseranno tutti g
 - NIENTE ELEMENTI GENERICI: Non esistono "taverne normali" o "contadini a caso". Ogni luogo nasconde una cicatrice del passato, ogni NPC ha un'agenda nascosta, un debito o una colpa.
 - RETE DI CAUSA-EFFETTO: Gli elementi devono essere intrecciati. Se l'NPC_A ha perso un manufatto, quell'oggetto si trova nel Luogo_B, sorvegliato dal Nemico_C.
 - SCRITTURA COMPRESSA: Usa uno stile evocativo ma telegrafico. Fornisci "Concept" e "Verità Fondamentali". Apollo (il DM) si occuperà di espanderli in prosa. Tu fornisci la sostanza pura.
+- ECCEZIONE ASSOLUTA (OPENING CINEMATIC): Il campo 'opening_cinematic' NON deve essere compresso. È l'inizio del gioco. Deve essere LUNGO, EPICO, RICCO DI DETTAGLI SENSORIALI. Scrivi almeno 3-4 frasi lunghissime (minimo 200 parole).
 
 === 2. I PILASTRI DEL MONDO ===
-- IL CONFLITTO (The Broken World): Il mondo deve essere in rovina, sotto l'ombra di una minaccia imminente o di un antico peccato. Spiega chiaramente "Perché il giocatore deve agire proprio ora?".
+- IL CONFLITTO (The Broken World): Il mondo deve essere in rovina, sotto una minaccia imminente o di un antico peccato. Spiega chiaramente "Perché il giocatore deve agire proprio ora?".
 - LA LORE (Backstory): Non scrivere millenni di storia. Scrivi l'Evento Catastrofico recente che ha plasmato lo stato attuale delle cose.
 - I LUOGHI (Atlas's Blueprint): Disegna una geografia sensata. Dalla zona sicura (Livello 0) si diramano luoghi sempre più pericolosi (Livello 1-5). Ogni luogo deve avere una "Funzione Narrativa" (es. "Nascondiglio della chiave", "Arena del traditore").
 - GLI NPC (Apollo's Cast): Nessun NPC è lì solo per aiutare il giocatore. Definisci i loro Segreti in modo netto (es. "Segreto: Ha avvelenato il vecchio re").
@@ -44,10 +45,8 @@ def generate_story_bible(
     
     agent = Agent(
         name="Muse",
-        model=Groq(id="llama-3.3-70b-versatile", temperature=0.6), #openai/gpt-oss-120b
-        instructions=MUSE_INSTRUCTIONS,
-        #reasoning_effort="medium",
-        #reasoning=True,
+        model=Groq(id="openai/gpt-oss-120b", temperature=0.8),
+        instructions=MUSE_INSTRUCTIONS
     ) 
     
     # Schema completo con tutti i campi richiesti dal tuo Pydantic
@@ -90,7 +89,9 @@ def generate_story_bible(
         "difficulty": difficulty, "session_id": session_id
     }
     
-    prompt = f"Genera la Story Bible per: {session_name}. Tema: {theme_id}. Usa questo schema: {json.dumps(schema)}"
+    prompt = (f"Genera la Story Bible per: {session_name}. Tema: {theme_id}. "
+        f"Usa questo schema: {json.dumps(schema)}. "
+        f"REGOLA FERREA: Il campo 'opening_cinematic' deve essere un monologo epico e lunghissimo (ALMENO 200 PAROLE REALI), altrimenti la tua generazione verrà rifiutata dal sistema.")
 
     max_retries = 3
     data = None

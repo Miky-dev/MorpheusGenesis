@@ -154,8 +154,9 @@ class StoryBible(BaseModel):
     @classmethod
     def check_word_count(cls, v: str) -> str:
         word_count = len(v.split())
-        if word_count < 200:
-            raise ValueError(f"L'opening_cinematic deve avere almeno 200 parole. Ne ha generate solo {word_count}.")
+        # Alziamo il muro a 120 parole (un paragrafo bello denso)
+        if word_count < 120:
+            raise ValueError(f"L'opening_cinematic deve essere epico e lungo. Ne ha generate solo {word_count}.")
         return v
 
 #SCHEMA GENRAZIONE NPC

@@ -49,5 +49,5 @@ Rispondi ESCLUSIVAMENTE con un file JSON valido che rispetti questa struttura, s
 spawner_agent = Agent(
     name="Spawner",
     model=Groq(id="llama-3.3-70b-versatile", temperature=0.7), 
-    instructions=ARES_INSTRUCTIONS,
+    instructions=ARES_INSTRUCTIONS, 
 )
