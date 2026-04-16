@@ -158,6 +158,20 @@ class StoryBible(BaseModel):
         if word_count < 120:
             raise ValueError(f"L'opening_cinematic deve essere epico e lungo. Ne ha generate solo {word_count}.")
         return v
+        
+    @field_validator('quest_chain')
+    @classmethod
+    def check_quest_count(cls, v):
+        if len(v) < 10:
+            raise ValueError(f"La catena di missioni è troppo corta ({len(v)}). Servono almeno 10 step.")
+        return v
+
+    @field_validator('key_npcs', 'key_enemies')
+    @classmethod
+    def check_lists_not_empty(cls, v):
+        if len(v) == 0:
+            raise ValueError("Le liste dei personaggi o dei nemici non possono essere vuote.")
+        return v
 
 #SCHEMA GENRAZIONE NPC
 class NPC(BaseModel):

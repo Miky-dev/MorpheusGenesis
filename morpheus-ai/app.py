@@ -260,6 +260,13 @@ if "world_state" not in st.session_state:
             
             st.session_state.story_bible = bible
             activate_first_locked_quest_if_none()
+            if "story_bible" not in st.session_state:
+                with st.spinner("La Musa scrive..."):
+                    bible = generate_story_bible(...)
+                    st.session_state.story_bible = bible
+                    # AGGIUNGI QUESTO PER VEDERE TUTTO SUBITO:
+                    with st.expander("🔍 VISUALIZZA SCHELETRO GENERATO"):
+                        st.json(bible.model_dump())
 
     # --- Generazione Mappa (Atlas) ---
     if "world_map" not in st.session_state:
@@ -648,11 +655,19 @@ with st.sidebar:
             st.write("Nessuna missione attiva al momento.")
         
         st.markdown("---")
-        with st.expander("📡 Debug World State"):
+        # Cerca questo blocco nella sidebar di app.py e sostituiscilo:
+        with st.expander("📡 Debug Totale Sistema"):
+            st.markdown("### 🌍 World State")
             st.json(asdict(st.session_state.world_state))
-    else:
-        st.header("🌍 World State")
-        st.json(asdict(st.session_state.world_state))
+    
+            st.markdown("---")
+    
+            st.markdown("### 📖 Story Bible (Lo Scheletro)")
+            if "story_bible" in st.session_state:
+                # Usiamo model_dump() perché StoryBible è un modello Pydantic
+                st.json(st.session_state.story_bible.model_dump())
+            else:
+                st.warning("⚠️ La Story Bible non è stata ancora generata.")
 
 # 2. Interfaccia di Gioco (Membro B)
 col_hp1, col_hp2 = st.columns(2) 

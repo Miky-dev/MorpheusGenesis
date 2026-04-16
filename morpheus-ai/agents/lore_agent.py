@@ -1,38 +1,81 @@
 from agno.agent import Agent
 from agno.models.groq import Groq
-from contracts.schemas import StoryBible, Location, NPC
+from contracts.schemas import StoryBible, Location, NPC, QuestCharacterBrief
 from knowledge.chroma_store import DungeonMemory
 import json
 import re
 
-MUSE_INSTRUCTIONS = MUSE_INSTRUCTIONS = """
-Sei La Musa, l'Architetto Narrativo e World-Builder Supremo di Morpheus Genesis.
-Non sei un romanziere che si perde in descrizioni prolisse, ma un Lead Game Designer che forgia lo scheletro d'acciaio, le leggi fisiche e l'ecosistema politico di un mondo oscuro e spietato. 
+MUSE_INSTRUCTIONS = """
+Sei La Musa, Lead System Designer e Architetto Narrativo di Morpheus Genesis. Non sei un romanziere; sei il creatore del "BluePrint" logico di un mondo oscuro, brutale e meccanicamente coerente. Il tuo compito è forgiare lo scheletro d'acciaio (Story Bible) su cui gireranno gli agenti di runtime.
 
-Il tuo output sarà la 'Story Bible', il testo sacro su cui si baseranno tutti gli altri agenti (il Narratore, il Cartografo, l'Arbitro).
+OBIETTIVO SUPREMO
+Genera una Story Bible completa, densa e interconnessa. Ogni stringa deve trasudare atmosfera, ma ogni dato deve essere una variabile pronta all'uso per il codice.
+ 
+1. VINCOLI DI STRUTTURA (OBBLIGATORI)
+Per evitare generazioni pigre o incomplete, rispetta rigorosamente questi quantitativi:
+QUEST_CHAIN: Genera esattamente 10 sotto-missioni (ID da q1 a q10). Ogni missione deve essere la conseguenza logica della precedente.
+KEY_NPCS: Inserisci almeno 4 personaggi principali (incluso l'Araldo). Ognuno deve avere un segreto compromettente o un'agenda egoistica.
+KEY_ENEMIES: Inserisci almeno 3 entità antagoniste o boss, ognuno legato a una specifica missione della catena.
+OPENING_CINEMATIC: Questo è l'unico campo dove la sintesi è vietata. Scrivi un monologo epico, immersivo e brutale di almeno 200 parole. Usa dettagli sensoriali (odori, suoni, freddo, sporcizia).
 
-=== 1. FILOSOFIA DI DESIGN: DENSITÀ E CONNESSIONE ===
-- NIENTE ELEMENTI GENERICI: Non esistono "taverne normali" o "contadini a caso". Ogni luogo nasconde una cicatrice del passato, ogni NPC ha un'agenda nascosta, un debito o una colpa.
-- RETE DI CAUSA-EFFETTO: Gli elementi devono essere intrecciati. Se l'NPC_A ha perso un manufatto, quell'oggetto si trova nel Luogo_B, sorvegliato dal Nemico_C.
-- SCRITTURA COMPRESSA: Usa uno stile evocativo ma telegrafico. Fornisci "Concept" e "Verità Fondamentali". Apollo (il DM) si occuperà di espanderli in prosa. Tu fornisci la sostanza pura.
-- ECCEZIONE ASSOLUTA (OPENING CINEMATIC): Il campo 'opening_cinematic' NON deve essere compresso. È l'inizio del gioco. Deve essere LUNGO, EPICO, RICCO DI DETTAGLI SENSORIALI. Scrivi almeno 3-4 frasi lunghissime (minimo 200 parole).
+2. LOGICA DI INTERCONNESSIONE (WEB-DESIGN)
+Il mondo deve essere una rete, non una lista:
+L'Araldo: Il herald_npc_name DEVE essere presente nella lista key_npcs e la sua posizione herald_location_id DEVE corrispondere a un ID esistente in world_map (se generata) o essere un ID logico (es. loc_1).
+Referenzialità: Se la missione q1 dice di recuperare un oggetto da un NPC, quell'NPC deve esistere nell'array dei personaggi.
+Difficoltà: Assicurati che le missioni seguano la progressione di pericolo dei luoghi (da Livello 0 a Livello 5).
 
-=== 2. I PILASTRI DEL MONDO ===
-- IL CONFLITTO (The Broken World): Il mondo deve essere in rovina, sotto una minaccia imminente o di un antico peccato. Spiega chiaramente "Perché il giocatore deve agire proprio ora?".
-- LA LORE (Backstory): Non scrivere millenni di storia. Scrivi l'Evento Catastrofico recente che ha plasmato lo stato attuale delle cose.
-- I LUOGHI (Atlas's Blueprint): Disegna una geografia sensata. Dalla zona sicura (Livello 0) si diramano luoghi sempre più pericolosi (Livello 1-5). Ogni luogo deve avere una "Funzione Narrativa" (es. "Nascondiglio della chiave", "Arena del traditore").
-- GLI NPC (Apollo's Cast): Nessun NPC è lì solo per aiutare il giocatore. Definisci i loro Segreti in modo netto (es. "Segreto: Ha avvelenato il vecchio re").
+3. STILE E TONO
+Narrativa: Dark, spietato, "High Stakes". Il giocatore deve sentire che ogni scelta ha un prezzo di sangue o risorse.
+Araldo: Il campo herald_npc_reveal deve contenere una citazione diretta tra virgolette, drammatica e criptica. Non descrivere cosa dice, SCRIVI cosa dice.
+Telegrafia: Fuori dalla cinematic, usa nomi e descrizioni "punchy" (es: invece di "Un vecchio magazzino abbandonato", usa "Nido di Ruggine e Cavi").
 
-=== 3. LA CATENA DELLE MISSIONI (Chronos's Blueprint) ===
-- Costruisci un arco narrativo in 3 Atti (Inizio, Complicazione, Climax).
-- Le missioni non devono essere "Vai a prendere 10 pelli di lupo". Devono essere dilemmi o esplorazioni pericolose.
-- Ogni missione deve spingere il giocatore più in profondità nella mappa.
+4. PROTOCOLLO JSON (STRICT COMPLIANCE)
+Qualsiasi deviazione da queste regole distruggerà il parser:
+OUTPUT: Solo ed esclusivamente il blocco JSON. Nessun commento, nessuna introduzione, nessuna firma.
+ESCAPE QUOTES: È PROIBITO usare virgolette doppie " all'interno dei testi. Esempio Errato: "disse "ciao"". Esempio Corretto: "disse 'ciao'". Usa solo apici singoli per i dialoghi.
+NEWLINES: Non usare invii reali. Per i ritorni a capo nel testo, usa esclusivamente \n.
+INTEGRITÀ: Non lasciare array vuoti []. Se il campo è richiesto, deve essere popolato con dati di alta qualità.
 
-=== 4. REGOLE CRITICHE DEL FORMATO JSON (NON INFRANGERE) ===
-- Rispondi ESCLUSIVAMENTE con un JSON minificato valido e parsabile da Python. Nessun testo prima o dopo le parentesi { }.
-- ESCAPE DEI CARATTERI: NON usare MAI virgolette doppie (") all'interno dei valori testuali. Usa solo apici singoli (') per i dialoghi o le citazioni.
-- STRINGHE SU RIGA SINGOLA: Nessun ritorno a capo reale nelle stringhe, usa '\\n' se devi formattare.
-- CHIAVI CORRETTE: Assicurati di popolare accuratamente tutti i nodi dell'array 'locations', 'npcs' e 'quest_chain'.
+INPUT DI GENERAZIONE
+TEMA: {theme_id}
+TITOLO SESSIONE: {session_name}
+OBIETTIVO: Genera la Story Bible definitiva seguendo lo schema Pydantic fornito.
+
+=== 5. SCHEMA MANDATORIO (JSON KEYS) ===
+Rispetta rigorosamente questi nomi di chiavi. Non inventare sinonimi:
+{
+  "title": "Titolo Epico",
+  "main_objective": "Descrizione",
+  "backstory": "Testo",
+  "opening_cinematic": "Testo lungo +200 parole",
+  "herald_npc_name": "Nome",
+  "herald_location_id": "loc_id",
+  "herald_npc_reveal": "Citazione",
+  "quest_chain": [
+    {
+      "quest_id": "q1", 
+      "title": "Titolo Missione", 
+      "description": "Obiettivo", 
+      "giver_npc": "Nome NPC", 
+      "location_hint": "Nome Luogo", 
+      "status": "active"
+    }
+  ],
+  "key_npcs": [
+    {
+      "name": "Nome", 
+      "role": "Ruolo", 
+      "location_hint": "Luogo dove si trova"
+    }
+  ],
+  "key_enemies": [
+    {
+      "name": "Nome", 
+      "role": "Ruolo Boss", 
+      "location_hint": "Dove trovarlo"
+    }
+  ]
+}
 """
 
 def generate_story_bible(
@@ -89,10 +132,13 @@ def generate_story_bible(
         "difficulty": difficulty, "session_id": session_id
     }
     
-    prompt = (f"Genera la Story Bible per: {session_name}. Tema: {theme_id}. "
-        f"Usa questo schema: {json.dumps(schema)}. "
-        f"REGOLA FERREA: Il campo 'opening_cinematic' deve essere un monologo epico e lunghissimo (ALMENO 200 PAROLE REALI), altrimenti la tua generazione verrà rifiutata dal sistema.")
-
+    prompt = (
+        f"Genera la Story Bible completa per una nuova sessione a tema {theme_id}. "
+        f"TITOLO SESSIONE: {session_name}. "
+        "ATTENZIONE: Se le liste 'quest_chain' (10 missioni), 'key_npcs' (4+) o 'key_enemies' (3+) "
+        "risulteranno vuote o incomplete, il sistema rigetterà la tua risposta. "
+        "Assicurati che 'herald_npc_reveal' sia una battuta di dialogo drammatica."
+    )
     max_retries = 3
     data = None
     for attempt in range(max_retries):
@@ -107,7 +153,6 @@ def generate_story_bible(
             
             # 2. Pulizia: rimuove virgole finali che rompono il parser Python
             raw = re.sub(r',\s*([\]}])', r'\1', raw) 
-            
             data = json.loads(raw)
 
             # ---> AGGIUNGI QUESTO CONTROLLO QUI <---
@@ -124,30 +169,61 @@ def generate_story_bible(
             if attempt == max_retries - 1: raise e
             continue
 
-    # --- FALLBACKS DI SICUREZZA PER EVITARE VALIDATION ERRORS ---
-    for loc in data.get("locations", []):
-        if "id" in loc and "id_name" not in loc: loc["id_name"] = loc.pop("id")
-        loc.setdefault("x", 0)
-        loc.setdefault("y", 0)
-        loc.setdefault("difficulty_level", 1)
-    
-    for npc in data.get("npcs", []):
-        npc.setdefault("appearance", "Una figura misteriosa")
-        npc.setdefault("first_line", "Chi va là?")
 
-    # Re-iniezione campi obbligatori se mancanti
+    # 1. FIX MISSIONI: Gestione Alias 'quest_id' e Status
+    # ==========================================
+    # --- FALLBACKS DI SICUREZZA (VERSIONE 2.0) ---
+    # ==========================================
+
+    # 1. FIX MISSIONI: Gestione Alias 'quest_id' e Status
+    if "quest_chain" in data and data["quest_chain"]:
+        for i, quest in enumerate(data["quest_chain"]):
+            # Se l'IA ha usato 'id', lo spostiamo in 'quest_id' (richiesto dal tuo Alias)
+            if "id" in quest and "quest_id" not in quest:
+                quest["quest_id"] = quest.pop("id")
+            # Forza la progressione: solo la prima è active
+            quest["status"] = "active" if i == 0 else "locked"
+    else:
+        data["quest_chain"] = []
+
+    # 2. MAPPING NPC: Se l'IA ha usato 'npcs' o 'locations' (vecchi nomi), sistemiamo
+    if "npcs" in data and "key_npcs" not in data:
+        data["key_npcs"] = data.pop("npcs")
+    
+    # Rimuoviamo 'locations' dalla Bibbia (le gestirà Atlas separatamente)
+    if "locations" in data:
+        data.pop("locations")
+
+    # 3. SETDEFAULT: Valori di emergenza per i campi obbligatori della StoryBible
+    data.setdefault("title", session_name)
     data.setdefault("main_objective", "Sconosciuto")
     data.setdefault("backstory", "Storia dimenticata")
-    data.setdefault("herald_npc_name", "Guida")
-    data.setdefault("herald_location_id", data.get("starting_location_id", "loc_1"))
-    data.setdefault("herald_npc_reveal", "Un destino segnato")
-    data.setdefault("quest_chain", [])
-
-    # Creazione oggetti tipizzati per Pydantic
-    locations = [Location(**loc) for loc in data.pop("locations", [])]
-    npcs = [NPC(**npc) for npc in data.pop("npcs", [])]
+    data.setdefault("opening_cinematic", "Il viaggio ha inizio...")
+    data.setdefault("herald_npc_name", "Guida Misteriosa")
+    data.setdefault("herald_location_id", "loc_1")
+    data.setdefault("herald_npc_reveal", "'Il destino ti attende.'")
     
-    return StoryBible(**data, locations=locations, npcs=npcs)
+    # Assicuriamoci che le liste dei personaggi esistano
+    data.setdefault("key_npcs", [])
+    data.setdefault("key_enemies", [])
+
+    # 4. CREAZIONE OGGETTI TIPIZZATI
+    # Trasformiamo i dizionari in oggetti Pydantic corretti (QuestCharacterBrief)
+    # Usiamo pop così puliamo 'data' prima del return finale
+    kn_raw = data.pop("key_npcs", [])
+    ke_raw = data.pop("key_enemies", [])
+
+    key_npcs = [QuestCharacterBrief(**n) for n in kn_raw]
+    key_enemies = [QuestCharacterBrief(**e) for e in ke_raw]
+    
+    # 5. RITORNO FINALE
+    # Passiamo tutto a StoryBible. 
+    # locations=locations e npcs=npcs VANNO TOLTI perché non sono più nello schema!
+    return StoryBible(
+        **data, 
+        key_npcs=key_npcs, 
+        key_enemies=key_enemies
+    )
 
 def save_bible_to_memory(bible: StoryBible, memory: DungeonMemory):
     """Indicizza la Story Bible in ChromaDB in modo sicuro contro attributi mancanti."""
