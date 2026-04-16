@@ -31,7 +31,7 @@ Rispondi ESCLUSIVAMENTE con un file JSON valido che rispetti la struttura richie
 
 npc_agent = Agent(
     name="Hermes",
-    model=Groq(id="openai/gpt-oss-120b", temperature=0.7), 
+    model=Groq(id="llama-3.3-70b-versatile", temperature=0.7), 
     instructions=HERMES_INSTRUCTIONS,
     output_schema=LocationPopulation,
 )

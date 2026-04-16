@@ -26,7 +26,7 @@ def generate_story_bible(
     
     agent = Agent(
         name="Muse",
-        model=Groq(id="openai/gpt-oss-120b", temperature=0.6),
+        model=Groq(id="llama-3.3-70b-versatile", temperature=0.6),
         instructions=MUSE_INSTRUCTIONS,
     )
     
