@@ -134,6 +134,7 @@ class StoryBible(BaseModel):
     quest_chain: List[SubQuest] = Field(description="La catena di almeno 10 sub-missioni da completare per arrivare all'obiettivo finale")
     key_npcs: List[QuestCharacterBrief] = Field(default_factory=list, description="Lista degli NPC più importanti della storia con i loro ruoli")
     key_enemies: List[QuestCharacterBrief] = Field(default_factory=list, description="Lista dei nemici/boss più importanti con i loro ruoli")
+    
 
 #SCHEMA GENRAZIONE NPC
 class NPC(BaseModel):
