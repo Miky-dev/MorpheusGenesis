@@ -26,9 +26,11 @@ def generate_story_bible(
     
     agent = Agent(
         name="Muse",
-        model=Groq(id="llama-3.3-70b-versatile", temperature=0.6),
+        model=Groq(id="llama-3.3-70b-versatile", temperature=0.6), #openai/gpt-oss-120b
         instructions=MUSE_INSTRUCTIONS,
-    )
+        #reasoning_effort="medium",
+        reasoning=True,
+    ) 
     
     # Schema completo con tutti i campi richiesti dal tuo Pydantic
     schema = {

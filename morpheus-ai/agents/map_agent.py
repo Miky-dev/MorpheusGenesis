@@ -23,6 +23,6 @@ Rispondi ESCLUSIVAMENTE con un JSON valido che rispetta lo schema WorldMap.
 
 map_agent = Agent(
     name="Atlas",
-    model=Groq(id="llama-3.3-70b-versatile", temperature=0.7), 
+    model=Groq(id="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0.7), 
     output_schema=WorldMap,
 )

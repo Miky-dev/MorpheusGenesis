@@ -50,7 +50,7 @@ from agno.models.groq import Groq
 
 rules_agent = Agent(
     name="Rules",
-    model=Groq(id="llama-3.3-70b-versatile", temperature=0.7),
+    model=Groq(id="openai/gpt-oss-safeguard-20b"),
     instructions=MEDIEVAL_RULES,
     #output_schema=RulesResult,
 )
