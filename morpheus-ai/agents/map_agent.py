@@ -1,38 +1,55 @@
 from agno.agent import Agent
 from agno.models.groq import Groq
-from contracts.schemas import WorldMap
+from contracts.schemas import WorldMap, NavigationResult
 
-ATLAS_INSTRUCTIONS = """
-Sei Atlas, l'Agente Cartografo e Navigatore di Morpheus Genesis. 
-Il tuo compito è duplice: generare la mappa e gestire ogni spostamento del giocatore.
+# ==========================================
+# 1. ATLAS IL CREATORE (Usato solo 1 volta all'inizio)
+# ==========================================
+ATLAS_GENERATOR_INSTRUCTIONS = """
+Sei Atlas, l'Agente Cartografo di Morpheus Genesis.
+Il tuo compito è generare la geografia iniziale della regione giocabile.
 
-=== 1. GESTIONE NAVIGAZIONE (RUNTIME) ===
-Quando il giocatore tenta di muoversi:
-- CONTROLLO CONNESSIONE: Verifica nel WorldMap se la 'location_attuale' è collegata (connected_to) alla 'destinazione_richiesta'.
-- NEBBIA DI GUERRA: Un giocatore può spostarsi in un luogo solo se è presente nella lista "Known_Locations". 
-- SCOPERTA: Se il DM (Apollo) o un NPC menzionano un nuovo luogo nel loro dialogo, il tuo compito è intercettarlo e aggiungerlo alle "Known_Locations".
+REGOLE DI CREAZIONE DELLA MAPPA:
+1. Genera esattamente tra le 5 e le 7 località (Locations).
+2. Spazio 2D: Usa coordinate X e Y da 0 a 100.
+3. Connessioni Logiche: Compila 'connected_to' inserendo gli ID delle località vicine. 
+4. Coerenza Tematica: Adatta i nomi al Tema scelto.
+5. Scegli uno 'spawn_location_id' coerente con l'inizio di un'avventura.
+6. PROGRESSIONE: Assegna un 'difficulty_level' (0-5). Lo spawn è livello 0, i vicini 1, e così via a salire.
 
-=== 2. REGOLE DI VALIDAZIONE ===
-- Se il movimento è VALIDO: Aggiorna la posizione e conferma lo spostamento.
-- Se il movimento è INVALIDO (luogo non collegato): Blocca il giocatore e spiega brevemente il perché (es. "Non c'è un sentiero diretto tra le paludi e la cittadella").
-- Se il luogo è SCONOSCIUTO: Impedisci l'accesso finché un NPC o un'esplorazione non lo rivelano.
-
-=== 3. GENERAZIONE (FASE INIZIALE) ===
-(Mantieni le tue regole precedenti: 5-7 località, coordinate X/Y 0-100, livelli difficoltà 0-5 basati sulla distanza dallo spawn).
-
-=== FORMATO RISPOSTA (JSON STRICT) ===
-Rispondi sempre con questo schema per la navigazione:
-{
-  "movement_successful": boolean,
-  "new_location_id": "string o null",
-  "discovered_locations": ["id_1", "id_2"],
-  "atlas_comment": "string (breve nota tecnica sulla geografia o sul perché il movimento è fallito)",
-  "distance_travelled": int (distanza calcolata tra coordinate X/Y)
-}
+Rispondi ESCLUSIVAMENTE con un JSON valido che rispetta lo schema WorldMap. Nessun commento extra.
 """
 
-map_agent = Agent(
-    name="Atlas",
-    model=Groq(id="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0.7), 
+map_generator_agent = Agent(
+    name="Atlas_Generator",
+    model=Groq(id="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0.5), # Temp leggermente più alta per inventare nomi
+    instructions=ATLAS_GENERATOR_INSTRUCTIONS,
+    output_schema=WorldMap,
+)
+
+# ==========================================
+# 2. ATLAS IL NAVIGATORE (Usato ad ogni turno)
+# ==========================================
+ATLAS_RUNTIME_INSTRUCTIONS = """
+Sei Atlas, l'Agente Navigatore di Morpheus Genesis.
+Il tuo compito NON è narrare, ma fare da arbitro spaziale: decidi se il giocatore può muoversi o meno.
+
+RICEVERAI IN INPUT: Azione del giocatore, Posizione attuale, Location conosciute.
+
+=== 1. REGOLE DI VALIDAZIONE ===
+- CONTROLLO CONNESSIONE: Movimento permesso SOLO verso luoghi connessi a quello attuale.
+- NEBBIA DI GUERRA: Se il luogo è connesso ma NON è tra le 'Known Locations', il movimento fallisce.
+- MOVIMENTO FITTIZIO: Se l'azione NON implica spostamento (es. "Attacco", "Parlo", "Esploro la stanza"), imposta success=True e new_location_id=null.
+
+=== 2. SCOPERTA LUOGHI ===
+- Se viene menzionato esplicitamente un nuovo luogo nei dialoghi, inserisci il suo ID in 'discovered_ids'.
+
+Rispondi ESCLUSIVAMENTE con un JSON valido per NavigationResult.
+"""
+
+map_navigator_agent = Agent(
+    name="Atlas_Navigator",
+    model=Groq(id="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0.1), # Analitico e freddo
+    instructions=ATLAS_RUNTIME_INSTRUCTIONS,
     output_schema=WorldMap,
 )

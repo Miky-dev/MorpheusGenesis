@@ -1,6 +1,19 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional, Any, Dict
 from dataclasses import dataclass, field
+
+
+class Item(BaseModel):
+    name: str = Field(description="Nome evocativo dell'oggetto")
+    item_type: str = Field(description="'weapon', 'armor', 'consumable' o 'key_item'")
+    rarity: str = Field(description="'common', 'rare', 'epic', o 'legendary'")
+    description: str = Field(description="Descrizione estetica e sensoriale")
+    attack_bonus: Optional[int] = Field(default=None, description="Bonus all'attacco (se arma)")
+    ac_bonus: Optional[int] = Field(default=None, description="Bonus alla CA (se armatura)")
+    heal_amount: Optional[int] = Field(default=None, description="HP curati (se consumabile)")
+    value: int = Field(default=0, description="Valore in monete o crediti")
+    lore_snippet: str = Field(description="Una riga di storia o curiosità sull'oggetto")
+
 
 
 # ==========================================
@@ -50,8 +63,8 @@ class Enemy(BaseModel):
 @dataclass
 class WorldState:
     theme: str
-    party: list[Character]
-    active_enemies: list[Enemy]
+    party: list['Character']
+    active_enemies: list['Enemy']
     current_location: str
     known_locations: list[str] = field(default_factory=list)
     turn_number: int = 1
@@ -137,7 +150,13 @@ class StoryBible(BaseModel):
     quest_chain: List[SubQuest] = Field(description="La catena di almeno 10 sub-missioni da completare per arrivare all'obiettivo finale")
     key_npcs: List[QuestCharacterBrief] = Field(default_factory=list, description="Lista degli NPC più importanti della storia con i loro ruoli")
     key_enemies: List[QuestCharacterBrief] = Field(default_factory=list, description="Lista dei nemici/boss più importanti con i loro ruoli")
-    
+    @field_validator('opening_cinematic')
+    @classmethod
+    def check_word_count(cls, v: str) -> str:
+        word_count = len(v.split())
+        if word_count < 200:
+            raise ValueError(f"L'opening_cinematic deve avere almeno 200 parole. Ne ha generate solo {word_count}.")
+        return v
 
 #SCHEMA GENRAZIONE NPC
 class NPC(BaseModel):
@@ -172,22 +191,11 @@ class QuestUpdate(BaseModel):
     objective_delta: Optional[str] = Field(default=None, description="Nota per il DM: come è cambiato l'obiettivo a breve termine")
 
 # --- HEPHAESTUS (Loot Agent) ---
-class Item(BaseModel):
-    name: str = Field(description="Nome evocativo dell'oggetto")
-    item_type: str = Field(description="'weapon', 'armor', 'consumable' o 'key_item'")
-    rarity: str = Field(description="'common', 'rare', 'epic', o 'legendary'")
-    description: str = Field(description="Descrizione estetica e sensoriale")
-    attack_bonus: Optional[int] = Field(default=None, description="Bonus all'attacco (se arma)")
-    ac_bonus: Optional[int] = Field(default=None, description="Bonus alla CA (se armatura)")
-    heal_amount: Optional[int] = Field(default=None, description="HP curati (se consumabile)")
-    value: int = Field(default=0, description="Valore in monete o crediti")
-    lore_snippet: str = Field(description="Una riga di storia o curiosità sull'oggetto")
 
 class LootResponse(BaseModel):
     found_item: Optional[Item] = Field(default=None, description="L'oggetto trovato, nullo se non c'è nulla")
     rarity_roll: int = Field(description="Valore generato (1-100) che ha determinato la rarità")
     lore_hint: str = Field(description="Breve suggerimento per il DM su come descrivere il ritrovamento")
-
 # --- MNEMOSINE (Memory Agent) ---
 class MemorySnapshot(BaseModel):
     summary_snapshot: str = Field(description="Riassunto denso e tecnico dell'intera storia finora (max 5 righe)")

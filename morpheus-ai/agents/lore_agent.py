@@ -47,7 +47,7 @@ def generate_story_bible(
         model=Groq(id="llama-3.3-70b-versatile", temperature=0.6), #openai/gpt-oss-120b
         instructions=MUSE_INSTRUCTIONS,
         #reasoning_effort="medium",
-        reasoning=True,
+        #reasoning=True,
     ) 
     
     # Schema completo con tutti i campi richiesti dal tuo Pydantic
@@ -108,7 +108,17 @@ def generate_story_bible(
             raw = re.sub(r',\s*([\]}])', r'\1', raw) 
             
             data = json.loads(raw)
-            break
+
+            # ---> AGGIUNGI QUESTO CONTROLLO QUI <---
+            if "error" in data:
+                error_msg = data["error"].get("message", "Errore API sconosciuto")
+                print(f"⚠️ Errore API intercettato (Tentativo {attempt+1}): {error_msg}")
+                if attempt == max_retries - 1:
+                    raise ValueError(f"API Groq bloccata: {error_msg}")
+                continue # Riprova
+
+            break # Se arriva qui, il JSON è buono!
+            
         except Exception as e:
             if attempt == max_retries - 1: raise e
             continue
