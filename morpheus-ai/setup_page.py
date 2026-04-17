@@ -1,15 +1,15 @@
 import streamlit as st
-
+import time
 
 def init_session_state():
     if 'selected_theme' not in st.session_state:
-        st.session_state.selected_theme = "🦾 Cyberpunk"
+        st.session_state.selected_theme = "Cyberpunk"
     if 'num_players' not in st.session_state:
         st.session_state.num_players = 2
     if 'campaign_name' not in st.session_state:
         st.session_state.campaign_name = ""
     if 'difficulty' not in st.session_state:
-        st.session_state.difficulty = "Normale"
+        st.session_state.difficulty = "Normal"
     if 'narrative_style' not in st.session_state:
         st.session_state.narrative_style = "Oscuro"
     if 'is_loading_game' not in st.session_state:
@@ -18,343 +18,338 @@ def init_session_state():
 def render_setup_page():
     init_session_state()
 
-    # --- 1. CSS CUSTOM ---
+    # --- 1. GLOBAL UI TWEAKS (CSS INJECTION) ---
     st.markdown("""
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+        
         <style>
-        /* Sfondo Base */
+        /* Base Reset & Fonts */
         .stApp {
-            background-color: #0a0a0a;
-            background-image: 
-                linear-gradient(to right, #141414 1px, transparent 1px),
-                linear-gradient(to bottom, #141414 1px, transparent 1px);
-            background-size: 30px 30px;
-            color: #f0f0f0;
+            background-color: #131313;
+            color: #e5e2e1;
+            font-family: 'Inter', sans-serif;
         }
+        
+        h1, h2, h3, h4, h5, h6 { font-family: 'Manrope', sans-serif !important; }
+        
+        /* Top Navigation Mockup */
+        .top-nav {
+            background-color: #0a0a0a;
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            padding: 0 2rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+            z-index: 100;
+        }
+        
 
         .block-container {
-            padding-top: 2rem !important;
-            max-width: 95% !important; /* Sfrutta più larghezza possibile */
+            padding-top: 5rem !important;
+            max-width: 90% !important;
         }
 
-        .main-title {
-            font-size: clamp(2rem, 4vw, 3.5rem);
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 0.2rem;
-            line-height: 1.1;
-        }
-        .purple-text {
-            color: #9d66ff;
-            text-shadow: 0 0 15px rgba(157, 102, 255, 0.4);
-        }
-
-        .status-box {
-            background: rgba(20, 20, 25, 0.9);
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 15px;
-            border-left: 4px solid #00ff88;
-            height: 100%;
+        /* Abstract Accent */
+        .abstract-bg {
+            position: absolute;
+            top: 0; right: 0;
+            width: 50vw; height: 100vh;
+            background: linear-gradient(to bottom left, #1c1b1b, transparent);
+            opacity: 0.5;
+            border-bottom-left-radius: 100%;
+            pointer-events: none;
+            z-index: 0;
         }
 
-        /* ---------------------------------------------------
-           CARD DEI TEMI: Altezze fisse e wrap naturale
-           --------------------------------------------------- */
+        /* Typography Override */
+        .header-subtitle { color: #81d6be; letter-spacing: 0.1em; font-size: 0.875rem; text-transform: uppercase; font-weight: 500;}
+        .header-title { font-family: 'Manrope', sans-serif; font-size: clamp(2.5rem, 4vw, 3.75rem); font-weight: 700; line-height: 1.1; margin-bottom: 1rem;}
+        .header-desc { color: #bec9c4; font-size: 1.125rem; max-width: 600px; margin-bottom: 2rem;}
         
-        div[data-testid="stButton"] button {
-            height: 240px !important; /* Altezza FISSA e uguale per tutti, ingrandita */
-            width: 400px !important;
-            border-radius: 12px !important;
-            border: 1px solid #333 !important;
-            background: #121212 !important;
-            /* La transizione è fondamentale per l'hover */
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-            padding: 15px !important;
-            
-            /* Flexbox per distribuire il contenuto */
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: flex-end !important; /* Testo parte dal basso per far vedere l'immagine */
-            align-items: center !important;
-            
-            /* Preparazione sfondi */
-            background-size: cover !important;
-            background-position: center !important;
-            background-blend-mode: overlay !important;
-            background-color: rgba(18, 18, 18, 0.75) !important; /* Scuriamo l'immagine di default */
+        .section-title {
+            display: flex; align-items: center; gap: 0.75rem;
+            font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem;
+            font-family: 'Manrope', sans-serif;
+        }
+        .section-title span.material-symbols-outlined { color: #81d6be; }
+
+        /* Inputs override */
+        div[data-baseweb="input"] {
+            background-color: #2a2a2a;
+            border-radius: 0.75rem;
+            border: 1px solid transparent;
+        }
+        div[data-baseweb="input"]:focus-within { border-color: rgba(129,214,190, 0.4); }
+        div[data-baseweb="input"] > input { color: #e5e2e1; padding: 0.75rem 1rem;}
+        
+        /* Selectbox override */
+        div[data-baseweb="select"] {
+            background-color: #2a2a2a;
+            border-radius: 0.75rem;
+            border: 1px solid transparent;
         }
 
-        /* Hover: Glow Viola per i temi, e schiarisce l'immagine */
-        div[data-testid="stButton"] button:hover {
-            border-color: #9d66ff !important;
-            box-shadow: 0 0 20px rgba(157, 102, 255, 0.5) !important;
-            background-color: rgba(24, 20, 37, 0.4) !important;
-            transform: translateY(-2px) !important;
+        /* Setup Box (Right Column) */
+        .party-box {
+            background-color: #2a2a2a;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.4);
+            position: relative;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+        .party-box::before {
+            content: ""; position: absolute; top: 0; right: 0; width: 8rem; height: 8rem;
+            background-color: #227e69; opacity: 0.1; border-radius: 50%; filter: blur(40px); pointer-events: none;
         }
 
-        div[data-testid="stButton"] button p {
-            white-space: normal !important; /* Permette l'a capo naturale senza tagliare */
-            word-break: break-word !important; 
-            text-align: center !important;
-            line-height: 1.4 !important;
-            margin: 0 !important;
-            font-size: 1.05rem !important; /* Leggermente più grande */
-            text-shadow: 0 2px 4px rgba(0,0,0,0.9) !important; /* Ombra per leggibilità su immagini */
+        .player-card {
+            background-color: #1c1b1b;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid transparent;
+            transition: border-color 0.3s;
         }
-
-        /* Stato Selezionato */
-        div[data-testid="stButton"] button[kind="primary"] {
-            border: 2px solid #9d66ff !important;
-            background-color: rgba(157, 102, 255, 0.25) !important;
-            box-shadow: 0 0 15px rgba(157, 102, 255, 0.5) !important;
+        .player-card:hover { border-color: rgba(136,147,142,0.2); }
+        
+        /* --- THEME BUTTONS TRICK (Injected Via Markdown) --- */
+        /* Will be handled individually to map to Streamlit buttons */
+        
+        /* Start Button Overrides */
+        div.stButton > button { border: none !important; }
+        .start-action-container .stButton > button {
+            background: linear-gradient(135deg, #81d6be, #227e69) !important;
+            color: #00382c !important;
+            font-family: 'Manrope', sans-serif !important;
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            height: 80px !important;
+            border-radius: 0.75rem !important;
+            box-shadow: 0 12px 24px rgba(34,126,105,0.3) !important;
+            transition: all 0.3s ease !important;
         }
-
-        /* Pulsante Start: stile spostato per isolamento */
+        .start-action-container .stButton > button:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 16px 32px rgba(34,126,105,0.4) !important;
+        }
         </style>
+        
+        <div class="abstract-bg"></div>
+    
     """, unsafe_allow_html=True)
 
-    # --- 2. HEADER ---
-    st.markdown("""
-        <div style="text-align: center; margin-bottom: 3rem; margin-top: 1rem;">
-            <h1 style="font-size: clamp(3rem, 6vw, 5.5rem); letter-spacing: 6px; text-transform: uppercase; margin-bottom: -15px;">
-                Morpheus <span class="purple-text">Genesis</span>
-            </h1>
-            <p style="color: #00ff88; font-size: 1.4rem; font-weight: bold; letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 10px rgba(0, 255, 136, 0.3);">
-                Configura il tuo Destino
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    st.divider()
+    # --- 2. LAYOUT SPLIT (equivalent to grid-cols-12: 7 and 5) ---
+    col_left, col_border, col_right = st.columns([6, 0.5, 4.5])
 
-    # --- 3. PARAMETRI GLOBALI ---
-    st.subheader("🌐 Parametri di Rete")
-    col_sys1, col_sys2, col_sys3 = st.columns([2, 1.5, 1], gap="large")
-    
-    with col_sys1:
-        st.session_state.campaign_name = st.text_input("NOME CAMPAGNA", value=st.session_state.campaign_name, placeholder="Es. Protocollo Omega...", disabled=st.session_state.is_loading_game)
-    with col_sys2:
-        st.session_state.difficulty = st.select_slider("LIVELLO DI SFIDA", options=["Storia", "Normale", "Difficile", "Incubo"], value=st.session_state.difficulty, disabled=st.session_state.is_loading_game)
-    with col_sys3:
-        st.session_state.num_players = st.number_input("NUMERO GIOCATORI", min_value=1, max_value=4, value=st.session_state.num_players, disabled=st.session_state.is_loading_game)
-
-    st.markdown("<br>", unsafe_allow_html=True)
-    
-    # Nuova sottomissione per il Mood
-    st.markdown("🎭 **Tono Narrativo**")
-    mood_options = ["Oscuro", "Eroico", "Divertente", "Tragico", "Misterioso", "Guerra", "Filosofico", "Romantico"]
-    st.session_state.narrative_style = st.selectbox(
-        "Seleziona il mood dominante della tua avventura",
-        options=mood_options,
-        index=mood_options.index(st.session_state.narrative_style),
-        disabled=st.session_state.is_loading_game,
-        label_visibility="collapsed"
-    )
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # --- 4. TEMI NARRATIVI ---
-    st.subheader("📖 Modulo Ambientale")
-    st.caption("Clicca su una cella di memoria per selezionare l'ambientazione.")
-    
-    # Rimosso il \n per permettere al CSS (white-space: normal) di impaginare da solo
-    themes = {
-        "Fantasy": "Magia, draghi, tesori e regni in rovina.",
-        "Cyberpunk": "Neon, Umanoidi, tecnologia avanzata e impianti neurali.", 
-        "Sci-Fi": "Esplorazione stellare e IA ribelli.",
-        "Horror": "Oscurità, tensione, crimini e mostri indicibili.",
-        "Pirati": "Navi, tesori e avventura tra i mari.",
-        "Egizio": "Faraoni, piramidi e divinità egizie.",
-        "Post-Apoc": "Sopravvivenza tra scorie radioattive.",
-        "Mythological": "Dei capricciosi e gesta eroiche."
-    }
-    theme_names = list(themes.keys())
-    
-    theme_images = {
-        "🏰 Fantasy": "url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=600')",
-        "🦾 Cyberpunk": "url('https://png.pngtree.com/thumb_back/fh260/background/20230705/pngtree-conceptual-3d-art-futuristic-cyberpunk-city-at-night-with-scifi-touches-image_3759066.jpg')",
-        "🚀 Sci-Fi": "url('https://png.pngtree.com/thumb_back/fh260/background/20230611/pngtree-space-wallpapers-download-free-image_2929035.jpg')",
-        "💀 Horror": "url('https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=80&w=600')",
-        "🔍 Mystery": "url('https://img.freepik.com/foto-gratuito/disposizione-astratta-del-concetto-di-verita_23-2149051376.jpg?semt=ais_hybrid&w=740&q=80')",
-        "⚙️ Steampunk": "url('https://img.freepik.com/photos-premium/paysage-urbain-steampunk-dirigeables-volant-au-dessus-grands-batiments_14117-1014014.jpg?semt=ais_hybrid&w=740&q=80')",
-        "⛰️ Post-Apoc": "url('https://img.freepik.com/free-photo/skyline-dystopian-future_23-2151957425.jpg?semt=ais_hybrid&w=740&q=80')",
-        "🌪️ Mythological": "url('https://img.freepik.com/free-photo/fantasy-scene-depicting-sun-god-s_23-2151339297.jpg?semt=ais_hybrid&w=740&q=80')",
-    }
-
-    # Inject dynamic CSS to map each column to its specific background image via :has() trick
-    css_bg = "<style>\n"
-    for idx, (name, bg) in enumerate(theme_images.items()):
-        css_bg += f"div[data-testid='stColumn']:has(.theme-marker-{idx}) div[data-testid='stButton'] button {{ background-image: {bg} !important; }}\n"
-    css_bg += "</style>"
-    st.markdown(css_bg, unsafe_allow_html=True)
-
-    # 3 colonne per rendere le card più larghe. L'ultima riga avrà 2 card centrate.
-    for row in range(0, 8, 3):
-        if row + 3 <= 8:
-            cols = st.columns(3, gap="large")
-            items_to_render = 3
-        else:
-            # Ultima riga: creiamo layout con spaziatura laterale per centrare le 2 card rimanenti
-            pad_cols = st.columns([0.5, 1, 1, 0.5], gap="large")
-            cols = [pad_cols[1], pad_cols[2]]
-            items_to_render = 2
-
-        for i in range(items_to_render):
-            idx = row + i
-            if idx >= len(theme_names): 
-                break
-                
-            theme_name = theme_names[idx]
-            theme_desc = themes[theme_name]
-            
-            with cols[i]:
-                # Invisible marker to act as anchor for CSS
-                st.markdown(f'<span class="theme-marker-{idx}" style="display:none"></span>', unsafe_allow_html=True)
-                
-                # Usiamo \n\n per distanziare il titolo dalla descrizione.
-                button_label = f"**{theme_name}**\n\n{theme_desc}"
-                if theme_name == st.session_state.selected_theme:
-                    st.button(button_label, key=f"btn_{theme_name}", use_container_width=True, type="primary", disabled=st.session_state.is_loading_game)
-                else:
-                    if st.button(button_label, key=f"btn_{theme_name}", use_container_width=True, disabled=st.session_state.is_loading_game):
-                        st.session_state.selected_theme = theme_name
-                        st.rerun()
-
-    st.divider()
-
-    # --- 5. GIOCATORI E DIAGNOSTICA ---
-    col_agents, col_status = st.columns([2.5, 1.5], gap="large")
-
-    with col_agents:
-        st.subheader("🛠️ Inizializzazione Giocatori")
-        players = int(st.session_state.num_players)
+    with col_left:
+        # HEADER
+        st.markdown("""
+            <div class="header-subtitle">Morpheus Genesis</div>
+            <div class="header-title">Configure<br>Your Expedition</div>
+            <div class="header-desc">Select the thematic foundation of your narrative and define the adventurers who will traverse this realm.</div>
+        """, unsafe_allow_html=True)
         
-        for i in range(0, players, 2):
-            agent_cols = st.columns(2, gap="medium")
-            with agent_cols[0]:
-                with st.container(border=True):
-                    st.markdown(f"**GIOCATORE 0{i+1}**")
-                    st.text_input("Identificativo", placeholder="Inserisci nome...", key=f"p{i+1}_name", label_visibility="collapsed", disabled=st.session_state.is_loading_game)
-                    st.selectbox("Classe", ["Warrior", "Mage", "Rogue", "Cleric"], key=f"p{i+1}_class", label_visibility="collapsed", disabled=st.session_state.is_loading_game)
-            if i + 1 < players:
-                with agent_cols[1]:
-                    with st.container(border=True):
-                        st.markdown(f"**GIOCATORE 0{i+2}**")
-                        st.text_input("Identificativo", placeholder="Inserisci nome...", key=f"p{i+2}_name", label_visibility="collapsed", disabled=st.session_state.is_loading_game)
-                        st.selectbox("Classe", ["Warrior", "Mage", "Rogue", "Cleric"], key=f"p{i+2}_class", label_visibility="collapsed", disabled=st.session_state.is_loading_game)
-
-    with col_status:
-        st.subheader("⚙️ Diagnostica")
-        display_name = st.session_state.campaign_name if st.session_state.campaign_name else "Non assegnato"
-        
-        st.markdown(f"""
-            <div class="status-box">
-                <p style="color: #00ff88; margin-bottom: 8px; font-weight: bold;">● Neural Engine Pronto</p>
-                <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 4px;">▸ Campagna: <b>{display_name}</b></p>
-                <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 4px;">▸ Difficoltà: <b>{st.session_state.difficulty}</b></p>
-                <p style="color: #9d66ff; font-size: 0.9rem; margin-bottom: 0;">▸ Dataset: <b>{st.session_state.selected_theme}</b></p>
+        # CAMPAIGN SETTINGS
+        st.markdown("""
+            <div class="section-title">
+                <span class="material-symbols-outlined">settings_applications</span>
+                <span>Campaign Settings</span>
             </div>
         """, unsafe_allow_html=True)
+        
+        setting_cols = st.columns([1, 1])
+        with setting_cols[0]:
+            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Campaign Name</label>", unsafe_allow_html=True)
+            st.session_state.campaign_name = st.text_input("NOME", value=st.session_state.campaign_name, placeholder="e.g. The Obsidian Crown", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="off")
+        with setting_cols[1]:
+            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Difficulty</label>", unsafe_allow_html=True)
+            diff_options = ["Easy", "Normal", "Hard", "Epic"]
+            st.session_state.difficulty = st.segmented_control(
+                "Difficoltà", 
+                options=diff_options, 
+                default=st.session_state.difficulty if st.session_state.difficulty in diff_options else "Normal",
+                label_visibility="collapsed", 
+                disabled=st.session_state.is_loading_game,
+                selection_mode="single"
+            )
 
-    # --- 6. PULSANTE START CENTRATO E PIÙ PICCOLO ---
-    st.markdown("<br><br>", unsafe_allow_html=True)
-    
-    # Colonne per stringere il bottone e lasciarlo comodo al centro
-    _, col_center, _ = st.columns([3, 2, 3])
-    
-    with col_center:
-        # Iniettiamo lo stile localmente puntando ESATTAMENTE al contenitore adiacente (il bottone successivo)
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # NARRATIVE THEME & MOOD HEADER
+        theme_mood_cols = st.columns([1.5, 1])
+        with theme_mood_cols[0]:
+            st.markdown("""
+                <div class="section-title" style="margin-top: 1rem;">
+                    <span class="material-symbols-outlined">auto_stories</span>
+                    <span>Narrative Theme</span>
+                </div>
+            """, unsafe_allow_html=True)
+        with theme_mood_cols[1]:
+            st.markdown("<div style='margin-top: 1.25rem;'>", unsafe_allow_html=True)
+            moods = ["Oscuro", "Eroico", "Divertente", "Misterioso", "Cyberpunk", "Tragico"]
+            st.session_state.narrative_style = st.selectbox(
+                "Narrative Mood", 
+                moods, 
+                index=moods.index(st.session_state.narrative_style) if st.session_state.narrative_style in moods else 0, 
+                label_visibility="collapsed", 
+                disabled=st.session_state.is_loading_game
+            )
+            st.markdown("</div>", unsafe_allow_html=True)
+        
+        themes = {
+            "Fantasy": {"icon": "swords", "bg": "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDbWQubtqL5TSapDqpXUL5JzF9ULGqEVHPjd1oWGR7tDuxLoMPnXQkHuj57cQtTNUjZJsBeklZmxcKmYVVKYSjZKq0G-vGTS6LH4AwP7MlqN4DkogdS3TJQglstxap_hk6i4xlIoREVCxuV2UFw5daN29goJQAaaqULI-jtuVdbkYrcDAFvNEeQ_gP7XFKAWuvPPUHVLXmu3X3h85_dlAL_nG58khD-s81bsT6Rj98hj8kPTaZoCGbMurQX7euT3bNfZq8hcC9XfZc')"},
+            "Cyberpunk": {"icon": "memory", "bg": "url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6tjCCHnSp_5193HTFpb-qywgnrvmoqViyaHuslEKZZAMbwO2t54eQwpuYaDw6YsSF4zaKI6B45xXJRTxSu2mL5uxZEhK32XASkchAOttvXsisdcIzazk1-MzjV3Eadp1GJPejDefnHP6euUfvLLG5nTY7UNnl7PZ3jjj_77igylLFbxzd3zAf3-syggkVkqYt47P_NRIC2U6XWJd20bV1yUH8m85Cvs-l1mxV2rIycNV9gM0f853Wcw4n06ucfESAgixJkkIg-1E')"},
+            "Sci-Fi": {"icon": "rocket_launch", "bg": "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdRjdFIvBrYbSilSCXIEdVl6pnU1qOYRvqtdlkTrdYIz02iY0Yb0TdkCBpOUEeb7bRIIfJfBJZBAlp0s3dFFpNWUy9oanxX4X13FnNYAy-3uP7VhEdVdJ4kT3PH09SQ04UcrnDpzpPtpTbe-0-Qz6eEBF47FeFRzSADFgxO0wS0CosZwbRsffa-SFVxREPJzKzHJfi8kUp8tUMlhpMD3t6EGzwyscaxhuVy0SB_87ddDbkO6IH0a0IGiSnsQci0h9lglo5kkzK8qo')"},
+            "Horror": {"icon": "psychiatry", "bg": "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCpMT6Q_DSJVOC6HAlW5Ap0IAUaF9imuhvGeo7Z-tvJmdv6ip4Ep0DZlTEeM6b6CrYT2T_gnUqMubOGTz7oFZGXXdozjZ8mkoVU3YwrEva4u4mx9sxeQVNxIVsWV-KOymkyntxRU9u2avWb_satKUDgIW4KtnhpbuqGQDepHOTmRJC2tnq4C03AcZAyJ9wxdK-WycIkjibstYLxAYCPJLvUDF1Ld0eMXJxE_amdGFWqkMJj64zCXfLXbDJXgA71m2dvGoel-Aa9HkA')"},
+            "Post-Apoc": {"icon": "local_fire_department", "bg": "url('https://lh3.googleusercontent.com/aida-public/AB6AXuBp76HBktJCPq5144vFyy_0A04caHS6N9ZLrapDudUG61OrJHVL2JoiRRHzud2JEZnoM1EyN4kW_jhXxDk2R4XhHstmr8BPZ4Isp0Yow6HusqbOnqGCx-eYp75D-s8HVr3AuAtB8LPxuc7XQBzZZPadptZBgEaUEjeTyz6tiqSr6DIBuwVNeIWz1FrWLCIkS_qz97kJ22wCLsSRzXztUtEn2-gpuN_90uGRpVZTExqVjX0zs1Y-ijDEd2j4qPb2Jzs79nm-H12z3Wk')"},
+            "Steampunk": {"icon": "castle", "bg": "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCZM8RgZZJPO5dg93xTUeCiRxFrpbrNAvS9yhMgLG6UAbRteGUxkPyLTbWiND1CwECT93L-V3lJmyBiG3ow4EuTz-QwfXDJIYXphhDmZL73r5iT5XQH07tfXhYk8ErS4tNd6PTK8B4ZosLVuoDQbvNjanr9e7m-j1CUuPkbvQ-eGaxi6iKW22sRLwwOzj_g9Sn8Kv65zRmh760GcDLTfNV5p5SK8Uk3S0gg5Wd0zFFXC8po3ubVqlVK_A5mS_f4Htf0VO21YeJ7PWY')"},
+            "Mystery": {"icon": "mystery", "bg": "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDkRe1YyMwY2WsbNjxmq-YrwPBpzV6JSQcnaRg86Z7RqTvw3qht0OtgW91xQrHb3HZC7gxTEAswEzDReUPU2IiXlBGSpR6h5fLCmoYkRBqjyU2Sy_oI2iEvZzm_vLMOvuImYVdfrYFIB6CooIuclzDwK5VotgcgpP-uWGMCd1dN9dswNX2G6D4wg5GfIDtdbFLGbESFH4t2GZ4uWpDObnhqPnaQ6XKdyFhfJYp0Wn9bjwHD5huNuNi2n89-ryndXpooOoxaKe0KNRQ')"},
+            "Wilderness": {"icon": "eco", "bg": "url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_tRVxWEQ8EEhoBVgatHN6AtaSBLQqO0skz2C1bF6htlaiyG14R5nLTm1AYh5blY2mqtgWYcehwP4ksu5HEwPEHvjnwtZCHBvlpqgW8r-wyM2nGBr9tHoODDM-7ZWg0_zA9QdwEItuRDAMlsPutFLddwY7ogTuNm0kHJsYKTAx6nxOZlXkO7TvrP2cEKgPo6snBtievKToM96V2H1Fobl8rpcehfuICBG6KkTq1vFlR-e1ed5RfbjhNibkEhbxq6reu1Jj7nSqdYA')"}
+        }
+        
+        # Inietta la logica CSS dei pulsanti con le immagini come l'HTML originale
+        css_bg = "<style>\n"
+        for i, (t_name, t_data) in enumerate(themes.items()):
+            active = t_name == st.session_state.selected_theme
+            bg_overlay = "rgba(42, 42, 42, 0.4)" if not active else "rgba(129, 214, 190, 0.1)"
+            border_c = "rgba(136, 147, 142, 0.2)" if not active else "rgba(129, 214, 190, 0.4)"
+            hover_border = "rgba(255, 255, 255, 0.2)" if not active else "#81d6be"
+            c_text = "#81d6be" if active else "#bec9c4"
+            
+            # Attenzione, il wrapper stButton deve riempire
+            css_bg += f"""
+                div.element-container:has(.theme-{i}) + div.element-container div[data-testid='stButton'] button {{
+                    background-image: linear-gradient({bg_overlay}, {bg_overlay}), {t_data['bg']} !important;
+                    background-size: cover !important; background-position: center !important;
+                    height: 140px !important; width: 100% !important; border-radius: 0.75rem !important;
+                    border: 1px solid {border_c} !important; border-bottom: 2px solid {hover_border} !important;
+                    color: transparent !important; /* Nasconde font di base di ST */
+                    position: relative; overflow: hidden;
+                    box-shadow: 0 8px 16px rgba(0,0,0,0.4) !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                }}
+                /* Nascondi il markdown placeholder di Streamlit interno al bottone */
+                div.element-container:has(.theme-{i}) + div.element-container div[data-testid='stButton'] button div {{
+                    display: none !important;
+                }}
+                /* Icona centrata */
+                div.element-container:has(.theme-{i}) + div.element-container div[data-testid='stButton'] button::before {{
+                    content: "{t_data['icon']}";
+                    font-family: 'Material Symbols Outlined';
+                    font-size: 2.2rem;
+                    color: {c_text};
+                    margin-bottom: 8px;
+                    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+                }}
+                /* Testo centrato */
+                div.element-container:has(.theme-{i}) + div.element-container div[data-testid='stButton'] button::after {{
+                    content: "{t_name}";
+                    font-family: 'Inter', sans-serif;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                    color: {c_text};
+                    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+                }}
+                /* Hover effect per i thumbnail */
+                div.element-container:has(.theme-{i}) + div.element-container div[data-testid='stButton'] button:hover {{
+                    border: 1px solid {hover_border} !important;
+                    filter: brightness(1.2);
+                }}
+            """
+
+        css_bg += "</style>"
+        st.markdown(css_bg, unsafe_allow_html=True)
+        
+        # Griglia 4 colonne
+        theme_names = list(themes.keys())
+        for row in range(0, len(theme_names), 4):
+            cols = st.columns(4)
+            for i in range(4):
+                if row + i < len(theme_names):
+                    t_name = theme_names[row+i]
+                    with cols[i]:
+                        st.markdown(f'<span class="theme-{row+i}" style="display:none"></span>', unsafe_allow_html=True)
+                        if st.button(" ", key=f"tbtn_{t_name}", use_container_width=True, disabled=st.session_state.is_loading_game):
+                            st.session_state.selected_theme = t_name
+                            st.rerun()
+
+    with col_right:
         st.markdown("""
-            <div class="start-btn-marker" style="display:none"></div>
-            <style>
-                div.element-container:has(.start-btn-marker) + div.element-container button {
-                    height: 65px !important; 
-                    background: linear-gradient(90deg, #9d66ff, #6b4cff) !important; 
-                    color: #ffffff !important;
-                    border: none !important;
-                    padding: 0 !important;
-                    border-radius: 8px !important; 
-                    width: 100% !important;
-                    transition: all 0.3s ease !important;
-                    
-                    /* Flexbox per centrare in modo assoluto e perfetto */
-                    display: flex !important;
-                    justify-content: center !important;
-                    align-items: center !important;
-                }
-                
-                /* Streamlit aggiunge dei div interni al bottone, dobbiamo centrare anche loro */
-                div.element-container:has(.start-btn-marker) + div.element-container button div {
-                    display: flex !important;
-                    justify-content: center !important;
-                    align-items: center !important;
-                }
-                
-                div.element-container:has(.start-btn-marker) + div.element-container button:hover {
-                    transform: translateY(-3px) !important;
-                    box-shadow: 0 8px 20px rgba(157, 102, 255, 0.5) !important;
-                    background: linear-gradient(90deg, #aa78ff, #7a5dff) !important;
-                }
-                
-                div.element-container:has(.start-btn-marker) + div.element-container button p {
-                    font-size: 1.15rem !important;
-                    font-weight: bold !important;
-                    color: #ffffff !important; 
-                    text-transform: uppercase !important;
-                    letter-spacing: 2px !important;
-                    
-                    /* Reset margini per allineamento millimetrico */
-                    text-align: center !important;
-                    line-height: 1 !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                }
-            </style>
+            <div class="party-box">
+                <div class="section-title" style="margin-bottom: 2rem; justify-content: space-between;">
+                    <div style="display: flex; gap: 0.5rem;"><span class="material-symbols-outlined">groups</span><span>The Party</span></div>
+                </div>
         """, unsafe_allow_html=True)
         
+        st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600;'>Number of Adventurers</label>", unsafe_allow_html=True)
+        player_counts = [1, 2, 3, 4]
+        st.session_state.num_players = st.segmented_control(
+            "GIOCATORI", 
+            options=player_counts, 
+            default=int(st.session_state.num_players), 
+            label_visibility="collapsed", 
+            disabled=st.session_state.is_loading_game,
+            selection_mode="single"
+        )
         
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        # Player Config Loop (semplificato a 2 per ora, ma espandibile)
+        players = int(st.session_state.num_players)
+        for p in range(players):
+            st.markdown(f"""
+                <div class="player-card">
+                    <div style="display:flex; justify-content:space-between; margin-bottom: 1rem;">
+                        <span style="font-size:0.75rem; color:#bec9c4; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;">Player 0{p+1}</span>
+                        <span class="material-symbols-outlined" style="font-size: 1rem; color:#bec9c4;">person</span>
+                    </div>
+            """, unsafe_allow_html=True)
+            
+            p_val = st.session_state.get(f"setup_p{p+1}_name", "Valerius" if p==0 else "")
+            c_val = st.session_state.get(f"setup_p{p+1}_class", "Warrior")
+            
+            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-bottom: 0.25rem;'>Character Name</label>", unsafe_allow_html=True)
+            st.session_state[f"setup_p{p+1}_name"] = st.text_input(f"NOME P{p+1}", value=p_val, placeholder="Awaiting entry..." if p!=0 else "Enter name", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="name")
+            
+            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-top: 0.5rem; margin-bottom: 0.25rem;'>Class / Archetype</label>", unsafe_allow_html=True)
+            st.session_state[f"setup_p{p+1}_class"] = st.selectbox(f"CLASSE P{p+1}", ["Warrior", "Hacker", "Rogue", "Mage"], index=["Warrior", "Hacker", "Rogue", "Mage"].index(c_val) if c_val in ["Warrior", "Hacker", "Rogue", "Mage"] else 0, label_visibility="collapsed", disabled=st.session_state.is_loading_game)
+            
+            st.markdown("</div>", unsafe_allow_html=True) 
 
-        if st.button("INIZIA AVVENTURA ➔", use_container_width=True, disabled=st.session_state.is_loading_game):
-            # --- AGGIUNGI QUESTI SALVATAGGI ---
-            st.session_state.setup_p1_name = st.session_state.get("p1_name", "Valerius")
-            st.session_state.setup_p1_class = st.session_state.get("p1_class", "Warrior")
+        st.markdown("</div>", unsafe_allow_html=True) # close party box
+
+        st.markdown("<br><br>", unsafe_allow_html=True)
+
+        st.markdown('<div class="start-action-container">', unsafe_allow_html=True)
+        if st.button("INIZIA AVVENTURA", use_container_width=True, disabled=st.session_state.is_loading_game):
+            # Salva logic per engine 
             st.session_state.setup_theme = st.session_state.selected_theme
             st.session_state.setup_mood = st.session_state.narrative_style
-            # ----------------------------------
-            
             st.session_state.is_loading_game = True
             st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
 
-    # --- ANIMAZIONE DI CARICAMENTO ---
-    # Questa sezione fissa l'attenzione sotto il pulsante e blocca l'UI soprastante
+    # --- LOADING SCREEN ---
     if st.session_state.is_loading_game:
-        import time
         st.markdown("<br><br>", unsafe_allow_html=True)
-        
         _, spin_col, _ = st.columns([1, 2, 1])
         with spin_col:
-            with st.spinner("Avvio del Neural Engine in corso..."):
+            with st.spinner("Connessione al Neural Engine in corso..."):
                 status_text = st.empty()
-                
-                status_text.markdown("<h3 style='text-align: center; color: #9d66ff; margin-bottom: 20px;'>Morpheus Genesis sta chiamando i suoi agenti...</h3>", unsafe_allow_html=True)
-                
-                theme = st.session_state.selected_theme
-                
-                status_text.markdown("<h3 style='text-align: center; color: #bbb; margin-bottom: 20px;'>Agente Arbitro sta forgiando le regole dello scontro...</h3>", unsafe_allow_html=True)
-                import time
-                time.sleep(1)
-                
-                status_text.markdown("<h3 style='text-align: center; color: #00ff88; margin-bottom: 20px;'>Neural Engine Pronto. Benvenuti in Morpheus Genesis.</h3>", unsafe_allow_html=True)
-                time.sleep(1.5)
-                
+                status_text.markdown(f"<h3 style='text-align: center; color: #81d6be;'>Bypass dei protocolli di sicurezza... Inizializzando '{st.session_state.selected_theme}'...</h3>", unsafe_allow_html=True)
+                time.sleep(2)
         st.session_state.is_loading_game = False
         st.session_state.page = "game"
         st.rerun()
 
 if __name__ == "__main__":
-    st.set_page_config(layout="wide", page_title="Setup Destino")
+    st.set_page_config(layout="wide", page_title="The Archive Setup")
     render_setup_page()
