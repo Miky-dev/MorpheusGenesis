@@ -92,20 +92,7 @@ def render_setup_page():
             border: 1px solid transparent;
         }
 
-        /* Setup Box (Right Column) */
-        .party-box {
-            background-color: #2a2a2a;
-            border-radius: 1rem;
-            padding: 2rem;
-            box-shadow: 0 24px 48px rgba(0,0,0,0.4);
-            position: relative;
-            overflow: hidden;
-            margin-top: 1rem;
-        }
-        .party-box::before {
-            content: ""; position: absolute; top: 0; right: 0; width: 8rem; height: 8rem;
-            background-color: #227e69; opacity: 0.1; border-radius: 50%; filter: blur(40px); pointer-events: none;
-        }
+        
 
         .player-card {
             background-color: #1c1b1b;
@@ -120,24 +107,30 @@ def render_setup_page():
         /* --- THEME BUTTONS TRICK (Injected Via Markdown) --- */
         /* Will be handled individually to map to Streamlit buttons */
         
-        /* Start Button Overrides */
-        div.stButton > button { border: none !important; }
-        .start-action-container .stButton > button {
+        /* Start Button - Container Targeted Strategy */
+        div[data-testid="stVerticalBlock"]:has(> div.element-container div.start-button-marker) button {
             background: linear-gradient(135deg, #81d6be, #227e69) !important;
             color: #00382c !important;
             font-family: 'Manrope', sans-serif !important;
-            font-size: 1.25rem !important;
+            font-size: 1rem !important;
             font-weight: 700 !important;
-            height: 80px !important;
+            height: 48px !important;
+            width: 200px !important;
             border-radius: 0.75rem !important;
-            box-shadow: 0 12px 24px rgba(34,126,105,0.3) !important;
+            box-shadow: 0 12px 24px rgba(34, 126, 105, 0.2) !important;
+            margin-top: 10px !important;
+            margin-left: auto !important;
+            border: none !important;
             transition: all 0.3s ease !important;
         }
-        .start-action-container .stButton > button:hover {
-            transform: translateY(-4px) !important;
-            box-shadow: 0 16px 32px rgba(34,126,105,0.4) !important;
+
+        div[data-testid="stVerticalBlock"]:has(> div.element-container div.start-button-marker) button:hover {
+            transform: translateY(-3px) scale(1.02) !important;
+            box-shadow: 0 0 20px rgba(129, 214, 190, 0.6), 
+                        0 0 40px rgba(129, 214, 190, 0.3),
+                        0 16px 32px rgba(34, 126, 105, 0.4) !important;
+            filter: brightness(1.1) !important;
         }
-        </style>
         
         <div class="abstract-bg"></div>
     
@@ -165,14 +158,14 @@ def render_setup_page():
         setting_cols = st.columns([1, 1])
         with setting_cols[0]:
             st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Campaign Name</label>", unsafe_allow_html=True)
-            st.session_state.campaign_name = st.text_input("NOME", value=st.session_state.campaign_name, placeholder="e.g. The Obsidian Crown", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="off")
+            st.text_input("NOME", key="campaign_name", placeholder="e.g. The Obsidian Crown", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="off")
         with setting_cols[1]:
             st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Difficulty</label>", unsafe_allow_html=True)
             diff_options = ["Easy", "Normal", "Hard", "Epic"]
-            st.session_state.difficulty = st.segmented_control(
+            st.segmented_control(
                 "Difficoltà", 
                 options=diff_options, 
-                default=st.session_state.difficulty if st.session_state.difficulty in diff_options else "Normal",
+                key="difficulty",
                 label_visibility="collapsed", 
                 disabled=st.session_state.is_loading_game,
                 selection_mode="single"
@@ -190,7 +183,7 @@ def render_setup_page():
                 </div>
             """, unsafe_allow_html=True)
         with theme_mood_cols[1]:
-            st.markdown("<div style='margin-top: 1.25rem;'>", unsafe_allow_html=True)
+            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Narrative Mood</label>", unsafe_allow_html=True)
             moods = ["Oscuro", "Eroico", "Divertente", "Misterioso", "Cyberpunk", "Tragico"]
             st.session_state.narrative_style = st.selectbox(
                 "Narrative Mood", 
@@ -283,59 +276,79 @@ def render_setup_page():
 
     with col_right:
         st.markdown("""
-            <div class="party-box">
-                <div class="section-title" style="margin-bottom: 2rem; justify-content: space-between;">
-                    <div style="display: flex; gap: 0.5rem;"><span class="material-symbols-outlined">groups</span><span>The Party</span></div>
-                </div>
+
         """, unsafe_allow_html=True)
         
-        st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600;'>Number of Adventurers</label>", unsafe_allow_html=True)
-        player_counts = [1, 2, 3, 4]
-        st.session_state.num_players = st.segmented_control(
-            "GIOCATORI", 
-            options=player_counts, 
-            default=int(st.session_state.num_players), 
-            label_visibility="collapsed", 
-            disabled=st.session_state.is_loading_game,
-            selection_mode="single"
-        )
+        # TOP ACTIONS ROW
+        top_act_l, top_act_r = st.columns([1, 1])
+        
+        with top_act_l:
+            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600;'>Adventurers</label>", unsafe_allow_html=True)
+            player_counts = [1, 2, 3, 4]
+            st.segmented_control(
+                "GIOCATORI", 
+                options=player_counts, 
+                key="num_players",
+                label_visibility="collapsed", 
+                disabled=st.session_state.is_loading_game,
+                selection_mode="single"
+            )
+        
+        with top_act_r:
+            with st.container():
+                st.markdown('<div class="start-button-marker" style="display:none"></div>', unsafe_allow_html=True)
+                if st.button("INIZIA AVVENTURA", use_container_width=True, disabled=st.session_state.is_loading_game):
+                    # Salva logic per engine 
+                    st.session_state.setup_theme = st.session_state.selected_theme
+                    st.session_state.setup_mood = st.session_state.narrative_style
+                    st.session_state.is_loading_game = True
+                    st.rerun()
         
         st.markdown("<br>", unsafe_allow_html=True)
         
-        # Player Config Loop (semplificato a 2 per ora, ma espandibile)
+        # Player Config Loop
         players = int(st.session_state.num_players)
+        
+        # Inject styling specific for player container
+        st.markdown("""
+        <style>
+        div[data-testid="stVerticalBlock"]:has(> div.element-container div.player-card-marker) {
+            background-color: #1c1b1b;
+            padding: 1.25rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        div[data-testid="stVerticalBlock"]:has(> div.element-container div.player-card-marker):hover { 
+            border-color: rgba(136,147,142,0.2); 
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
         for p in range(players):
-            st.markdown(f"""
-                <div class="player-card">
+            with st.container():
+                st.markdown(f"""
+                    <div class="player-card-marker" style="display:none"></div>
                     <div style="display:flex; justify-content:space-between; margin-bottom: 1rem;">
                         <span style="font-size:0.75rem; color:#bec9c4; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;">Player 0{p+1}</span>
                         <span class="material-symbols-outlined" style="font-size: 1rem; color:#bec9c4;">person</span>
                     </div>
-            """, unsafe_allow_html=True)
-            
-            p_val = st.session_state.get(f"setup_p{p+1}_name", "Valerius" if p==0 else "")
-            c_val = st.session_state.get(f"setup_p{p+1}_class", "Warrior")
-            
-            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-bottom: 0.25rem;'>Character Name</label>", unsafe_allow_html=True)
-            st.session_state[f"setup_p{p+1}_name"] = st.text_input(f"NOME P{p+1}", value=p_val, placeholder="Awaiting entry..." if p!=0 else "Enter name", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="name")
-            
-            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-top: 0.5rem; margin-bottom: 0.25rem;'>Class / Archetype</label>", unsafe_allow_html=True)
-            st.session_state[f"setup_p{p+1}_class"] = st.selectbox(f"CLASSE P{p+1}", ["Warrior", "Hacker", "Rogue", "Mage"], index=["Warrior", "Hacker", "Rogue", "Mage"].index(c_val) if c_val in ["Warrior", "Hacker", "Rogue", "Mage"] else 0, label_visibility="collapsed", disabled=st.session_state.is_loading_game)
-            
-            st.markdown("</div>", unsafe_allow_html=True) 
+                """, unsafe_allow_html=True)
+                
+                p_val = st.session_state.get(f"setup_p{p+1}_name", "Valerius" if p==0 else "")
+                c_val = st.session_state.get(f"setup_p{p+1}_class", "Warrior")
+                
+                st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-bottom: 0.25rem;'>Character Name</label>", unsafe_allow_html=True)
+                st.session_state[f"setup_p{p+1}_name"] = st.text_input(f"NOME P{p+1}", value=p_val, placeholder="Awaiting entry..." if p!=0 else "Enter name", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="name")
+                
+                st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-top: 0.5rem; margin-bottom: 0.25rem;'>Class / Archetype</label>", unsafe_allow_html=True)
+                st.session_state[f"setup_p{p+1}_class"] = st.selectbox(f"CLASSE P{p+1}", ["Warrior", "Hacker", "Rogue", "Mage"], index=["Warrior", "Hacker", "Rogue", "Mage"].index(c_val) if c_val in ["Warrior", "Hacker", "Rogue", "Mage"] else 0, label_visibility="collapsed", disabled=st.session_state.is_loading_game)
+
+
+        
 
         st.markdown("</div>", unsafe_allow_html=True) # close party box
-
-        st.markdown("<br><br>", unsafe_allow_html=True)
-
-        st.markdown('<div class="start-action-container">', unsafe_allow_html=True)
-        if st.button("INIZIA AVVENTURA", use_container_width=True, disabled=st.session_state.is_loading_game):
-            # Salva logic per engine 
-            st.session_state.setup_theme = st.session_state.selected_theme
-            st.session_state.setup_mood = st.session_state.narrative_style
-            st.session_state.is_loading_game = True
-            st.rerun()
-        st.markdown('</div>', unsafe_allow_html=True)
 
     # --- LOADING SCREEN ---
     if st.session_state.is_loading_game:
