@@ -121,12 +121,16 @@ if "world_state" not in st.session_state:
     # --- Generazione Story Bible (La Musa) PRIMA di tutto ---
     if "story_bible" not in st.session_state:
         with st.spinner("📖 La Musa sta scrivendo la storia del mondo..."):
+            # Se il giocatore non ha inserito un nome campagna, passiamo None per forzare la Musa a inventarne uno originale
+            campaign_name = st.session_state.get("campaign_name", "").strip()
+            session_name_to_pass = campaign_name if campaign_name else None
+
             bible = generate_story_bible(
                 theme_id=theme,
                 theme_description=f"Un mondo a tema {theme} con un tono {mood}",
                 narrative_style=mood,
                 difficulty="Normale",
-                session_name=f"Le Cronache di {p1_name}",
+                session_name=session_name_to_pass,
                 session_id="test_session_001"
             )
             # Salviamo la Bible nella memoria ChromaDB per gli altri agenti

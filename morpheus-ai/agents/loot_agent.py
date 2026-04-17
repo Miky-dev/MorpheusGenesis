@@ -22,6 +22,7 @@ NON sei un narratore. Fornisci i "dati grezzi" dell'oggetto che Apollo userà pe
 4. NIENTE LOOT: Se il giocatore compie un'azione in cui non ha senso trovare nulla (es. "Guardo il cielo"), restituisci 'found_item' come null.
 
 === FORMATO RISPOSTA (JSON STRICT) ===
+LINGUA: Rispondi esclusivamente in LINGUA ITALIANA. Ogni nome di oggetto, descrizione e lore deve essere in italiano.
 Rispondi ESCLUSIVAMENTE con un JSON che rispetti rigorosamente questo schema:
 {
   "found_item": {

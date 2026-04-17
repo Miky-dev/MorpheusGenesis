@@ -25,7 +25,9 @@ OPENING_CINEMATIC: Questo è l'unico campo dove la sintesi è vietata. Scrivi un
 - Difficoltà: Assicurati che le missioni seguano la progressione di pericolo dei luoghi (da Livello 0 a Livello 5).
 
 === 4. PROTOCOLLO JSON (STRICT COMPLIANCE) ===
+- LINGUA: Rispondi esclusivamente in LINGUA ITALIANA. Ogni campo testuale deve essere in italiano accurato ed evocativo.
 - OUTPUT: Solo ed esclusivamente il blocco JSON. Nessun commento.
+- JSON KEYS: Usa SEMPRE doppi apici " per le chiavi.
 - ESCAPE QUOTES: Usa solo apici singoli ' all'interno dei testi.
 - NEWLINES: Usa esclusivamente \\n per i ritorni a capo nel testo.
 
@@ -35,8 +37,8 @@ TITOLO SESSIONE: {session_name}
 OBIETTIVO: Genera la Story Bible definitiva seguendo lo schema Pydantic fornito.
 
 === 6. SCHEMA MANDATORIO (JSON KEYS) ===
-{
-  "title": "Titolo Coerente",
+{{
+  "title": "Titolo Viscerale e Unico ,",
   "narrative_style": "{narrative_style}",
   "main_objective": "Descrizione",
   "backstory": "Testo",
@@ -45,15 +47,15 @@ OBIETTIVO: Genera la Story Bible definitiva seguendo lo schema Pydantic fornito.
   "herald_location_id": "loc_id",
   "herald_npc_reveal": "Citazione drammatica coerente col mood",
   "quest_chain": [
-    { "quest_id": "q1", "title": "...", "description": "...", "giver_npc": "...", "location_hint": "...", "status": "active" }
+    {{ "quest_id": "q1", "title": "...", "description": "...", "giver_npc": "...", "location_hint": "...", "status": "active" }}
   ],
   "key_npcs": [
-    { "name": "...", "role": "...", "location_hint": "..." }
+    {{ "name": "...", "role": "...", "location_hint": "..." }}
   ],
   "key_enemies": [
-    { "name": "...", "role": "...", "location_hint": "..." }
+    {{ "name": "...", "role": "...", "location_hint": "..." }}
   ]
-}
+}}
 """
 
 STYLISTIC_MAPPING = {
@@ -78,11 +80,13 @@ def generate_story_bible(
     
     style_guidelines = STYLISTIC_MAPPING.get(narrative_style, STYLISTIC_MAPPING["Oscuro"])
     
+    session_display_name = session_name if session_name else "DA GENERARE (Titolo Fantastico Originale)"
+
     formatted_instructions = MUSE_INSTRUCTIONS.format(
         narrative_style=narrative_style,
         style_guidelines=style_guidelines,
         theme_id=theme_id,
-        session_name=session_name
+        session_name=session_display_name
     )
 
     agent = Agent(
@@ -135,8 +139,8 @@ def generate_story_bible(
     prompt = (
         f"Genera la Story Bible completa per una nuova sessione a tema {theme_id}. "
         f"MOOD: {narrative_style}. "
-        f"TITOLO SESSIONE: {session_name}. "
-        "Assicurati che OGNI elemento rifletta il tono scelto."
+        f"TITOLO: {session_display_name}. "
+        "Assicurati che OGNI elemento rifletta il tono scelto e che il titolo sia unico e inerente alla storia."
     )
     max_retries = 3
     data = None
@@ -150,9 +154,21 @@ def generate_story_bible(
             if not match: continue
             raw = match.group(0)
             
-            # 2. Pulizia: rimuove virgole finali che rompono il parser Python
-            raw = re.sub(r',\s*([\]}])', r'\1', raw) 
-            data = json.loads(raw)
+            # 2. Pulizia: rimuove virgole finali e gestisce caratteri di controllo
+            raw = re.sub(r',\s*([\]}])', r'\1', raw)
+            
+            # 3. Fallback per newline letterali dentro le stringhe JSON
+            # Questo regex cerca di trovare newline che non sono preceduti da una backslash
+            # ma sono dentro apici doppi. È un po' complesso, quindi proviamo prima strict=False.
+            try:
+                data = json.loads(raw, strict=False)
+            except json.JSONDecodeError:
+                # Se fallisce ancora, proviamo a pulire i newline letterali
+                # NOTA: Questa è una soluzione d'emergenza
+                raw = raw.replace('\n', '\\n').replace('\r', '\\r')
+                # Ma dobbiamo ri-aggiustare i newline strutturali del JSON che abbiamo appena rotto?
+                # In realtà json.loads con strict=False di solito basta per i newline nelle stringhe.
+                data = json.loads(raw, strict=False)
 
             # ---> AGGIUNGI QUESTO CONTROLLO QUI <---
             if "error" in data:
@@ -165,7 +181,11 @@ def generate_story_bible(
             break # Se arriva qui, il JSON è buono!
             
         except Exception as e:
-            if attempt == max_retries - 1: raise e
+            if attempt == max_retries - 1:
+                # Se siamo all'ultimo tentativo, stampiamo il corpo del reato per il debug
+                print(f"DEBUG: Fallimento parsing JSON al tentativo {attempt+1}")
+                print(f"RAW CONTENT PRE-PARSING: {raw[:500]}...") 
+                raise e
             continue
 
 
@@ -194,7 +214,9 @@ def generate_story_bible(
         data.pop("locations")
 
     # 3. SETDEFAULT: Valori di emergenza per i campi obbligatori della StoryBible
-    data.setdefault("title", session_name)
+    # Usiamo session_name solo se non è nullo, altrimenti un titolo di placeholder
+    default_title = session_name if session_name else f"Il Mito di {theme_id}"
+    data.setdefault("title", default_title)
     data.setdefault("main_objective", "Sconosciuto")
     data.setdefault("backstory", "Storia dimenticata")
     data.setdefault("opening_cinematic", "Il viaggio ha inizio...")

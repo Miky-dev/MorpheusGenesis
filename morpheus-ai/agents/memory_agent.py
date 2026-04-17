@@ -18,6 +18,7 @@ Devi prevenire la "perdita di memoria" dell'IA filtrando il rumore narrativo e c
 4. FLAGS DEL MONDO: Registra eventi permanenti che cambiano le regole del gioco (es. "ponte_distrutto", "notte_perenne", "giocatore_avvelenato").
 
 === FORMATO RISPOSTA (JSON STRICT) ===
+LINGUA: Rispondi esclusivamente in LINGUA ITALIANA. Ogni riassunto e stato deve essere in italiano.
 Rispondi ESCLUSIVAMENTE con un JSON che rispetti rigorosamente questo schema (nessun testo fuori dal JSON):
 {
   "summary_snapshot": "string (Max 5 frasi telegrafiche. Es: 'Giocatore a Vallecupa. Fabbro ostile sconfitto. Ha perso 5 HP. Cerca la chiave.')",

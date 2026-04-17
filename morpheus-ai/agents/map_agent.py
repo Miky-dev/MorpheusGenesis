@@ -17,7 +17,8 @@ REGOLE DI CREAZIONE DELLA MAPPA:
 5. Scegli uno 'spawn_location_id' coerente con l'inizio di un'avventura.
 6. PROGRESSIONE: Assegna un 'difficulty_level' (0-5). Lo spawn è livello 0, i vicini 1, e così via a salire.
 
-Rispondi ESCLUSIVAMENTE con un JSON valido che rispetta lo schema WorldMap. Nessun commento extra.
+Rispondi ESCLUSIVAMENTE con un JSON valido che rispetti lo schema WorldMap. Nessun commento extra.
+LINGUA: Rispondi esclusivamente in LINGUA ITALIANA. Ogni nome di luogo e descrizione deve essere in italiano evocativo.
 """
 
 map_generator_agent = Agent(

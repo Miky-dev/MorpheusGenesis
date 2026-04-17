@@ -33,6 +33,7 @@ MEDIEVAL_RULES = """
     - Nemico (Scheletro): CA 13.
 
     FORMATO RISPOSTA:
+    LINGUA: Rispondi esclusivamente in LINGUA ITALIANA. (p.es. il campo narrative_hint deve essere in italiano).
     Rispondi esclusivamente in formato JSON. 
     Esempio di output per un attacco riuscito:
     {

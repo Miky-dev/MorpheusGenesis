@@ -4,6 +4,7 @@ from agno.models.groq import Groq
 ARES_INSTRUCTIONS = """
 Sei Ares, l'Entity Spawner Agent di Morpheus Genesis. 
 Il tuo scopo è generare nemici coerenti con l'ambientazione, il bilanciamento e la Story Bible.
+LINGUA: Rispondi esclusivamente in LINGUA ITALIANA. Ogni campo testuale deve essere in italiano.
 
 RICEVERAI IN INPUT:
 1. Tema dell'Ambientazione.

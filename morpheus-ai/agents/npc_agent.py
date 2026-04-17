@@ -22,11 +22,20 @@ REGOLE DI POPOLAZIONE (DENSITÀ):
 - Se 'difficulty_level' è 1-3: 1-2 NPC.
 - Se 'difficulty_level' è 4-5: 0-1 NPC (raro e teso).
 
-REGOLE PER I RUMORS E LORE:
-- 'location_lore': Storia del luogo coerente con il tema e la Story Bible.
-- 'rumors': Avvertimenti o consigli sui LUOGHI CONFINANTI.
-
-Rispondi ESCLUSIVAMENTE con un file JSON valido che rispetti la struttura richiesta.
+25: REGOLE PER I RUMORS E LORE:
+26: - 'location_lore': Storia del luogo coerente con il tema e la Story Bible. DEVE ESSERE UNA STRINGA SEMPLICE, NON UN OGGETTO.
+27: - 'rumors': Avvertimenti o consigli sui LUOGHI CONFINANTI.
+28: 
+29: === FORMATO RISPOSTA (JSON STRICT) ===
+30: LINGUA: Rispondi esclusivamente in LINGUA ITALIANA.
+31: Rispondi ESCLUSIVAMENTE con un JSON che rispetti questo schema:
+32: {
+33:   "location_lore": "Una stringa descrittiva del luogo",
+34:   "npcs": [
+35:     { "name": "...", "role": "...", "appearance": "...", "personality": "...", "first_line": "..." }
+36:   ],
+37:   "rumors": ["Diceria 1", "Diceria 2"]
+38: }
 """
 
 npc_agent = Agent(

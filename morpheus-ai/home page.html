@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Project Morpheus - Setup Lobby</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .glass-panel {
+            background: rgba(42, 42, 42, 0.4);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+        }
+        .theme-card-active {
+            background: linear-gradient(135deg, rgba(129, 214, 190, 0.1), rgba(34, 126, 105, 0.2));
+            border: 1px solid rgba(129, 214, 190, 0.3);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#3f4945",
+                        "error": "#ffb4ab",
+                        "on-background": "#e5e2e1",
+                        "outline": "#88938e",
+                        "tertiary": "#ffb4a6",
+                        "on-tertiary-fixed-variant": "#72352a",
+                        "primary-fixed": "#9df3d9",
+                        "on-tertiary-container": "#fff3f1",
+                        "on-error": "#690005",
+                        "inverse-primary": "#006b57",
+                        "on-tertiary": "#551f16",
+                        "on-tertiary-fixed": "#3a0b05",
+                        "inverse-on-surface": "#313030",
+                        "on-secondary": "#1a352e",
+                        "on-surface": "#e5e2e1",
+                        "surface-container-high": "#2a2a2a",
+                        "tertiary-fixed-dim": "#ffb4a6",
+                        "on-surface-variant": "#bec9c4",
+                        "on-primary-fixed-variant": "#005141",
+                        "background": "#131313",
+                        "on-secondary-fixed": "#042019",
+                        "surface-tint": "#81d6be",
+                        "error-container": "#93000a",
+                        "on-secondary-container": "#a1bfb4",
+                        "secondary-fixed-dim": "#afcdc2",
+                        "on-primary-container": "#d4fff0",
+                        "primary-container": "#227e69",
+                        "secondary-container": "#334e46",
+                        "surface-bright": "#393939",
+                        "surface-variant": "#353534",
+                        "surface-container-lowest": "#0e0e0e",
+                        "inverse-surface": "#e5e2e1",
+                        "on-primary": "#00382c",
+                        "on-secondary-fixed-variant": "#314c44",
+                        "surface-container-low": "#1c1b1b",
+                        "tertiary-container": "#a45d50",
+                        "on-primary-fixed": "#002019",
+                        "surface-dim": "#131313",
+                        "tertiary-fixed": "#ffdad4",
+                        "surface": "#131313",
+                        "on-error-container": "#ffdad6",
+                        "secondary-fixed": "#cae9de",
+                        "surface-container": "#201f1f",
+                        "secondary": "#afcdc2",
+                        "surface-container-highest": "#353534",
+                        "primary-fixed-dim": "#81d6be",
+                        "primary": "#81d6be"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body min-h-screen flex flex-col antialiased selection:bg-primary-container selection:text-on-primary-container">
+<!-- Top Navigation (Shell Component) -->
+<nav class="bg-neutral-950 flex justify-between items-center px-8 w-full h-16 shadow-[0_4px_24px_rgba(0,0,0,0.2)] relative z-50">
+<div class="flex items-center space-x-8">
+<span class="font-headline text-2xl font-bold tracking-tight text-primary">The Archive</span>
+<div class="hidden md:flex space-x-6">
+<!-- Navigation mapping: Setup/Lobby doesn't strongly match, defaulting to inactive for all to show it's a specific setup screen, but keeping structure -->
+<a class="text-neutral-400 hover:text-primary transition-colors duration-200 font-label" href="#">Party</a>
+<a class="text-neutral-400 hover:text-primary transition-colors duration-200 font-label" href="#">Combat</a>
+<a class="text-neutral-400 hover:text-primary transition-colors duration-200 font-label" href="#">World</a>
+</div>
+</div>
+<div class="flex items-center space-x-4">
+<button class="text-neutral-400 hover:text-primary transition-colors duration-200 scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">notifications</span>
+</button>
+<button class="text-neutral-400 hover:text-primary transition-colors duration-200 scale-95 duration-150">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">settings</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="flex-1 overflow-y-auto relative py-12 px-4 md:px-8 lg:px-12">
+<!-- Abstract background accent -->
+<div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-surface-container-low to-transparent opacity-50 pointer-events-none rounded-bl-full z-0"></div>
+<div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12">
+<!-- Left Column: Themes & Players -->
+<div class="lg:col-span-7 space-y-12">
+<!-- Header -->
+<header class="space-y-4">
+<p class="font-label text-primary uppercase tracking-widest text-sm">Project Morpheus</p>
+<h1 class="font-headline text-5xl lg:text-6xl font-bold tracking-tight leading-tight">Configure<br/>Your Expedition</h1>
+<p class="font-body text-on-surface-variant text-lg leading-relaxed max-w-xl">
+                        Select the thematic foundation of your narrative and define the adventurers who will traverse this realm.
+                    </p>
+</header>
+<!-- Campaign Settings Section -->
+<section class="space-y-6">
+<h2 class="font-headline text-2xl font-semibold flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary">settings_applications</span>
+<span>Campaign Settings</span>
+</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block font-label text-sm text-on-surface-variant mb-2">Campaign Name</label>
+<input class="w-full bg-surface-container-high border-none rounded-xl text-on-surface font-body py-3 px-4 focus:ring-1 focus:ring-primary/40 placeholder-on-surface-variant/50 transition-shadow" placeholder="e.g. The Obsidian Crown" type="text"/>
+</div>
+<div>
+<label class="block font-label text-sm text-on-surface-variant mb-2">Difficulty</label>
+<div class="flex items-center space-x-1 bg-surface-container-high p-1 rounded-xl w-full">
+<button class="flex-1 py-2.5 text-sm font-label rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors">Easy</button>
+<button class="flex-1 py-2.5 text-sm font-label rounded-lg bg-surface-container-lowest text-primary shadow-sm border border-outline-variant/30 transition-colors">Normal</button>
+<button class="flex-1 py-2.5 text-sm font-label rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors">Hard</button>
+<button class="flex-1 py-2.5 text-sm font-label rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-highest transition-colors">Epic</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Narrative Themes Section -->
+<section class="space-y-6">
+<h2 class="font-headline text-2xl font-semibold flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary">auto_stories</span>
+<span>Narrative Theme</span>
+</h2>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<!-- Theme Card 1 (Active) -->
+<button class="flex flex-col items-center justify-center p-6 rounded-xl shadow-[0_8px_16px_rgba(0,0,0,0.2)] transition-all duration-300 relative overflow-hidden group">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDbWQubtqL5TSapDqpXUL5JzF9ULGqEVHPjd1oWGR7tDuxLoMPnXQkHuj57cQtTNUjZJsBeklZmxcKmYVVKYSjZKq0G-vGTS6LH4AwP7MlqN4DkogdS3TJQglstxap_hk6i4xlIoREVCxuV2UFw5daN29goJQAaaqULI-jtuVdbkYrcDAFvNEeQ_gP7XFKAWuvPPUHVLXmu3X3h85_dlAL_nG58khD-s81bsT6Rj98hj8kPTaZoCGbMurQX7euT3bNfZq8hcC9XfZc');"></div>
+<div class="absolute inset-0 bg-black/60 group-hover:bg-black/50 transition-colors duration-300"></div>
+<div class="absolute inset-0 theme-card-active z-10 pointer-events-none"></div>
+<div class="relative z-20 flex flex-col items-center">
+<span class="material-symbols-outlined text-3xl mb-3 text-primary drop-shadow-md" style="font-variation-settings: 'FILL' 1;">swords</span>
+<span class="font-label text-sm font-medium text-primary drop-shadow-md">Fantasy</span>
+</div>
+</button>
+<!-- Theme Card 2 -->
+<button class="flex flex-col items-center justify-center p-6 rounded-xl bg-surface-container-low transition-all duration-300 relative overflow-hidden group ring-1 ring-white/5 hover:ring-white/20">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB6tjCCHnSp_5193HTFpb-qywgnrvmoqViyaHuslEKZZAMbwO2t54eQwpuYaDw6YsSF4zaKI6B45xXJRTxSu2mL5uxZEhK32XASkchAOttvXsisdcIzazk1-MzjV3Eadp1GJPejDefnHP6euUfvLLG5nTY7UNnl7PZ3jjj_77igylLFbxzd3zAf3-syggkVkqYt47P_NRIC2U6XWJd20bV1yUH8m85Cvs-l1mxV2rIycNV9gM0f853Wcw4n06ucfESAgixJkkIg-1E');"></div>
+<div class="absolute inset-0 bg-black/70 group-hover:bg-black/50 transition-colors duration-300"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-3xl mb-3 text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md" style="font-variation-settings: 'FILL' 0;">memory</span>
+<span class="font-label text-sm font-medium text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md">Cyberpunk</span>
+</div>
+</button>
+<!-- Theme Card 3 -->
+<button class="flex flex-col items-center justify-center p-6 rounded-xl bg-surface-container-low transition-all duration-300 relative overflow-hidden group ring-1 ring-white/5 hover:ring-white/20">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAdRjdFIvBrYbSilSCXIEdVl6pnU1qOYRvqtdlkTrdYIz02iY0Yb0TdkCBpOUEeb7bRIIfJfBJZBAlp0s3dFFpNWUy9oanxX4X13FnNYAy-3uP7VhEdVdJ4kT3PH09SQ04UcrnDpzpPtpTbe-0-Qz6eEBF47FeFRzSADFgxO0wS0CosZwbRsffa-SFVxREPJzKzHJfi8kUp8tUMlhpMD3t6EGzwyscaxhuVy0SB_87ddDbkO6IH0a0IGiSnsQci0h9lglo5kkzK8qo');"></div>
+<div class="absolute inset-0 bg-black/70 group-hover:bg-black/50 transition-colors duration-300"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-3xl mb-3 text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md" style="font-variation-settings: 'FILL' 0;">rocket_launch</span>
+<span class="font-label text-sm font-medium text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md">Sci-Fi</span>
+</div>
+</button>
+<!-- Theme Card 4 -->
+<button class="flex flex-col items-center justify-center p-6 rounded-xl bg-surface-container-low transition-all duration-300 relative overflow-hidden group ring-1 ring-white/5 hover:ring-white/20">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCpMT6Q_DSJVOC6HAlW5Ap0IAUaF9imuhvGeo7Z-tvJmdv6ip4Ep0DZlTEeM6b6CrYT2T_gnUqMubOGTz7oFZGXXdozjZ8mkoVU3YwrEva4u4mx9sxeQVNxIVsWV-KOymkyntxRU9u2avWb_satKUDgIW4KtnhpbuqGQDepHOTmRJC2tnq4C03AcZAyJ9wxdK-WycIkjibstYLxAYCPJLvUDF1Ld0eMXJxE_amdGFWqkMJj64zCXfLXbDJXgA71m2dvGoel-Aa9HkA');"></div>
+<div class="absolute inset-0 bg-black/70 group-hover:bg-black/50 transition-colors duration-300"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-3xl mb-3 text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md" style="font-variation-settings: 'FILL' 0;">psychiatry</span>
+<span class="font-label text-sm font-medium text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md">Horror</span>
+</div>
+</button>
+<!-- Theme Card 5 -->
+<button class="flex flex-col items-center justify-center p-6 rounded-xl bg-surface-container-low transition-all duration-300 relative overflow-hidden group ring-1 ring-white/5 hover:ring-white/20">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBp76HBktJCPq5144vFyy_0A04caHS6N9ZLrapDudUG61OrJHVL2JoiRRHzud2JEZnoM1EyN4kW_jhXxDk2R4XhHstmr8BPZ4Isp0Yow6HusqbOnqGCx-eYp75D-s8HVr3AuAtB8LPxuc7XQBzZZPadptZBgEaUEjeTyz6tiqSr6DIBuwVNeIWz1FrWLCIkS_qz97kJ22wCLsSRzXztUtEn2-gpuN_90uGRpVZTExqVjX0zs1Y-ijDEd2j4qPb2Jzs79nm-H12z3Wk');"></div>
+<div class="absolute inset-0 bg-black/70 group-hover:bg-black/50 transition-colors duration-300"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-3xl mb-3 text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md" style="font-variation-settings: 'FILL' 0;">local_fire_department</span>
+<span class="font-label text-sm font-medium text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md">Post-Apocalyptic</span>
+</div>
+</button>
+<!-- Theme Card 6 -->
+<button class="flex flex-col items-center justify-center p-6 rounded-xl bg-surface-container-low transition-all duration-300 relative overflow-hidden group ring-1 ring-white/5 hover:ring-white/20">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCZM8RgZZJPO5dg93xTUeCiRxFrpbrNAvS9yhMgLG6UAbRteGUxkPyLTbWiND1CwECT93L-V3lJmyBiG3ow4EuTz-QwfXDJIYXphhDmZL73r5iT5XQH07tfXhYk8ErS4tNd6PTK8B4ZosLVuoDQbvNjanr9e7m-j1CUuPkbvQ-eGaxi6iKW22sRLwwOzj_g9Sn8Kv65zRmh760GcDLTfNV5p5SK8Uk3S0gg5Wd0zFFXC8po3ubVqlVK_A5mS_f4Htf0VO21YeJ7PWY');"></div>
+<div class="absolute inset-0 bg-black/70 group-hover:bg-black/50 transition-colors duration-300"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-3xl mb-3 text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md" style="font-variation-settings: 'FILL' 0;">castle</span>
+<span class="font-label text-sm font-medium text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md">Steampunk</span>
+</div>
+</button>
+<!-- Theme Card 7 -->
+<button class="flex flex-col items-center justify-center p-6 rounded-xl bg-surface-container-low transition-all duration-300 relative overflow-hidden group ring-1 ring-white/5 hover:ring-white/20">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDkRe1YyMwY2WsbNjxmq-YrwPBpzV6JSQcnaRg86Z7RqTvw3qht0OtgW91xQrHb3HZC7gxTEAswEzDReUPU2IiXlBGSpR6h5fLCmoYkRBqjyU2Sy_oI2iEvZzm_vLMOvuImYVdfrYFIB6CooIuclzDwK5VotgcgpP-uWGMCd1dN9dswNX2G6D4wg5GfIDtdbFLGbESFH4t2GZ4uWpDObnhqPnaQ6XKdyFhfJYp0Wn9bjwHD5huNuNi2n89-ryndXpooOoxaKe0KNRQ');"></div>
+<div class="absolute inset-0 bg-black/70 group-hover:bg-black/50 transition-colors duration-300"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-3xl mb-3 text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md" style="font-variation-settings: 'FILL' 0;">mystery</span>
+<span class="font-label text-sm font-medium text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md">Mystery</span>
+</div>
+</button>
+<!-- Theme Card 8 -->
+<button class="flex flex-col items-center justify-center p-6 rounded-xl bg-surface-container-low transition-all duration-300 relative overflow-hidden group ring-1 ring-white/5 hover:ring-white/20">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD_tRVxWEQ8EEhoBVgatHN6AtaSBLQqO0skz2C1bF6htlaiyG14R5nLTm1AYh5blY2mqtgWYcehwP4ksu5HEwPEHvjnwtZCHBvlpqgW8r-wyM2nGBr9tHoODDM-7ZWg0_zA9QdwEItuRDAMlsPutFLddwY7ogTuNm0kHJsYKTAx6nxOZlXkO7TvrP2cEKgPo6snBtievKToM96V2H1Fobl8rpcehfuICBG6KkTq1vFlR-e1ed5RfbjhNibkEhbxq6reu1Jj7nSqdYA');"></div>
+<div class="absolute inset-0 bg-black/70 group-hover:bg-black/50 transition-colors duration-300"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="material-symbols-outlined text-3xl mb-3 text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md" style="font-variation-settings: 'FILL' 0;">eco</span>
+<span class="font-label text-sm font-medium text-on-surface-variant group-hover:text-white transition-colors drop-shadow-md">Wilderness</span>
+</div>
+</button>
+</div>
+</section>
+</div>
+<!-- Right Column: Player Roster & Actions -->
+<div class="lg:col-span-5 space-y-8">
+<!-- Party Setup Container -->
+<div class="bg-surface-container-high rounded-2xl p-8 shadow-[0_24px_48px_rgba(0,0,0,0.4)] relative overflow-hidden">
+<!-- Decorative subtle gradient -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary-container opacity-10 rounded-full blur-3xl pointer-events-none"></div>
+<div class="flex justify-between items-end mb-8">
+<h2 class="font-headline text-2xl font-semibold flex items-center space-x-3">
+<span class="material-symbols-outlined text-primary">groups</span>
+<span>The Party</span>
+</h2>
+<!-- Player Count Selector -->
+<div class="flex items-center space-x-2 bg-surface-container-lowest p-1.5 rounded-lg">
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors"><span class="font-label text-sm">1</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary-container text-on-primary-container transition-colors shadow-sm"><span class="font-label text-sm font-medium">2</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors"><span class="font-label text-sm">3</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors"><span class="font-label text-sm">4</span></button>
+</div>
+</div>
+<!-- Player Entries -->
+<div class="space-y-6">
+<!-- Player 1 -->
+<div class="bg-surface-container-low p-5 rounded-xl border border-transparent focus-within:border-outline-variant/20 transition-all duration-300">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label text-xs uppercase tracking-wider text-on-surface-variant">Player 01</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">person</span>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block font-label text-sm text-on-surface-variant mb-1.5">Character Name</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg text-on-surface font-body py-2.5 px-4 focus:ring-1 focus:ring-primary/40 placeholder-on-surface-variant/50 transition-shadow" placeholder="Enter name" type="text"/>
+</div>
+<div>
+<label class="block font-label text-sm text-on-surface-variant mb-1.5">Class / Archetype</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg text-on-surface font-body py-2.5 px-4 focus:ring-1 focus:ring-primary/40 placeholder-on-surface-variant/50 transition-shadow" placeholder="e.g. Rogue, Hacker" type="text"/>
+</div>
+</div>
+</div>
+<!-- Player 2 -->
+<div class="bg-surface-container-low p-5 rounded-xl border border-transparent focus-within:border-outline-variant/20 transition-all duration-300 relative opacity-80 hover:opacity-100">
+<div class="flex items-center justify-between mb-4">
+<span class="font-label text-xs uppercase tracking-wider text-on-surface-variant">Player 02</span>
+<span class="material-symbols-outlined text-on-surface-variant text-sm">person</span>
+</div>
+<div class="space-y-4">
+<div>
+<label class="block font-label text-sm text-on-surface-variant mb-1.5">Character Name</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg text-on-surface font-body py-2.5 px-4 focus:ring-1 focus:ring-primary/40 placeholder-on-surface-variant/30 transition-shadow" placeholder="Awaiting entry..." type="text"/>
+</div>
+<div>
+<label class="block font-label text-sm text-on-surface-variant mb-1.5">Class / Archetype</label>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg text-on-surface font-body py-2.5 px-4 focus:ring-1 focus:ring-primary/40 placeholder-on-surface-variant/30 transition-shadow" placeholder="..." type="text"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Button -->
+<div class="pt-4">
+<button class="w-full group relative flex items-center justify-center p-6 rounded-xl overflow-hidden bg-gradient-to-br from-primary to-primary-container text-on-primary shadow-[0_12px_24px_rgba(34,126,105,0.3)] hover:shadow-[0_16px_32px_rgba(34,126,105,0.4)] transition-all duration-300 transform hover:-translate-y-1">
+<div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+<span class="font-headline text-xl font-bold tracking-wide relative z-10 mr-3">Inizia Avventura</span>
+<span class="material-symbols-outlined relative z-10 transition-transform duration-300 group-hover:translate-x-2" style="font-variation-settings: 'FILL' 1;">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Mobile Only) -->
+<nav class="md:hidden bg-[#131313]/70 backdrop-blur-xl shadow-[0_-24px_48px_rgba(0,0,0,0.4)] fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-2 rounded-t-3xl">
+<a class="flex flex-col items-center justify-center text-neutral-400 px-6 py-2 hover:text-primary duration-200 scale-110 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">casino</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Roll Dice</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-400 px-6 py-2 hover:text-primary duration-200 scale-110 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">edit_note</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Quick Note</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-400 px-6 py-2 hover:text-primary duration-200 scale-110 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">emergency</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Condition</span>
+</a>
+<a class="flex flex-col items-center justify-center text-neutral-400 px-6 py-2 hover:text-primary duration-200 scale-110 active:scale-90 transition-transform" href="#">
+<span class="material-symbols-outlined mb-1 text-2xl">music_note</span>
+<span class="font-label text-[10px] uppercase tracking-wider">Music</span>
+</a>
+</nav>
+</body></html>

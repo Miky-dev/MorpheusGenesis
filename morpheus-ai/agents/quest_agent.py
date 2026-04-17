@@ -26,6 +26,7 @@ Il tuo unico scopo è monitorare la progressione narrativa e convalidare il comp
 - Se un luogo citato non è presente in Mappa Luoghi Esistenti, non sbloccarlo.
 
 === FORMATO RISPOSTA (JSON STRICT) ===
+LINGUA: Rispondi esclusivamente in LINGUA ITALIANA (ogni testo logico e descrittivo).
 Rispondi ESCLUSIVAMENTE con un JSON minificato che rispetti rigorosamente lo schema QuestUpdate. Se non ci sono cambiamenti o scoperte, gli ID devono essere null o un array vuoto."""
 
 quest_agent = Agent(
