@@ -42,7 +42,7 @@ Rispondi ESCLUSIVAMENTE con un JSON che rispetti rigorosamente questo schema:
 
 loot_agent = Agent(
     name="Hephaestus",
-    model=Groq(id="llama-3.3-70b-versatile", temperature=0.6), 
+    model=Groq(id="openai/gpt-oss-20b", temperature=0.6), 
     instructions=HEPHAESTUS_INSTRUCTIONS,
     output_schema=LootResponse,
 )

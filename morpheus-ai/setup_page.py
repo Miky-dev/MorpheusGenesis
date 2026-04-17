@@ -10,6 +10,8 @@ def init_session_state():
         st.session_state.campaign_name = ""
     if 'difficulty' not in st.session_state:
         st.session_state.difficulty = "Normale"
+    if 'narrative_style' not in st.session_state:
+        st.session_state.narrative_style = "Oscuro"
     if 'is_loading_game' not in st.session_state:
         st.session_state.is_loading_game = False
 
@@ -136,6 +138,19 @@ def render_setup_page():
         st.session_state.difficulty = st.select_slider("LIVELLO DI SFIDA", options=["Storia", "Normale", "Difficile", "Incubo"], value=st.session_state.difficulty, disabled=st.session_state.is_loading_game)
     with col_sys3:
         st.session_state.num_players = st.number_input("NUMERO GIOCATORI", min_value=1, max_value=4, value=st.session_state.num_players, disabled=st.session_state.is_loading_game)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Nuova sottomissione per il Mood
+    st.markdown("🎭 **Tono Narrativo**")
+    mood_options = ["Oscuro", "Eroico", "Divertente", "Tragico", "Misterioso", "Guerra", "Filosofico", "Romantico"]
+    st.session_state.narrative_style = st.selectbox(
+        "Seleziona il mood dominante della tua avventura",
+        options=mood_options,
+        index=mood_options.index(st.session_state.narrative_style),
+        disabled=st.session_state.is_loading_game,
+        label_visibility="collapsed"
+    )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -308,6 +323,7 @@ def render_setup_page():
             st.session_state.setup_p1_name = st.session_state.get("p1_name", "Valerius")
             st.session_state.setup_p1_class = st.session_state.get("p1_class", "Warrior")
             st.session_state.setup_theme = st.session_state.selected_theme
+            st.session_state.setup_mood = st.session_state.narrative_style
             # ----------------------------------
             
             st.session_state.is_loading_game = True

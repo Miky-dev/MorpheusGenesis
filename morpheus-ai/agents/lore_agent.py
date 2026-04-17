@@ -6,96 +6,96 @@ import json
 import re
 
 MUSE_INSTRUCTIONS = """
-Sei La Musa, Lead System Designer e Architetto Narrativo di Morpheus Genesis. Non sei un romanziere; sei il creatore del "BluePrint" logico di un mondo oscuro, brutale e meccanicamente coerente. Il tuo compito è forgiare lo scheletro d'acciaio (Story Bible) su cui gireranno gli agenti di runtime.
+Sei La Musa, Lead System Designer e Architetto Narrativo di Morpheus Genesis. Non sei un romanziere; sei il creatore del "BluePrint" logico di un mondo coerente, ma con una forte impronta stilistica. Il tuo compito è forgiare lo scheletro d'acciaio (Story Bible) su cui gireranno gli agenti di runtime.
 
-OBIETTIVO SUPREMO
-Genera una Story Bible completa, densa e interconnessa. Ogni stringa deve trasudare atmosfera, ma ogni dato deve essere una variabile pronta all'uso per il codice.
- 
-1. VINCOLI DI STRUTTURA (OBBLIGATORI)
+=== 1. STILE E TONO (DIRETTIVA SUPREMA) ===
+MOOD RICHIESTO: {narrative_style}
+GUIDA STILISTICA: {style_guidelines}
+
+=== 2. VINCOLI DI STRUTTURA (OBBLIGATORI) ===
 Per evitare generazioni pigre o incomplete, rispetta rigorosamente questi quantitativi:
 QUEST_CHAIN: Genera esattamente 10 sotto-missioni (ID da q1 a q10). Ogni missione deve essere la conseguenza logica della precedente.
-KEY_NPCS: Inserisci almeno 4 personaggi principali (incluso l'Araldo). Ognuno deve avere un segreto compromettente o un'agenda egoistica.
+KEY_NPCS: Inserisci almeno 4 personaggi principali (incluso l'Araldo). Ognuno deve avere un segreto o un'agenda coerente con il mood.
 KEY_ENEMIES: Inserisci almeno 3 entità antagoniste o boss, ognuno legato a una specifica missione della catena.
-OPENING_CINEMATIC: Questo è l'unico campo dove la sintesi è vietata. Scrivi un monologo epico, immersivo e brutale di almeno 200 parole. Usa dettagli sensoriali (odori, suoni, freddo, sporcizia).
+OPENING_CINEMATIC: Questo è l'unico campo dove la sintesi è vietata. Scrivi un monologo epico e immersivo di almeno 200 parole che introduca il giocatore al mondo seguendo il MOOD RICHIESTO.
 
-2. LOGICA DI INTERCONNESSIONE (WEB-DESIGN)
-Il mondo deve essere una rete, non una lista:
-L'Araldo: Il herald_npc_name DEVE essere presente nella lista key_npcs e la sua posizione herald_location_id DEVE corrispondere a un ID esistente in world_map (se generata) o essere un ID logico (es. loc_1).
-Referenzialità: Se la missione q1 dice di recuperare un oggetto da un NPC, quell'NPC deve esistere nell'array dei personaggi.
-Difficoltà: Assicurati che le missioni seguano la progressione di pericolo dei luoghi (da Livello 0 a Livello 5).
+=== 3. LOGICA DI INTERCONNESSIONE ===
+- L'Araldo: Il herald_npc_name DEVE essere presente nella lista key_npcs.
+- Referenzialità: Se la missione q1 cita un oggetto o un NPC, questi devono essere definiti nei relativi array.
+- Difficoltà: Assicurati che le missioni seguano la progressione di pericolo dei luoghi (da Livello 0 a Livello 5).
 
-3. STILE E TONO
-Narrativa: Dark, spietato, "High Stakes". Il giocatore deve sentire che ogni scelta ha un prezzo di sangue o risorse.
-Araldo: Il campo herald_npc_reveal deve contenere una citazione diretta tra virgolette, drammatica e criptica. Non descrivere cosa dice, SCRIVI cosa dice.
-Telegrafia: Fuori dalla cinematic, usa nomi e descrizioni "punchy" (es: invece di "Un vecchio magazzino abbandonato", usa "Nido di Ruggine e Cavi").
+=== 4. PROTOCOLLO JSON (STRICT COMPLIANCE) ===
+- OUTPUT: Solo ed esclusivamente il blocco JSON. Nessun commento.
+- ESCAPE QUOTES: Usa solo apici singoli ' all'interno dei testi.
+- NEWLINES: Usa esclusivamente \\n per i ritorni a capo nel testo.
 
-4. PROTOCOLLO JSON (STRICT COMPLIANCE)
-Qualsiasi deviazione da queste regole distruggerà il parser:
-OUTPUT: Solo ed esclusivamente il blocco JSON. Nessun commento, nessuna introduzione, nessuna firma.
-ESCAPE QUOTES: È PROIBITO usare virgolette doppie " all'interno dei testi. Esempio Errato: "disse "ciao"". Esempio Corretto: "disse 'ciao'". Usa solo apici singoli per i dialoghi.
-NEWLINES: Non usare invii reali. Per i ritorni a capo nel testo, usa esclusivamente \n.
-INTEGRITÀ: Non lasciare array vuoti []. Se il campo è richiesto, deve essere popolato con dati di alta qualità.
-
-INPUT DI GENERAZIONE
+=== 5. INPUT DI GENERAZIONE ===
 TEMA: {theme_id}
 TITOLO SESSIONE: {session_name}
 OBIETTIVO: Genera la Story Bible definitiva seguendo lo schema Pydantic fornito.
 
-=== 5. SCHEMA MANDATORIO (JSON KEYS) ===
-Rispetta rigorosamente questi nomi di chiavi. Non inventare sinonimi:
+=== 6. SCHEMA MANDATORIO (JSON KEYS) ===
 {
-  "title": "Titolo Epico",
+  "title": "Titolo Coerente",
+  "narrative_style": "{narrative_style}",
   "main_objective": "Descrizione",
   "backstory": "Testo",
   "opening_cinematic": "Testo lungo +200 parole",
   "herald_npc_name": "Nome",
   "herald_location_id": "loc_id",
-  "herald_npc_reveal": "Citazione",
+  "herald_npc_reveal": "Citazione drammatica coerente col mood",
   "quest_chain": [
-    {
-      "quest_id": "q1", 
-      "title": "Titolo Missione", 
-      "description": "Obiettivo", 
-      "giver_npc": "Nome NPC", 
-      "location_hint": "Nome Luogo", 
-      "status": "active"
-    }
+    { "quest_id": "q1", "title": "...", "description": "...", "giver_npc": "...", "location_hint": "...", "status": "active" }
   ],
   "key_npcs": [
-    {
-      "name": "Nome", 
-      "role": "Ruolo", 
-      "location_hint": "Luogo dove si trova"
-    }
+    { "name": "...", "role": "...", "location_hint": "..." }
   ],
   "key_enemies": [
-    {
-      "name": "Nome", 
-      "role": "Ruolo Boss", 
-      "location_hint": "Dove trovarlo"
-    }
+    { "name": "...", "role": "...", "location_hint": "..." }
   ]
 }
 """
 
+STYLISTIC_MAPPING = {
+    "Oscuro": "Tono cupo, brutale, spietato. Ambientazioni oppressive, pericoli mortali e scelte morali difficili. Il giocatore deve sentire che ogni scelta ha un prezzo di sangue.",
+    "Eroico": "Tono epico, ispiratore, avventuroso. Lotte tra il bene e il male, atti di coraggio, onore e trionfo finale. Linguaggio magniloquente e nobile.",
+    "Divertente": "Tono ironico, assurdo, grottesco. Dialoghi brillanti, situazioni bizzarre, nemici ridicoli ma pericolosi e umorismo nero. Non aver paura dell'esagerazione.",
+    "Tragico": "Tono melancolico, fatale, triste. Senso di ineluttabilità, perdite personali, bellezza in decadenza ed eroismo destinato al fallimento.",
+    "Misterioso": "Tono criptico, noir, investigativo. Enigmi, segreti nascosti, atmosfera di sospetto e colpi di scena. Nulla è come sembra.",
+    "Guerra": "Tono militare, crudo, tattico. Conflitti di massa, campi di battaglia devastati, onore tra commilitoni e il peso del comando.",
+    "Filosofico": "Tono intellettuale, astratto, metaforico. Domande sull'esistenza, morali profonde, simbolismo e riflessioni sul senso del viaggio.",
+    "Romantico": "Tono passionale, sentimentale, cavalleresco. Relazioni intense, promesse d'amore, conflitti del cuore e bellezza struggente."
+}
+
 def generate_story_bible(
     theme_id: str,
     theme_description: str,
+    narrative_style: str,
     difficulty: str,
     session_name: str,
     session_id: str
 ) -> StoryBible:
     
+    style_guidelines = STYLISTIC_MAPPING.get(narrative_style, STYLISTIC_MAPPING["Oscuro"])
+    
+    formatted_instructions = MUSE_INSTRUCTIONS.format(
+        narrative_style=narrative_style,
+        style_guidelines=style_guidelines,
+        theme_id=theme_id,
+        session_name=session_name
+    )
+
     agent = Agent(
         name="Muse",
-        model=Groq(id="openai/gpt-oss-120b", temperature=0.8),
-        instructions=MUSE_INSTRUCTIONS
+        model=Groq(id="openai/gpt-oss-120b", temperature=0.85), # Temperatura leggermente alzata per favorire la creatività del mood
+        instructions=formatted_instructions
     ) 
     
     # Schema completo con tutti i campi richiesti dal tuo Pydantic
     schema = {
         "title": session_name,
         "theme_id": theme_id,
+        "narrative_style": narrative_style,
         "premise": "Breve premessa",
         "main_conflict": "Conflitto principale",
         "main_objective": "Obiettivo finale",
@@ -134,10 +134,9 @@ def generate_story_bible(
     
     prompt = (
         f"Genera la Story Bible completa per una nuova sessione a tema {theme_id}. "
+        f"MOOD: {narrative_style}. "
         f"TITOLO SESSIONE: {session_name}. "
-        "ATTENZIONE: Se le liste 'quest_chain' (10 missioni), 'key_npcs' (4+) o 'key_enemies' (3+) "
-        "risulteranno vuote o incomplete, il sistema rigetterà la tua risposta. "
-        "Assicurati che 'herald_npc_reveal' sia una battuta di dialogo drammatica."
+        "Assicurati che OGNI elemento rifletta il tono scelto."
     )
     max_retries = 3
     data = None
@@ -202,6 +201,7 @@ def generate_story_bible(
     data.setdefault("herald_npc_name", "Guida Misteriosa")
     data.setdefault("herald_location_id", "loc_1")
     data.setdefault("herald_npc_reveal", "'Il destino ti attende.'")
+    data.setdefault("narrative_style", narrative_style)
     
     # Assicuriamoci che le liste dei personaggi esistano
     data.setdefault("key_npcs", [])
@@ -235,8 +235,9 @@ def save_bible_to_memory(bible: StoryBible, memory: DungeonMemory):
     conflict = getattr(bible, 'main_conflict', getattr(bible, 'main_objective', 'Sopravvivere'))
     
     # 1. Premessa e conflitto
+    style = getattr(bible, 'narrative_style', 'Oscuro')
     memory.add_event(
-        f"LORE: {premise}. CONFLITTO: {conflict}", 
+        f"LORE: {premise}. CONFLITTO: {conflict}. MOOD: {style}", 
         turn=0, 
         event_type="story_bible_core"
     )

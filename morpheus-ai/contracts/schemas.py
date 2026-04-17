@@ -46,6 +46,7 @@ class Character:
     max_hp: int
     ac: int = 12  # Classe Armatura base
     level: int = 1
+    inventory: list[Item] = field(default_factory=list)
     # Bonus di attacco calcolati in base alla classe
     @property
     def attack_bonus(self) -> int:
@@ -71,8 +72,6 @@ class WorldState:
     active_npc_name: Optional[str] = None
     # Nuovo: Registro per i messaggi di combattimento
     combat_log: list[str] = field(default_factory=list)
-
-    inventory: list[Item] = field(default_factory=list)
     memory_summary: str = "" # Conterrà il 'summary_snapshot' di Mnemosine
 
 class StoryScene(BaseModel): 
@@ -141,6 +140,7 @@ class QuestCharacterBrief(BaseModel):
 
 class StoryBible(BaseModel):
     title: str = Field(description="Titolo epico dell'avventura")
+    narrative_style: str = Field(description="Il mood o tono della storia scelto dal giocatore")
     main_objective: str = Field(description="L'obiettivo finale del giocatore in 1 frase chiara e motivante")
     backstory: str = Field(description="Contesto narrativo del mondo: cosa è successo, perché è importante (2-3 frasi)")
     opening_cinematic: str = Field(description="Un lungo paragrafo cinematografico (almeno 200 parole) che narra la lore completa, rivela l'obiettivo principale, spiega le regole del mondo (esplorazione, combattimento, NPC, oggetti) e cosa il giocatore può trovare nell'avventura. Deve essere epico, immersivo e in seconda persona.")
@@ -199,11 +199,13 @@ class NavigationResult(BaseModel):
     discovered_ids: List[str] = Field(default_factory=list, description="ID di nuovi luoghi citati nei dialoghi o appena scoperti")
 
 # --- CHRONOS (Quest Agent) ---
+# --- CHRONOS (Quest Agent) ---
 class QuestUpdate(BaseModel):
     completed_id: Optional[str] = Field(default=None, description="ID della missione appena completata")
     unlocked_id: Optional[str] = Field(default=None, description="ID di una nuova missione sbloccata")
     logic_reasoning: str = Field(description="Spiegazione logica del perché lo stato è cambiato o rimasto fermo")
     objective_delta: Optional[str] = Field(default=None, description="Nota per il DM: come è cambiato l'obiettivo a breve termine")
+    discovered_location_ids: List[str] = Field(default_factory=list, description="Lista degli 'id_name' dei luoghi scoperti analizzando i dialoghi e indizi attuali")
 
 # --- HEPHAESTUS (Loot Agent) ---
 

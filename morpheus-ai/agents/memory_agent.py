@@ -34,7 +34,7 @@ Rispondi ESCLUSIVAMENTE con un JSON che rispetti rigorosamente questo schema (ne
 
 memory_agent = Agent(
     name="Mnemosine",
-    model=Groq(id="llama-3.3-70b-versatile", temperature=0.1), 
+    model=Groq(id="openai/gpt-oss-20b", temperature=0.1), 
     instructions=MNEMOSINE_INSTRUCTIONS,
     output_schema=MemorySnapshot,
 )

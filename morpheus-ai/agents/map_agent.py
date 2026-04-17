@@ -51,5 +51,5 @@ map_navigator_agent = Agent(
     name="Atlas_Navigator",
     model=Groq(id="meta-llama/llama-4-scout-17b-16e-instruct", temperature=0.1), # Analitico e freddo
     instructions=ATLAS_RUNTIME_INSTRUCTIONS,
-    output_schema=WorldMap,
+    output_schema=NavigationResult,
 )
