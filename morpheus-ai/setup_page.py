@@ -92,7 +92,38 @@ def render_setup_page():
             border: 1px solid transparent;
         }
 
-        
+        /* --- SEGMENTED CONTROL NATIVI (STREAMLIT 1.56+) --- */
+        /* Rimuove il focus ring rosso da tutti i pulsanti nel gruppo */
+        div[data-testid="stButtonGroup"] button:focus,
+        div[data-testid="stButtonGroup"] button:focus-visible {
+            box-shadow: 0 0 0 2px rgba(129, 214, 190, 0.4) !important;
+            outline: none !important;
+        }
+
+        /* STATO ATTIVO: Sovrascrive il rosso di base con il gradiente verde acqua */
+        div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-segmented_controlActive"] {
+            background: linear-gradient(135deg, #81d6be, #227e69) !important;
+            color: #00382c !important;
+            border-color: #81d6be !important;
+            font-weight: 700 !important;
+        }
+
+        /* Colore del testo interno per lo stato attivo */
+        div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-segmented_controlActive"] * {
+            color: #00382c !important;
+        }
+
+        /* STATO HOVER: Colora i bordi e il testo dei pulsanti non selezionati al passaggio del mouse */
+        div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-segmented_control"]:hover {
+            border-color: #81d6be !important;
+            color: #81d6be !important;
+            background-color: rgba(129, 214, 190, 0.1) !important;
+        }
+
+        /* Colore del testo in hover */
+        div[data-testid="stButtonGroup"] button[data-testid="stBaseButton-segmented_control"]:hover * {
+            color: #81d6be !important;
+        }
 
         .player-card {
             background-color: #1c1b1b;
