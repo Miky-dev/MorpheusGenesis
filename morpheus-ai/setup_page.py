@@ -18,7 +18,7 @@ def init_session_state():
 def render_setup_page():
     init_session_state()
 
-    # --- 1. GLOBAL UI TWEAKS (CSS INJECTION) ---
+    # --- 1. GLOBAL UI TWEAKS (CSS INJECTION)  ---
     st.markdown("""
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet"/>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
