@@ -46,18 +46,14 @@ def parse_json_response(raw: str, context: str = ""):
     raw = normalize_agent_output(raw)
     try:
         return json.loads(raw)
-    except json.JSONDecodeError as exc:
+    except json.JSONDecodeError:
         fallback = extract_first_json(raw)
         if fallback != raw:
             try:
                 return json.loads(fallback)
             except json.JSONDecodeError:
                 pass
-        st.error(f"Risposta non valida da {context}. Riprova.")
-        with st.expander("Debug risposta LLM"):
-            st.code(raw)
-            st.code(str(exc))
-        logger.error("JSON decode failed for %s: %s", context, exc)
+        logger.error("JSON decode failed for %s", context)
         return None
 
 
@@ -72,7 +68,7 @@ def safe_agent_run(agent, prompt, schema=None, context_name=""):
                     if hasattr(schema, "model_validate_json"):
                         return schema.model_validate_json(raw)
                     return schema(**json.loads(raw))
-                except Exception as exc:
+                except Exception:
                     parsed = parse_json_response(raw, context_name)
                     if parsed is not None:
                         try:
@@ -80,12 +76,11 @@ def safe_agent_run(agent, prompt, schema=None, context_name=""):
                                 return schema.model_validate(parsed)
                             return schema(**parsed)
                         except Exception as exc2:
-                            exc = exc2
-                    st.error(f"Errore di validazione della risposta {context_name}. Controlla il formato della risposta.")
-                    with st.expander("Debug validazione"):
-                        st.code(raw)
-                        st.code(str(exc))
-                    logger.error("Schema validation failed for %s: %s", context_name, exc)
+                            st.error(f"Errore di validazione della risposta {context_name}.")
+                            logger.error("Schema validation failed for %s: %s", context_name, exc2)
+                            return None
+                    st.error(f"Risposta non valida da {context_name}. Riprova.")
+                    logger.error("JSON decode failed for %s", context_name)
                     return None
             elif isinstance(raw, dict):
                 try:
@@ -93,16 +88,11 @@ def safe_agent_run(agent, prompt, schema=None, context_name=""):
                         return schema.model_validate(raw)
                     return schema(**raw)
                 except Exception as exc:
-                    st.error(f"Errore di validazione della risposta {context_name}. Controlla il formato della risposta.")
-                    with st.expander("Debug validazione"):
-                        st.code(raw)
-                        st.code(str(exc))
+                    st.error(f"Errore di validazione della risposta {context_name}.")
                     logger.error("Schema validation failed for %s: %s", context_name, exc)
                     return None
         return raw
     except Exception as exc:
         st.error(f"Errore durante la chiamata {context_name}. Riprova.")
-        with st.expander("Debug errore agente"):
-            st.code(str(exc))
         logger.exception("Agent run failed for %s", context_name)
         return None

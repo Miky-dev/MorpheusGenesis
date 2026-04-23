@@ -2,6 +2,7 @@ import streamlit as st
 import time
 import os
 import base64
+from persistence import save_game_state
 
 @st.cache_data
 def get_cached_base64_image(image_path):
@@ -20,7 +21,7 @@ def init_session_state():
     if 'campaign_name' not in st.session_state:
         st.session_state.campaign_name = ""
     if 'difficulty' not in st.session_state:
-        st.session_state.difficulty = "Normal"
+        st.session_state.difficulty = "Normale"
     if 'narrative_style' not in st.session_state:
         st.session_state.narrative_style = "Oscuro"
     if 'is_loading_game' not in st.session_state:
@@ -185,33 +186,37 @@ def render_setup_page():
         # HEADER
         st.markdown("""
             <div class="header-subtitle">Morpheus Genesis</div>
-            <div class="header-title">Configure<br>Your Expedition</div>
-            <div class="header-desc">Select the thematic foundation of your narrative and define the adventurers who will traverse this realm.</div>
+            <div class="header-title">Configura la tua<br>Spedizione</div>
+            <div class="header-desc">Seleziona la base tematica della tua narrazione e definisci gli avventurieri che attraverseranno questo regno.</div>
         """, unsafe_allow_html=True)
         
         # CAMPAIGN SETTINGS
         st.markdown("""
             <div class="section-title">
                 <span class="material-symbols-outlined">settings_applications</span>
-                <span>Campaign Settings</span>
+                <span>Impostazioni Campagna</span>
             </div>
         """, unsafe_allow_html=True)
         
-        setting_cols = st.columns([1, 1])
-        with setting_cols[0]:
-            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Campaign Name</label>", unsafe_allow_html=True)
-            st.text_input("NOME", key="campaign_name", placeholder="e.g. The Obsidian Crown", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="off")
-        with setting_cols[1]:
-            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Difficulty</label>", unsafe_allow_html=True)
-            diff_options = ["Easy", "Normal", "Hard", "Epic"]
-            st.segmented_control(
-                "Difficoltà", 
-                options=diff_options, 
-                key="difficulty",
-                label_visibility="collapsed", 
-                disabled=st.session_state.is_loading_game,
-                selection_mode="single"
-            )
+        @st.fragment
+        def render_campaign_settings():
+            setting_cols = st.columns([1, 1])
+            with setting_cols[0]:
+                st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Nome della Campagna</label>", unsafe_allow_html=True)
+                st.text_input("NOME", key="campaign_name", placeholder="es. La Corona di Ossidiana", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="off")
+            with setting_cols[1]:
+                st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Difficoltà</label>", unsafe_allow_html=True)
+                diff_options = ["Facile", "Normale", "Difficile", "Epica"]
+                st.segmented_control(
+                    "Difficoltà", 
+                    options=diff_options, 
+                    key="difficulty",
+                    label_visibility="collapsed", 
+                    disabled=st.session_state.is_loading_game,
+                    selection_mode="single"
+                )
+        
+        render_campaign_settings()
 
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -219,28 +224,33 @@ def render_setup_page():
         st.markdown("""
             <div class="section-title" style="margin-top: 1rem;">
                 <span class="material-symbols-outlined">auto_stories</span>
-                <span>Narrative Theme</span>
+                <span>Tema Narrativo</span>
             </div>
         """, unsafe_allow_html=True)
         
-        mood_cols = st.columns([1, 1])
-        with mood_cols[0]:
-            st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Narrative Mood</label>", unsafe_allow_html=True)
-            moods = ["Oscuro", "Eroico", "Divertente", "Misterioso", "Cyberpunk", "Tragico"]
-            st.session_state.narrative_style = st.selectbox(
-                "Narrative Mood", 
-                moods, 
-                index=moods.index(st.session_state.narrative_style) if st.session_state.narrative_style in moods else 0, 
-                label_visibility="collapsed", 
-                disabled=st.session_state.is_loading_game
-            )
+        @st.fragment
+        def render_mood_selector():
+            mood_cols = st.columns([1, 1])
+            with mood_cols[0]:
+                st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600; margin-bottom: 0.5rem; display: block;'>Mood Narrativo</label>", unsafe_allow_html=True)
+                moods = ["Oscuro", "Eroico", "Divertente", "Misterioso", "Tragico"]
+                st.selectbox(
+                    "Mood Narrativo", 
+                    moods, 
+                    index=moods.index(st.session_state.narrative_style) if st.session_state.narrative_style in moods else 0, 
+                    key="narrative_style",
+                    label_visibility="collapsed", 
+                    disabled=st.session_state.is_loading_game
+                )
+        
+        render_mood_selector()
         
         themes = {
             "Fantasy": {"icon": "swords", "bg": "assets/fantasy.png"},
             "Cyberpunk": {"icon": "memory", "bg": "assets/cyberpunk.png"},
-            "Sci-Fi": {"icon": "rocket_launch", "bg": "assets/scifi.png"},
+            "Fantascienza": {"icon": "rocket_launch", "bg": "assets/scifi.png"},
             "Horror": {"icon": "psychiatry", "bg": "assets/horror.png"},
-            "Post-Apoc": {"icon": "local_fire_department", "bg": "assets/postapoc.png"},
+            "Post-Apocalittico": {"icon": "local_fire_department", "bg": "assets/postapoc.png"},
             "Pirati": {"icon": "sailing", "bg": "assets/pirates.png"},
             "Western": {"icon": "landscape", "bg": "assets/western.png"},
             "Antico Egitto": {"icon": "history", "bg": "assets/egypt.png"}
@@ -350,7 +360,7 @@ def render_setup_page():
             top_act_l, top_act_r = st.columns([1, 1])
             
             with top_act_l:
-                st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600;'>Adventurers</label>", unsafe_allow_html=True)
+                st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600;'>Avventurieri</label>", unsafe_allow_html=True)
                 player_counts = [1, 2, 3, 4]
                 st.segmented_control(
                     "GIOCATORI", 
@@ -398,19 +408,20 @@ def render_setup_page():
                     st.markdown(f"""
                         <div class="player-card-marker" style="display:none"></div>
                         <div style="display:flex; justify-content:space-between; margin-bottom: 1rem;">
-                            <span style="font-size:0.75rem; color:#bec9c4; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;">Player 0{p+1}</span>
+                            <span style="font-size:0.75rem; color:#bec9c4; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;">Giocatore 0{p+1}</span>
                             <span class="material-symbols-outlined" style="font-size: 1rem; color:#bec9c4;">person</span>
                         </div>
                     """, unsafe_allow_html=True)
                     
                     p_val = st.session_state.get(f"setup_p{p+1}_name", "Valerius" if p==0 else "")
-                    c_val = st.session_state.get(f"setup_p{p+1}_class", "Warrior")
+                    c_val = st.session_state.get(f"setup_p{p+1}_class", "Guerriero")
                     
-                    st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-bottom: 0.25rem;'>Character Name</label>", unsafe_allow_html=True)
-                    st.session_state[f"setup_p{p+1}_name"] = st.text_input(f"NOME P{p+1}", value=p_val, placeholder="Awaiting entry..." if p!=0 else "Enter name", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="name")
+                    st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-bottom: 0.25rem;'>Nome del Personaggio</label>", unsafe_allow_html=True)
+                    st.session_state[f"setup_p{p+1}_name"] = st.text_input(f"NOME P{p+1}", value=p_val, placeholder="In attesa di inserimento..." if p!=0 else "Inserisci nome", label_visibility="collapsed", disabled=st.session_state.is_loading_game, autocomplete="name")
                     
-                    st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-top: 0.5rem; margin-bottom: 0.25rem;'>Class / Archetype</label>", unsafe_allow_html=True)
-                    st.session_state[f"setup_p{p+1}_class"] = st.selectbox(f"CLASSE P{p+1}", ["Warrior", "Hacker", "Rogue", "Mage"], index=["Warrior", "Hacker", "Rogue", "Mage"].index(c_val) if c_val in ["Warrior", "Hacker", "Rogue", "Mage"] else 0, label_visibility="collapsed", disabled=st.session_state.is_loading_game)
+                    st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; margin-top: 0.5rem; margin-bottom: 0.25rem;'>Classe / Archetipo</label>", unsafe_allow_html=True)
+                    classi = ["Guerriero", "Ladro", "Mago"]
+                    st.session_state[f"setup_p{p+1}_class"] = st.selectbox(f"CLASSE P{p+1}", classi, index=classi.index(c_val) if c_val in classi else 0, label_visibility="collapsed", disabled=st.session_state.is_loading_game)
 
             st.markdown("</div>", unsafe_allow_html=True) # close party box
 
@@ -427,8 +438,10 @@ def render_setup_page():
                 time.sleep(2)
         st.session_state.is_loading_game = False
         st.session_state.page = "game"
+        if "session_id" in st.session_state:
+            save_game_state(st.session_state.session_id)
         st.rerun()
 
 if __name__ == "__main__":
-    st.set_page_config(layout="wide", page_title="The Archive Setup")
+    st.set_page_config(layout="wide", page_title="Morpheus Genesis - Setup")
     render_setup_page()

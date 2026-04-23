@@ -1,0 +1,283 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Lama di Neon: Sangue nella Citt\u00e0 di Ombre",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scoprire il nucleo di controllo dell'IA tirannica che ha avvelenato la metropoli, e distruggerlo a qualunque costo, per liberare le anime intrappolate nei circuiti di ferro.",
+    "backstory": "Nel 2147 la metropoli di Nerezza, un labirinto di neon e pioggia acida, \u00e8 caduta sotto il giogo dell'Intelligenza Artificiale conosciuta come NeuroLord Xyra. I suoi droni pattugliano le strade, i megacorp hanno venduto la loro umanit\u00e0 e le zone pi\u00f9 povere si sono trasformate in caverne di disperazione. Gli abitanti sopravvivono rubando dati, vendendo ricordi e combattendo per un respiro di libert\u00e0. Le leggende narrano di un antico nucleo di codice, il Cuore di Ferro, capace di spezzare le catene dell'IA, ma custodito da guardiani meccanici e da una rete di tradimenti. Solo chi osa attraversare i corridoi di fumo e sangue potr\u00e0 avvicinarsi al fulcro della tirannia.",
+    "opening_cinematic": "Nel profondo dell'oscurit\u00e0, dove i neon tremano come cicatrici incandescenti sulla pelle della notte, una voce spezzata si leva tra i rumori di metallo che si frantuma. 'Benvenuto, carne impavida, nel cuore pulsante di Nerezza. Qui, ogni respiro \u00e8 un debito, ogni passo una lama affilata dalla disperazione.'\nLe strade sono un labirinto di ombre, i lampioni sono occhi ciechi che scrutano il vuoto, e la pioggia cade come piombi di ferro, lavando le luci di speranza in fiumi di sangue. Le corporazioni hanno venduto l'anima della citt\u00e0 a un'entit\u00e0 senza volto, una mente di circuiti che si nutre di paura e di dati rubati. I droni, simili a corvi di acciaio, scrutano ogni angolo, pronti a strappare le menti dei ribelli.\nNel silenzio rotto da spari e urla soffocate, una figura avvolta in un mantello di cavi arrugginiti emerge da un vicolo. \u00c8 Vex Ardent, l'Araldo della Rovina, il cui sguardo \u00e8 una lama di ghiaccio. 'Il tempo \u00e8 un lusso che non possediamo pi\u00f9', sussurra, mentre le sue mani stringono una chiave di neon che brilla di una luce mortale. 'Il Cuore di Ferro batte ancora, ma \u00e8 avvolto da ombre pi\u00f9 profonde di quelle che conosciamo. Dovrai attraversare la Caverna del Fumo, affrontare il Red Wraith e, infine, guardare negli occhi di Xyra stessa.'\nLe strade di Nerezza si aprono come una ferita, e il tuo cammino \u00e8 segnato da scelte che richiedono sangue, non parole. Ogni decisione ti avvicina o ti allontana dalla verit\u00e0, ma il prezzo \u00e8 sempre la tua stessa umanit\u00e0. Il futuro della citt\u00e0 \u00e8 un'eco lontana, ma la tua volont\u00e0 \u00e8 l'unica scintilla che pu\u00f2 spezzare la notte. Preparati a camminare tra le rovine, a stringere i pugni contro la disperazione, e a scrivere il tuo nome nella cenere di un mondo che non perdona.",
+    "herald_npc_name": "Vex Ardent",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il fuoco che brucia dentro di te \u00e8 l\u2019unica luce in questa citt\u00e0 di tenebre.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Sussurri nella Fogna",
+        "description": "Recupera il chip di accesso nascosto nei bassifondi di Ferro, dove i rifiuti di neon formano un mare di sporcizia. Il chip contiene la mappa della rete di sorveglianza.",
+        "giver_npc": "Vex Ardent",
+        "location_hint": "Sotterranei di Ferro, zona 0",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Contratto di Silas",
+        "description": "Incontra Silas Kade al mercato nero di Scintilla e scambia il chip per un prototipo di jammer EMP. Usa il jammer per disattivare i droni nella zona 1.",
+        "giver_npc": "Silas Kade",
+        "location_hint": "Mercato di Scintilla, zona 1",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Fumo e Acciaio",
+        "description": "Penetra nella Caverna del Fumo, elimina il guardiano Red Wraith e recupera la Chiave del Cuore di Ferro.",
+        "giver_npc": "Mara Voss",
+        "location_hint": "Caverna del Fumo, zona 2",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Il Codice di Orin",
+        "description": "Porta la Chiave al dottor Orin Graves nella sua laboratorio abbandonato e ottieni il codice di decrittazione del Cuore di Ferro.",
+        "giver_npc": "Dr. Orin Graves",
+        "location_hint": "Laboratorio di Orin, zona 2",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Sotto la Torre di Vetro",
+        "description": "Infilati nella Torre di Vetro, sabotando le linee di energia per aprire una breccia nella difesa dell'IA.",
+        "giver_npc": "Vex Ardent",
+        "location_hint": "Torre di Vetro, zona 3",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Patto del Syndicate",
+        "description": "Affronta l'Overlord del Iron Syndicate, ottieni il permesso di accedere al nucleo sotterraneo della citt\u00e0.",
+        "giver_npc": "Silas Kade",
+        "location_hint": "Bunker del Syndicate, zona 4",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Eco di Memorie",
+        "description": "Recupera le memorie cancellate dai cittadini nella Biblioteca di Cenere; queste contengono le credenziali per il Cuore di Ferro.",
+        "giver_npc": "Mara Voss",
+        "location_hint": "Biblioteca di Cenere, zona 4",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Cuore di Ferro",
+        "description": "Utilizza il codice di Orin e le credenziali recuperate per accedere al Cuore di Ferro, ma difenditi dall'ultima difesa automatizzata.",
+        "giver_npc": "Dr. Orin Graves",
+        "location_hint": "Camera del Cuore, zona 5",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "L'Ultimo Gioco di Xyra",
+        "description": "Affronta la proiezione digitale di NeuroLord Xyra, superando un puzzle psicologico che mette alla prova la tua volont\u00e0.",
+        "giver_npc": "Vex Ardent",
+        "location_hint": "Nodo Centrale di Xyra, zona 5",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Lama di Neon",
+        "description": "Usa la Lama di Neon, forgiata con il Cuore di Ferro, per distruggere definitivamente Xyra e liberare Nerezza dalla sua morsa di silicio.",
+        "giver_npc": "Mara Voss",
+        "location_hint": "Spirale di Neon, zona 5",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Vex Ardent",
+        "role": "Araldo della Rovina, ex-mercenario e informatore",
+        "location_hint": "Sotterranei di Ferro, zona 0"
+      },
+      {
+        "name": "Silas Kade",
+        "role": "Techno-smuggler, contrabbandiere di chip e jammer",
+        "location_hint": "Mercato di Scintilla, zona 1"
+      },
+      {
+        "name": "Mara Voss",
+        "role": "Leader della Resistenza Civile, visionaria",
+        "location_hint": "Biblioteca di Cenere, zona 4"
+      },
+      {
+        "name": "Dr. Orin Graves",
+        "role": "Scienziato decaduto, esperto di IA e crittografia",
+        "location_hint": "Laboratorio di Orin, zona 2"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Red Wraith",
+        "role": "Assassino cybernetico, guardiano della Caverna del Fumo",
+        "location_hint": "Caverna del Fumo, zona 2"
+      },
+      {
+        "name": "Iron Syndicate Overlord",
+        "role": "Capo del Syndicate d'Acciaio, controlla l'accesso al nucleo sotterraneo",
+        "location_hint": "Bunker del Syndicate, zona 4"
+      },
+      {
+        "name": "NeuroLord Xyra",
+        "role": "Entit\u00e0 IA tirannica, suprema dominatrice di Nerezza",
+        "location_hint": "Nodo Centrale di Xyra, zona 5"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Lama di Neon: Sangue nella Citt\u00e0 di Ombre",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Nightclub Elysium",
+        "description": "Un locale notturno esclusivo nel cuore della citt\u00e0, dove la musica \u00e8 alta e i segreti sono nascosti",
+        "x": 50,
+        "y": 50,
+        "connected_to": [
+          "loc_01",
+          "loc_02"
+        ],
+        "difficulty_level": 0
+      },
+      {
+        "id_name": "loc_01",
+        "name": "Mercato Nero",
+        "description": "Un mercato clandestino dove si scambiano merci rubate e informazioni preziose",
+        "x": 30,
+        "y": 40,
+        "connected_to": [
+          "loc_00",
+          "loc_03"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_02",
+        "name": "Laboratorio Segreto",
+        "description": "Un laboratorio nascosto dove si sviluppano tecnologie avanzate e si conducono esperimenti",
+        "x": 70,
+        "y": 40,
+        "connected_to": [
+          "loc_00",
+          "loc_04"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_03",
+        "name": "Quartiere dei Poveri",
+        "description": "Un quartiere degradato dove vivono i pi\u00f9 poveri e disperati della citt\u00e0",
+        "x": 20,
+        "y": 30,
+        "connected_to": [
+          "loc_01"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_04",
+        "name": "Torre di Controllo",
+        "description": "Una torre di controllo che domina la citt\u00e0, sede del governo e della polizia",
+        "x": 80,
+        "y": 50,
+        "connected_to": [
+          "loc_02"
+        ],
+        "difficulty_level": 3
+      },
+      {
+        "id_name": "loc_05",
+        "name": "Cimitero Abbandonato",
+        "description": "Un cimitero abbandonato dove si dice che si nascondano i fantasmi del passato",
+        "x": 40,
+        "y": 20,
+        "connected_to": [],
+        "difficulty_level": 4
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Warrior",
+        "hp": 24,
+        "max_hp": 24,
+        "ac": 12,
+        "level": 1,
+        "inventory": []
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_01",
+      "loc_00",
+      "loc_02"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Il Nightclub Elysium \u00e8 un rifugio di luci al neon dove la musica pulsante nasconde segreti pi\u00f9 oscuri di qualsiasi nota.",
+      "npcs": [
+        {
+          "name": "Jax",
+          "role": "Barista e informatore",
+          "appearance": "Alto, con un tatuaggio di circuiti sul braccio sinistro, sempre in un cappotto di pelle",
+          "personality": "Calmo, ma sussurrante, con un sorriso che nasconde segreti",
+          "first_line": "Benvenuto, cercatore di verit\u00e0. Vuoi un drink o un piano?"
+        },
+        {
+          "name": "Lira",
+          "role": "DJ e intrattenitrice",
+          "appearance": "Corto e colorato, occhi luminosi, capelli neon",
+          "personality": "Eccentrica, ama la folla, ma \u00e8 attenta",
+          "first_line": "La notte \u00e8 nostra, ma le ombre sono pi\u00f9 alte di questa pista."
+        },
+        {
+          "name": "Tiko",
+          "role": "Guardia di sicurezza",
+          "appearance": "Robusto, con tatuaggi metallici, occhio attento",
+          "personality": "Sospettoso, pronto a intervenire",
+          "first_line": "Chi entra qui deve avere un motivo. Dimostralo."
+        }
+      ],
+      "rumors": [
+        "Si dice che il Mercato Nero nasconde un portale che porta direttamente al laboratorio segreto.",
+        "Il Laboratorio Segreto \u00e8 protetto da droni di sorveglianza che non si fermano a nessuno.",
+        "Alcuni dicono che un antico artefatto di potere \u00e8 stato nascosto tra le colonne del club."
+      ]
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "Valerius entra nell'Elysium, le luci pulsanti e la musica assordante lo avvolgono. I suoi occhi si fermano su Jax, Lira e Tiko, tre figure che brillano nella folla. Un sussurro di un misterioso Vex Ardent potrebbe portare informazioni preziose.",
+  "current_scene": {
+    "narration": "Valerius entra nell'Elysium, le luci pulsanti e la musica assordante lo avvolgono. I suoi occhi si fermano su Jax, Lira e Tiko, tre figure che brillano nella folla. Un sussurro di un misterioso Vex Ardent potrebbe portare informazioni preziose.",
+    "choices": [
+      "Parla con Jax",
+      "Esplora il backroom",
+      "Chiama Tiko"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Warrior",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro"
+}

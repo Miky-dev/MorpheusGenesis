@@ -22,25 +22,27 @@ REGOLE DI POPOLAZIONE (DENSITÀ):
 - Se 'difficulty_level' è 1-3: 1-2 NPC.
 - Se 'difficulty_level' è 4-5: 0-1 NPC (raro e teso).
 
-25: REGOLE PER I RUMORS E LORE:
-26: - 'location_lore': Storia del luogo coerente con il tema e la Story Bible. DEVE ESSERE UNA STRINGA SEMPLICE, NON UN OGGETTO.
-27: - 'rumors': Avvertimenti o consigli sui LUOGHI CONFINANTI.
-28: 
-29: === FORMATO RISPOSTA (JSON STRICT) ===
-30: LINGUA: Rispondi esclusivamente in LINGUA ITALIANA.
-31: Rispondi ESCLUSIVAMENTE con un JSON che rispetti questo schema:
-32: {
-33:   "location_lore": "Una stringa descrittiva del luogo",
-34:   "npcs": [
-35:     { "name": "...", "role": "...", "appearance": "...", "personality": "...", "first_line": "..." }
-36:   ],
-37:   "rumors": ["Diceria 1", "Diceria 2"]
-38: }
+REGOLE PER I RUMORS E LORE:
+- 'location_lore': Storia del luogo coerente con il tema e la Story Bible. DEVE ESSERE UNA STRINGA SEMPLICE, NON UN OGGETTO.
+- 'rumors': Avvertimenti o consigli sui LUOGHI CONFINANTI.
+
+=== FORMATO RISPOSTA (JSON STRICT) ===
+LINGUA: Rispondi esclusivamente in LINGUA ITALIANA.
+Rispondi ESCLUSIVAMENTE con un JSON valido.
+IMPORTANTE: Usa SEMPRE doppi apici (") per chiavi e valori stringa.
+
+{
+  "location_lore": "Una stringa descrittiva del luogo",
+  "npcs": [
+    { "name": "...", "role": "...", "appearance": "...", "personality": "...", "first_line": "..." }
+  ],
+  "rumors": ["Diceria 1", "Diceria 2"]
+}
 """
 
 npc_agent = Agent(
     name="Hermes",
-    model=Groq(id="openai/gpt-oss-20b", temperature=0.7),   
+    model=Groq(id="openai/gpt-oss-20b", temperature=0.1),   
     instructions=HERMES_INSTRUCTIONS,
     output_schema=LocationPopulation,
 )

@@ -1,0 +1,285 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Echi di Tenebra Stellare",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scoprire e distruggere il nucleo energetico della megastruttura chiamata L'Abisso, prima che la sua pulsazione annienti l'ultimo frammento di speranza umana.",
+    "backstory": "Nel 2473 l'umanit\u00e0 ha colonizzato le stelle, ma l'avidit\u00e0 ha dato vita a progetti proibiti. L'Abisso, una stazione orbitante costruita per estrarre energia dal vuoto quantico, ha iniziato a corrompere la realt\u00e0 circostante. Le sue pulsazioni hanno scatenato mutazioni, follia e una serie di entit\u00e0 che si nutrono di vita. I sopravvissuti si sono rifugiati nei settori pi\u00f9 oscuri della galassia, dove la luce \u00e8 solo un ricordo. Ora, una piccola cellula di ribelli deve avventurarsi nella corazza di L'Abisso, affrontare le sue guardie spettrali e porre fine al macabro esperimento prima che il vuoto inghiottisca l'intero sistema.",
+    "opening_cinematic": "Nel vuoto pi\u00f9 profondo, dove la luce si spegne e i sogni si infrangono contro il silenzio, sorge L'Abisso. Una colossale struttura d'acciaio nero, pulsante di energia quantica, che si erge come una tomba per i desideri dell'umanit\u00e0. Il suo cuore, un nucleo di tenebra pura, ruggisce con la voce di milioni di voci dimenticate, strappando la realt\u00e0 dalle sue fondamenta. \nLe stelle intorno a essa si curvano, come se fossero trascinate in un vortice di disperazione, e il vuoto stesso sembra respirare, inghiottendo ogni speranza. \nSui ponti di metallo arrugginito, le ombre si muovono con passo sinistro, portatrici di segreti e di morte. I sopravvissuti, ridotti a scheletri di carne e paura, sussurrano il nome di Mara Vex, l'Araldo della Fine, colui che ha accettato di guidare gli ultimi cuori coraggiosi verso la rovina. \nMentre la telecamera si avvicina al portale di accesso, una voce roca e senza piet\u00e0 si leva dal buio: \n'Benvenuti, miseri. Il vostro sangue sar\u00e0 la chiave per aprire le porte del nulla, e il vostro coraggio, o la vostra debolezza, sar\u00e0 il prezzo che pagherete. In questo regno di tenebra, non c'\u00e8 spazio per i deboli. Solo chi abbraccia la distruzione pu\u00f2 sperare di trovare la salvezza.' \nIl canto delle sirene metalliche si fonde con il ruggito del nucleo, mentre la telecamera scivola dentro la fessura della struttura, mostrando corridoi infiniti di ossidazione, camere di esperimenti falliti e occhi che osservano dall'oscurit\u00e0. \nIl vostro viaggio inizia ora, e la notte non conceder\u00e0 tregua a chiunque osi sfidare il destino di L'Abisso.",
+    "herald_npc_name": "Mara Vex",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "'Il vuoto non ha piet\u00e0, ma noi possiamo usarlo come lama. Segui il mio cammino, o perisci nella tua stessa paura.'",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Vuoto",
+        "description": "Incontra Mara Vex al punto di rifornimento di Loc_00. Ricevi la mappa criptata che indica l'entrata principale di L'Abisso. Preparati a varcare la soglia dell'oscurit\u00e0.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "loc_00",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Sotto la Superficie",
+        "description": "Penetra nella zona di manutenzione di Loc_01, dove le porte di sicurezza sono corrotte. Recupera il Codice di Sblocco 7A, custodito da Soren Kade, il tecnico traditore.",
+        "giver_npc": "Soren Kade",
+        "location_hint": "loc_01",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Il Cuore di Ferro",
+        "description": "Porta il Codice a Dr. Kael Dorn in Loc_02. Aiutalo a riattivare il Generatore di Scudi, necessario per attraversare il Primo Corridoio di Tenebra.",
+        "giver_npc": "Dr. Kael Dorn",
+        "location_hint": "loc_02",
+        "status": "active"
+      },
+      {
+        "id": "q4",
+        "title": "L'Ombra del Maw",
+        "description": "Affronta l'entit\u00e0 chiamata The Maw nella Camera del Vuoto (Loc_03). Sconfiggi il suo scudo di energia e ottieni la Chiave di Ferro, indispensabile per aprire il Nucleo.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "loc_03",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Il Sentiero dell'Obsidian",
+        "description": "Con la Chiave di Ferro, accedi al livello intermedio (Loc_04). Sconfiggi l'Obsidian Warden, un guardiano di pietra e ombra, per liberare il Corridoio di Cristallo.",
+        "giver_npc": "Lira Nyx",
+        "location_hint": "loc_04",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Ritrovamento del Registro Perduto",
+        "description": "Raccogli i frammenti di registro sparsi nella Sala delle Memorie (Loc_04). Decifra il messaggio segreto di Lira Nyx che rivela la vulnerabilit\u00e0 del Nucleo.",
+        "giver_npc": "Lira Nyx",
+        "location_hint": "loc_04",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Velo di Tenebra",
+        "description": "Utilizza le informazioni decifrate per disattivare il campo di distorsione in Loc_05, aprendo l'accesso al Nucleo Energetico.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "loc_05",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Regno del Void Regent",
+        "description": "Affronta il boss finale, il Void Regent, nel cuore di L'Abisso (Loc_05). Distruggi il suo scettro di energia quantica.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "loc_05",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Detonazione del Nucleo",
+        "description": "Installa il dispositivo di detonazione fornito da Dr. Kael Dorn. Evacua la zona entro il conto alla rovescia di 3 minuti.",
+        "giver_npc": "Dr. Kael Dorn",
+        "location_hint": "loc_05",
+        "status": "active"
+      },
+      {
+        "id": "q10",
+        "title": "Fuga dalla Ceneri",
+        "description": "Raggiungi l'uscita di emergenza in Loc_00 prima che la struttura collassi. Sopravvivi al caos e testimonia la fine di L'Abisso.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "loc_00",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Mara Vex",
+        "role": "Araldo della Fine, leader dei ribelli",
+        "location_hint": "loc_00"
+      },
+      {
+        "name": "Dr. Kael Dorn",
+        "role": "Scienziato corrotto, custodisce il segreto del Generatore di Scudi",
+        "location_hint": "loc_02"
+      },
+      {
+        "name": "Soren Kade",
+        "role": "Tecnico traditore, possiede il Codice di Sblocco 7A",
+        "location_hint": "loc_01"
+      },
+      {
+        "name": "Lira Nyx",
+        "role": "Esperta di sistemi di memoria, conosce la vulnerabilit\u00e0 del Nucleo",
+        "location_hint": "loc_04"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "The Maw",
+        "role": "Entit\u00e0 vorace che custodisce la Chiave di Ferro",
+        "location_hint": "loc_03"
+      },
+      {
+        "name": "Obsidian Warden",
+        "role": "Guardiano di pietra e ombra del Corridoio di Cristallo",
+        "location_hint": "loc_04"
+      },
+      {
+        "name": "Void Regent",
+        "role": "Signore del Vuoto, boss finale del Nucleo Energetico",
+        "location_hint": "loc_05"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Echi di Tenebra Stellare",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Stazione Spaziale Aurora",
+        "description": "Una stazione spaziale abbandonata con strutture danneggiate e silenzio inquietante.",
+        "x": 50,
+        "y": 50,
+        "connected_to": [
+          "loc_01",
+          "loc_02"
+        ],
+        "difficulty_level": 0
+      },
+      {
+        "id_name": "loc_01",
+        "name": "Hangar degli Astronavi",
+        "description": "Un hangar con poche astronavi residue, danneggiate e silenziose.",
+        "x": 30,
+        "y": 50,
+        "connected_to": [
+          "loc_00",
+          "loc_03"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_02",
+        "name": "Laboratorio di Ricerca",
+        "description": "Un laboratorio con attrezzature danneggiate e documenti sparsi.",
+        "x": 70,
+        "y": 50,
+        "connected_to": [
+          "loc_00",
+          "loc_04"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_03",
+        "name": "Dipartimento di Ingegneria",
+        "description": "Un'area con macchinari pesanti e progetti di riparazione abbandonati.",
+        "x": 20,
+        "y": 40,
+        "connected_to": [
+          "loc_01"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_04",
+        "name": "Centro di Controllo Missione",
+        "description": "Una sala con console di controllo danneggiate e registri di missioni passate.",
+        "x": 80,
+        "y": 60,
+        "connected_to": [
+          "loc_02",
+          "loc_05"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_05",
+        "name": "Area di Stoccaggio",
+        "description": "Un deposito con merci e rifornimenti, alcuni ancora integri.",
+        "x": 90,
+        "y": 50,
+        "connected_to": [
+          "loc_04"
+        ],
+        "difficulty_level": 3
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Fantascienza",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Guerriero",
+        "hp": 24,
+        "max_hp": 24,
+        "ac": 12,
+        "level": 1,
+        "inventory": []
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_01",
+    "known_locations": [
+      "loc_00",
+      "loc_01",
+      "loc_02"
+    ],
+    "turn_number": 17,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": "Giocatore parla a Dr. Kael Dorn per capire il suo silenzio. Dr. Kael Dorn rimane in silenzio. Nessun cambiamento di stato. Player continua a cercare informazioni."
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "La Stazione Spaziale Aurora, un tempo fulcro di ricerca interstellare, ora \u00e8 un silenzioso mausoleo di metallo arrugginito, dove i corridoi sono avvolti da un'ombra di silenzio inquietante.",
+      "npcs": [
+        {
+          "name": "Dr. Kael Dorn",
+          "role": "Scienziato in ritirata",
+          "appearance": "Un uomo di mezza et\u00e0 con capelli grigi e occhiali spessi, vestito in un camice sporco",
+          "personality": "Calmo, riflessivo, ma con un'ombra di disperazione",
+          "first_line": "Ho studiato la pulsazione dell'Abisso per anni, ma ora \u00e8 troppo tardi."
+        },
+        {
+          "name": "Echo",
+          "role": "Assistente AI",
+          "appearance": "Un'eco di voce sintetica, visualizzata come un'onda luminosa sul pannello di controllo",
+          "personality": "Razionale, distaccata",
+          "first_line": "Il tuo compito \u00e8 chiaro: distruggi il nucleo prima che la pulsazione si propaghi."
+        },
+        {
+          "name": "Rhea",
+          "role": "Sopravvissuta ferita",
+          "appearance": "Una giovane donna con un braccio coperto da un pacchetto di saldatura",
+          "personality": "Paranoica, ma con un cuore di ferro",
+          "first_line": "Non c'\u00e8 pi\u00f9 nessuno qui, tranne me e le macchine."
+        }
+      ],
+      "rumors": [
+        "Si dice che l'hangar degli astronavi nasconda un veicolo di fuga, ma la sua porta \u00e8 bloccata da un sistema di sicurezza che non si pu\u00f2 disattivare.",
+        "Il laboratorio di ricerca \u00e8 stato teatro di esperimenti su forme di vita bio-energetiche; alcuni dicono che ancora vi risiedono entit\u00e0 che cercano di emergere."
+      ]
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "Il hangar si apre davanti a te come un ventre di ferro, le luci tremolanti proiettano ombre che danzano sulle pareti polverose. Il silenzio \u00e8 un urlo, e l'eco del tuo passo ricorda la voce assente di Dr. Kael Dorn. Le astronavi, gigantesche ombre di metallo, si stagliano contro il cielo notturno, pronte a sollevare il tuo destino.",
+  "current_scene": {
+    "narration": "Il hangar si apre davanti a te come un ventre di ferro, le luci tremolanti proiettano ombre che danzano sulle pareti polverose. Il silenzio \u00e8 un urlo, e l'eco del tuo passo ricorda la voce assente di Dr. Kael Dorn. Le astronavi, gigantesche ombre di metallo, si stagliano contro il cielo notturno, pronte a sollevare il tuo destino.",
+    "choices": [
+      "Esplora l'hangar",
+      "Cerca Dr. Kael Dorn",
+      "Rimani in silenzio"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Fantascienza",
+  "setup_mood": "Oscuro"
+}

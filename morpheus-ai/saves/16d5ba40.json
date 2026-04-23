@@ -1,0 +1,272 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Abisso di Fiamme Perdute",
+    "narrative_style": "Tragico",
+    "main_objective": "Scoprire la verit\u00e0 celata nell'Abisso di Hell e impedire che la sua fiamma eterna consumi l'ultimo barlume di speranza del mondo.",
+    "backstory": "Un tempo, la terra fu avvolta da un'eterna aurora di luce, ma un cataclisma di fuoco e cenere, noto come l'Incendio di Hell, divor\u00f2 la civilt\u00e0, lasciando solo rovine fumanti e ricordi spezzati. Le anime dei sopravvissuti vagano come ombre in un deserto di braci, mentre una presenza antica si risveglia, bramando a riportare il caos.",
+    "opening_cinematic": "Nel silenzio di una notte senza stelle, le ceneri del mondo si sollevano come un lamento sussurrato dal vento. Le ombre si allungano, avvolgendo le rovine di ci\u00f2 che fu, mentre il fuoco morente dipinge il cielo di un rosso sanguigno. Un uomo, avvolto in un mantello di cenere, avanza tra le macerie, i suoi passi riecheggiano come un eco di perdite dimenticate. 'O viandante, ascolta il pianto delle torri crollate, lamenti di chi ha amato e perso, di chi ha sperato e fallito.' Le fiamme, ora spente, sembrano ricordare un'epoca di gloria, ma la loro luce \u00e8 ora una promessa di rovina. Ogni respiro \u00e8 un ricordo di ci\u00f2 che \u00e8 stato strappato, ogni battito del cuore \u00e8 un'agonia che si avvicina. Il vento trasporta il profumo di bruciato, e con esso la consapevolezza che il destino \u00e8 una spirale di dolore che non conosce redenzione. L'araldo, con voce rotta dal tempo, proclama: 'Il ciclo si chiude, ma la fine \u00e8 solo l'inizio di un nuovo abisso.' E cos\u00ec, l'oscurit\u00e0 si fa pi\u00f9 densa, e la tragedia si insinua nei sogni di chi osa avventurarsi in questo regno di disperazione, dove ogni passo \u00e8 una preghiera sussurrata a un dio dimenticato. L'eco di un futuro che non sar\u00e0 mai, si dissolve nelle fiamme che ancora bruciano, ma non consumano. Il mondo trema, e l'ultima speranza \u00e8 un filo di luce che si spezza sotto il peso della fatalit\u00e0.",
+    "herald_npc_name": "Mordecai, l'Araldo delle Ceneri",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il fuoco che ardeva dentro di noi \u00e8 ora la cenere che ci avvolge; segui il sentiero delle fiamme spezzate, o sarai destinato a bruciare nella tua stessa disperazione.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Eco di un'Ultima Fiamma",
+        "description": "Mordecai ti affida il Talismano di Cenere, l'ultimo ricordo di una luce perduta. Recupera il frammento nella Caverna di Sussurri.",
+        "giver_npc": "Mordecai, l'Araldo delle Ceneri",
+        "location_hint": "Caverna di Sussurri (Livello 0)",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Diario della Scribe",
+        "description": "Porta il Talismano a Evelyn, la Scribe della Decadenza, affinch\u00e9 decifri le scritture di fuoco contenute al suo rifugio.",
+        "giver_npc": "Evelyn, la Scribe della Decadenza",
+        "location_hint": "Rovine di Luminara (Livello 0)",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Il Mietitore di Cenere",
+        "description": "Nel profondo della Galleria del Vuoto, affronta il Mietitore di Cenere, guardiano dei segreti dell'Incendio, e recupera la Chiave di Fumo.",
+        "giver_npc": "Rufus, il Guardiano del Vuoto",
+        "location_hint": "Galleria del Vuoto (Livello 1)",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "L'Antico Sigillo di Brina",
+        "description": "Usa la Chiave di Fumo per aprire il Sigillo di Brina nella Cripta delle Lacrime, dove riposa il cuore di pietra.",
+        "giver_npc": "Rufus, il Guardiano del Vuoto",
+        "location_hint": "Cripta delle Lacrime (Livello 1)",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "La Signora del Vapore",
+        "description": "Nel Labirinto di Vapore, la Signora del Vapore custodisce il Vaso delle Ceneri. Sconfiggila per ottenere l'Acqua Nera.",
+        "giver_npc": "Lydia, la Curatrice delle Ombre",
+        "location_hint": "Labirinto di Vapore (Livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Rituale dell'Oblio",
+        "description": "Con l'Acqua Nera, insieme a Lydia, esegui il Rituale dell'Oblio nella Sala dei Sussurri Perduti per indebolire la presenza del Re delle Fiamme.",
+        "giver_npc": "Lydia, la Curatrice delle Ombre",
+        "location_hint": "Sala dei Sussurri Perduti (Livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Ponte delle Anime",
+        "description": "Attraversa il Ponte delle Anime, un passaggio sospeso sopra l'abisso, per raggiungere la Torre del Crepuscolo, dove dimora il Re delle Fiamme Spezzate.",
+        "giver_npc": "Mordecai, l'Araldo delle Ceneri",
+        "location_hint": "Ponte delle Anime (Livello 3)",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Crepuscolo del Regno",
+        "description": "All'interno della Torre del Crepuscolo, affronta gli scagnozzi di fuoco e recupera il Corno del Destino.",
+        "giver_npc": "Mordecai, l'Araldo delle Ceneri",
+        "location_hint": "Torre del Crepuscolo (Livello 3)",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Il Vortice delle Ceneri",
+        "description": "Usa il Corno del Destino per aprire il Vortice delle Ceneri nella Sala del Giudizio, dove il Re delle Fiamme attende.",
+        "giver_npc": "Evelyn, la Scribe della Decadenza",
+        "location_hint": "Sala del Giudizio (Livello 4)",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Il Re delle Fiamme Spezzate",
+        "description": "Confronta il Re delle Fiamme Spezzate, l'ultimo guardiano dell'Abisso, e scegli se sacrificare il Talismano di Cenere o la tua stessa anima per spegnere l'eterna fiamma.",
+        "giver_npc": "Mordecai, l'Araldo delle Ceneri",
+        "location_hint": "Abisso di Hell (Livello 5)",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Mordecai, l'Araldo delle Ceneri",
+        "role": "Araldo, guida spirituale e custode del Talismano di Cenere",
+        "location_hint": "Rovine di Luminara (Livello 0)"
+      },
+      {
+        "name": "Evelyn, la Scribe della Decadenza",
+        "role": "Storica dei fuochi antichi, decifratrice di rune infuocate",
+        "location_hint": "Biblioteca di Pietra Nera (Livello 1)"
+      },
+      {
+        "name": "Rufus, il Guardiano del Vuoto",
+        "role": "Sentinella della Galleria del Vuoto, conoscitore delle chiavi di fumo",
+        "location_hint": "Galleria del Vuoto (Livello 1)"
+      },
+      {
+        "name": "Lydia, la Curatrice delle Ombre",
+        "role": "Mistica capace di manipolare l'Acqua Nera, cerca redenzione per le sue colpe",
+        "location_hint": "Santuario delle Ombre (Livello 2)"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Il Mietitore di Cenere",
+        "role": "Custode delle rovine, brandisce falci di fumo che divorano la luce",
+        "location_hint": "Galleria del Vuoto (Livello 1)"
+      },
+      {
+        "name": "La Signora del Vapore",
+        "role": "Entit\u00e0 avvolta in nubi di vapore, governa il Labirinto di Vapore",
+        "location_hint": "Labirinto di Vapore (Livello 2)"
+      },
+      {
+        "name": "Il Re delle Fiamme Spezzate",
+        "role": "Entit\u00e0 primordiale dell'Abisso, incarna la disperazione del fuoco eterno",
+        "location_hint": "Abisso di Hell (Livello 5)"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Abisso di Fiamme Perdute",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Ingresso dell'Abisso",
+        "description": "Un'apertura buia e minacciosa nella roccia, fiamme danzanti ai bordi",
+        "x": 50,
+        "y": 0,
+        "connected_to": [
+          "loc_01",
+          "loc_02"
+        ],
+        "difficulty_level": 0
+      },
+      {
+        "id_name": "loc_01",
+        "name": "Caverna delle Ombre",
+        "description": "Una grotta buia e umida, ombre inquietanti si muovono ai muri",
+        "x": 30,
+        "y": 20,
+        "connected_to": [
+          "loc_00",
+          "loc_03"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_02",
+        "name": "Fumarola Ardente",
+        "description": "Una zona di fiamme e calore intenso, aria densa di fumo",
+        "x": 70,
+        "y": 10,
+        "connected_to": [
+          "loc_00",
+          "loc_04"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_03",
+        "name": "Labirinto dei Dannati",
+        "description": "Un intricato sistema di corridoi e stanze, voci disperate nell'oscurit\u00e0",
+        "x": 20,
+        "y": 40,
+        "connected_to": [
+          "loc_01",
+          "loc_05"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_04",
+        "name": "Gola del Vento",
+        "description": "Una gola stretta e profonda, vento ululante e fiamme che lambiscono le pareti",
+        "x": 80,
+        "y": 30,
+        "connected_to": [
+          "loc_02",
+          "loc_06"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_05",
+        "name": "Cimitero delle Anime",
+        "description": "Un luogo di tombe e resti, anime in pena che vagano senza pace",
+        "x": 10,
+        "y": 60,
+        "connected_to": [
+          "loc_03"
+        ],
+        "difficulty_level": 3
+      },
+      {
+        "id_name": "loc_06",
+        "name": "Fucina dell'Inferno",
+        "description": "Un luogo di fuoco e metallo fuso, demoni al lavoro su macchine infernali",
+        "x": 90,
+        "y": 50,
+        "connected_to": [
+          "loc_04"
+        ],
+        "difficulty_level": 4
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Horror",
+    "party": [
+      {
+        "name": "FiglioDiTroia",
+        "char_class": "Ladro",
+        "hp": 24,
+        "max_hp": 24,
+        "ac": 12,
+        "level": 1,
+        "inventory": []
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_02",
+      "loc_01",
+      "loc_00"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "Il tuo passo echeggia tra le rovine annerite dell'ingresso dell'Abisso, la brezza di cenere che ti avvolge come una coperta di fuoco spento. Una figura imponente, avvolta in un mantello di fumo, si staglia all'ombra di una colonna di pietra: Mordecai, l'Araldo delle Ceneri, che attende silenzioso il tuo arrivo.",
+  "current_scene": {
+    "narration": "Il tuo passo echeggia tra le rovine annerite dell'ingresso dell'Abisso, la brezza di cenere che ti avvolge come una coperta di fuoco spento. Una figura imponente, avvolta in un mantello di fumo, si staglia all'ombra di una colonna di pietra: Mordecai, l'Araldo delle Ceneri, che attende silenzioso il tuo arrivo.",
+    "choices": [
+      "Chiedere informazioni a Mordecai",
+      "Esplorare l'ingresso dell'Abisso",
+      "Ritornare al villaggio"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "FiglioDiTroia",
+  "setup_p1_class": "Ladro",
+  "setup_theme": "Horror",
+  "setup_mood": "Tragico"
+}

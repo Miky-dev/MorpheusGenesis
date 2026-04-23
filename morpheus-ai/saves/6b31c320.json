@@ -1,0 +1,298 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Neon Abyss: Sangue nella Pioggia",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scavare l'oscurit\u00e0 che avvolge la megacity di Nox, distruggere il Cuore di Acciaio del Concilio delle Tenebre e liberare gli ultimi sopravvissuti dal giogo di una rete di sorveglianza mortale.",
+    "backstory": "Nel 2197, la citt\u00e0 di Nox \u00e8 caduta sotto il giogo di un oligarchico Concilio di Corporazioni. Le strade sono illuminate da neon che mascherano il sangue versato, i vicoli sono abitati da spettri di cyber\u2011uomini e intelligenze artificiali corrotte. Le famiglie di strada si sono trasformate in clan di mercenari, e la tecnologia \u00e8 diventata un'arma contro l'umanit\u00e0 stessa. Un antico artefatto, il Cuore di Acciaio, controlla la rete di sorveglianza, e chi lo possiede ha il potere di manipolare la vita di tutti gli abitanti. Il protagonista, un ex\u2011cacciatore di taglie, viene chiamato dall'Araldo per una missione che potrebbe spezzare le catene o far affondare l'anima nella pi\u00f9 profonda disperazione.",
+    "opening_cinematic": "Nel silenzio rotto solo dal ronzio dei droni, la pioggia acida cadeva come lame di vetro sulla spugna di cemento. I neon sputavano colori malsani, riflettendo volti segnati da cicatrici di circuiti e occhi di vetro rotto. Un'ombra si aggirava tra i grattacieli, un'eco di passi meccanici che si fondevano con il battito di un cuore umano. 'Questa \u00e8 la notte in cui il cielo si spezza', mormor\u00f2 Silas Vrax, l'Araldo, la sua voce un sussurro metallico che si insinuava nelle vene dei pochi che osavano ascoltare. 'Nox \u00e8 un labirinto di dolore, un ventre che inghiotte speranze e le rigurgita come fumo tossico.'\n\nLe strade, un mare di detriti e neon, custodivano segreti sepolti sotto strati di codice corrotti. Le corporazioni, giganti di ferro e carne, tiravano i fili della realt\u00e0, e la gente si aggrappava a frammenti di libert\u00e0 come a schegge di vetro. Ogni passo era una scelta di sangue: salvare un alleato o tradirlo per un chip di potere. I guardiani della rete, noti come i Serpenti di Acciaio, pattugliavano i confini della coscienza, pronti a cancellare chi osava sfidare il loro dominio.\n\nIl tuo respiro si mescolava al fumo di carburante bruciato, il tuo sguardo incontrava quello di un bambino con gli occhi di un'IA, implorante di salvezza. La citt\u00e0 ti osservava, una bestia con mille occhi, pronta a divorare chiunque avesse il coraggio di alzare la mano contro il Concilio. E cos\u00ec, sotto la pioggia di ferro, la tua missione comincia: penetrare il cuore di Nox, spezzare le catene di silicio e risvegliare la luce che ancora brucia, seppur debole, sotto la cenere di questo inferno neon.",
+    "herald_npc_name": "Silas Vrax",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "Il mio nome \u00e8 l'eco di un ordine dimenticato; seguir\u00f2 la tua mano finch\u00e9 il sangue non scorrer\u00e0 pi\u00f9 rosso nella pioggia.",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Vuoto",
+        "description": "Incontra Silas Vrax nella zona abbandonata di Echo District per ricevere il primo frammento di codice che svela la posizione del Cuore di Acciaio.",
+        "giver_npc": "Silas Vrax",
+        "location_hint": "Echo District, zona 0, sotto le luci spente dei cartelloni pubblicitari.",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Lacrime di Cromo",
+        "description": "Recupera il chip di accesso dalla mano di Mara 'The Needle' Kade, custodito nella cantina di Neon Bazaar.",
+        "giver_npc": "Mara 'The Needle' Kade",
+        "location_hint": "Neon Bazaar, cantina sotterranea, livello 1.",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Il Laboratorio dell'Oracolo",
+        "description": "Ottieni il supporto di Dr. Orion Vell per decifrare il frammento di codice, ma dovrai difendere il suo laboratorio da un attacco dei Serpenti di Acciaio.",
+        "giver_npc": "Dr. Orion Vell",
+        "location_hint": "Lab. Orion, livello 2, nella zona industriale di Steelworks.",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "L'Ombra del Wraith",
+        "description": "Infiltrati nella base di Rook 'The Wraith' per rubare la chiave di crittografia necessaria a penetrare il server del Concilio.",
+        "giver_npc": "Rook 'The Wraith'",
+        "location_hint": "Rook's Den, livello 2, sotto i tubi di refrigerazione della Citt\u00e0 Bassa.",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Serpente di Acciaio",
+        "description": "Affronta il primo boss, l'Iron Serpent, in una arena di ferro fuso per recuperare il nodo di trasmissione.",
+        "giver_npc": "Silas Vrax",
+        "location_hint": "Arena del Ferro, livello 3, nel cuore della zona militare.",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Mercante di Anime",
+        "description": "Scambia il nodo di trasmissione con il Mercante di Anime per ottenere l'algoritmo di disattivazione del Cuore di Acciaio.",
+        "giver_npc": "Mara 'The Needle' Kade",
+        "location_hint": "Mercato Nero, livello 3, tra le rovine della vecchia borsa di scambio.",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Labirinto di Codice",
+        "description": "Naviga nel labirinto virtuale creato dal Concilio, dove ogni errore pu\u00f2 costare la vita reale.",
+        "giver_npc": "Dr. Orion Vell",
+        "location_hint": "Rete Immersiva, livello 4, accessibile dal Terminale Centrale.",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Lord Cipher",
+        "description": "Sconfiggi il boss Lord Cipher, custode delle chiavi di sicurezza, in un duello di hacking e fuoco.",
+        "giver_npc": "Silas Vrax",
+        "location_hint": "Citadel del Concilio, livello 4, sala dei server principali.",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Il Cuore di Tenebra",
+        "description": "Penetra nella camera del Cuore di Acciaio e piazza l'algoritmo di disattivazione, ma il sistema avvier\u00e0 un conto alla rovescia mortale.",
+        "giver_npc": "Rook 'The Wraith'",
+        "location_hint": "Camera del Cuore, livello 5, nucleo della Citt\u00e0 Centrale.",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Rinascita o Rovina",
+        "description": "Scegli se sacrificare il Cuore di Acciaio per liberare la citt\u00e0 o usarlo per consolidare il potere, determinando il destino di Nox.",
+        "giver_npc": "Silas Vrax",
+        "location_hint": "Centro di Controllo, livello 5, sopra il cielo di neon.",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Silas Vrax",
+        "role": "Araldo, ex agente del Concilio decaduto, guida il protagonista verso la verit\u00e0.",
+        "location_hint": "Echo District, loc_00"
+      },
+      {
+        "name": "Mara 'The Needle' Kade",
+        "role": "Mercenaria cybernetica, possiede informazioni e chip di accesso vitali.",
+        "location_hint": "Neon Bazaar, loc_01"
+      },
+      {
+        "name": "Dr. Orion Vell",
+        "role": "Scienziato ribelle, esperto di decodifica e hacking avanzato.",
+        "location_hint": "Laboratorio Orion, loc_02"
+      },
+      {
+        "name": "Rook 'The Wraith'",
+        "role": "Leader dei ribelli urbani, fornisce chiavi di crittografia e supporto tattico.",
+        "location_hint": "Rook's Den, loc_03"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Iron Serpent",
+        "role": "Boss di livello 3, un drone da guerra autonomo con artigli di metallo e laser corrosivi.",
+        "location_hint": "Arena del Ferro, loc_04"
+      },
+      {
+        "name": "Lord Cipher",
+        "role": "Boss di livello 4, un'intelligenza artificiale senziente che controlla i sistemi di sicurezza del Concilio.",
+        "location_hint": "Citadel del Concilio, loc_05"
+      },
+      {
+        "name": "The Black Maw",
+        "role": "Entit\u00e0 cybernetica emergente, risultato della fusione di dati corrotti, appare nella Camera del Cuore.",
+        "location_hint": "Camera del Cuore, loc_06"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Neon Abyss: Sangue nella Pioggia",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Nightclub Khaos",
+        "description": "Un locale notturno di musica e droga nella zona pi\u00f9 povera della citt\u00e0",
+        "x": 50,
+        "y": 50,
+        "connected_to": [
+          "loc_01",
+          "loc_02"
+        ],
+        "difficulty_level": 0
+      },
+      {
+        "id_name": "loc_01",
+        "name": "Mercato Nero",
+        "description": "Un mercato clandestino dove si vendono merci rubate e illegali",
+        "x": 30,
+        "y": 40,
+        "connected_to": [
+          "loc_00",
+          "loc_03"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_02",
+        "name": "Docks della Disperazione",
+        "description": "Un'area portuale abbandonata e pericolosa",
+        "x": 70,
+        "y": 40,
+        "connected_to": [
+          "loc_00",
+          "loc_04"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_03",
+        "name": "Quartiere dei Poveri",
+        "description": "Un quartiere degradato dove vivono i pi\u00f9 poveri della citt\u00e0",
+        "x": 20,
+        "y": 30,
+        "connected_to": [
+          "loc_01",
+          "loc_05"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_04",
+        "name": "Zona Industriale",
+        "description": "Un'area industriale abbandonata e piena di pericoli",
+        "x": 80,
+        "y": 30,
+        "connected_to": [
+          "loc_02",
+          "loc_06"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_05",
+        "name": "Sottopassi Abbandonati",
+        "description": "Un sistema di sottopassi abbandonati e pericolosi",
+        "x": 10,
+        "y": 20,
+        "connected_to": [
+          "loc_03"
+        ],
+        "difficulty_level": 3
+      },
+      {
+        "id_name": "loc_06",
+        "name": "Edificio Abbandonato",
+        "description": "Un edificio abbandonato e pericolante",
+        "x": 90,
+        "y": 20,
+        "connected_to": [
+          "loc_04"
+        ],
+        "difficulty_level": 4
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Warrior",
+        "hp": 24,
+        "max_hp": 24,
+        "ac": 12,
+        "level": 1,
+        "inventory": []
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_01",
+      "loc_00",
+      "loc_02"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Il Nightclub Khaos \u00e8 un rifugio di neon e bassi, dove la musica \u00e8 pi\u00f9 veleno di droga e i clienti sono l'ombra del degrado.",
+      "npcs": [
+        {
+          "name": "Lena \"Echo\" Marquez",
+          "role": "DJ e barista",
+          "appearance": "Capelli colorati, occhi di neon",
+          "personality": "Sorridente ma con un velo di mistero",
+          "first_line": "Ciao, sei pronto a perderti tra i beat?"
+        },
+        {
+          "name": "Jax \"Pulse\" Torres",
+          "role": "Security guard",
+          "appearance": "Corpo muscoloso, tatuaggi cibernetici",
+          "personality": "Sospettoso e protettivo",
+          "first_line": "Non mi piace che gli sconosciuti entrino in zona. Dimmi chi sei."
+        },
+        {
+          "name": "Sofia \"Silk\" Reyes",
+          "role": "Contabile del club",
+          "appearance": "Vestita di seta nera, occhi freddi",
+          "personality": "Calma e calcolatrice",
+          "first_line": "Il tuo conto \u00e8 pronto. Vuoi pagare con denaro o con informazioni?"
+        }
+      ],
+      "rumors": [
+        "Il Mercato Nero \u00e8 noto per vendere pezzi di tecnologia proibita, ma chi vi entra non torna mai.",
+        "I Docks della Disperazione sono un labirinto di navi abbandonate e spie del Concilio. Evita di attraversarli di notte.",
+        "C'\u00e8 una leggenda che la musica del Khaos contenga un segnale segreto per il Cuore di Acciaio."
+      ]
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "Il neon pulsante di Khaos illumina le ombre di Valerius mentre entra, accolto da Lena \"Echo\" Marquez, Jax \"Pulse\" Torres e Sofia \"Silk\" Reyes. Lena: \"Benvenuto, Valerius. Il beat di Khaos ti accoglier\u00e0.\"",
+  "current_scene": {
+    "narration": "Il neon pulsante di Khaos illumina le ombre di Valerius mentre entra, accolto da Lena \"Echo\" Marquez, Jax \"Pulse\" Torres e Sofia \"Silk\" Reyes. Lena: \"Benvenuto, Valerius. Il beat di Khaos ti accoglier\u00e0.\"",
+    "choices": [
+      "Parlare con Lena",
+      "Esplorare la zona",
+      "Chiedere informazioni a Jax"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Warrior",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro"
+}

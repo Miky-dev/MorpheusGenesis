@@ -164,11 +164,14 @@ def generate_story_bible(
                 data = json.loads(raw, strict=False)
             except json.JSONDecodeError:
                 # Se fallisce ancora, proviamo a pulire i newline letterali
-                # NOTA: Questa è una soluzione d'emergenza
-                raw = raw.replace('\n', '\\n').replace('\r', '\\r')
-                # Ma dobbiamo ri-aggiustare i newline strutturali del JSON che abbiamo appena rotto?
-                # In realtà json.loads con strict=False di solito basta per i newline nelle stringhe.
-                data = json.loads(raw, strict=False)
+                raw_fixed = raw.replace('\n', '\\n').replace('\r', '\\r')
+                try:
+                    data = json.loads(raw_fixed, strict=False)
+                except json.JSONDecodeError as e:
+                    print(f"⚠️ Errore di parsing JSON (Tentativo {attempt+1}): {e}")
+                    if attempt == max_retries - 1:
+                        raise e
+                    continue # Continua il ciclo e riprova se il JSON è irrecuperabile
 
             # ---> AGGIUNGI QUESTO CONTROLLO QUI <---
             if "error" in data:

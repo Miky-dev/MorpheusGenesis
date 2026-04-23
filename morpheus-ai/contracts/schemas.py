@@ -182,9 +182,9 @@ class NPC(BaseModel):
     first_line: str = Field(description="La primissima frase esatta che dice rivolgendosi al giocatore")
 
 class LocationPopulation(BaseModel):
-    location_lore: str = Field(description="La storia, il segreto o l'atmosfera di questo luogo specifico (1-2 frasi)")
-    npcs: List[NPC] = Field(description="Lista degli NPC presenti in questo luogo")
-    rumors: List[str] = Field(description="2 o 3 dicerie, consigli o avvertimenti sui nemici o sui luoghi vicini")
+    location_lore: str = Field(default="Un luogo avvolto nel mistero.", description="La storia, il segreto o l'atmosfera di questo luogo specifico (1-2 frasi)")
+    npcs: List[NPC] = Field(default_factory=list, description="Lista degli NPC presenti in questo luogo")
+    rumors: List[str] = Field(default_factory=list, description="2 o 3 dicerie, consigli o avvertimenti sui nemici o sui luoghi vicini")
 
 
 # ==========================================

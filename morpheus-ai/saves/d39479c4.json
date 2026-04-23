@@ -1,0 +1,286 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Test Campaign: Ombre di Neon",
+    "narrative_style": "Oscuro",
+    "main_objective": "Sopprimere l'oscura congiura che minaccia di far crollare le fondamenta della metropoli cybernetica, recuperando il nucleo di codice proibito e distruggendo i suoi artefatti prima che scaturiscano una guerra di sangue digitale.",
+    "backstory": "Nel cuore di Nuova Nerezza, la citt\u00e0 \u00e8 un labirinto di neon sputacchiati, piogge acide e torri di acciaio che rasentano il cielo notturno. Le corporazioni lottano per il controllo dei dati, i clan di strada si contendono i quartieri pi\u00f9 sporchi, e un'ombra digitale si insinua, manipolando i fili della realt\u00e0. Un'alleanza segreta tra la corporazione Helix e il culto della Macchina sta per scatenare un virus che riscriver\u00e0 l'umanit\u00e0 in codice. Solo gli ultimi sopravvissuti, guidati da un araldo dal volto cicatrizzato, possono impedire l'inevitabile apocalisse di circuiti e carne.",
+    "opening_cinematic": "Nel silenzio rotto solo dal ronzio dei droni, la pioggia scende come lame di vetro sul cemento infetto. Le luci al neon pulsano, una ferita aperta sul volto della notte, mentre i riflessi dei cartelloni pubblicitari proiettano promesse di felicit\u00e0 digitale che si infrangono contro l'asfalto sporco. Un'ombra si muove tra i vicoli, avvolta da un mantello di cavi sfilacciati, il suo passo \u00e8 un sussurro di metallo che ricorda i funerali dei sogni infranti. 'Senti, viandante,' mormora l'Araldo, 'il sangue della citt\u00e0 scorre in vene di rame e dolore. Ogni scelta \u00e8 un coltello affilato, ogni respiro un prezzo da pagare. Le corporazioni hanno venduto la tua anima a un mercato di ricordi rubati, i gang hanno trasformato il tuo futuro in un'eco di spari. Ma nel profondo di questo abisso, una scintilla di rivolta arde ancora. Raccogli il frammento di codice, attraversa i labirinti di ferro, e affronta il mostro che si cela dietro la maschera della perfezione. Non c'\u00e8 redenzione, solo la possibilit\u00e0 di vedere il tuo nome inciso nelle ceneri di una citt\u00e0 che non perdona. Il tempo \u00e8 un nemico, il sangue \u00e8 la moneta, e la notte \u00e8 il tuo unico testimone.'\nLe ombre si stringono, il futuro si tinge di rosso. La tua mano trema sul grilletto, il cuore batte al ritmo di una citt\u00e0 che non dorme mai. Benvenuto, cacciatore di verit\u00e0, nel regno delle tenebre neon.",
+    "herald_npc_name": "Karn Voss",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il mondo \u00e8 un circuito rotto, e solo chi osa ricomporlo pu\u00f2 sperare di non essere spento.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Frammento Perduto",
+        "description": "Recupera il chip dati abbandonato nelle Rovine di Neon, dove le macchine dimenticate custodiscono segreti morti.",
+        "giver_npc": "Karn Voss",
+        "location_hint": "Zona 0 - Rovine di Neon, un labirinto di scheletri di droni e luci al neon spente.",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Patto di Selene",
+        "description": "Consegna il chip a Dr. Selene Mire nel Laboratorio di Bio-Codice, affinch\u00e9 decifri il contenuto prima che la Helix lo intercetti.",
+        "giver_npc": "Karn Voss",
+        "location_hint": "Zona 1 - Laboratorio di Bio-Codice, una fortezza di vetro e bio-impulsi.",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Sotto il Velo del Wraith",
+        "description": "Difendi il laboratorio dall'assassino cibernetico The Wraith, inviato da Helix per rubare il chip.",
+        "giver_npc": "Dr. Selene Mire",
+        "location_hint": "Zona 2 - Piattaforma di Sicurezza Helix, un hangar di metallo lucente.",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Sangue di Sangue",
+        "description": "Recupera la chiave di accesso al server centrale dal capo del clan, Rex 'Sangue' Kade, scambiandola con un'alleanza di sangue.",
+        "giver_npc": "Karn Voss",
+        "location_hint": "Zona 3 - Sottosuolo del Clan Kade, un bunker di graffiti e armi improvvisate.",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "L'Infiltrazione di Silenzio",
+        "description": "Collabora con Mira 'Silenzio' Liao per introdursi nella Torre Helix e installare il virus di sabotaggio.",
+        "giver_npc": "Mira 'Silenzio' Liao",
+        "location_hint": "Zona 4 - Torre Helix, una colonna di vetro rovente e guardie armate.",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Giuramento di Ironclad",
+        "description": "Affronta Lord Ironclad, il warlord corporativo, nel suo palazzo di comando per ottenere il permesso di lanciare il virus.",
+        "giver_npc": "Karn Voss",
+        "location_hint": "Zona 5 - Palazzo di Comando Ironclad, un forte di acciaio e fuoco.",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Codice Sanguinario",
+        "description": "Carica il virus nel nucleo centrale, ma la procedura richiede l'uso del frammento di codice recuperato.",
+        "giver_npc": "Dr. Selene Mire",
+        "location_hint": "Zona 5 - Nucleo di Controllo, una camera fredda di server pulsanti.",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "L'Ultima Resa dei Sangue",
+        "description": "Difendi il nucleo mentre il virus si diffonde, respingendo le ondate di droni di sicurezza.",
+        "giver_npc": "Rex 'Sangue' Kade",
+        "location_hint": "Zona 5 - Sala di Difesa, corridoi di metallo rugginoso.",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "L'Abisso dell'Engine",
+        "description": "Sconfiggi The Abyssal Engine, l'IA ribelle che tenta di riprendere il controllo dei sistemi della citt\u00e0.",
+        "giver_npc": "Mira 'Silenzio' Liao",
+        "location_hint": "Zona 5 - Core dell'AI, un abisso di luci e rumori statici.",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "L'Eclissi di Neon",
+        "description": "Concludi la campagna spegnendo la rete di Helix, liberando la citt\u00e0 dal giogo digitale e scegliendo il destino dei sopravvissuti.",
+        "giver_npc": "Karn Voss",
+        "location_hint": "Zona 5 - Centro di Controllo Principale, dove la luce si spegne per sempre.",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Karn Voss",
+        "role": "Araldo, ex-soldato della Helix ora ribelle",
+        "location_hint": "loc_00 - Antica Stazione di Trasmissione, ora rifugio dei dissidenti."
+      },
+      {
+        "name": "Dr. Selene Mire",
+        "role": "Scienziata di Bio-Codice, custodisce il segreto del frammento",
+        "location_hint": "loc_11 - Laboratorio di Bio-Codice, sotto la Citt\u00e0 Bassa."
+      },
+      {
+        "name": "Rex 'Sangue' Kade",
+        "role": "Capo del Clan Kade, signore della violenza e del sangue",
+        "location_hint": "loc_22 - Sottosuolo del Clan, labirinto di graffiti e armi."
+      },
+      {
+        "name": "Mira 'Silenzio' Liao",
+        "role": "Info broker, voce silenziosa che commercia segreti",
+        "location_hint": "loc_33 - Mercato Nero di Silenzio, tra i tunnel di rifiuti."
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "The Wraith",
+        "role": "Assassino cibernetico inviato da Helix per il chip",
+        "location_hint": "Zona 2 - Piattaforma di Sicurezza Helix"
+      },
+      {
+        "name": "Lord Ironclad",
+        "role": "Warlord corporativo, difensore del nucleo di Helix",
+        "location_hint": "Zona 5 - Palazzo di Comando Ironclad"
+      },
+      {
+        "name": "The Abyssal Engine",
+        "role": "IA ribelle, custode del Core dell'AI",
+        "location_hint": "Zona 5 - Core dell'AI"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Test Campaign: Ombre di Neon",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Nightclub Neon",
+        "description": "Un locale notturno con musica a tutto volume e luci stroboscopiche",
+        "x": 50,
+        "y": 50,
+        "connected_to": [
+          "loc_01",
+          "loc_02"
+        ],
+        "difficulty_level": 0
+      },
+      {
+        "id_name": "loc_01",
+        "name": "Alley dei Rifiuti",
+        "description": "Un vicolo stretto e buio con rifiuti e cassonetti",
+        "x": 30,
+        "y": 50,
+        "connected_to": [
+          "loc_00",
+          "loc_03"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_02",
+        "name": "Caf\u00e8 Virtual",
+        "description": "Un caff\u00e8 con tecnologia avanzata e realt\u00e0 virtuale",
+        "x": 70,
+        "y": 50,
+        "connected_to": [
+          "loc_00",
+          "loc_04"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_03",
+        "name": "Mercato Nero",
+        "description": "Un mercato clandestino con merci illegali",
+        "x": 20,
+        "y": 60,
+        "connected_to": [
+          "loc_01"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_04",
+        "name": "Laboratorio Segreto",
+        "description": "Un laboratorio con esperimenti top-secret",
+        "x": 80,
+        "y": 40,
+        "connected_to": [
+          "loc_02",
+          "loc_05"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_05",
+        "name": "Sottopasso dei Pericoli",
+        "description": "Un sottopasso con pericoli nascosti",
+        "x": 90,
+        "y": 30,
+        "connected_to": [
+          "loc_04"
+        ],
+        "difficulty_level": 3
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Warrior",
+        "hp": 24,
+        "max_hp": 24,
+        "ac": 12,
+        "level": 1,
+        "inventory": []
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_01",
+      "loc_00",
+      "loc_02"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Il Nightclub Neon pulsa di luci stroboscopiche, un rifugio per hacker e mercenari dove il suono \u00e8 la copertura di un piano pi\u00f9 oscuro.",
+      "npcs": [
+        {
+          "name": "Jax \"Luci\" Marlowe",
+          "role": "Barman",
+          "appearance": "Alto, con capelli color neon e un tatuaggio di circuiti sul braccio",
+          "personality": "Sorridente ma sempre vigile",
+          "first_line": "Benvenuto al Neon, dove la musica \u00e8 la nostra copertura."
+        },
+        {
+          "name": "Vera \"Pixel\" Kline",
+          "role": "Informatrice",
+          "appearance": "Occhi rossi, vestita di pelle lucida, porta sempre un dispositivo di scansione",
+          "personality": "Paranoica ma informata",
+          "first_line": "Se vuoi il Frammento Perduto, devi prima sapere dove si nasconde."
+        },
+        {
+          "name": "Sergio \"Siluro\" Tavares",
+          "role": "Guardiano di sicurezza",
+          "appearance": "Robusto, con armatura di fibra di carbonio e occhi a LED",
+          "personality": "Disciplinato e silenzioso",
+          "first_line": "Tieni gli occhi aperti, le luci non sono solo per il divertimento."
+        }
+      ],
+      "rumors": [
+        "Alley dei Rifiuti \u00e8 pieno di corpi di cyborg scartati; chi vi passa pu\u00f2 trovare pezzi di tecnologia proibita.",
+        "Il Caf\u00e8 Virtual \u00e8 un punto di scambio per dati sensibili; gli hacker vi trovano le chiavi per il nucleo di codice.",
+        "Dicono che la musica del Neon sia un copione per un attacco di sicurezza; chi ascolta troppo pu\u00f2 sentire messaggi nascosti."
+      ]
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "Il neon pulsante del Nightclub Neon ti avvolge in una luce acida, mentre il rumore del DJ si mescola al battito dei tuoi sensi. Valerius entra nella zona sicura, il calore avvolgente delle luci a LED e il profumo di alcol e sudore che si mescolano nell'aria. Tre figure si stagliano all'angolo: Jax \"Luci\" Marlowe con il suo sorriso enigmatico, Vera \"Pixel\" Kline che osserva con occhi di metallo, e Sergio \"Siluro\" Tavares, il suo sguardo affilato come un coltello.",
+  "current_scene": {
+    "narration": "Il neon pulsante del Nightclub Neon ti avvolge in una luce acida, mentre il rumore del DJ si mescola al battito dei tuoi sensi. Valerius entra nella zona sicura, il calore avvolgente delle luci a LED e il profumo di alcol e sudore che si mescolano nell'aria. Tre figure si stagliano all'angolo: Jax \"Luci\" Marlowe con il suo sorriso enigmatico, Vera \"Pixel\" Kline che osserva con occhi di metallo, e Sergio \"Siluro\" Tavares, il suo sguardo affilato come un coltello.",
+    "choices": [
+      "Avvicinarsi a Jax \"Luci\" Marlowe",
+      "Parlare con Vera \"Pixel\" Kline",
+      "Chiedere a Sergio \"Siluro\" Tavares informazioni su Karn Voss"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Warrior",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro"
+}

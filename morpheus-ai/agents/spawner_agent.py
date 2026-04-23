@@ -28,7 +28,10 @@ IL TUO COMPITO:
 Inventa il nemico basandoti sul tema e sulla Story Bible. 'enemy_type' deve essere "base" (liv 1-3), "elite" (liv 4), o "boss" (liv 5).
 
 FORMATO RISPOSTA:
-Rispondi ESCLUSIVAMENTE con un file JSON valido che rispetti questa struttura, senza testo extra (nessun blocco markdown di codice, inizia direttamente con la parentesi graffa):
+Rispondi ESCLUSIVAMENTE con un JSON valido.
+IMPORTANTE: Usa SEMPRE doppi apici (") per chiavi e valori stringa.
+Inizia direttamente con la parentesi graffa {, senza blocchi markdown.
+
 {
   "name": "Nome del nemico (es. 'Predone del Neon' o 'Gorgone d'Acciaio')",
   "enemy_type": "base",
@@ -49,6 +52,6 @@ Rispondi ESCLUSIVAMENTE con un file JSON valido che rispetti questa struttura, s
 
 spawner_agent = Agent(
     name="Spawner",
-    model=Groq(id="openai/gpt-oss-20b", temperature=0.7), 
+    model=Groq(id="openai/gpt-oss-20b", temperature=0.1), 
     instructions=ARES_INSTRUCTIONS, 
 )
