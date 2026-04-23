@@ -249,11 +249,11 @@ def render_setup_page():
             "Fantasy": {"icon": "swords", "bg": "assets/fantasy.png"},
             "Cyberpunk": {"icon": "memory", "bg": "assets/cyberpunk.png"},
             "Fantascienza": {"icon": "rocket_launch", "bg": "assets/scifi.png"},
-            "Horror": {"icon": "psychiatry", "bg": "assets/horror.png"},
-            "Post-Apocalittico": {"icon": "local_fire_department", "bg": "assets/postapoc.png"},
+            "Horror": {"icon": "skull", "bg": "assets/horror.png"},
+            "Post-Apocalittico": {"icon": "dangerous", "bg": "assets/postapoc.png"},
             "Pirati": {"icon": "sailing", "bg": "assets/pirates.png"},
-            "Western": {"icon": "landscape", "bg": "assets/western.png"},
-            "Antico Egitto": {"icon": "history", "bg": "assets/egypt.png"}
+            "Western": {"icon": "grade", "bg": "assets/western.png"},
+            "Antico Egitto": {"icon": "landscape", "bg": "assets/egypt.png"}
         }
 
         # ---------------------------------------------------------------
