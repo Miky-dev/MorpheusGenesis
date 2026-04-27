@@ -2,6 +2,7 @@ from agno.agent import Agent
 from agno.models.groq import Groq
 from contracts.schemas import StoryBible, Location, NPC, QuestCharacterBrief
 from knowledge.chroma_store import DungeonMemory
+from utils import parse_json_response
 import json
 import re
 
@@ -149,45 +150,27 @@ def generate_story_bible(
             response = agent.run(prompt)
             raw = response.content.strip()
             
-            # 1. Estrazione del solo blocco JSON pulito
-            match = re.search(r'\{.*\}', raw, re.DOTALL)
-            if not match: continue
-            raw = match.group(0)
+            data = parse_json_response(raw, "Muse StoryBible")
             
-            # 2. Pulizia: rimuove virgole finali e gestisce caratteri di controllo
-            raw = re.sub(r',\s*([\]}])', r'\1', raw)
-            
-            # 3. Fallback per newline letterali dentro le stringhe JSON
-            # Questo regex cerca di trovare newline che non sono preceduti da una backslash
-            # ma sono dentro apici doppi. È un po' complesso, quindi proviamo prima strict=False.
-            try:
-                data = json.loads(raw, strict=False)
-            except json.JSONDecodeError:
-                # Se fallisce ancora, proviamo a pulire i newline letterali
-                raw_fixed = raw.replace('\n', '\\n').replace('\r', '\\r')
-                try:
-                    data = json.loads(raw_fixed, strict=False)
-                except json.JSONDecodeError as e:
-                    print(f"⚠️ Errore di parsing JSON (Tentativo {attempt+1}): {e}")
-                    if attempt == max_retries - 1:
-                        raise e
-                    continue # Continua il ciclo e riprova se il JSON è irrecuperabile
+            if data is None:
+                print(f"⚠️ Errore di parsing JSON (Tentativo {attempt+1})")
+                if attempt == max_retries - 1:
+                    raise ValueError("Impossibile parsare la Story Bible. L'AI ha restituito un formato non valido.")
+                continue
 
-            # ---> AGGIUNGI QUESTO CONTROLLO QUI <---
+            # ---> CONTROLLO ERRORI API <---
             if "error" in data:
                 error_msg = data["error"].get("message", "Errore API sconosciuto")
                 print(f"⚠️ Errore API intercettato (Tentativo {attempt+1}): {error_msg}")
                 if attempt == max_retries - 1:
-                    raise ValueError(f"API Groq bloccata: {error_msg}")
+                    raise ValueError(f"API bloccata: {error_msg}")
                 continue # Riprova
 
             break # Se arriva qui, il JSON è buono!
             
         except Exception as e:
             if attempt == max_retries - 1:
-                # Se siamo all'ultimo tentativo, stampiamo il corpo del reato per il debug
                 print(f"DEBUG: Fallimento parsing JSON al tentativo {attempt+1}")
-                print(f"RAW CONTENT PRE-PARSING: {raw[:500]}...") 
                 raise e
             continue
 

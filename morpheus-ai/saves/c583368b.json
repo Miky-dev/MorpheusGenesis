@@ -1,0 +1,318 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Echi di Acciaio nell'Ombra Digitale",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scavare il segreto del Nexus Nero e impedire che la megacorpora Helix riscriva la coscienza della citt\u00e0",
+    "backstory": "Nel cuore di Neo-Arcadia, la pioggia di neon scivola su strade di ferro corroso, dove le corporazioni si contendono il sangue dei pochi rimasti liberi. Helix, la pi\u00f9 potente, ha costruito il Nexus Nero, un nodo di controllo capace di manipolare le menti dei cittadini. Una resistenza frammentata, guidata da ombre e tradimenti, lotta per spezzare le catene digitali. Il mondo \u00e8 un labirinto di cyber-impalcature, dove ogni scelta si paga in vite spezzate e cicatrici di luce nera.",
+    "opening_cinematic": "Nel crepuscolo di una citt\u00e0 che non dorme mai, le luci al neon si rifrangono in pozzanghere di sangue sintetico. Il vento porta con s\u00e9 l'eco di sirene spezzate e di cavi bruciati, un canto di disperazione che si mescola al ruggito dei motori dei droni di sorveglianza. Le ombre si allungano tra i grattacieli di acciaio, dove i cartelloni pubblicitari promettono felicit\u00e0 a chi si sottomette al Nexus Nero. Ma la felicit\u00e0 \u00e8 un'illusione, una catena invisibile che avvolge i cuori dei pi\u00f9 deboli. \nUn uomo, il Vex Harrow, l'Araldo della Fine, si erge su un tetto di metallo arrugginito. Il suo volto \u00e8 coperto da una maschera di circuiti incrinati, gli occhi brillano di una luce spettrale. 'Siete pronti a vedere la verit\u00e0 che si nasconde dietro le vene di questa citt\u00e0?' sussurra, la voce un sussurro di ferro. \nMentre la pioggia cade come lame affilate, le strade si riempiono di figure che si muovono come spettri, ognuna con un segreto pi\u00f9 oscuro dell'ultima. Le loro mani stringono pistole al plasma, i loro cuori battono al ritmo di codici corrotti. Ogni passo \u00e8 un patto di sangue, ogni decisione una lama che si affonda nella carne della realt\u00e0. \nIl futuro di Neo-Arcadia \u00e8 un filo sottile, teso tra la luce dei neon e l'oscurit\u00e0 della disperazione. La tua missione \u00e8 una singola scintilla in questo abisso, ma anche una scintilla pu\u00f2 innescare l'esplosione di un'intera rete di menzogne. Preparati, perch\u00e9 nel mondo di acciaio e ombre, non c'\u00e8 redenzione senza sacrificio, e il prezzo del silenzio \u00e8 la tua stessa anima.",
+    "herald_npc_name": "Vex Harrow",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il Nexus non \u00e8 solo un'arma, \u00e8 una condanna. Scegli il tuo destino, ma ricorda: ogni passo verso la luce \u00e8 una caduta nella tenebra.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Silenzio",
+        "description": "Incontra Vex Harrow sul tetto di loc_00 per ricevere il primo frammento di codice che svela la posizione del Nexus Nero.",
+        "giver_npc": "Vex Harrow",
+        "location_hint": "Tetto del centro di comando di Helix, zona industriale",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Le Caverne di Rook",
+        "description": "Segui le indicazioni di Vex e trova Rook nei bassifondi di loc_01; recupera il datalog della rete di Helix.",
+        "giver_npc": "Vex Harrow",
+        "location_hint": "Sottopassaggi di Neon Abyss, zona 1",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Il Patto di Mira",
+        "description": "Mira Kest, esperta di cybernetica, ti aiuter\u00e0 a decifrare il datalog in cambio di un impianto di difesa.",
+        "giver_npc": "Rook",
+        "location_hint": "Laboratorio clandestino di Mira, loc_02",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Sotto il Velo del Wraith",
+        "description": "Affronta il primo boss, The Iron Wraith, nelle fabbriche abbandonate di loc_03 per ottenere l'accesso al nodo centrale.",
+        "giver_npc": "Mira Kest",
+        "location_hint": "Fabbrica di smaltimento di metalli, zona 3",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Il Cuore di Silas",
+        "description": "Silas Grave, informatore, ti riveler\u00e0 il codice di bypass se recuperi il suo chip di identit\u00e0 rubato.",
+        "giver_npc": "The Iron Wraith",
+        "location_hint": "Rifugio sotterraneo di Silas, loc_04",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Assalto al Neon Reaver",
+        "description": "Il secondo boss, Neon Reaver, difende l'entrata al server principale; sconfiggilo per penetrare nella rete.",
+        "giver_npc": "Silas Grave",
+        "location_hint": "Piattaforma di trasporto aerea, zona 5",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "La Cripta dei Codici",
+        "description": "Penetra nella cripta digitale di Helix e recupera il frammento finale del Nexus Nero.",
+        "giver_npc": "Neon Reaver",
+        "location_hint": "Centro di elaborazione dati, loc_06",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Tradimento di Dr. Selene",
+        "description": "Dr. Selene Voss, scienziata di Helix, ti offre una via di fuga in cambio di un segreto; scegli se allearti o tradirla.",
+        "giver_npc": "Vex Harrow",
+        "location_hint": "Laboratorio di ricerca avanzata, loc_07",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Il Cabal dell'Abisso",
+        "description": "Affronta il terzo boss, Cabal of the Abyss, nella sala del Nexus; la tua decisione finale determiner\u00e0 il destino di Neo-Arcadia.",
+        "giver_npc": "Dr. Selene Voss",
+        "location_hint": "Camera del Nexus Nero, loc_08",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Rinascita o Oblio",
+        "description": "Sconfiggi o corrompi il Nexus Nero, scegliendo tra la distruzione totale della rete o la sua sottomissione al tuo volere.",
+        "giver_npc": "Cabal of the Abyss",
+        "location_hint": "Nexus Nero, cuore pulsante della citt\u00e0, loc_09",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Vex Harrow",
+        "role": "Araldo della Resistenza",
+        "location_hint": "Tetto del centro di comando di Helix, loc_00"
+      },
+      {
+        "name": "Rook",
+        "role": "Contrabbandiere di dati",
+        "location_hint": "Sottopassaggi di Neon Abyss, loc_01"
+      },
+      {
+        "name": "Mira Kest",
+        "role": "Cybernetica clandestina",
+        "location_hint": "Laboratorio clandestino, loc_02"
+      },
+      {
+        "name": "Silas Grave",
+        "role": "Informatore del mercato nero",
+        "location_hint": "Rifugio sotterraneo, loc_04"
+      },
+      {
+        "name": "Dr. Selene Voss",
+        "role": "Scienziata di Helix",
+        "location_hint": "Laboratorio di ricerca avanzata, loc_07"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "The Iron Wraith",
+        "role": "Guardiano meccanico delle fabbriche",
+        "location_hint": "Fabbrica di smaltimento di metalli, loc_03"
+      },
+      {
+        "name": "Neon Reaver",
+        "role": "Assaltatore cybernetico dei trasporti aerei",
+        "location_hint": "Piattaforma di trasporto aerea, loc_05"
+      },
+      {
+        "name": "Cabal of the Abyss",
+        "role": "Culto digitale che protegge il Nexus Nero",
+        "location_hint": "Camera del Nexus Nero, loc_08"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Echi di Acciaio nell'Ombra Digitale",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Nightclub Onyx",
+        "description": "Un locale notturno con musica a luci stroboscopiche e ombre oscure",
+        "x": 50,
+        "y": 50,
+        "connected_to": [
+          "loc_01",
+          "loc_02"
+        ],
+        "difficulty_level": 0
+      },
+      {
+        "id_name": "loc_01",
+        "name": "Mercato Nero di Ryght",
+        "description": "Un mercato clandestino dove si vendono merci illegali",
+        "x": 30,
+        "y": 40,
+        "connected_to": [
+          "loc_00",
+          "loc_03"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_02",
+        "name": "Docks di Newhaven",
+        "description": "Un'area di scarico merci con container e gru",
+        "x": 70,
+        "y": 40,
+        "connected_to": [
+          "loc_00",
+          "loc_04"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_03",
+        "name": "Hideout dei Razorwire",
+        "description": "Un nascondiglio segreto di un gruppo di hacker",
+        "x": 20,
+        "y": 30,
+        "connected_to": [
+          "loc_01"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_04",
+        "name": "Sottopasso di Steelgrid",
+        "description": "Un sottopasso ferroviario con graffiti e ombre",
+        "x": 80,
+        "y": 30,
+        "connected_to": [
+          "loc_02",
+          "loc_05"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_05",
+        "name": "DataCenter di Cygnus",
+        "description": "Un centro di dati con server e sistemi di sicurezza avanzati",
+        "x": 90,
+        "y": 20,
+        "connected_to": [
+          "loc_04"
+        ],
+        "difficulty_level": 3
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "ac": 14,
+        "level": 1,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          },
+          {
+            "name": "Cartella di Accesso di Sicurezza",
+            "item_type": "key_item",
+            "rarity": "common",
+            "description": "Un piccolo badge di plastica con un chip RFID, coperto da graffi e segni di uso. Il suo colore grigio opaco riflette la luce fioca del club.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 15,
+            "lore_snippet": "Una carta di accesso che apriva le porte del server centrale del club, custodita da guardie cibernetiche.",
+            "quantity": 1,
+            "durability": null
+          },
+          {
+            "name": "Cavallo di ferro",
+            "item_type": "weapon",
+            "rarity": "common",
+            "description": "Un semplice attrezzo agricolo, con una lama di ferro grezza e manico di legno scuro, ora usato come arma improvvisata.",
+            "attack_bonus": 1,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 5,
+            "lore_snippet": "Un ex-farmer lo ha trasformato in un'arma di sopravvivenza nei vicoli di Neon City.",
+            "quantity": 1,
+            "durability": 95
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_01",
+      "loc_00",
+      "loc_02"
+    ],
+    "turn_number": 6,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Un luogo avvolto nel mistero.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "Il guerriero Valerius brandisce la spada e si lancia su una stripper al centro del Nightclub Onyx. Le luci al neon si offuscano in un bagliore sanguinoso mentre la folla inizia a gridare. L'oscurit\u00e0 si infittisce, e un'eco di raggiri di sicurezza si annuncia. Valerius sente il peso del suo destino marziale mentre la violenza si fa carne.",
+  "current_scene": {
+    "narration": "Il guerriero Valerius brandisce la spada e si lancia su una stripper al centro del Nightclub Onyx. Le luci al neon si offuscano in un bagliore sanguinoso mentre la folla inizia a gridare. L'oscurit\u00e0 si infittisce, e un'eco di raggiri di sicurezza si annuncia. Valerius sente il peso del suo destino marziale mentre la violenza si fa carne.",
+    "choices": [
+      "Smetti e chiedi scusa",
+      "Continua a colpire",
+      "Scappa dalla scena"
+    ],
+    "is_combat": true,
+    "allow_free_action": false,
+    "enemy_spawn": "base"
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro"
+}

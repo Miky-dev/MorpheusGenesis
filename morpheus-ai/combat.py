@@ -5,15 +5,15 @@ import logging
 logger = logging.getLogger("morpheus_ai")
 
 CLASS_MOVES = {
-    "Warrior": [
+    "Guerriero": [
         {"name": "Attacco Pesante", "damage": "1d10+4", "desc": "Un fendente brutale."},
         {"name": "Scudo d'Acciaio", "damage": "1d4+4", "desc": "Colpisci col bordo dello scudo."}
     ],
-    "Mage": [
+    "Mago": [
         {"name": "Dardo Incantato", "damage": "2d4+5", "desc": "Dardi di pura energia magica."},
         {"name": "Esplosione Arcana", "damage": "1d12+2", "desc": "Un'onda d'urto distruttiva."}
     ],
-    "Rogue": [
+    "Ladro": [
         {"name": "Attacco Furtivo", "damage": "1d6+6", "desc": "Colpisci i punti vitali."},
         {"name": "Lama Veloce", "damage": "2d4+3", "desc": "Due fendenti rapidissimi."}
     ]
@@ -34,6 +34,17 @@ def resolve_combat_round(move_name, d20_roll=None):
         st.session_state.world_state.combat_log.append(f"💥 **{hero.name}** usa {move_name}: COLPITO! ({total_atk} vs CA {enemy.ac}) per {dmg} danni.")
     else:
         st.session_state.world_state.combat_log.append(f"🛡️ **{hero.name}** usa {move_name}: MANCATO! ({total_atk} vs CA {enemy.ac}).")
+
+    # 1b. USURA ARMA: Ogni attacco consuma un po' di durabilità
+    for item in hero.inventory:
+        if item.item_type == "weapon" and item.durability is not None:
+            wear = random.randint(2, 5)
+            item.durability -= wear
+            if item.durability <= 0:
+                item.durability = 0
+                st.session_state.world_state.combat_log.append(f"⚠️ **ATTENZIONE**: La tua arma ({item.name}) si è rotta durante lo scontro!")
+                hero.inventory.remove(item)
+            break # Applichiamo l'usura solo alla prima arma trovata (quella usata)
 
     if enemy.hp <= 0:
         enemy.hp = 0

@@ -24,7 +24,7 @@ from agents.lore_agent import generate_story_bible, save_bible_to_memory
 from agents.map_agent import map_generator_agent
 
 from knowledge.chroma_store import DungeonMemory
-from contracts.schemas import WorldState, Character, Enemy, StoryScene, WorldMap, LocationPopulation, StoryBible
+from contracts.schemas import WorldState, Character, Enemy, StoryScene, WorldMap, LocationPopulation, StoryBible, Item
 from setup_page import render_setup_page
 from dataclasses import asdict
 import uuid
@@ -60,10 +60,17 @@ def show_inventory_modal(character: Character):
         if not items:
             return
         st.markdown(f"#### {icon} {title}")
-        for it in items:
+        for idx, it in enumerate(items):
             color = rarity_colors.get(it.rarity, "#ffffff")
             with st.container(border=True):
-                st.markdown(f"<span style='color: {color}; font-weight: bold; font-size: 1.1em;'>{it.name}</span> <span style='font-size: 0.8em; color: gray;'>[{it.rarity}]</span>", unsafe_allow_html=True)
+                # Formattazione Nome: Durabilità (armi/armature) vs Quantità (altro)
+                nome_formattato = f"{it.name}"
+                if it.durability is not None:
+                    nome_formattato += f" [Durabilità: {it.durability}%]"
+                elif it.quantity > 1:
+                    nome_formattato += f" (x{it.quantity})"
+                
+                st.markdown(f"<span style='color: {color}; font-weight: bold; font-size: 1.1em;'>{nome_formattato}</span> <span style='font-size: 0.8em; color: gray;'>[{it.rarity}]</span>", unsafe_allow_html=True)
                 st.write(f"*{it.description}*")
                 
                 stats = []
@@ -75,6 +82,15 @@ def show_inventory_modal(character: Character):
                 if stats:
                     st.markdown("**Statistiche:** " + " | ".join(stats))
                 st.caption(f"📖 *{it.lore_snippet}*")
+                
+                # Bottone per usare i consumabili
+                if it.item_type == "consumable" and it.heal_amount:
+                    if st.button(f"Usa {it.name}", key=f"use_{it.name}_{idx}"):
+                        character.hp = min(character.max_hp, character.hp + it.heal_amount)
+                        it.quantity -= 1
+                        if it.quantity <= 0:
+                            character.inventory.remove(it)
+                        st.rerun()
 
     col1, col2 = st.columns(2)
     with col1:
@@ -182,8 +198,22 @@ if "world_state" not in st.session_state:
     if "visited_locations" not in st.session_state:
         st.session_state.visited_locations = {}
 
-    # Creiamo uno stato iniziale basato sull'input
-    hero = Character(name=p1_name, char_class=p1_class, hp=24, max_hp=24)
+    # Creiamo uno stato iniziale basato sull'input e differenziato per classe
+    if p1_class == "Mago":
+        hero = Character(name=p1_name, char_class=p1_class, hp=16, max_hp=16, ac=10)
+        start_item = Item(name="Cristallo Risonante", item_type="key_item", rarity="Non Comune", description="Un frammento che pulsa di energia.", lore_snippet="Vibra quando c'è magia vicina.", quantity=1)
+        weapon_item = Item(name="Bastone Nodoso", item_type="weapon", rarity="Comune", description="Un bastone di legno vecchio ma robusto.", attack_bonus=1, lore_snippet="Apparteneva a uno stregone novizio.", durability=100)
+        hero.inventory.extend([start_item, weapon_item])
+    elif p1_class == "Ladro":
+        hero = Character(name=p1_name, char_class=p1_class, hp=22, max_hp=22, ac=12)
+        start_item = Item(name="Set di Grimaldelli", item_type="key_item", rarity="Comune", description="Attrezzi essenziali per aprire serrature.", lore_snippet="Hanno aperto più forzieri di quanti ne ricordi.", quantity=5)
+        weapon_item = Item(name="Pugnale Celato", item_type="weapon", rarity="Non Comune", description="Lama corta, facile da nascondere.", attack_bonus=2, lore_snippet="Porta il marchio della gilda dei ladri.", durability=100)
+        hero.inventory.extend([start_item, weapon_item])
+    else: # Guerriero o fallback
+        hero = Character(name=p1_name, char_class=p1_class, hp=30, max_hp=30, ac=14)
+        start_item = Item(name="Pozione Rigenerante", item_type="consumable", rarity="Non Comune", description="Densa fiala rossa che rinvigorisce il corpo.", heal_amount=15, lore_snippet="Sa di ferro e cenere.", quantity=3)
+        weapon_item = Item(name="Spada d'Acciaio", item_type="weapon", rarity="Comune", description="Una spada a una mano standard.", attack_bonus=3, lore_snippet="Forgiata in massa per le guardie cittadine.", durability=100)
+        hero.inventory.extend([start_item, weapon_item])
     st.session_state.world_state = WorldState(
         theme=theme,
         party=[hero],

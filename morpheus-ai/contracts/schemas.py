@@ -13,6 +13,8 @@ class Item(BaseModel):
     heal_amount: Optional[int] = Field(default=None, description="HP curati (se consumabile)")
     value: int = Field(default=0, description="Valore in monete o crediti")
     lore_snippet: str = Field(description="Una riga di storia o curiosità sull'oggetto")
+    quantity: int = Field(default=1, description="Quantità per oggetti cumulabili (es. pozioni)")
+    durability: Optional[int] = Field(default=None, description="Percentuale di integrità da 0 a 100 (solo per armi e armature)")
 
 
 
@@ -208,11 +210,17 @@ class QuestUpdate(BaseModel):
     discovered_location_ids: List[str] = Field(default_factory=list, description="Lista degli 'id_name' dei luoghi scoperti analizzando i dialoghi e indizi attuali")
 
 # --- HEPHAESTUS (Loot Agent) ---
+class InventoryUpdate(BaseModel):
+    item_name: str = Field(description="Il nome esatto dell'oggetto nell'inventario da modificare")
+    quantity_change: int = Field(default=0, description="Variazione della quantità (es. -1 se consumato/perso)")
+    durability_change: int = Field(default=0, description="Variazione della durabilità (es. -5 se usato in combattimento)")
+    reason: str = Field(description="Breve motivo narrativo per la modifica")
 
 class LootResponse(BaseModel):
     found_item: Optional[Item] = Field(default=None, description="L'oggetto trovato, nullo se non c'è nulla")
-    rarity_roll: int = Field(description="Valore generato (1-100) che ha determinato la rarità")
-    lore_hint: str = Field(description="Breve suggerimento per il DM su come descrivere il ritrovamento")
+    rarity_roll: Optional[int] = Field(default=None, description="Valore generato (1-100) che ha determinato la rarità")
+    lore_hint: Optional[str] = Field(default=None, description="Breve suggerimento per il DM su come descrivere il ritrovamento")
+    inventory_updates: List[InventoryUpdate] = Field(default_factory=list, description="Aggiornamenti per consumare, usurare o perdere oggetti già in inventario")
 # --- MNEMOSINE (Memory Agent) ---
 class MemorySnapshot(BaseModel):
     summary_snapshot: str = Field(description="Riassunto denso e tecnico dell'intera storia finora (max 5 righe)")

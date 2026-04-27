@@ -188,9 +188,16 @@ def show_inventory_modal(character: Character):
     def draw_category(title, icon, items):
         if not items: return
         st.markdown(f"#### {icon} {title}")
-        for it in items:
+        for idx, it in enumerate(items):
             with st.container(border=True):
-                st.markdown(f"<span style='font-weight: bold;'>{it.name}</span> <span style='font-size: 0.8em; color: gray;'>[{it.rarity}]</span>", unsafe_allow_html=True)
+                # Formattazione Nome: Durabilità (armi/armature) vs Quantità (altro)
+                nome_formattato = f"{it.name}"
+                if it.durability is not None:
+                    nome_formattato += f" [Durabilità: {it.durability}%]"
+                elif it.quantity > 1:
+                    nome_formattato += f" (x{it.quantity})"
+                    
+                st.markdown(f"<span style='font-weight: bold;'>{nome_formattato}</span> <span style='font-size: 0.8em; color: gray;'>[{it.rarity}]</span>", unsafe_allow_html=True)
                 st.write(f"*{it.description}*")
                 stats = []
                 if it.attack_bonus: stats.append(f"⚔️ ATK +{it.attack_bonus}")
@@ -199,6 +206,15 @@ def show_inventory_modal(character: Character):
                 if it.value > 0: stats.append(f"🪙 Valore: {it.value}")
                 if stats: st.markdown("**Statistiche:** " + " | ".join(stats))
                 st.caption(f"📖 *{it.lore_snippet}*")
+                
+                # Bottone per usare i consumabili
+                if it.item_type == "consumable" and it.heal_amount:
+                    if st.button(f"Usa {it.name}", key=f"use_game_{it.name}_{idx}"):
+                        character.hp = min(character.max_hp, character.hp + it.heal_amount)
+                        it.quantity -= 1
+                        if it.quantity <= 0:
+                            character.inventory.remove(it)
+                        st.rerun()
 
     col1, col2 = st.columns(2)
     with col1:
@@ -400,9 +416,9 @@ def render_game_page():
                 st.session_state.azione_scelta_per_turn = None
 
             def on_input_change():
-                st.session_state.azione_scelta_per_turn = st.session_state.free_action_input
-                # Non svuotiamo subito per permettere al codice sotto di leggerlo se necessario
-                # ma st.session_state.free_action_input verrà sovrascritto al prossimo rendering
+                if st.session_state.free_action_input:
+                    st.session_state.azione_scelta_per_turn = st.session_state.free_action_input
+                    st.session_state.free_action_input = "" # Svuota l'input
 
             with st.container():
                 st.markdown('<div class="pill-input-marker" style="display:none"></div>', unsafe_allow_html=True)
@@ -411,7 +427,9 @@ def render_game_page():
                     st.text_input("Azione Libera", placeholder="Oppure fai di testa tua...", label_visibility="collapsed", key="free_action_input", on_change=on_input_change, autocomplete="off")
                 with col_send:
                     if st.button("Invia", icon=":material/arrow_upward:", key="send_btn"):
-                        st.session_state.azione_scelta_per_turn = st.session_state.free_action_input
+                        if st.session_state.free_action_input:
+                            st.session_state.azione_scelta_per_turn = st.session_state.free_action_input
+                            st.session_state.free_action_input = ""
             
             if st.session_state.azione_scelta_per_turn:
                 azione_scelta = st.session_state.azione_scelta_per_turn

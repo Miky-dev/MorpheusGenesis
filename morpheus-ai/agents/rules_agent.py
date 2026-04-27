@@ -53,5 +53,5 @@ rules_agent = Agent(
     name="Rules",
     model=Groq(id="openai/gpt-oss-safeguard-20b"),
     instructions=MEDIEVAL_RULES,
-    #output_schema=RulesResult,
+    output_schema=RulesResult,
 )

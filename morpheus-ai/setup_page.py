@@ -360,16 +360,9 @@ def render_setup_page():
             top_act_l, top_act_r = st.columns([1, 1])
             
             with top_act_l:
-                st.markdown("<label style='font-size: 0.875rem; color: #bec9c4; font-weight: 600;'>Avventurieri</label>", unsafe_allow_html=True)
-                player_counts = [1, 2, 3, 4]
-                st.segmented_control(
-                    "GIOCATORI", 
-                    options=player_counts, 
-                    key="num_players",
-                    label_visibility="collapsed", 
-                    disabled=st.session_state.is_loading_game,
-                    selection_mode="single"
-                )
+                # Multiplayer rimosso per semplificare l'interfaccia
+                pass
+            
             
             with top_act_r:
                 with st.container():
@@ -383,8 +376,8 @@ def render_setup_page():
             
             st.markdown("<br>", unsafe_allow_html=True)
             
-            # Player Config Loop
-            players = int(st.session_state.num_players)
+            # Player Config Loop (Single Player Only)
+            players = 1
             
             # Inject styling specific for player container
             st.markdown("""
@@ -408,7 +401,7 @@ def render_setup_page():
                     st.markdown(f"""
                         <div class="player-card-marker" style="display:none"></div>
                         <div style="display:flex; justify-content:space-between; margin-bottom: 1rem;">
-                            <span style="font-size:0.75rem; color:#bec9c4; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;">Giocatore 0{p+1}</span>
+                            <span style="font-size:0.75rem; color:#bec9c4; font-weight:600; letter-spacing:0.05em; text-transform:uppercase;">Eroe Principale</span>
                             <span class="material-symbols-outlined" style="font-size: 1rem; color:#bec9c4;">person</span>
                         </div>
                     """, unsafe_allow_html=True)

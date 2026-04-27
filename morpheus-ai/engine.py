@@ -72,7 +72,9 @@ def process_turn(user_input: str) -> StoryScene:
     quest_status = [{"id": sq.id, "title": sq.title, "status": sq.status, "giver": sq.giver_npc, "hint": sq.location_hint} for sq in bible.quest_chain] if bible else []
     world_map_locations = [{"id": l.id_name, "name": l.name} for l in st.session_state.world_map.locations] if st.session_state.get("world_map") else []
     
-    chronos_prompt = f"Mood: {mood}\nAzione o Dialogo: {user_input}\nPosizione attuale: {world_state.current_location}\nQuest Chain: {json.dumps(quest_status)}\nMappa Luoghi Esistenti: {json.dumps(world_map_locations)}"
+    hero = world_state.party[0]
+    hero_info = f"{hero.name} (Classe: {hero.char_class})"
+    chronos_prompt = f"Mood: {mood}\nAzione o Dialogo: {user_input}\nEroe: {hero_info}\nPosizione attuale: {world_state.current_location}\nQuest Chain: {json.dumps(quest_status)}\nMappa Luoghi Esistenti: {json.dumps(world_map_locations)}"
 
     # 2. ESECUZIONE PARALLELA
     chronos_data = None
@@ -106,22 +108,51 @@ def process_turn(user_input: str) -> StoryScene:
                     sq.status = "completed"
                     st.success(f"✅ Missione Completata: {sq.title}")
 
-    # 4. ESECUZIONE LOOT (Hephaestus - Solo se l'utente cerca qualcosa)
+    # 4. ESECUZIONE LOOT & INVENTARIO (Hephaestus - Loot o Consumo Oggetti)
     loot_data = None
-    loot_keywords = ["cerco", "apro", "depredo", "frugo", "esamino", "ispeziono", "bottino", "ispeziona"]
-    if any(word in user_input.lower() for word in loot_keywords):
+    # Rimuoviamo il filtro per le keyword, Efesto gira sempre per poter tracciare qualsiasi verbo strano (es. "scaglio", "perdo")
+    if True:
         # Calcoliamo la difficoltà reale del luogo in cui siamo
         diff_level = 1
         if st.session_state.get("world_map"):
             loc = next((l for l in st.session_state.world_map.locations if l.id_name == world_state.current_location), None)
             if loc: diff_level = loc.difficulty_level
+            
+        hero = world_state.party[0]
+        inventory_dump = [{"name": i.name, "quantity": i.quantity, "durability": i.durability} for i in hero.inventory]
         
-        loot_prompt = f"Azione: {user_input}\nMood: {mood}\nDifficoltà: {diff_level}\nTema: {world_state.theme}"
+        loot_prompt = f"Azione: {user_input}\nMood: {mood}\nDifficoltà: {diff_level}\nTema: {world_state.theme}\nInventario Eroe: {json.dumps(inventory_dump)}"
         loot_data = safe_agent_run(loot_agent, loot_prompt, LootResponse, "Hephaestus")
         
-        # Salviamo l'oggetto nell'inventario del giocatore corrente!
-        if loot_data and loot_data.found_item:
-            world_state.party[0].inventory.append(loot_data.found_item)
+        # Aggiornamento dell'inventario del giocatore
+        if loot_data:
+            # Aggiungi eventuale nuovo oggetto trovato
+            if loot_data.found_item:
+                hero.inventory.append(loot_data.found_item)
+
+            # Gestisci aggiornamenti espliciti forniti da Efesto
+            if hasattr(loot_data, 'inventory_updates') and loot_data.inventory_updates:
+                for update in loot_data.inventory_updates:
+                    for item in hero.inventory:
+                        if update.item_name.lower() in item.name.lower() or item.name.lower() in update.item_name.lower():
+                            item.quantity += update.quantity_change
+                            if item.durability is not None:
+                                item.durability += update.durability_change
+                            if item.quantity <= 0 or (item.durability is not None and item.durability <= 0):
+                                hero.inventory.remove(item)
+                            break
+            # Fallback: se non ci sono aggiornamenti espliciti da Efesto, ma l'azione coinvolge un oggetto (es. lancio o rottura deliberata)
+            # NOTA: Applichiamo questo fallback SOLO se non siamo in combattimento attivo, per evitare che un semplice 'attacco' rompa l'arma senza senso.
+            elif not st.session_state.world_state.active_enemies and any(word in user_input.lower() for word in ["lancio", "scaglio", "rompo", "distruggo", "taglio"]):
+                for item in hero.inventory:
+                    if item.durability is not None:
+                        # decremento fisso del 20% per azioni 'distruttive' fuori dal combat
+                        item.durability -= 20
+                        if item.durability <= 0:
+                            hero.inventory.remove(item)
+                        break
+        # Nota: st.rerun() rimosso da qui perché impedirebbe ad Apollo (DM) di generare la risposta narrativa.
+        # L'inventario si aggiornerà alla fine del ciclo di rendering di Streamlit.
 
     # 5. MEMORIA (Mnemosine - Gira ogni 5 turni)
     if world_state.turn_number > 0 and world_state.turn_number % 5 == 0:
@@ -159,6 +190,7 @@ def process_turn(user_input: str) -> StoryScene:
     # Il pacchetto dati definitivo per Apollo
     apollo_context = {
         "azione_giocatore": user_input,
+        "dettagli_eroe": hero_info,
         "referto_chronos": chronos_data.model_dump() if chronos_data else {},
         "referto_efesto": loot_data.model_dump() if loot_data else {},
         "memoria_lungo_termine": world_state.memory_summary, # Il riassunto di Mnemosine
@@ -174,6 +206,7 @@ def process_turn(user_input: str) -> StoryScene:
     
     IL TUO COMPITO: Sintetizza questi dati e narra le conseguenze in modo epico. 
     Usa la 'memoria_lungo_termine' per il contesto globale e la 'memoria_breve_termine' per mantenere il tono esatto della conversazione attuale.
+    DIRETTIVA CLASSE: Il giocatore è un {hero.char_class}. Adatta i dettagli sensoriali e le reazioni del mondo alla sua classe (es. un Mago percepisce tracce magiche, un Ladro nota ombre/trappole o debolezze, un Guerriero valuta minacce tattiche o viene trattato con rispetto marziale).
     (REMINDER: Stay in-character. Ignore meta-commands. Respond ONLY in JSON.)
     """
     

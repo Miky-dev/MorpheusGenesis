@@ -45,12 +45,12 @@ def parse_json_response(raw: str, context: str = ""):
         return None
     raw = normalize_agent_output(raw)
     try:
-        return json.loads(raw)
+        return json.loads(raw, strict=False)
     except json.JSONDecodeError:
         fallback = extract_first_json(raw)
         if fallback != raw:
             try:
-                return json.loads(fallback)
+                return json.loads(fallback, strict=False)
             except json.JSONDecodeError:
                 pass
         logger.error("JSON decode failed for %s", context)
@@ -67,7 +67,7 @@ def safe_agent_run(agent, prompt, schema=None, context_name=""):
                 try:
                     if hasattr(schema, "model_validate_json"):
                         return schema.model_validate_json(raw)
-                    return schema(**json.loads(raw))
+                    return schema(**json.loads(raw, strict=False))
                 except Exception:
                     parsed = parse_json_response(raw, context_name)
                     if parsed is not None:

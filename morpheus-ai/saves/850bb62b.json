@@ -1,0 +1,332 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "L'Abisso di Cenere e Sangue",
+    "narrative_style": "Oscuro",
+    "main_objective": "Spezzare il Sigillo del Cuore Nero per impedire che la Tenebra divorzi il regno.",
+    "backstory": "Nel cuore di Valdombra, un tempo fiorente, il reame fu avvolto da una piaga di tenebre quando l'arcano Sigillo del Cuore Nero fu corrotto da un antico patto sanguinario. Le ombre hanno inghiottito le citt\u00e0, i fiumi scorrono di sangue e le creature della notte si sono levate dalle cripte. Solo un manipolo di anime disperate pu\u00f2 tentare di infrangere il patto, ma ogni passo verso il cuore dell'abisso richiede un sacrificio pi\u00f9 oscuro del precedente.",
+    "opening_cinematic": "Nel silenzio greve di una notte senza stelle, il vento sussurra lamenti di anime spezzate attraverso le rovine di Valdombra. Le torri un tempo maestose ora si ergono come scheletri carbonizzati, i loro picchi affilati puntano al cielo come artigli di un mostro addormentato. Sul suolo, il sangue si mescola alla pioggia acida, formando fiumi fosforescenti che lambiscono le radici di alberi avvizziti. Una voce, ruvida come la pietra frantumata, rompe l'eco: 'Ascoltate, voi che osate varcare la soglia del dolore. Il Cuore Nero batte ancora, ma il suo ritmo \u00e8 un tamburo di morte che avverte l'arrivo dell'Apocalisse. Ogni passo che farete sar\u00e0 un affondo nella vostra stessa anima, ogni scelta un pugnale piantato nel vostro cuore. Le tenebre non attendono, ma vi inseguono, pronte a inghiottire chiunque si lasci avvolgere dal dubbio. Il mondo \u00e8 un cimitero di speranze, e voi siete gli ultimi custodi di una luce ormai morente. Preparatevi a camminare sul filo dell'abisso, dove il sangue \u00e8 la moneta e la paura il vostro unico compagno.'\nIl suono di catene spezzate riecheggia, e l'ombra di una figura avvolta in un mantello nero si staglia contro il fuoco di un faro morente. \u00c8 il segno dell'Annunciatore, l'unica voce che pu\u00f2 guidare gli stolti verso la rovina o verso una speranza tanto fragile quanto il vetro rotto. Il vostro cammino comincia ora, nella Caverna di Ghiaccio, dove il respiro diventa vapore e il gelo morde l'anima. Siete pronti a pagare il prezzo del vostro destino?",
+    "herald_npc_name": "Mordrath l'Annunciatore",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il tempo \u00e8 un'ombra che si allunga, e il vostro sangue \u00e8 l'unica luce che pu\u00f2 fermare la caduta.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Sussurro della Caverna di Ghiaccio",
+        "description": "Recupera il frammento di cristallo oscuro custodito nelle profondit\u00e0 ghiacciate; il frammento \u00e8 la chiave per aprire la Porta delle Lamentazioni.",
+        "giver_npc": "Mordrath l'Annunciatore",
+        "location_hint": "Caverna di Ghiaccio (livello 0)",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Patto di Sangue di Lady Vespera",
+        "description": "Porta il cristallo a Lady Vespera e ottieni il sigillo di sangue necessario per sigillare temporaneamente il Cuore Nero.",
+        "giver_npc": "Lady Vespera",
+        "location_hint": "Santuario di Ombre (livello 1)",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "La Caduta del Cavaliere Kael",
+        "description": "Accompagna Sir Kael nella sua ultima battaglia contro i guerrieri spettrali per guadagnare il suo spadone spezzato, arma capace di frantumare le barriere di tenebra.",
+        "giver_npc": "Sir Kael",
+        "location_hint": "Campi di Rovina (livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Scontro con Il Mietitore di Ombre",
+        "description": "Affronta il Mietitore di Ombre, custode delle porte infernali; sconfiggilo per ottenere l'Amuleto del Vuoto.",
+        "giver_npc": "Mordrath l'Annunciatore",
+        "location_hint": "Caverna delle Lamentazioni (livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Il Rituale del Vecchio Saggio",
+        "description": "Porta l'Amuleto del Vuoto al Vecchio Saggio e completa il rituale che apre il sentiero verso le Catacombe del Cuore Nero.",
+        "giver_npc": "Il Vecchio Saggio",
+        "location_hint": "Catacombe di Cenere (livello 3)",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "L'Essenza del Vuoto",
+        "description": "Recupera l'Essenza del Vuoto dalle cripte, un liquido nero che pu\u00f2 indebolire il Sigillo del Cuore Nero.",
+        "giver_npc": "Mordrath l'Annunciatore",
+        "location_hint": "Cripta del Silenzio (livello 3)",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "La Regina dei Vermi",
+        "description": "Sconfiggi la Regina dei Vermi, signora delle tenebre sotterranee, per liberare la chiave di pietra che apre la Sala del Cuore Nero.",
+        "giver_npc": "Lady Vespera",
+        "location_hint": "Fosse Infestate (livello 4)",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Portale della Desolazione",
+        "description": "Usa la chiave di pietra per aprire il Portale della Desolazione e accedi alla Camera del Cuore Nero.",
+        "giver_npc": "Sir Kael",
+        "location_hint": "Portale della Desolazione (livello 4)",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Il Cuore Nero Infranto",
+        "description": "Combatti le guardie di ombra nella Camera del Cuore Nero e posiziona l'Essenza del Vuoto sul sigillo per indebolirlo.",
+        "giver_npc": "Mordrath l'Annunciatore",
+        "location_hint": "Camera del Cuore Nero (livello 5)",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Il Drago di Cenere",
+        "description": "Affronta il Drago di Cenere, incarnazione del fuoco distruttivo, e usa lo spadone spezzato di Sir Kael per distruggere il Sigillo del Cuore Nero una volta per tutte.",
+        "giver_npc": "Il Vecchio Saggio",
+        "location_hint": "Forgia di Cenere (livello 5)",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Mordrath l'Annunciatore",
+        "role": "Araldo delle Tenebre, guida i sopravvissuti verso il loro destino",
+        "location_hint": "Caverna di Ghiaccio (loc_00)"
+      },
+      {
+        "name": "Lady Vespera",
+        "role": "Sacerdotessa del Sangue, custodisce antichi rituali proibiti",
+        "location_hint": "Santuario di Ombre (loc_01)"
+      },
+      {
+        "name": "Sir Kael",
+        "role": "Cavaliere decaduto, cerca redenzione attraverso la morte",
+        "location_hint": "Campi di Rovina (loc_02)"
+      },
+      {
+        "name": "Il Vecchio Saggio",
+        "role": "Custode delle Catacombe, detentore di conoscenze dimenticate",
+        "location_hint": "Catacombe di Cenere (loc_03)"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Il Mietitore di Ombre",
+        "role": "Guardiano delle porte infernali, brandisce falci di tenebra",
+        "location_hint": "Caverna delle Lamentazioni (loc_04)"
+      },
+      {
+        "name": "La Regina dei Vermi",
+        "role": "Signora delle tenebre sotterranee, controlla eserciti di vermi corazzati",
+        "location_hint": "Fosse Infestate (loc_05)"
+      },
+      {
+        "name": "Il Drago di Cenere",
+        "role": "Incarnazione del fuoco distruttivo, difende il Cuore Nero",
+        "location_hint": "Forgia di Cenere (loc_06)"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "L'Abisso di Cenere e Sangue",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Villaggio dei Corvi",
+        "description": "Un piccolo villaggio ai margini dell'abisso, abitato da corvi e pochi abitanti",
+        "x": 10,
+        "y": 10,
+        "connected_to": [
+          "loc_01",
+          "loc_02"
+        ],
+        "difficulty_level": 0
+      },
+      {
+        "id_name": "loc_01",
+        "name": "Foresta della Cenere",
+        "description": "Una foresta oscura e silenziosa, coperta di cenere e alberi morti",
+        "x": 20,
+        "y": 15,
+        "connected_to": [
+          "loc_00",
+          "loc_03"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_02",
+        "name": "Caverna dei Lupi",
+        "description": "Una caverna buia e umida, abitata da lupi e pericolosi",
+        "x": 15,
+        "y": 25,
+        "connected_to": [
+          "loc_00",
+          "loc_04"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_03",
+        "name": "Lago di Sangue",
+        "description": "Un lago rosso sangue, circondato da montagne e pericolosi",
+        "x": 30,
+        "y": 20,
+        "connected_to": [
+          "loc_01",
+          "loc_05"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_04",
+        "name": "Montagna della Furia",
+        "description": "Una montagna alta e pericolosa, abitata da creature feroci",
+        "x": 25,
+        "y": 30,
+        "connected_to": [
+          "loc_02",
+          "loc_06"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_05",
+        "name": "Citt\u00e0 dei Dannati",
+        "description": "Una citt\u00e0 in rovina, abitata da dannati e creature oscure",
+        "x": 40,
+        "y": 25,
+        "connected_to": [
+          "loc_03"
+        ],
+        "difficulty_level": 3
+      },
+      {
+        "id_name": "loc_06",
+        "name": "Torre del Mago",
+        "description": "Una torre alta e misteriosa, abitata da un mago potente",
+        "x": 35,
+        "y": 35,
+        "connected_to": [
+          "loc_04"
+        ],
+        "difficulty_level": 4
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Fantasy",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "ac": 14,
+        "level": 1,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 2,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_01",
+      "loc_00",
+      "loc_02"
+    ],
+    "turn_number": 2,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Un piccolo villaggio ai margini dell'abisso, dove i corvi sembrano pi\u00f9 compagni che predatori, e i pochi abitanti custodiscono segreti antichi.",
+      "npcs": [
+        {
+          "name": "Lady Vespera",
+          "role": "Annunciatore delle Ombre",
+          "appearance": "Una donna alta, vestita di velluto nero, con occhi che brillano come stelle cadenti.",
+          "personality": "Calma e enigmatica.",
+          "first_line": "Benvenuto, viaggiatore. Il tuo cammino \u00e8 gi\u00e0 scritto."
+        },
+        {
+          "name": "Sir Kael",
+          "role": "Guardiano del Villaggio",
+          "appearance": "Un cavaliere in armatura lucente, con la spada al fianco.",
+          "personality": "Onorevole e protettivo.",
+          "first_line": "Chi sei, e cosa cerchi in questo luogo di ombre?"
+        },
+        {
+          "name": "Il Vecchio Saggio",
+          "role": "Custode delle Leggende",
+          "appearance": "Un anziano con barba bianca e occhi penetranti.",
+          "personality": "Saggio e paziente.",
+          "first_line": "Le stelle parlano di un segreto che solo tu puoi svelare."
+        },
+        {
+          "name": "Corvo Ruggente",
+          "role": "Oste del villaggio",
+          "appearance": "Un uomo robusto, con un cappello di paglia, che serve birra ai corvi.",
+          "personality": "Accogliente e un po' scontroso.",
+          "first_line": "Prendi un bicchiere, e ascolta le storie di chi non ha pi\u00f9 voce."
+        }
+      ],
+      "rumors": [
+        "Si dice che nella Foresta della Cenere gli alberi parlano, ma chi ascolta non torna pi\u00f9.",
+        "La Caverna dei Lupi \u00e8 piena di occhi che osservano, e chi entra non esce mai.",
+        "I corvi del villaggio sussurrano di un segreto nascosto sotto la piazza."
+      ]
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "Valerius, il guerriero, impugna la spada e la scaglia con furia contro il muro di pietra del villaggio dei Corvi. Il colpo \u00e8 cos\u00ec potente che la roccia si frantuma, rivelando un'ombra inquietante che si alza dalle fessure. Il suono del calcare che si spezza echeggia nella notte oscura, come un urlo di morte. Lady Vespera e Sir Kael si spostano in silenzio, gli occhi fissi sul fuoco che si accende tra le macerie, mentre il Vecchio Saggio sussurra una preghiera al vento. Il Corvo Ruggente sferza un ululato, ma nessuno appare. La scena rimane senza nemico, ma la tensione si avvolge come nebbia.",
+  "current_scene": {
+    "narration": "Valerius, il guerriero, impugna la spada e la scaglia con furia contro il muro di pietra del villaggio dei Corvi. Il colpo \u00e8 cos\u00ec potente che la roccia si frantuma, rivelando un'ombra inquietante che si alza dalle fessure. Il suono del calcare che si spezza echeggia nella notte oscura, come un urlo di morte. Lady Vespera e Sir Kael si spostano in silenzio, gli occhi fissi sul fuoco che si accende tra le macerie, mentre il Vecchio Saggio sussurra una preghiera al vento. Il Corvo Ruggente sferza un ululato, ma nessuno appare. La scena rimane senza nemico, ma la tensione si avvolge come nebbia.",
+    "choices": [
+      "Esplora le macerie",
+      "Cerca le tracce del muro",
+      "Raccogli l'energia rilasciata"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Fantasy",
+  "setup_mood": "Oscuro"
+}

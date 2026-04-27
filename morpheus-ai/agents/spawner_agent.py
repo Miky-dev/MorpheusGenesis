@@ -1,5 +1,6 @@
 from agno.agent import Agent
 from agno.models.groq import Groq
+from contracts.schemas import EnemyEntity
 
 ARES_INSTRUCTIONS = """
 Sei Ares, l'Entity Spawner Agent di Morpheus Genesis. 
@@ -54,4 +55,5 @@ spawner_agent = Agent(
     name="Spawner",
     model=Groq(id="openai/gpt-oss-20b", temperature=0.1), 
     instructions=ARES_INSTRUCTIONS, 
+    output_schema=EnemyEntity,
 )

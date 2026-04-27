@@ -1,0 +1,327 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Il Velo di Sangue dei Mari Oscuri",
+    "narrative_style": "Oscuro",
+    "main_objective": "Ritrovare il Cuore di Tenebra, l'artefatto proibito che, una volta riunito, pu\u00f2 aprire le fenditure dell'abisso e condurre i mari a una notte senza alba, dove solo i pi\u00f9 spietati sopravvivono.",
+    "backstory": "Nelle acque avvolte da nubi di fumo, i mari sono governati da regni di pirati che hanno venduto le loro anime al vento e al sangue. Una maledizione antica, scagliata da un dio dimenticato, ha trasformato le acque in un labirinto di ombre. Le navi non sono pi\u00f9 solo legno e vele, ma grotte di ferro e carne, pronte a inghiottire chi osa sfidare la loro furia. Il Cuore di Tenebra, una gemma nera forgiata nelle viscere del mare, \u00e8 l'unica speranza di spezzare o potenziare questa maledizione. Ma il suo potere attira non solo pirati, ma anche entit\u00e0 dimenticate, bestie che strisciano sotto le onde e signore delle fessure. Solo chi accetter\u00e0 il prezzo del sangue potr\u00e0 avvicinarsi al suo segreto.",
+    "opening_cinematic": "Nel silenzio opprimente di una notte senza stelle, le onde si infrangono contro le scogliere di pietra nera come se stessero graffiando il volto stesso della morte. Un vento gelido porta con s\u00e9 l'odore di ferro e di promesse infrante, mentre un faro spenta la sua luce, lasciando l'oscurit\u00e0 a inghiottire il porto. 'Senti, viandante, il canto delle sirene che non cantano pi\u00f9', sussurra una voce rauca, proveniente dall'ombra di un uomo avvolto in un mantello di corvo. 'Il mare \u00e8 una tomba che si risveglia, e noi, i figli della sua rabbia, siamo i guardiani del suo segreto'. Il suo sguardo taglia il buio come una lama, rivelando cicatrici di battaglie dimenticate. 'Il Cuore di Tenebra batte ancora, sepolto tra gli abissi, ma chiunque osi prenderlo dovr\u00e0 versare il proprio sangue per nutrire la sua sete eterna'. Il suono di una barca che strilla nel vento si mescola al lamento di una nave affondata, mentre la nebbia si addensa, trasformando il porto in un labirinto di spettri. La tua mano si stringe sul manico del pugnale, il tuo respiro si fa pi\u00f9 profondo, e il suono del tuo cuore si mescola a quello dei tamburi di guerra che riecheggiano sotto la superficie. Le ombre si addensano, i mostri dell'abisso attendono, e l'unica via d'uscita \u00e8 attraverso il sangue, la paura e la follia. Preparati, perch\u00e9 il mare non dimentica, e il tuo nome sar\u00e0 scritto con l'inchiostro della disperazione.",
+    "herald_npc_name": "Corvo l'Annunciatore",
+    "herald_location_id": "loc_harbor_01",
+    "herald_npc_reveal": "\u2018Il mare non concede piet\u00e0, ma io vi mostrer\u00f2 il sentiero attraverso le sue vene di tenebra.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Faro",
+        "description": "Recupera il frammento di lanterna spezzata nel Faro di Pietra Nera, l'unico faro che ancora tenta di illuminare il mare corrotto.",
+        "giver_npc": "Corvo l'Annunciatore",
+        "location_hint": "Faro di Pietra Nera, livello 0",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Patto della Sirena Caduta",
+        "description": "Consegna il frammento al Capitano Marrow, che dovr\u00e0 scambiare la sua anima con la Sirena Caduta per ottenere la chiave d'argento.",
+        "giver_npc": "Capitano Marrow",
+        "location_hint": "Caverna delle Sirene, livello 1",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Il Sigillo dell'Abisso",
+        "description": "Porta la chiave d'argento alla Strega del Mare, che la user\u00e0 per aprire il Sigillo dell'Abisso, ma la sua magia evoca il Kraken di Fumo.",
+        "giver_npc": "Strega del Mare",
+        "location_hint": "Roccia delle Onde Morte, livello 2",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Sangue sulla Sabbia",
+        "description": "Sconfiggi il Kraken di Fumo e recupera il suo cuore di fumo, necessario per alimentare il rituale del Cuore di Tenebra.",
+        "giver_npc": "Capitano Marrow",
+        "location_hint": "Bacino di Fumo, livello 3",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "L'Eco della Fossa",
+        "description": "Affronta la Signora della Fossa, un'entit\u00e0 che custodisce l'accesso alla caverna del Cuore, e ottieni il Codice di Ossa.",
+        "giver_npc": "Strega del Mare",
+        "location_hint": "Fossa delle Ossa, livello 3",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Prigioniero Sanguinante",
+        "description": "Libera il Prigioniero Sanguinante dalla prigione sommersa; la sua conoscenza riveler\u00e0 il percorso verso il Cuore di Tenebra.",
+        "giver_npc": "Corvo l'Annunciatore",
+        "location_hint": "Celle di Corallo, livello 4",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Portale delle Tenebre",
+        "description": "Usa il cuore di fumo, il Codice di Ossa e le parole del Prigioniero per aprire il Portale delle Tenebre.",
+        "giver_npc": "Capitano Marrow",
+        "location_hint": "Tempio Sommerso, livello 4",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Tradimento del Corsaro Nero",
+        "description": "Il Corsaro Nero, un alleato apparente, tenta di rubare il Cuore di Tenebra; fermalo prima che tradisca l'equipaggio.",
+        "giver_npc": "Strega del Mare",
+        "location_hint": "Nave Fantasma, livello 5",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Il Sacrificio del Mare",
+        "description": "Compie il rituale di sacrificio sul bordo del mondo, versando il sangue di un capitano per attivare il Cuore di Tenebra.",
+        "giver_npc": "Corvo l'Annunciatore",
+        "location_hint": "Bordo del Mondo, livello 5",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Il Velo di Sangue",
+        "description": "Sconfiggi l'entit\u00e0 finale che emerge dal Cuore di Tenebra, reclamando il potere oscuro per il tuo equipaggio o per la tua rovina.",
+        "giver_npc": "Capitano Marrow",
+        "location_hint": "Cuore di Tenebra, livello 5",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Corvo l'Annunciatore",
+        "role": "Araldo",
+        "location_hint": "Porto di Ombra, loc_harbor_01"
+      },
+      {
+        "name": "Capitano Marrow",
+        "role": "Capitano dei Pirati",
+        "location_hint": "Nave del Vento Nero, loc_ship_01"
+      },
+      {
+        "name": "Strega del Mare",
+        "role": "Veggente",
+        "location_hint": "Isola delle Nebbie, loc_island_02"
+      },
+      {
+        "name": "Prigioniero Sanguinante",
+        "role": "Informatore",
+        "location_hint": "Celle di Corallo, loc_cells_03"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Kraken di Fumo",
+        "role": "Mostro Marino",
+        "location_hint": "Bacino di Fumo, loc_fumo_04"
+      },
+      {
+        "name": "Signora della Fossa",
+        "role": "Entit\u00e0 Abissale",
+        "location_hint": "Fossa delle Ossa, loc_fossa_05"
+      },
+      {
+        "name": "Corsaro Nero",
+        "role": "Traditore",
+        "location_hint": "Nave Fantasma, loc_ghostship_06"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Il Velo di Sangue dei Mari Oscuri",
+    "locations": [
+      {
+        "id_name": "loc_harbor_01",
+        "name": "Baia dei Pirati",
+        "description": "Un'anonima baia con una rumorosa taverna e un mercato di contrabbando.",
+        "x": 50,
+        "y": 50,
+        "connected_to": [
+          "loc_shipwreck_02",
+          "loc_town_03"
+        ],
+        "difficulty_level": 0
+      },
+      {
+        "id_name": "loc_shipwreck_02",
+        "name": "Relitto della Costa",
+        "description": "Un relitto di nave sulla costa rocciosa, possibile fonte di bottino.",
+        "x": 30,
+        "y": 40,
+        "connected_to": [
+          "loc_harbor_01",
+          "loc_island_04"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_town_03",
+        "name": "Villaggio dei Pescatori",
+        "description": "Un piccolo villaggio di pescatori con case in legno e reti da pesca.",
+        "x": 60,
+        "y": 50,
+        "connected_to": [
+          "loc_harbor_01",
+          "loc_forest_05"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_island_04",
+        "name": "Isola dei Tesori",
+        "description": "Una piccola isola con una spiaggia di sabbia bianca e una giungla fitta.",
+        "x": 20,
+        "y": 30,
+        "connected_to": [
+          "loc_shipwreck_02",
+          "loc_cave_06"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_forest_05",
+        "name": "Foresta Incantata",
+        "description": "Una foresta buia e misteriosa con alberi secolari e un'atmosfera inquietante.",
+        "x": 70,
+        "y": 40,
+        "connected_to": [
+          "loc_town_03"
+        ],
+        "difficulty_level": 3
+      },
+      {
+        "id_name": "loc_cave_06",
+        "name": "Caverna dei Mostri",
+        "description": "Una caverna buia e umida con stalattiti e stalagmiti e un'atmosfera ostile.",
+        "x": 10,
+        "y": 20,
+        "connected_to": [
+          "loc_island_04"
+        ],
+        "difficulty_level": 4
+      }
+    ],
+    "spawn_location_id": "loc_harbor_01"
+  },
+  "world_state": {
+    "theme": "Pirati",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "ac": 14,
+        "level": 1,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 95
+          },
+          {
+            "name": "Bottiglia di Rum",
+            "item_type": "consumable",
+            "rarity": "common",
+            "description": "Una bottiglia di rum scuro, con un tappo di cuoio e un'etichetta in stile marinare.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 5,
+            "value": 10,
+            "lore_snippet": "Racconta di un bottino rubato dal capitano Lupo, ora in mano al pirata sconfitto.",
+            "quantity": 1,
+            "durability": null
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_harbor_01",
+    "known_locations": [
+      "loc_harbor_01",
+      "loc_island_04",
+      "loc_town_03",
+      "loc_shipwreck_02"
+    ],
+    "turn_number": 4,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_harbor_01": {
+      "location_lore": "La Baia dei Pirati \u00e8 un rifugio di contrabbandieri e vecchi marinai, dove il profumo di sale si mescola al fumo delle torce e la taverna rumorosa \u00e8 il cuore pulsante di segreti e piani di furti.",
+      "npcs": [
+        {
+          "name": "Corvo l'Annunciatore",
+          "role": "Annunciatore",
+          "appearance": "Un uomo alto, con un cappuccio di pelle nera e occhi che sembrano riflettere la luna",
+          "personality": "Calmo e enigmatico",
+          "first_line": "Benvenuto, viaggiatore. Il destino ti ha portato qui, dove le ombre sussurrano i segreti del mare."
+        },
+        {
+          "name": "Mara la Sorridente",
+          "role": "Oste",
+          "appearance": "Una donna robusta con capelli rossi intrecciati e un sorriso che nasconde segreti",
+          "personality": "Accogliente ma sospettosa",
+          "first_line": "Cosa ti porta in questa taverna, amico? Hai qualcosa da offrire o solo curiosit\u00e0?"
+        },
+        {
+          "name": "Gino il Sottile",
+          "role": "Contrabbandiere",
+          "appearance": "Un giovane con un cappello di paglia e un sorriso furbo",
+          "personality": "Astuto e persuasivo",
+          "first_line": "Se vuoi qualcosa di prezioso, devi prima dimostrare di essere degno."
+        }
+      ],
+      "rumors": [
+        "Si dice che il relitto della costa nasconda una mappa verso il Cuore di Tenebra.",
+        "Il villaggio dei pescatori \u00e8 stato recentemente visitato da un misterioso capitano che si dice sia alla ricerca di un antico tesoro.",
+        "Alcuni dicono che la taverna nasconde un passaggio segreto che porta al faro di cui parla la missione 'Il Richiamo del Faro'."
+      ]
+    }
+  },
+  "current_location_id": "loc_harbor_01",
+  "last_narrative": "Valerius, il guerriero, impugna la sua spada d'acciaio e si lancia contro il pirata nero, il cui sguardo \u00e8 un'ombra di furia. La lotta \u00e8 ferma e crudele: il sangue si mescola al mare, le spade sfrecciano come fulmini neri. Con un colpo preciso, il pirata cade a terra, e da lui scivola una bottiglia di rum scuro, etichettata con il segno di un bottino rubato dal capitano Lupo. Il suo cuore batte, la spada si sente pi\u00f9 pesante, la sua armatura \u00e8 coperta di briciole di sal e sabbia.",
+  "current_scene": {
+    "narration": "Valerius, il guerriero, impugna la sua spada d'acciaio e si lancia contro il pirata nero, il cui sguardo \u00e8 un'ombra di furia. La lotta \u00e8 ferma e crudele: il sangue si mescola al mare, le spade sfrecciano come fulmini neri. Con un colpo preciso, il pirata cade a terra, e da lui scivola una bottiglia di rum scuro, etichettata con il segno di un bottino rubato dal capitano Lupo. Il suo cuore batte, la spada si sente pi\u00f9 pesante, la sua armatura \u00e8 coperta di briciole di sal e sabbia.",
+    "choices": [
+      "Raccogli la bottiglia di rum",
+      "Esplora la baia dei pirati",
+      "Richiama i compagni"
+    ],
+    "is_combat": true,
+    "allow_free_action": false,
+    "enemy_spawn": "base"
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Pirati",
+  "setup_mood": "Oscuro"
+}

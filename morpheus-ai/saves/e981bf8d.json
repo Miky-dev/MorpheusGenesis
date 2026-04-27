@@ -1,0 +1,325 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Il Crepuscolo delle Anime Spezzate",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scoprire l'origine del Corvo d'Ombra e impedire che il suo potere corrompa l'intero regno di Nethra",
+    "backstory": "Da secoli, il regno di Nethra \u00e8 avvolto da una nebbia perpetua, segno di un patto infranto tra gli dei e gli uomini. Le antiche rune custodiscono un segreto: il Corvo d'Ombra, una creatura di pura disperazione, \u00e8 stato sigillato sotto la Caverna del Lamento. Quando la sigilla cede, la tenebra si espande, divorando la luce e la speranza. Le casate nobili sono cadute, i villaggi sono ridotti in rovine, e gli abitanti lottano per sopravvivere tra tradimenti e sacrifici di sangue. Solo un gruppo di eroi, guidati dall'Annunciatore, pu\u00f2 affrontare le forze che si celano nell'oscurit\u00e0 e spezzare il ciclo di morte.",
+    "opening_cinematic": "Nel silenzio gelido delle montagne di Nethra, il vento sussurra lamenti di anime dimenticate. Le ombre si allungano come artigli d'acciaio, avvolgendo ogni albero, ogni pietra, ogni cuore. Un cielo di cenere grava sopra il regno, mentre il crepuscolo non conosce alba. In lontananza, il suono di un corvo strilla, il suo richiamo \u00e8 un avvertimento di morte imminente. Le torce dei villaggi tremano, incapaci di scacciare l'oscurit\u00e0 che si insinua nei sogni dei bambini. Un'eco di passi risuona nella valle, un uomo avvolto in un mantello di velluto nero, il suo volto \u00e8 una maschera di pietra. \u00c8 Mordecai l'Annunciatore, l'ultimo messaggero dei dei dimenticati, il suo sguardo penetra l'anima di chiunque incontri. Con voce roca, egli proclama: 'Il Corvo d'Ombra si \u00e8 risvegliato. La nostra terra \u00e8 condannata a sanguinare finch\u00e9 non troveremo chi avr\u00e0 il coraggio di affrontare le tenebre e di sacrificare ci\u00f2 che pi\u00f9 ama. Il prezzo \u00e8 la vita, il sangue, la speranza. Siete pronti a camminare nel buio, a sentire il gelo delle pietre sotto i vostri piedi e a vedere la luce svanire? Se il vostro cuore \u00e8 di ferro, se le vostre mani non tremano, allora seguite il richiamo del corvo. Ma sappiate: ogni passo vi avviciner\u00e0 alla fine, e non tutti torneranno dal viaggio.' Il suono del suo mantello sfiora le rovine, mentre il cielo si oscura ulteriormente, pronto a inghiottire chiunque osi sfidare il destino. La notte \u00e8 giovane, ma il suo abbraccio \u00e8 mortale.",
+    "herald_npc_name": "Mordecai l'Annunciatore",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il sangue \u00e8 la chiave che apre le porte dell'oscurit\u00e0; solo chi \u00e8 disposto a versarlo potr\u00e0 vedere la verit\u00e0.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Crepuscolo",
+        "description": "Mordecai l'Annunciatore ti affida la ricerca del primo frammento della chiave d'argento, nascosto nelle rovine di Valdora.",
+        "giver_npc": "Mordecai l'Annunciatore",
+        "location_hint": "loc_01 - Rovine di Valdora (Livello 0)",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Patto della Strega",
+        "description": "Porta il frammento a Lady Vespera per scoprire il rituale necessario a rafforzare la chiave.",
+        "giver_npc": "Lady Vespera la Strega del Crepuscolo",
+        "location_hint": "loc_02 - Bosco delle Nebbie (Livello 1)",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "L'Acciaio Caduto",
+        "description": "Recupera la spada di Sir Kael, ora sepolta nella Cripta dei Crociati, per completare il rituale.",
+        "giver_npc": "Sir Kael il Crociato Caduto",
+        "location_hint": "loc_03 - Cripta dei Crociati (Livello 1)",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Il Sigillo della Cripta",
+        "description": "Utilizza la spada e il frammento nella Camera del Sigillo, difendendoti dal Signore delle Caverne.",
+        "giver_npc": "Elder Thorne il Guardiano della Cripta",
+        "location_hint": "loc_04 - Camera del Sigillo (Livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Il Sangue del Veggente",
+        "description": "Il Veggente di Sangue richiede una goccia del tuo sangue per completare la chiave, ma il prezzo \u00e8 la tua sanit\u00e0 mentale.",
+        "giver_npc": "Il Veggente di Sangue",
+        "location_hint": "loc_05 - Altare di Sangue (Livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "L'Assedio dei Corvi",
+        "description": "La Regina dei Corvi ha preso possesso del ponte di Pietra Nera; devi sconfiggerla per attraversare verso la Caverna del Lamento.",
+        "giver_npc": "Mordecai l'Annunciatore",
+        "location_hint": "loc_06 - Ponte di Pietra Nera (Livello 3)",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Cuore della Caverna",
+        "description": "Entra nella Caverna del Lamento e recupera il Cuore Oscuro, la fonte di potere del Corvo d'Ombra.",
+        "giver_npc": "Lady Vespera la Strega del Crepuscolo",
+        "location_hint": "loc_07 - Caverna del Lamento (Livello 3)",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Tradimento di Sir Kael",
+        "description": "Sir Kael, ormai posseduto, tenta di rubare il Cuore Oscuro; devi impedirgli di usarlo per evocare l'armata dei non-morti.",
+        "giver_npc": "Sir Kael il Crociato Caduto",
+        "location_hint": "loc_08 - Salone dei Non-Morti (Livello 4)",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "L'Ultimo Rito",
+        "description": "Con la chiave completa, esegui il rituale al centro del Circolo di Cenere per sigillare nuovamente il Corvo d'Ombra.",
+        "giver_npc": "Elder Thorne il Guardiano della Cripta",
+        "location_hint": "loc_09 - Circolo di Cenere (Livello 4)",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Il Sacrificio Finale",
+        "description": "Mordecai ti chiede di sacrificare la tua vita per attivare il sigillo; la scelta finale determiner\u00e0 il destino di Nethra.",
+        "giver_npc": "Mordecai l'Annunciatore",
+        "location_hint": "loc_10 - Altare del Crepuscolo (Livello 5)",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Mordecai l'Annunciatore",
+        "role": "Araldo del Destino, guida l'eroe verso la verit\u00e0",
+        "location_hint": "loc_00 - Torre dell'Oblio"
+      },
+      {
+        "name": "Lady Vespera la Strega del Crepuscolo",
+        "role": "Mistica della magia nera, custodisce antichi rituali",
+        "location_hint": "loc_02 - Bosco delle Nebbie"
+      },
+      {
+        "name": "Sir Kael il Crociato Caduto",
+        "role": "Ex cavaliere, ora tormentato dal potere oscuro",
+        "location_hint": "loc_03 - Cripta dei Crociati"
+      },
+      {
+        "name": "Elder Thorne il Guardiano della Cripta",
+        "role": "Saggio antico, detentore della chiave d'argento",
+        "location_hint": "loc_04 - Camera del Sigillo"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Il Signore delle Caverne",
+        "role": "Antico demone che veglia sul Sigillo",
+        "location_hint": "loc_04 - Camera del Sigillo"
+      },
+      {
+        "name": "La Regina dei Corvi",
+        "role": "Signora degli uccelli neri, controlla il ponte di Pietra Nera",
+        "location_hint": "loc_06 - Ponte di Pietra Nera"
+      },
+      {
+        "name": "Il Veggente di Sangue",
+        "role": "Cultista che richiede sangue per potenziare la chiave",
+        "location_hint": "loc_05 - Altare di Sangue"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Terre del Crepuscolo",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Villaggio dei Sussurri",
+        "description": "Un piccolo villaggio ai margini della foresta, avvolto nel silenzio.",
+        "x": 10,
+        "y": 10,
+        "connected_to": [
+          "loc_01",
+          "loc_02"
+        ],
+        "difficulty_level": 0
+      },
+      {
+        "id_name": "loc_01",
+        "name": "Foresta della Luna",
+        "description": "Una foresta incantata dove la luna sembra non tramontare mai.",
+        "x": 20,
+        "y": 30,
+        "connected_to": [
+          "loc_00",
+          "loc_03"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_02",
+        "name": "Caverna delle Ombre",
+        "description": "Una caverna oscura e misteriosa, abitata da creature della notte.",
+        "x": 15,
+        "y": 5,
+        "connected_to": [
+          "loc_00",
+          "loc_04"
+        ],
+        "difficulty_level": 1
+      },
+      {
+        "id_name": "loc_03",
+        "name": "Torre del Mago",
+        "description": "Una torre alta e imponente, dove un potente mago studia antichi incantesimi.",
+        "x": 35,
+        "y": 40,
+        "connected_to": [
+          "loc_01",
+          "loc_05"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_04",
+        "name": "Fiumi dell'Ancestrali",
+        "description": "Un fiume sacro dove gli antichi spiriti si raccontano.",
+        "x": 10,
+        "y": 20,
+        "connected_to": [
+          "loc_02",
+          "loc_06"
+        ],
+        "difficulty_level": 2
+      },
+      {
+        "id_name": "loc_05",
+        "name": "Montagne della Caduta",
+        "description": "Una catena montuosa dove gli dei sembrano essersi ritirati.",
+        "x": 50,
+        "y": 50,
+        "connected_to": [
+          "loc_03"
+        ],
+        "difficulty_level": 3
+      },
+      {
+        "id_name": "loc_06",
+        "name": "Cimitero degli Eroi",
+        "description": "Un luogo sacro dove gli eroi del passato dormono.",
+        "x": 5,
+        "y": 15,
+        "connected_to": [
+          "loc_04"
+        ],
+        "difficulty_level": 3
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Fantasy",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "ac": 14,
+        "level": 1,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_01",
+      "loc_02",
+      "loc_00"
+    ],
+    "turn_number": 6,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": "Giocatore controlla pietra."
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Il Villaggio dei Sussurri \u00e8 un piccolo insediamento ai margini della Foresta della Luna, dove il silenzio \u00e8 pi\u00f9 denso del vento e i residenti parlano in sussurri per paura di attirare l'attenzione del Corvo d'Ombra.",
+      "npcs": [
+        {
+          "name": "Mordecai l'Annunciatore",
+          "role": "Annunciatore",
+          "appearance": "Un uomo alto, con capelli grigi e occhi che sembrano riflettere la luna.",
+          "personality": "Sereno ma preoccupato",
+          "first_line": "Benvenuto, viaggiatore. Il silenzio qui \u00e8 un segno di protezione, ma anche di pericolo."
+        },
+        {
+          "name": "Luca il Custode",
+          "role": "Oste",
+          "appearance": "Un uomo robusto con una barba folta, vestito in lino grezzo.",
+          "personality": "Accogliente e saggio",
+          "first_line": "Ciao, straniero. Se cerchi riparo, il mio tavolo \u00e8 aperto."
+        },
+        {
+          "name": "Eldric il Saggio",
+          "role": "Sopravvissuto Errante",
+          "appearance": "Un anziano con la pelle rugosa, vestito in panni logori.",
+          "personality": "Paranoico ma utile",
+          "first_line": "Non fidarti del silenzio, \u00e8 la voce del Corvo che ti ascolta."
+        }
+      ],
+      "rumors": [
+        "Si dice che la Foresta della Luna nasconda antichi segreti che il Corvo d'Ombra cerca di sfruttare.",
+        "La Caverna delle Ombre \u00e8 un luogo dove le ombre si muovono da sole, e chi vi entra non torna pi\u00f9.",
+        "Alcuni dicono che il villaggio sia stato costruito su un antico tempio, e che il silenzio sia un sigillo che impedisce al Corvo di emergere."
+      ]
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "Nel silenzio opprimente del Villaggio dei Sussurri, Valerius, il guerriero, si avvicina alla pietra antica, la sua spada ancora lucente. Il metallo freddo risuona sul suo petto, ma la pietra rimane immobile, come se nascondesse segreti in un vuoto insondabile. Nessuna luce si sprigiona, nessun eco di battaglia si sente, ma l'aria \u00e8 densa di un potere oscuro che scuote le ossa del guerriero. La sua maestria non trova nulla, ma la pietra sembra osservarlo, pronta a rivelare il suo destino.",
+  "current_scene": {
+    "narration": "Nel silenzio opprimente del Villaggio dei Sussurri, Valerius, il guerriero, si avvicina alla pietra antica, la sua spada ancora lucente. Il metallo freddo risuona sul suo petto, ma la pietra rimane immobile, come se nascondesse segreti in un vuoto insondabile. Nessuna luce si sprigiona, nessun eco di battaglia si sente, ma l'aria \u00e8 densa di un potere oscuro che scuote le ossa del guerriero. La sua maestria non trova nulla, ma la pietra sembra osservarlo, pronta a rivelare il suo destino.",
+    "choices": [
+      "Esamina la pietra pi\u00f9 da vicino",
+      "Rivolgiti a Mordecai",
+      "Lascia la pietra"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Fantasy",
+  "setup_mood": "Oscuro"
+}
