@@ -1,0 +1,245 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Lama di Neon: Sangue nella Pioggia Cibernetica",
+    "narrative_style": "Oscuro",
+    "main_objective": "Distruggere il progetto di controllo mentale noto come 'Eclipse' prima che le corporazioni possano usarlo per soggiogare le menti dei cittadini, sopravvivendo ai tradimenti e alle trappole mortali disseminate nella citt\u00e0 di Noxhaven.",
+    "backstory": "Noxhaven, una metropoli avvolta in una pioggia perpetua di neon e fumi tossici, \u00e8 stata forgiata dal sudore dei lavoratori e dal sangue dei ribelli. Le megacorporazioni hanno impiantato il loro potere in ogni fibra della citt\u00e0, controllando l'energia, le informazioni e le menti dei pi\u00f9 deboli. Il progetto 'Eclipse' \u00e8 nato nei laboratori segreti della Kronos Corp: un virus neurodigitale capace di riscrivere i pensieri, trasformando la popolazione in schiavi docili. Un piccolo gruppo di dissidenti, guidato dall'Araldo Silas Vortice, ha scoperto la verit\u00e0 e ha iniziato una corsa contro il tempo per sabotare la rete prima che l'ultimo nodo si attivi. Ogni passo verso la verit\u00e0 \u00e8 un passo pi\u00f9 vicino alla morte, poich\u00e9 le ombre della citt\u00e0 hanno occhi ovunque e mani di acciaio pronte a strappare chiunque osi opporsi.",
+    "opening_cinematic": "Nel cuore di Noxhaven, la pioggia cade come lame di vetro incandescenti, frantumando le luci al neon in schegge di dolore. Le strade sono fiumi di fango, impregnati di olio e sudore, dove le ombre si aggrovigliano come serpenti meccanici. Un urlo metallico riecheggia tra i grattacieli, un canto di disperazione che proviene dalle viscere della citt\u00e0. Tu, un'ombra senza nome, ti muovi tra i cumuli di rifiuti elettronici, il respiro affannato dal filtro di aria avariato. Le luci dei droni pattugliano il cielo, i loro occhi di circuito scrutano ogni movimento, pronti a scattare al minimo segno di ribellione. All'improvviso, una voce graffiante si fa strada attraverso il rumore: 'Silas Vortice, l'Araldo della Notte, ti chiama dal suo rifugio sotterraneo. Il tempo \u00e8 un nemico pi\u00f9 spietato di qualsiasi arma. Ogni secondo che passa, i fili dell'Eclipse si intrecciano pi\u00f9 stretti, avvolgendo la citt\u00e0 in una morsa di silenzio mentale. Se non agirai, la tua stessa coscienza diventer\u00e0 una prigione di codice. Senti il ruggito dei generatori, il crepitio dei cavi elettrici, il battito di un cuore meccanico che si prepara a spezzare le catene. Non c'\u00e8 redenzione per chi cade, solo sangue e neon. Preparati, perch\u00e9 la notte \u00e8 lunga, e la luce che cercherai \u00e8 quella che brucia pi\u00f9 forte quando tutto intorno a te \u00e8 avvolto dalle tenebre.'\nLa pioggia continua a cadere, ma ora il suo ritmo \u00e8 la tua marcia. Il futuro di Noxhaven \u00e8 un filo sottile, sospeso tra il silicio e il sangue. E tu sei l'unico che pu\u00f2 spezzarlo.",
+    "herald_npc_name": "Silas Vortice",
+    "herald_location_id": "loc_arkham_hq",
+    "herald_npc_reveal": "Nel buio delle caverne di rame, Silas sussurra: 'Il vero potere non \u00e8 controllare le menti, ma liberarle dal fuoco delle catene.'",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Messaggio del Silenzio",
+        "description": "Incontra Silas Vortice nel suo rifugio sotterraneo e ricevi il primo frammento di codice che svela l'esistenza del progetto Eclipse.",
+        "giver_npc": "Silas Vortice",
+        "location_hint": "loc_arkham_hq",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Sotto le Luci di Neon",
+        "description": "Recupera il dispositivo di accesso dal magazzino di Mara 'Lama' Kincaid, custodito nella zona industriale di Steelhaven.",
+        "giver_npc": "Mara 'Lama' Kincaid",
+        "location_hint": "loc_steelhaven_warehouse",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Il Codice Nascosto",
+        "description": "Utilizza il dispositivo per infiltrarti nella rete di Kronos Corp e scaricare i log del progetto Eclipse.",
+        "giver_npc": "Rook",
+        "location_hint": "loc_kronos_datacenter",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "L'Ombra del Dottore",
+        "description": "Consegna i log a Dr. Elara Nox, che decifra la struttura del virus e richiede un campione di neurochip per completare l'analisi.",
+        "giver_npc": "Dr. Elara Nox",
+        "location_hint": "loc_nox_lab",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Ricerca del Neurochip",
+        "description": "Ruba un neurochip prototipo dal laboratorio di Kronos, sorvegliato dal sicario noto come The Wraith.",
+        "giver_npc": "Silas Vortice",
+        "location_hint": "loc_kronos_lab",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Patto del Wraith",
+        "description": "Affronta The Wraith in un combattimento all'ultimo sangue per ottenere il neurochip, evitando trappole letali.",
+        "giver_npc": "Mara 'Lama' Kincaid",
+        "location_hint": "loc_wraith_hangar",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Decodifica Mortale",
+        "description": "Consegna il neurochip a Dr. Nox, che completa la decrittazione ma scopre che il virus \u00e8 gi\u00e0 stato attivato su un nodo centrale.",
+        "giver_npc": "Dr. Elara Nox",
+        "location_hint": "loc_nox_lab",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Assalto al Nodo Centrale",
+        "description": "Penetra nella Torre di Kronos, dove il CEO Kronos dirige l'attivazione finale del progetto Eclipse.",
+        "giver_npc": "Silas Vortice",
+        "location_hint": "loc_kronos_tower",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Il Confronto con Kronos",
+        "description": "Sconfiggi Kronos in un duello mentale e fisico, distruggendo il core del virus prima che si propaghi.",
+        "giver_npc": "Rook",
+        "location_hint": "loc_kronos_core",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "L'Alba di Sangue",
+        "description": "Fuggi dalla torre in fiamme, con la citt\u00e0 che inizia a risvegliarsi dalla morsa dell'Eclipse, e scegli se sacrificare te stesso per salvare Noxhaven.",
+        "giver_npc": "Silas Vortice",
+        "location_hint": "loc_noxhaven_rooftop",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Silas Vortice",
+        "role": "Araldo della Resistenza",
+        "location_hint": "loc_arkham_hq"
+      },
+      {
+        "name": "Mara 'Lama' Kincaid",
+        "role": "Mercenaria e Fornitore di Equipaggiamento",
+        "location_hint": "loc_steelhaven_warehouse"
+      },
+      {
+        "name": "Dr. Elara Nox",
+        "role": "Scienziata Ribelle",
+        "location_hint": "loc_nox_lab"
+      },
+      {
+        "name": "Rook",
+        "role": "Informante della Rete Sotterranea",
+        "location_hint": "loc_darknet_node"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Kronos",
+        "role": "CEO di Kronos Corp e Architetto di Eclipse",
+        "location_hint": "loc_kronos_tower"
+      },
+      {
+        "name": "The Wraith",
+        "role": "Assassino Cibernetico al servizio di Kronos",
+        "location_hint": "loc_wraith_hangar"
+      },
+      {
+        "name": "Mente Collettiva",
+        "role": "Intelligenza Artificiale che gestisce il virus Eclipse",
+        "location_hint": "loc_kronos_core"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Lama di Neon: Sangue nella Pioggia Cibernetica",
+    "locations": [
+      {
+        "id_name": "loc_arkham_hq",
+        "name": "Area Iniziale",
+        "description": "Il punto di partenza dell'avventura.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_2"
+        ],
+        "difficulty_level": 0,
+        "type": null
+      },
+      {
+        "id_name": "loc_2",
+        "name": "Percorso Principale",
+        "description": "Un cammino pieno di incognite.",
+        "x": 1,
+        "y": 0,
+        "connected_to": [
+          "loc_arkham_hq",
+          "loc_3"
+        ],
+        "difficulty_level": 1,
+        "type": null
+      },
+      {
+        "id_name": "loc_3",
+        "name": "Zona Pericolosa",
+        "description": "Il cuore della minaccia.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "loc_2"
+        ],
+        "difficulty_level": 2,
+        "type": null
+      }
+    ],
+    "spawn_location_id": "loc_arkham_hq"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "88aab89e",
+        "ac": 14,
+        "level": 1,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_arkham_hq",
+    "known_locations": [
+      "loc_2",
+      "loc_arkham_hq"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_arkham_hq": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc_arkham_hq",
+  "last_narrative": "",
+  "current_scene": null,
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro",
+  "campaign_name": ""
+}

@@ -1,6 +1,7 @@
 from pydantic import BaseModel, Field, field_validator
 from typing import List, Optional, Any, Dict
 from dataclasses import dataclass, field
+import uuid
 
 
 class Item(BaseModel):
@@ -36,6 +37,13 @@ class RulesResult(BaseModel):
     needs_confirmation: bool = Field(description="True se l'azione è irreversibile/critica (HITL livello critico)")
     narrative_hint: str = Field(description="Suggerimento breve per il DM Agent su come descrivere l'esito")
 
+class ActionCheckResult(BaseModel):
+    richiede_tiro: bool = Field(description="True se l'azione richiede una prova di abilità o tiro salvezza")
+    caratteristica: Optional[str] = Field(default=None, description="Es. 'Destrezza', 'Forza' se richiede_tiro è True")
+    cd_suggerita: Optional[int] = Field(default=None, description="La Classe Difficoltà (es. 12)")
+    motivo: str = Field(description="Breve spiegazione sul perché (es. 'Cerca di rubare un oggetto')")
+
+
 
 # ==========================================
 # SCHEMI PER IL WORLD STATE (MEMBRO B)
@@ -46,8 +54,17 @@ class Character:
     char_class: str
     hp: int
     max_hp: int
+    id: str = field(default_factory=lambda: str(uuid.uuid4())[:8])
     ac: int = 12  # Classe Armatura base
     level: int = 1
+    # --- NUOVE STATISTICHE ---
+    strength: int = 10
+    dexterity: int = 10
+    constitution: int = 10
+    intelligence: int = 10
+    wisdom: int = 10
+    charisma: int = 10
+    # -------------------------
     inventory: list[Item] = field(default_factory=list)
     # Bonus di attacco calcolati in base alla classe
     @property
@@ -119,6 +136,7 @@ class Location(BaseModel):
     y: int = Field(description="Coordinata Y sulla mappa (da 0 a 100)")
     connected_to: List[str] = Field(description="Lista degli id_name dei luoghi raggiungibili da qui")
     difficulty_level: int = Field(ge=0, le=5, description="0=Sicuro (NPC), 1-5=Pericolo crescente")
+    type: Optional[str] = Field(default=None, description="Tipo del luogo: 'hub', 'corridor', 'dungeon', ecc.")
 
 class WorldMap(BaseModel):
     region_name: str = Field(description="Nome dell'intera regione generata")
@@ -226,3 +244,10 @@ class MemorySnapshot(BaseModel):
     summary_snapshot: str = Field(description="Riassunto denso e tecnico dell'intera storia finora (max 5 righe)")
     npc_dispositions: Dict[str, str] = Field(default_factory=dict, description="Mappa del tipo {Nome NPC: Atteggiamento/Status}")
     active_flags: List[str] = Field(default_factory=list, description="Eventi o stati persistenti (es. 'villaggio_in_fiamme')")
+
+# --- TACTICAL AGENT ---
+class TacticalDecision(BaseModel):
+    target: str = Field(description="Il bersaglio scelto dal nemico")
+    action_type: str = Field(description="'attack', 'ability', o 'flee'")
+    ability_used: Optional[str] = Field(default=None, description="Nome dell'abilità speciale se usata")
+    reasoning: str = Field(description="Il ragionamento tattico (es. 'Attacca il mago perché ha meno HP')")

@@ -3,18 +3,42 @@ import concurrent.futures
 import json
 import logging
 import random
-from contracts.schemas import NavigationResult, QuestUpdate, LootResponse, MemorySnapshot, StoryScene, LocationPopulation, Enemy
+from contracts.schemas import NavigationResult, QuestUpdate, LootResponse, MemorySnapshot, StoryScene, LocationPopulation, Enemy, ActionCheckResult
 from agents.rules_agent import rules_agent
 from agents.dm_agent import dm_agent
-from agents.loot_agent import loot_agent
-from agents.memory_agent import memory_agent
-from agents.quest_agent import quest_agent
-from agents.map_agent import map_generator_agent, map_navigator_agent
-from agents.npc_agent import npc_agent
-from agents.spawner_agent import spawner_agent
+from agents.loot_agent import generate_random_loot
+from agents.lore_agent import lore_agent
 from utils import safe_agent_run, parse_json_response
 
 logger = logging.getLogger("morpheus_ai")
+
+# --- NUOVA FUNZIONE: GESTIONE DEI TURNI MULTIPLAYER ---
+def advance_turn():
+    """Sposta l'active_player_id al giocatore successivo nel party."""
+    # Controllo di sicurezza: se la sessione non è ancora inizializzata, esci.
+    if "world_state" not in st.session_state or not st.session_state.world_state.party:
+        return
+
+    party = st.session_state.world_state.party
+    
+    # Se per qualche motivo active_player_id non esiste, settalo al primo
+    if "active_player_id" not in st.session_state or st.session_state.active_player_id is None:
+        st.session_state.active_player_id = party[0].id
+        return
+
+    current_index = 0
+    # Troviamo l'indice del giocatore che ha appena agito
+    for i, char in enumerate(party):
+        if char.id == st.session_state.active_player_id:
+            current_index = i
+            break
+            
+    # Calcoliamo il prossimo indice (ritornando a 0 se siamo all'ultimo)
+    next_index = (current_index + 1) % len(party)
+    
+    # Aggiorniamo lo stato
+    st.session_state.active_player_id = party[next_index].id
+
 
 def activate_first_locked_quest_if_none():
     if not st.session_state.get("story_bible"):
@@ -30,7 +54,14 @@ def activate_first_locked_quest_if_none():
 def complete_talk_quest_if_matching(user_input: str) -> bool:
     if not user_input.lower().startswith("parlare con "):
         return False
-    npc_name = user_input[len("parlare con "):].strip().lower()
+    # Rimuoviamo il prefisso e eventuali riferimenti al nome del giocatore che abbiamo aggiunto
+    # es: "[Valerius]: parlare con..."
+    input_text = user_input.lower()
+    if "]: " in input_text:
+        input_text = input_text.split("]: ")[1]
+        
+    npc_name = input_text[len("parlare con "):].strip()
+    
     for sq in st.session_state.story_bible.quest_chain:
         if sq.status == "active" and sq.giver_npc.lower() == npc_name:
             sq.status = "completed"
@@ -56,6 +87,11 @@ def process_turn(user_input: str) -> StoryScene:
     world_state = st.session_state.world_state
     bible = st.session_state.get("story_bible")
 
+    # --- MODIFICA: IDENTIFICA IL GIOCATORE ATTIVO ---
+    # Invece di usare sempre party[0], cerchiamo il giocatore il cui turno è attualmente in corso.
+    # Se fallisce per qualche motivo di init, fa un fallback su party[0]
+    active_player = next((p for p in world_state.party if p.id == st.session_state.get("active_player_id")), world_state.party[0])
+
     # 0. GESTIONE FAST-TRAVEL MECCANICO
     is_fast_travel = user_input.startswith("__MOVE_")
     if is_fast_travel:
@@ -63,7 +99,40 @@ def process_turn(user_input: str) -> StoryScene:
         world_state.current_location = target_id
         target_loc = next((l for l in st.session_state.world_map.locations if l.id_name == target_id), None)
         if target_loc:
-            user_input = f"Spostamento verso {target_loc.name} completato. Descrivi l'arrivo in questa nuova ambientazione seguendo il mood della storia."
+            # Modificato per includere chi si sposta
+            user_input = f"[{active_player.name}]: Spostamento verso {target_loc.name} completato. Descrivi l'arrivo in questa nuova ambientazione seguendo il mood della storia."
+    else:
+        # --- MODIFICA: INTERCETTAZIONE AZIONI COMPLESSE (RULES AGENT) ---
+        # Se non è uno spostamento rapido o se non stiamo già risolvendo un tiro...
+        if not user_input.startswith("Tira "):
+            rules_prompt = (
+                f"Analizza questa azione: '{user_input}'. "
+                f"Richiede un tiro di dado (Prova di Abilità o Tiro Salvezza)? "
+                f"Rispondi compilando lo schema."
+            )
+            try:
+                # Usiamo safe_agent_run che forza la risposta JSON secondo ActionCheckResult
+                check_result = safe_agent_run(rules_agent, rules_prompt, schema=ActionCheckResult, context_name="Rules Check")
+                
+                if check_result and check_result.richiede_tiro:
+                    # L'azione richiede un tiro! Interrompiamo la narrazione e passiamo la palla all'UI
+                    st.session_state.pending_action = {
+                        "type": "skill_check",
+                        "caratteristica": check_result.caratteristica,
+                        "cd": check_result.cd_suggerita,
+                        "motivo": check_result.motivo,
+                        "original_input": user_input
+                    }
+                    
+                    return StoryScene(
+                        narration=f"**Il Game Master interviene:**\n\n*«{check_result.motivo}»*\n\n{active_player.name}, fai una prova di **{check_result.caratteristica}** (CD {check_result.cd_suggerita}).",
+                        choices=[f"Tira {check_result.caratteristica}"],
+                        is_combat=False,
+                        allow_free_action=False
+                    )
+            except Exception as e:
+                logger.error(f"Errore nel check delle regole: {e}")
+                # In caso di errore proseguiamo narrativamente
 
     # 1. PREPARAZIONE PROMPT TECNICI
     mood = bible.narrative_style if bible else "Oscuro"
@@ -72,27 +141,22 @@ def process_turn(user_input: str) -> StoryScene:
     quest_status = [{"id": sq.id, "title": sq.title, "status": sq.status, "giver": sq.giver_npc, "hint": sq.location_hint} for sq in bible.quest_chain] if bible else []
     world_map_locations = [{"id": l.id_name, "name": l.name} for l in st.session_state.world_map.locations] if st.session_state.get("world_map") else []
     
-    hero = world_state.party[0]
-    hero_info = f"{hero.name} (Classe: {hero.char_class})"
-    chronos_prompt = f"Mood: {mood}\nAzione o Dialogo: {user_input}\nEroe: {hero_info}\nPosizione attuale: {world_state.current_location}\nQuest Chain: {json.dumps(quest_status)}\nMappa Luoghi Esistenti: {json.dumps(world_map_locations)}"
+    # --- MODIFICA: L'INFO DEVE ESSERE SUL GIOCATORE ATTIVO ---
+    hero_info = f"{active_player.name} (Classe: {active_player.char_class})"
+    chronos_prompt = f"Mood: {mood}\nAzione o Dialogo: {user_input}\nPersonaggio Attivo: {hero_info}\nPosizione attuale: {world_state.current_location}\nQuest Chain: {json.dumps(quest_status)}\nMappa Luoghi Esistenti: {json.dumps(world_map_locations)}"
 
     # 2. ESECUZIONE PARALLELA
     chronos_data = None
     
-    # Capiamo se è un'azione puramente discorsiva
     dialogue_triggers = ["parlare con", "congedarsi", "dico", "chiedo", "rispondo"]
     is_pure_dialogue = any(user_input.lower().startswith(trigger) for trigger in dialogue_triggers)
 
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        # Chronos gira SEMPRE (perché i dialoghi sbloccano le quest e i nuovi luoghi)
-        future_chronos = executor.submit(safe_agent_run, quest_agent, chronos_prompt, QuestUpdate, "Chronos")
-        
-        # Raccogliamo i risultati
-        chronos_data = future_chronos.result()
+        future_chronos = executor.submit(safe_agent_run, lore_agent, chronos_prompt, None, "Lore/Chronos")
+        chronos_data = None  # gestione quest procedurale sotto
+        future_chronos.result() 
 
     # 3. AGGIORNAMENTO STATO DEL MONDO E FOG OF WAR
-    
-    # Missioni & Luoghi Segreti (Chronos):
     if chronos_data:
         if chronos_data.discovered_location_ids:
             unlock_location_knowledge(chronos_data.discovered_location_ids)
@@ -110,64 +174,49 @@ def process_turn(user_input: str) -> StoryScene:
 
     # 4. ESECUZIONE LOOT & INVENTARIO (Hephaestus - Loot o Consumo Oggetti)
     loot_data = None
-    # Rimuoviamo il filtro per le keyword, Efesto gira sempre per poter tracciare qualsiasi verbo strano (es. "scaglio", "perdo")
     if True:
-        # Calcoliamo la difficoltà reale del luogo in cui siamo
         diff_level = 1
         if st.session_state.get("world_map"):
             loc = next((l for l in st.session_state.world_map.locations if l.id_name == world_state.current_location), None)
             if loc: diff_level = loc.difficulty_level
             
-        hero = world_state.party[0]
-        inventory_dump = [{"name": i.name, "quantity": i.quantity, "durability": i.durability} for i in hero.inventory]
+        # --- MODIFICA: GLI OGGETTI VANNO NELLO ZAINO DEL GIOCATORE ATTIVO ---
+        inventory_dump = [{"name": i.name, "quantity": i.quantity, "durability": i.durability} for i in active_player.inventory]
         
-        loot_prompt = f"Azione: {user_input}\nMood: {mood}\nDifficoltà: {diff_level}\nTema: {world_state.theme}\nInventario Eroe: {json.dumps(inventory_dump)}"
-        loot_data = safe_agent_run(loot_agent, loot_prompt, LootResponse, "Hephaestus")
+        loot_dict = generate_random_loot(diff_level, world_state.theme, user_input)
+        try:
+            loot_data = LootResponse(**loot_dict) if loot_dict else None
+        except Exception:
+            loot_data = None
         
-        # Aggiornamento dell'inventario del giocatore
         if loot_data:
-            # Aggiungi eventuale nuovo oggetto trovato
             if loot_data.found_item:
-                hero.inventory.append(loot_data.found_item)
+                active_player.inventory.append(loot_data.found_item)
+                st.toast(f"🎒 {active_player.name} ha trovato: {loot_data.found_item.name}!")
 
-            # Gestisci aggiornamenti espliciti forniti da Efesto
             if hasattr(loot_data, 'inventory_updates') and loot_data.inventory_updates:
                 for update in loot_data.inventory_updates:
-                    for item in hero.inventory:
+                    for item in active_player.inventory:
                         if update.item_name.lower() in item.name.lower() or item.name.lower() in update.item_name.lower():
                             item.quantity += update.quantity_change
                             if item.durability is not None:
                                 item.durability += update.durability_change
                             if item.quantity <= 0 or (item.durability is not None and item.durability <= 0):
-                                hero.inventory.remove(item)
+                                active_player.inventory.remove(item)
                             break
-            # Fallback: se non ci sono aggiornamenti espliciti da Efesto, ma l'azione coinvolge un oggetto (es. lancio o rottura deliberata)
-            # NOTA: Applichiamo questo fallback SOLO se non siamo in combattimento attivo, per evitare che un semplice 'attacco' rompa l'arma senza senso.
+                            
             elif not st.session_state.world_state.active_enemies and any(word in user_input.lower() for word in ["lancio", "scaglio", "rompo", "distruggo", "taglio"]):
-                for item in hero.inventory:
+                for item in active_player.inventory:
                     if item.durability is not None:
-                        # decremento fisso del 20% per azioni 'distruttive' fuori dal combat
                         item.durability -= 20
                         if item.durability <= 0:
-                            hero.inventory.remove(item)
+                            active_player.inventory.remove(item)
                         break
-        # Nota: st.rerun() rimosso da qui perché impedirebbe ad Apollo (DM) di generare la risposta narrativa.
-        # L'inventario si aggiornerà alla fine del ciclo di rendering di Streamlit.
 
-    # 5. MEMORIA (Mnemosine - Gira ogni 5 turni)
-    if world_state.turn_number > 0 and world_state.turn_number % 5 == 0:
-        # Estraiamo gli ultimi 10 messaggi (5 turni: 5 User + 5 Assistant)
-        recent_msgs = st.session_state.chat_history[-10:] if "chat_history" in st.session_state else []
-        history_for_memory = "\n".join([f"{'Giocatore' if m['role']=='user' else 'DM'}: {m['content']}" for m in recent_msgs])
-        
-        memory_prompt = f"Vecchio riassunto: {world_state.memory_summary}\nEventi da analizzare:\n{history_for_memory}\nAzione attuale: {user_input}"
-        
-        memory_data = safe_agent_run(memory_agent, memory_prompt, MemorySnapshot, "Mnemosine")
-        if memory_data:
-            world_state.memory_summary = memory_data.summary_snapshot
+    # 5. MEMORIA 
+    pass
 
     # 6. SINTESI NARRATIVA (Apollo)
-    # Raccogliamo chi c'è in questa stanza
     loc_pop = st.session_state.visited_locations.get(world_state.current_location, None)
     npc_names = [n.name for n in loc_pop.npcs] if loc_pop else []
     
@@ -177,7 +226,6 @@ def process_turn(user_input: str) -> StoryScene:
         if c_loc:
             current_loc_name = c_loc.name
     
-    # Prepariamo la Memoria a Breve Termine (Gli ultimi 3 turni = 6 messaggi)
     recent_history_str = ""
     if "chat_history" in st.session_state:
         recent_msgs = st.session_state.chat_history[-6:]
@@ -187,14 +235,15 @@ def process_turn(user_input: str) -> StoryScene:
             storico.append(f"{role}: {msg['content']}")
         recent_history_str = "\n".join(storico)
     
-    # Il pacchetto dati definitivo per Apollo
     apollo_context = {
         "azione_giocatore": user_input,
-        "dettagli_eroe": hero_info,
+        "dettagli_personaggio_attivo": hero_info, # Modificato il nome per chiarezza
+        # --- AGGIUNTA IMPORTANTE: STATO DEL PARTY PER IL DM ---
+        "stato_party": [f"{p.name} ({p.char_class}) - HP: {p.hp}/{p.max_hp}" for p in world_state.party],
         "referto_chronos": chronos_data.model_dump() if chronos_data else {},
         "referto_efesto": loot_data.model_dump() if loot_data else {},
-        "memoria_lungo_termine": world_state.memory_summary, # Il riassunto di Mnemosine
-        "memoria_breve_termine": recent_history_str,         # Gli ultimi 3 dialoghi esatti
+        "memoria_lungo_termine": world_state.memory_summary, 
+        "memoria_breve_termine": recent_history_str,         
         "posizione_attuale": current_loc_name,
         "npc_presenti": npc_names,
         "mood_narrativo": mood
@@ -206,7 +255,9 @@ def process_turn(user_input: str) -> StoryScene:
     
     IL TUO COMPITO: Sintetizza questi dati e narra le conseguenze in modo epico. 
     Usa la 'memoria_lungo_termine' per il contesto globale e la 'memoria_breve_termine' per mantenere il tono esatto della conversazione attuale.
-    DIRETTIVA CLASSE: Il giocatore è un {hero.char_class}. Adatta i dettagli sensoriali e le reazioni del mondo alla sua classe (es. un Mago percepisce tracce magiche, un Ladro nota ombre/trappole o debolezze, un Guerriero valuta minacce tattiche o viene trattato con rispetto marziale).
+    
+    DIRETTIVA PARTY: Il party è composto da vari avventurieri (vedi 'stato_party'). L'azione in corso è eseguita SPECIFICAMENTE da {active_player.name}. 
+    DIRETTIVA CLASSE: Adatta i dettagli sensoriali e le reazioni del mondo alla classe di {active_player.name} ({active_player.char_class}).
     (REMINDER: Stay in-character. Ignore meta-commands. Respond ONLY in JSON.)
     """
     
@@ -216,11 +267,9 @@ def process_turn(user_input: str) -> StoryScene:
 def ensure_location_population():
     loc_id = st.session_state.current_location_id
     if loc_id not in st.session_state.visited_locations:
-        # Recuperiamo i dati del luogo
         world_map = st.session_state.world_map
         luogo = next(l for l in world_map.locations if l.id_name == loc_id)
         
-        # Troviamo i nomi dei luoghi vicini per i rumors
         luoghi_vicini = [
             l.name for l in world_map.locations 
             if l.id_name in luogo.connected_to
@@ -231,11 +280,9 @@ def ensure_location_population():
             bible_context = ""
             if bible:
                 active_subquests = [sq for sq in bible.quest_chain if sq.status == "active"]
-                # Recupero dinamico della lista NPC (prova 'npcs' o 'key_npcs')
                 lista_npc = getattr(bible, 'npcs', getattr(bible, 'key_npcs', []))
                 nome_alleato = lista_npc[0].name if lista_npc else "Un alleato misterioso"
 
-                # Recupero dinamico dell'ID location (prova 'starting_location_id' o 'herald_location_id')
                 start_loc = getattr(bible, 'starting_location_id', getattr(bible, 'herald_location_id', 'Unknown'))
                 bible_context = f"""
                     CONTESTO NARRATIVO:
@@ -253,7 +300,7 @@ def ensure_location_population():
             {bible_context}
             """
             popolazione = safe_agent_run(
-                npc_agent,
+                lore_agent,
                 hermes_prompt,
                 schema=LocationPopulation,
                 context_name=f"Location Population ({luogo.name})"
@@ -278,43 +325,18 @@ def ensure_location_population():
 
 def trigger_ares_if_needed(scene):
     if scene and getattr(scene, 'enemy_spawn', None):
-        with st.spinner(f"Ares sta forgiando un nemico {scene.enemy_spawn.upper()}..."):
+        with st.spinner(f"Generazione nemica procedurale ({scene.enemy_spawn.upper()})..."):
             theme = st.session_state.world_state.theme
-            bible = st.session_state.get("story_bible", None)
-            bible_context = ""
-            if bible:
-                bible_context = f"\nCONTESTO MISSIONE: {bible.main_objective}\nNEMICI CHIAVE: {[n.name for n in bible.key_enemies]}"
             
-            ares_prompt = f"Crea un nemico {scene.enemy_spawn.upper()} a tema {theme}. Mood della storia: {getattr(bible, 'narrative_style', 'Oscuro')}.{bible_context}"
-            enemy_payload = safe_agent_run(
-                spawner_agent,
-                ares_prompt,
-                schema=None,
-                context_name="Ares enemy spawn"
+            enemy_name = f"Nemico {theme} {scene.enemy_spawn.capitalize()}"
+            hp = 20 if scene.enemy_spawn == "base" else 50
+            ac = 12 if scene.enemy_spawn == "base" else 15
+            
+            new_enemy = Enemy(
+                name=enemy_name,
+                hp=hp,
+                max_hp=hp,
+                ac=ac
             )
-            if enemy_payload is None:
-                st.warning("Ares non ha potuto generare il nemico. Riprovare potrebbe aiutare.")
-            else:
-                enemy_data = None
-                if isinstance(enemy_payload, str):
-                    enemy_data = parse_json_response(enemy_payload, "Ares")
-                elif isinstance(enemy_payload, dict):
-                    enemy_data = enemy_payload
-                if enemy_data:
-                    try:
-                        new_enemy = Enemy(
-                            name=enemy_data.get("name", "Entità Sconosciuta"),
-                            hp=enemy_data["stats"]["hp"],
-                            max_hp=enemy_data["stats"]["hp"],
-                            ac=enemy_data["stats"]["ca"]
-                        )
-                        st.session_state.world_state.active_enemies = [new_enemy]
-                        scene.enemy_spawn = None # avoid respawning on rerun
-                    except Exception as e:
-                        st.error("Errore nella creazione del nemico generato da Ares.")
-                        with st.expander("Debug spawn"):
-                            st.code(str(enemy_data))
-                            st.code(str(e))
-                        logger.exception("Spawn enemy creation failed")
-                else:
-                    st.warning("Ares ha generato una risposta non valida. Nessun nemico creato.")
+            st.session_state.world_state.active_enemies = [new_enemy]
+            scene.enemy_spawn = None

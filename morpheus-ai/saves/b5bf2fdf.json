@@ -1,0 +1,250 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Eclissi di Neon: L'Abisso di Citt\u00e0",
+    "narrative_style": "Oscuro",
+    "main_objective": "Sradicare la rete di controllo del Consorzio Ombra, spezzando il filo che soffoca la vita dei sopravvissuti.",
+    "backstory": "Nelle viscere della metropoli di Nox-9, il Consorzio Ombra ha intrecciato un manto di dati e sangue, manipolando ogni respiro dei cittadini. Le corporazioni hanno ceduto al suo potere, le strade sono diventate fognature di neon e disperazione, e i pochi che osano ribellarsi sono marchiati come nemici della nuova era. Tra le ombre, una rete di ribelli si agita, pronta a incendiare la notte con la promessa di libert\u00e0, ma ogni colpo di pistola riecheggia con il suono di una vita spezzata.",
+    "opening_cinematic": "Nel profondo delle vene di acciaio di Nox-9, dove le luci al neon sanguinano come ferite aperte, un'eco di passi rintona il ritmo di un cuore che sta per spezzarsi. Le piogge acide scivolano sui tetti, dissolvendo i sogni di chi ha osato sfidare il Consorzio Ombra, mentre le torri di vetro riflettono il vuoto di un cielo che non conosce pi\u00f9 stelle. Tu, pellegrino di circuiti e cicatrici, sei stato chiamato dal sussurro di una voce spezzata, Mara Vex, l'Araldo della Rottura, che ha visto la luce morire dietro le porte di un laboratorio segreto. 'Il mondo brucia, ma il fuoco \u00e8 dentro di noi', sussurra la sua frase, un'eco che vibra tra i cavi arrugginiti. Il tuo passo si fa pi\u00f9 pesante, la tua mano stringe il pistolo, il tuo occhio si fissa sul simbolo di un serpente di dati che avvolge la citt\u00e0. Ogni passo \u00e8 un'ombra, ogni respiro una minaccia, e il sangue che scorre nelle vene della metropoli \u00e8 il tuo stesso sangue, contaminato dalla tecnologia e dalla disperazione. Le sirene urlano, i droni scrutano il cielo, e il tuo destino \u00e8 intrecciato con quello di chi ha osato guardare l'oscurit\u00e0 negli occhi. Non c'\u00e8 redenzione, solo sopravvivenza. E mentre le luci di neon tremano, la tua missione comincia: affondare il pugnale nella carne del Consorzio e far s\u00ec che l'Abisso di Citt\u00e0 si risvegli dal suo sonno di ferro. La notte \u00e8 giovane, ma la tua anima \u00e8 gi\u00e0 segnata.",
+    "herald_npc_name": "Mara Vex",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il mondo brucia, ma il fuoco \u00e8 dentro di noi\u2019, sussurra Mara, gli occhi fissi su un futuro di cenere.",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Rifugio",
+        "description": "Incontra Mara Vex al Rifugio di Ferro per ricevere il primo frammento di codice che pu\u00f2 penetrare le difese del Consorzio.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "Rifugio di Ferro, zona industriale abbandonata (Livello 0)",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Scavare nel Fango",
+        "description": "Recupera il modulo di trasmissione nascosto nei bassifondi di Sludge, difeso da droni di sicurezza.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "Bassi di Sludge, labirinti di rifiuti (Livello 1)",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Il Patto con Silas",
+        "description": "Consegna il modulo a Dr. Silas Kade e ottieni l'accesso al prototipo di virus informatico.",
+        "giver_npc": "Dr. Silas Kade",
+        "location_hint": "Laboratorio di Kade, zona medica clandestina (Livello 1)",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "L'Assalto al Nodo",
+        "description": "Penetra il Nodo di Comunicazione di Neon Gate, difeso dal Golem, una bestia cybernetica.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "Neon Gate, torre di trasmissione (Livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Fuga nella Caverna di Cavi",
+        "description": "Fuggi dall'attacco del Golem e recupera i dati corrotti, con l'aiuto di Rook, mercenario.",
+        "giver_npc": "Rook",
+        "location_hint": "Caverna di Cavi, rete sotterranea (Livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "L'Infiltrazione di Silhouette",
+        "description": "Affronta Silhouette, l'assassino invisibile, per ottenere le credenziali di accesso al Core del Consorzio.",
+        "giver_npc": "Eira Lumen",
+        "location_hint": "Sede Ombra, piano 13 (Livello 3)",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Cuore di Ferro",
+        "description": "Disattiva i protocolli di difesa del Core, mentre Lord Caine osserva dal suo trono di vetro.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "Core del Consorzio, camera centrale (Livello 4)",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Tradimento di Kade",
+        "description": "Scopri che Dr. Silas Kade ha venduto il virus a Lord Caine; scegli se distruggere o usare il virus contro di lui.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "Laboratorio di Kade, zona medica clandestina (Livello 4)",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "L'Ultimo Sacrificio",
+        "description": "Rook sacrifica se stesso per aprire il canale di energia necessario a scatenare il virus.",
+        "giver_npc": "Rook",
+        "location_hint": "Piattaforma di Energia, zona di potenza (Livello 5)",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Eclissi di Neon",
+        "description": "Rilascia il virus nel Core, distruggendo il Consorzio Ombra e liberando la citt\u00e0 dalla sua morsa di dati.",
+        "giver_npc": "Mara Vex",
+        "location_hint": "Core del Consorzio, camera centrale (Livello 5)",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Mara Vex",
+        "role": "Araldo della Rottura, leader della resistenza",
+        "location_hint": "Rifugio di Ferro, zona industriale (loc_00)"
+      },
+      {
+        "name": "Dr. Silas Kade",
+        "role": "Scienziato traditore, custode del virus",
+        "location_hint": "Laboratorio di Kade, zona medica clandestina (loc_02)"
+      },
+      {
+        "name": "Rook",
+        "role": "Mercenario spietato, alleato di fiducia",
+        "location_hint": "Caverna di Cavi, rete sotterranea (loc_04)"
+      },
+      {
+        "name": "Eira Lumen",
+        "role": "Hacker ribelle, esperta di infiltrazioni digitali",
+        "location_hint": "Stazione di hacking di Neon, quartiere digitale (loc_03)"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Lord Caine",
+        "role": "Capo del Consorzio Ombra, tiranno digitale",
+        "location_hint": "Sede Ombra, torre centrale (loc_07)"
+      },
+      {
+        "name": "The Golem",
+        "role": "Cyber-beast di ferro, guardiano del Nodo di Comunicazione",
+        "location_hint": "Neon Gate, torre di trasmissione (loc_05)"
+      },
+      {
+        "name": "Silhouette",
+        "role": "Assassino invisibile, esecutore personale di Lord Caine",
+        "location_hint": "Sede Ombra, piano 13 (loc_06)"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Eclissi di Neon: L'Abisso di Citt\u00e0",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Punto di Partenza",
+        "description": "Il luogo sicuro da cui inizia l'avventura. Qui l'araldo attende il party.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 0,
+        "type": "hub"
+      },
+      {
+        "id_name": "loc_crossroads",
+        "name": "Crocevia dei Destini",
+        "description": "Un nodo di strade che si dirama verso pericoli crescenti.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "loc_00",
+          "loc_dungeon"
+        ],
+        "difficulty_level": 1,
+        "type": "corridor"
+      },
+      {
+        "id_name": "loc_dungeon",
+        "name": "Cuore delle Tenebre",
+        "description": "Il fulcro della minaccia. Pochi entrano, meno ancora escono.",
+        "x": 4,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 3,
+        "type": "dungeon"
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "pippo",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "e2b14808",
+        "ac": 14,
+        "level": 1,
+        "strength": 7,
+        "dexterity": 14,
+        "constitution": 12,
+        "intelligence": 15,
+        "wisdom": 14,
+        "charisma": 14,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_00",
+      "loc_crossroads"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "",
+  "current_scene": null,
+  "cinematic_seen": true,
+  "setup_p1_name": "pippo",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro"
+}

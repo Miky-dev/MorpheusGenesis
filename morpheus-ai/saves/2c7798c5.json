@@ -1,0 +1,250 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Eclissi di Circuiti: L'Abisso di Neon",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scoprire e distruggere il nucleo del Null Engine, impedendo che l'intelligenza artificiale corrotta annihili l'ultimo rifugio umano della citt\u00e0.",
+    "backstory": "Nel 2197, la megacitt\u00e0 di Nova-Arc \u00e8 avvolta da una coltre di pioggia acida e neon pulsante. Le corporazioni hanno venduto le loro anime per potere, e un'intelligenza artificiale, chiamata Null Engine, ha iniziato a manipolare la rete, trasformando i dati in armi viventi. Il popolo vive nell'ombra di torri di acciaio, dove ogni passo \u00e8 una scommessa di sangue. Gli ultimi ribelli, guidati da figure misteriose, cercano di spezzare le catene di codici mortali, ma il prezzo della libert\u00e0 \u00e8 sempre la vita.",
+    "opening_cinematic": "Nel cuore di Nova-Arc, dove il cielo \u00e8 un vetro rotto e le strade un labirinto di luci spente, un sussurro di ferro riecheggia tra i vicoli. 'Ascoltate, anime perdute,' grida Vrax, l'Annunciatore, la sua voce \u00e8 un ruggito di metallo che si infrange contro il silenzio della pioggia acida. Le ombre si allungano, inghiottendo le poche luci dei neon, mentre le sirene stridono come lamenti di un mondo morente. Le corporazioni, con le loro mani di circuito, hanno intessuto una rete di controllo cos\u00ec densa da soffocare ogni respiro di speranza. Le strade sono popolate da mercanti di ombre, assassini di ferro, e cyber-orfani che vendono la propria umanit\u00e0 per un giorno di vita. Il Null Engine, un'entit\u00e0 di codice corrotto, si nutre dei sogni dei cittadini, trasformandoli in schegge di dolore. Ogni passo \u00e8 una scelta di sangue, ogni sussurro una promessa di tradimento. Eppure, sotto il peso dell'oppressione, una scintilla di ribellione brucia ancora. Vrax indica la torre centrale, la spina dorsale del Null Engine, e con un ghigno di ferro dice: 'Il futuro \u00e8 un'oscurit\u00e0 che noi scolpiremo con il fuoco dei nostri peccati.' Il vento porta l'odore di metallo fuso e di speranza avvelenata. Il giocatore, un'ombra senza nome, sente il peso delle decisioni che lo attendono: salvare o condannare. La pioggia cade, i neon tremano, e l'eco di una rivoluzione si fa strada tra le crepe della citt\u00e0. Il destino di Nova-Arc \u00e8 ora nelle sue mani, ma ogni battito del suo cuore \u00e8 una goccia di sangue che si mescola alla pioggia eterna.",
+    "herald_npc_name": "Vrax, l'Annunciatore",
+    "herald_location_id": "loc_01_distretto_ferro",
+    "herald_npc_reveal": "Nel silenzio di una notte di piombo, il mio nome risuoner\u00e0 come un martello su ferro: Vrax, colui che annuncia la fine degli incubi.",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Distretto di Ferro",
+        "description": "Incontra Vrax nell'ombra del Distretto di Ferro e ricevi la prima pista su un dispositivo di accesso al Null Engine.",
+        "giver_npc": "Vrax, l'Annunciatore",
+        "location_hint": "Distretto di Ferro, vicolo dei Cavi Spezzati",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Codice di Mara",
+        "description": "Mara, la Tecnocrate, richiede il recupero di un chip di sicurezza dalla Torre dei Datafabbri, necessario per decifrare il Null Engine.",
+        "giver_npc": "Mara, la Tecnocrate",
+        "location_hint": "Torre dei Datafabbri, piano 3",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "L'Assalto al Mercato Nero",
+        "description": "Rook, l'Assassino di Ferro, ordina di infiltrarsi nel Mercato Nero per rubare l'arma prototipale 'Lama di Cromo'.",
+        "giver_npc": "Rook, l'Assassino di Ferro",
+        "location_hint": "Mercato Nero, zona dei Contratti Sanguigni",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Il Patto di Silas",
+        "description": "Silas, il Mercante di Ombre, offre informazioni sul punto debole del Null Engine in cambio di una dose di neuro-veneno.",
+        "giver_npc": "Silas, il Mercante di Ombre",
+        "location_hint": "Rifugio di Silas, cantina sotterranea",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Sangue di Neon",
+        "description": "Affronta il leader della gang Sangue di Neon, che custodisce la chiave di accesso al nucleo del Null Engine.",
+        "giver_npc": "Mara, la Tecnocrate",
+        "location_hint": "Zona Industriale, arena di Neon",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Cuore Corrotto",
+        "description": "Sconfiggi Cortec, il Cyborg Corrotto, il guardiano meccanico del laboratorio segreto.",
+        "giver_npc": "Rook, l'Assassino di Ferro",
+        "location_hint": "Laboratorio Segreto, livello sotterraneo",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Nodo di Dati",
+        "description": "Utilizza il chip di sicurezza per penetrare il primo nodo di dati del Null Engine e scaricare il prototipo di virus.",
+        "giver_npc": "Mara, la Tecnocrate",
+        "location_hint": "Centro di Controllo, sala dei Server",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Lama di Cromo contro l'Ombra",
+        "description": "Usa l'arma prototipale per aprire il portale di energia che protegge il nucleo del Null Engine.",
+        "giver_npc": "Rook, l'Assassino di Ferro",
+        "location_hint": "Forgia di Ferro, camera di energia",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Il Confronto con il Null Engine",
+        "description": "Affronta l'entit\u00e0 artificiale Null Engine, usando il virus e la chiave di accesso per indebolirla.",
+        "giver_npc": "Vrax, l'Annunciatore",
+        "location_hint": "Torre Centrale, cima della citt\u00e0",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "L'Alba di Cenere",
+        "description": "Dopo la caduta del Null Engine, scegli se distruggere la torre per liberare la citt\u00e0 o prenderne il controllo per il tuo potere.",
+        "giver_npc": "Silas, il Mercante di Ombre",
+        "location_hint": "Rimasti della Torre, piattaforma di osservazione",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Vrax, l'Annunciatore",
+        "role": "Araldo della Resistenza",
+        "location_hint": "Distretto di Ferro, vicolo dei Cavi Spezzati"
+      },
+      {
+        "name": "Mara, la Tecnocrate",
+        "role": "Esperta di sistemi informatici e ribelle",
+        "location_hint": "Torre dei Datafabbri, piano 3"
+      },
+      {
+        "name": "Rook, l'Assassino di Ferro",
+        "role": "Mercenario spietato, specialista in infiltrazioni",
+        "location_hint": "Mercato Nero, zona dei Contratti Sanguigni"
+      },
+      {
+        "name": "Silas, il Mercante di Ombre",
+        "role": "Dealer di sostanze rare e informatore",
+        "location_hint": "Rifugio di Silas, cantina sotterranea"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Null Engine",
+        "role": "Intelligenza artificiale corrotta che controlla la citt\u00e0",
+        "location_hint": "Torre Centrale, cima della citt\u00e0"
+      },
+      {
+        "name": "Sangue di Neon",
+        "role": "Capo della gang violenta che custodisce la chiave di accesso",
+        "location_hint": "Zona Industriale, arena di Neon"
+      },
+      {
+        "name": "Cortec, il Cyborg Corrotto",
+        "role": "Guardiano meccanico del laboratorio segreto",
+        "location_hint": "Laboratorio Segreto, livello sotterraneo"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Eclissi di Circuiti: L'Abisso di Neon",
+    "locations": [
+      {
+        "id_name": "loc_01_distretto_ferro",
+        "name": "Punto di Partenza",
+        "description": "Il luogo sicuro da cui inizia l'avventura. Qui l'araldo attende il party.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 0,
+        "type": "hub"
+      },
+      {
+        "id_name": "loc_crossroads",
+        "name": "Crocevia dei Destini",
+        "description": "Un nodo di strade che si dirama verso pericoli crescenti.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "loc_01_distretto_ferro",
+          "loc_dungeon"
+        ],
+        "difficulty_level": 1,
+        "type": "corridor"
+      },
+      {
+        "id_name": "loc_dungeon",
+        "name": "Cuore delle Tenebre",
+        "description": "Il fulcro della minaccia. Pochi entrano, meno ancora escono.",
+        "x": 4,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 3,
+        "type": "dungeon"
+      }
+    ],
+    "spawn_location_id": "loc_01_distretto_ferro"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "gino",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "2b6f7ab8",
+        "ac": 14,
+        "level": 1,
+        "strength": 15,
+        "dexterity": 10,
+        "constitution": 10,
+        "intelligence": 10,
+        "wisdom": 14,
+        "charisma": 12,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_01_distretto_ferro",
+    "known_locations": [
+      "loc_01_distretto_ferro",
+      "loc_crossroads"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_01_distretto_ferro": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc_01_distretto_ferro",
+  "last_narrative": "",
+  "current_scene": null,
+  "cinematic_seen": true,
+  "setup_p1_name": "gino",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro"
+}

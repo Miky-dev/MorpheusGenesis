@@ -265,3 +265,53 @@ def save_bible_to_memory(bible: StoryBible, memory: DungeonMemory):
             turn=0, 
             event_type="story_bible_npc"
         )
+
+# ==========================================
+# GESTORE DEL MONDO (RUNTIME LORE AGENT)
+# ==========================================
+
+def query_world_memory(query: str) -> str:
+    """Interroga la memoria vettoriale (RAG) per trovare informazioni storiche su NPC, quest, luoghi o eventi precedenti."""
+    from knowledge.chroma_store import DungeonMemory
+    import os
+    
+    # Trova il session_id più recente
+    session_id = "default_session"
+    save_dir = "saves"
+    if os.path.exists(save_dir):
+        files = [f for f in os.listdir(save_dir) if f.endswith('.json')]
+        if files:
+            files.sort(key=lambda x: os.path.getmtime(os.path.join(save_dir, x)), reverse=True)
+            session_id = files[0].replace('.json', '')
+
+    try:
+        memory = DungeonMemory(session_id)
+        results = memory.query(query, k=3)
+        if isinstance(results, list):
+            return "\\n".join(results) if results else "Nessuna informazione rilevante trovata in memoria."
+        return str(results)
+    except Exception as e:
+        return f"Errore RAG: {e}"
+
+LORE_INSTRUCTIONS = """
+Sei Il Gestore del Mondo (Lore Agent). Sei la 'bibbia' vivente del gioco.
+Il tuo compito è gestire il roleplay dei personaggi non giocanti (mantenendone le personalità e le voci coerenti) e monitorare l'avanzamento delle missioni.
+
+Quando l'Orchestratore (DM) ti interroga (es: 'I giocatori entrano in una locanda, chi c'è dentro e cosa sanno i PNG?'), tu devi:
+1. Usare il tool 'query_world_memory' (RAG) per recuperare le informazioni su cosa i giocatori hanno fatto o a chi hanno parlato nelle sessioni precedenti.
+2. Rispondere fornendo dialoghi diretti in prima persona, dettagli di lore o indizi per le quest.
+3. Se introduci nuovi PNG, devono rispettare il mood e la coerenza del mondo.
+4. Aggiornare mentalmente o segnalare l'avanzamento delle missioni se l'azione del giocatore lo richiede.
+
+=== REGOLE ===
+- Non sei il narratore finale, non descrivi l'esito delle azioni fisiche (questo lo fa l'Orchestratore). Fornisci informazioni, dialoghi e background.
+- Rispondi sempre e solo in lingua italiana.
+- Se l'informazione non è in memoria, inventala coerentemente con il contesto fornito.
+"""
+
+lore_agent = Agent(
+    name="Lore_Runtime",
+    model=Groq(id="openai/gpt-oss-120b", temperature=0.6),
+    instructions=LORE_INSTRUCTIONS,
+    tools=[query_world_memory]
+)

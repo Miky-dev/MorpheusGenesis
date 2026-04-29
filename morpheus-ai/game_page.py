@@ -14,11 +14,10 @@ from engine import (
     get_known_locations_names,
     process_turn,
     ensure_location_population,
-    trigger_ares_if_needed
+    trigger_ares_if_needed,
+    advance_turn  # <-- IMPORTANTE: Aggiunto l'import per passare il turno
 )
 from agents.dm_agent import dm_agent
-from agents.spawner_agent import spawner_agent
-from agents.map_agent import map_generator_agent
 from contracts.schemas import Character, Enemy, StoryScene
 from persistence import save_game_state
 
@@ -157,21 +156,70 @@ def get_morpheus_css():
     .dm-dot:nth-child(3) { animation-delay: 0.4s; }
     .dm-dot:nth-child(4) { animation-delay: 0.6s; }
     .content-spacer { height: 80px; width: 100%; }
+
+    /* --- HUD STATS TOOLTIP --- */
+    .hud-card { position: relative; cursor: pointer; }
+    .hud-tooltip { 
+        visibility: hidden; opacity: 0; position: absolute; bottom: 105%; left: 0; 
+        width: 100%; min-width: 190px; background-color: var(--surface-container-highest); 
+        border: 1px solid rgba(109,221,255,0.4); border-radius: 8px; padding: 12px; 
+        box-shadow: 0 10px 25px rgba(0,0,0,0.8); transition: all 0.2s ease-in-out; 
+        z-index: 1000; transform: translateY(10px); backdrop-filter: blur(10px);
+    }
+    .hud-card:hover .hud-tooltip, .hud-card:active .hud-tooltip { 
+        visibility: visible; opacity: 1; transform: translateY(0); 
+    }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+    .stat-item { 
+        font-family: 'Inter', sans-serif; font-size: 10px; display: flex; 
+        justify-content: space-between; background: rgba(255,255,255,0.03); 
+        padding: 4px 8px; border-radius: 4px; 
+    }
+    .stat-label { color: var(--on-surface-variant); font-weight: 700; }
+    .stat-val { color: var(--primary); font-weight: 900; }
+
     </style>
     """
 
-def draw_hp_bar(current_hp, max_hp, name, is_hero=True):
+def draw_hp_bar(entity, is_hero=True, label_prefix=""):
+    # Accorpiamo il prefisso (es. "TURNO DI:") al nome se esiste
+    nome_mostrato = f"{label_prefix} {entity.name}" if label_prefix else entity.name
+    current_hp = entity.hp
+    max_hp = entity.max_hp
     pct = max(0, current_hp / max_hp)
     fill_class = "hp-bar-fill-green" if pct > 0.6 else "hp-bar-fill-yellow" if pct > 0.3 else "hp-bar-fill-red"
     card_class = "hud-card" if is_hero else "hud-card-inactive"
     name_class = "hud-name" if is_hero else "hud-name-inactive"
-    st.markdown(f"""
-        <div class="{card_class}">
-            <div class="{name_class}">{name.upper()}</div>
-            <div class="hp-bar-track"><div class="{fill_class}" style="width:{pct*100:.0f}%"></div></div>
-            <p class="hp-label">Salute: {current_hp} / {max_hp} HP</p>
-        </div>
-    """, unsafe_allow_html=True)
+
+    # Creiamo il tooltip solo se l'entità ha le statistiche (gli eroi)
+    tooltip_html = ""
+    if is_hero and hasattr(entity, 'strength'):
+        tooltip_html = (
+            f"<div class='hud-tooltip'>"
+            f"<div style=\"font-family:'Space Grotesk', sans-serif; font-size:12px; font-weight:bold; color:var(--primary); margin-bottom:8px; border-bottom:1px solid rgba(109,221,255,0.3); padding-bottom:4px;\">SCHEDA STATISTICHE</div>"
+            f"<div class='stat-grid'>"
+            f"<div class='stat-item'><span class='stat-label'>FOR</span> <span class='stat-val'>{entity.strength}</span></div>"
+            f"<div class='stat-item'><span class='stat-label'>DES</span> <span class='stat-val'>{entity.dexterity}</span></div>"
+            f"<div class='stat-item'><span class='stat-label'>COS</span> <span class='stat-val'>{entity.constitution}</span></div>"
+            f"<div class='stat-item'><span class='stat-label'>INT</span> <span class='stat-val'>{entity.intelligence}</span></div>"
+            f"<div class='stat-item'><span class='stat-label'>SAG</span> <span class='stat-val'>{entity.wisdom}</span></div>"
+            f"<div class='stat-item'><span class='stat-label'>CAR</span> <span class='stat-val'>{entity.charisma}</span></div>"
+            f"</div>"
+            f"<div class='stat-item' style='margin-top:6px; justify-content:center; gap:8px; background: rgba(109,221,255,0.1); border: 1px solid rgba(109,221,255,0.2);'>"
+            f"<span class='stat-label'>CLASSE ARMATURA (CA)</span> <span class='stat-val'>{entity.ac}</span>"
+            f"</div>"
+            f"</div>"
+        )
+
+    st.markdown(
+        f"<div class='{card_class}'>"
+        f"{tooltip_html}"
+        f"<div class='{name_class}'>{nome_mostrato.upper()}</div>"
+        f"<div class='hp-bar-track'><div class='{fill_class}' style='width:{pct*100:.0f}%'></div></div>"
+        f"<p class='hp-label' style='margin-top:4px;'>Salute: {current_hp} / {max_hp} HP</p>"
+        f"</div>",
+        unsafe_allow_html=True
+    )
 
 @st.dialog("🎒 Zaino Personale", width="large")
 def show_inventory_modal(character: Character):
@@ -190,7 +238,6 @@ def show_inventory_modal(character: Character):
         st.markdown(f"#### {icon} {title}")
         for idx, it in enumerate(items):
             with st.container(border=True):
-                # Formattazione Nome: Durabilità (armi/armature) vs Quantità (altro)
                 nome_formattato = f"{it.name}"
                 if it.durability is not None:
                     nome_formattato += f" [Durabilità: {it.durability}%]"
@@ -207,7 +254,6 @@ def show_inventory_modal(character: Character):
                 if stats: st.markdown("**Statistiche:** " + " | ".join(stats))
                 st.caption(f"📖 *{it.lore_snippet}*")
                 
-                # Bottone per usare i consumabili
                 if it.item_type == "consumable" and it.heal_amount:
                     if st.button(f"Usa {it.name}", key=f"use_game_{it.name}_{idx}"):
                         character.hp = min(character.max_hp, character.hp + it.heal_amount)
@@ -229,6 +275,13 @@ def render_game_page():
     st.markdown(f"<div style='display:none'>{get_morpheus_css()}</div>", unsafe_allow_html=True)
     bible = st.session_state.get("story_bible", None)
 
+    # Identifica il giocatore attivo per questo turno
+    active_player = next((p for p in st.session_state.world_state.party if p.id == st.session_state.active_player_id), None)
+    
+    if not active_player:
+        st.error("Errore di caricamento: Nessun giocatore attivo trovato.")
+        return
+
     if bible and not st.session_state.cinematic_seen:
         st.markdown(f"""
             <div style="background: linear-gradient(180deg, #0e0e0f 0%, #0e0e1f 100%); border: 1px solid rgba(109,221,255,0.15); border-radius: 16px; padding: 48px; margin: 20px 0; box-shadow: 0 0 60px rgba(109,221,255,0.06);">
@@ -239,11 +292,64 @@ def render_game_page():
         """, unsafe_allow_html=True)
         col_center = st.columns([1, 2, 1])[1]
         with col_center:
-            if st.button("⚔️ INIZIA L'AVVENTURA", use_container_width=True, type="primary"):
+            if st.button("👁️ APRI GLI OCCHI", use_container_width=True, type="primary"):
                 st.session_state.cinematic_seen = True
                 save_game_state(st.session_state.session_id)
                 st.rerun()
         st.stop()
+
+    # 2. NUOVA FASE: ASSEGNAZIONE STATISTICHE
+    if st.session_state.cinematic_seen and not st.session_state.get("stats_assigned", False):
+        st.markdown("## 🎲 Il Destino prende forma")
+        st.markdown("*Mentre la visione svanisce, prendete coscienza dei vostri corpi...*")
+        
+        # Iteriamo su tutti i membri del party per mostrare i loro tiri
+        for char in st.session_state.world_state.party:
+            with st.container(border=True):
+                st.markdown(f"### {char.name} ({char.char_class})")
+                
+                col1, col2, col3, col4, col5, col6 = st.columns(6)
+                # Funzione per simulare il tiro 4d6 scarta il più basso (classico D&D)
+                def roll_stat():
+                    rolls = sorted([random.randint(1, 6) for _ in range(4)])
+                    return sum(rolls[1:])
+
+                # Se le statistiche sono ancora a 10 (valore di default), mostriamo il bottone per tirare
+                if char.strength == 10 and st.button(f"Tira per {char.name}", key=f"roll_{char.id}"):
+                    char.strength = roll_stat()
+                    char.dexterity = roll_stat()
+                    char.constitution = roll_stat()
+                    char.intelligence = roll_stat()
+                    char.wisdom = roll_stat()
+                    char.charisma = roll_stat()
+                    save_game_state(st.session_state.session_id)
+                    st.rerun()
+                
+                # Se ha tirato, mostriamo i risultati
+                if char.strength != 10:
+                    col1.metric("FORZA", char.strength)
+                    col2.metric("DESTREZZA", char.dexterity)
+                    col3.metric("COSTITUZIONE", char.constitution)
+                    col4.metric("INTELLIGENZA", char.intelligence)
+                    col5.metric("SAGGEZZA", char.wisdom)
+                    col6.metric("CARISMA", char.charisma)
+
+        st.divider()
+        
+        # Controlliamo se TUTTI hanno tirato le statistiche
+        tutti_pronti = all(c.strength != 10 for c in st.session_state.world_state.party)
+        
+        if tutti_pronti:
+            col_start = st.columns([1, 2, 1])[1]
+            with col_start:
+                if st.button("⚔️ INIZIA L'AVVENTURA", use_container_width=True, type="primary"):
+                    st.session_state.stats_assigned = True
+                    save_game_state(st.session_state.session_id)
+                    st.rerun()
+        else:
+            st.info("Tutti i giocatori devono tirare i dadi prima di poter iniziare.")
+            
+        st.stop() # Blocca l'esecuzione finché le statistiche non sono confermate
 
     title_text = bible.title if bible else "Project Morpheus"
     st.markdown(f"""
@@ -276,15 +382,19 @@ def render_game_page():
                 st.json(asdict(st.session_state.world_state))
                 if "story_bible" in st.session_state: st.json(st.session_state.story_bible.model_dump())
 
+    # Modificato: L'HUD ora mostra il giocatore attivo
+    # Modificato: L'HUD ora passa l'oggetto per intero e mostra il tooltip!
     col_hp1, col_hp2 = st.columns([1, 1])
     with col_hp1: 
-        draw_hp_bar(st.session_state.world_state.party[0].hp, st.session_state.world_state.party[0].max_hp, st.session_state.world_state.party[0].name, is_hero=True)
+        # Passiamo l'oggetto active_player intero
+        draw_hp_bar(active_player, is_hero=True, label_prefix="TURNO DI:")
+        
         if st.button("🎒 Inventario", key="hud_inv_btn", use_container_width=True):
-            show_inventory_modal(st.session_state.world_state.party[0])
+            show_inventory_modal(active_player)
     with col_hp2:
         if st.session_state.world_state.active_enemies:
-            draw_hp_bar(st.session_state.world_state.active_enemies[0].hp, st.session_state.world_state.active_enemies[0].max_hp, st.session_state.world_state.active_enemies[0].name, is_hero=False)
-    st.divider()
+            # Passiamo l'oggetto nemico intero
+            draw_hp_bar(st.session_state.world_state.active_enemies[0], is_hero=False)
 
     if not st.session_state.last_narrative and st.session_state.current_scene is None:
         ensure_location_population()
@@ -293,23 +403,33 @@ def render_game_page():
         pop = st.session_state.visited_locations[luogo_attuale.id_name]
         
         if luogo_attuale.difficulty_level == 0:
-            st.success(f"📍 Sei a {luogo_attuale.name}. È un luogo sicuro.")
-            with st.spinner("Apollo sta preparando l'accoglienza..."):
+            st.success(f"📍 Siete a {luogo_attuale.name}. È un luogo sicuro.")
+            with st.spinner("Il Dungeon Master sta descrivendo la scena..."):
                 quest_hint = f"\nHINT NARRATIVO: Un misterioso {bible.herald_npc_name} potrebbe avere informazioni." if bible else ""
-                dm_prompt = f"GIOCATORE: {st.session_state.world_state.party[0].name}.\nLOCATION: {luogo_attuale.name}.\nNPC: {[n.name for n in pop.npcs]}.\n{quest_hint}\nZONA SICURA. Narra arrivo."
+                cinematic_summary = bible.opening_cinematic if bible else "Siete appena giunti sul posto."
+                
+                dm_prompt = f"""
+SEI IL DUNGEON MASTER. È L'INIZIO DELLA CAMPAGNA (TURNO 1).
+GIOCATORE ATTIVO: {active_player.name} ({active_player.char_class}).
+LOCATION: {luogo_attuale.name}.
+NPC PRESENTI: {[n.name for n in pop.npcs]}.
+
+IL TUO COMPITO:
+1. Descrivi l'atmosfera iniziale in cui si trova il party.
+2. Crea un GANCIO NARRATIVO improvviso (es. qualcuno entra ferito, un rumore forte, una richiesta di aiuto) legato a questo indizio: {quest_hint}.
+3. Concludi TASSATIVAMENTE il tuo messaggio chiedendo a {active_player.name}: "Cosa fai?"
+"""
+                
                 scene = safe_agent_run(dm_agent, dm_prompt, schema=StoryScene, context_name=f"DM scene safe mode ({luogo_attuale.name})")
                 if scene: st.session_state.current_scene = scene; st.session_state.last_narrative = scene.narration
         else:
             st.error(f"⚠️ Attenzione: {luogo_attuale.name} (Livello di Pericolo {luogo_attuale.difficulty_level})")
             if not st.session_state.world_state.active_enemies:
-                with st.spinner("Ares sta forgiando una minaccia..."):
-                    enemy_payload = safe_agent_run(spawner_agent, f"Genera nemico liv {luogo_attuale.difficulty_level}", schema=None, context_name="Ares spawn")
-                    if isinstance(enemy_payload, str): enemy_payload = parse_json_response(enemy_payload, "Ares")
-                    if enemy_payload:
-                        st.session_state.world_state.active_enemies = [Enemy(name=enemy_payload.get("name", "Nemico"), hp=enemy_payload["stats"]["hp"], max_hp=enemy_payload["stats"]["hp"], ac=enemy_payload["stats"]["ca"])]
+                trigger_ares_if_needed(st.session_state.current_scene or StoryScene(narration="", choices=[], is_combat=True, allow_free_action=False, enemy_spawn="base"))
             nemico = st.session_state.world_state.active_enemies[0] if st.session_state.world_state.active_enemies else None
             with st.spinner("Apollo descrive il pericolo..."):
-                dm_prompt = f"GIOCATORE: {st.session_state.world_state.party[0].name}.\nNEMICO: {nemico.name if nemico else 'Sconosciuto'}. Narra apparizione."
+                # Modificato: Usa il nome del giocatore attivo nel prompt
+                dm_prompt = f"GIOCATORE: {active_player.name} ({active_player.char_class}).\nNEMICO: {nemico.name if nemico else 'Sconosciuto'}. Narra apparizione."
                 scene = safe_agent_run(dm_agent, dm_prompt, schema=StoryScene, context_name="DM combat scene")
                 if scene: st.session_state.current_scene = scene; st.session_state.last_narrative = scene.narration
         save_game_state(st.session_state.session_id)
@@ -329,24 +449,32 @@ def render_game_page():
     if st.session_state.last_narrative:
         st.markdown(f"<div class='narrative-box'><div class='narrative-gm-label'>Game Master</div><p class='narrative-text'>{st.session_state.last_narrative}</p></div>", unsafe_allow_html=True)
 
-    if st.session_state.world_state.party[0].hp <= 0:
-        st.markdown("<div style='text-align:center; padding:32px; background:rgba(255,113,108,0.05); border:1px solid rgba(255,113,108,0.2); border-radius:16px; margin:16px 0;'><div style='font-family:\"Space Grotesk\",sans-serif; font-size:24px; font-weight:700; color:#ff716c; letter-spacing:-0.02em; margin-bottom:8px;'>☠️ GAME OVER</div><div style='font-family:\"Newsreader\",serif; font-size:14px; color:#767576; font-style:italic;'>La storia si chiude senza di te. Rinasci per tentare una nuova sorte.</div></div>", unsafe_allow_html=True)
+    # Controllo stato di salute globale o del singolo giocatore
+    alive_players = [p for p in st.session_state.world_state.party if p.hp > 0]
+    if not alive_players:
+        st.markdown("<div style='text-align:center; padding:32px; background:rgba(255,113,108,0.05); border:1px solid rgba(255,113,108,0.2); border-radius:16px; margin:16px 0;'><div style='font-family:\"Space Grotesk\",sans-serif; font-size:24px; font-weight:700; color:#ff716c; letter-spacing:-0.02em; margin-bottom:8px;'>☠️ GAME OVER</div><div style='font-family:\"Newsreader\",serif; font-size:14px; color:#767576; font-style:italic;'>Il party è stato sconfitto. La storia si chiude senza di voi.</div></div>", unsafe_allow_html=True)
         col_r = st.columns([1, 2, 1])[1]
         with col_r:
             if st.button("🔄 Nuova Partita", use_container_width=True, type="primary"):
                 st.session_state.clear()
                 st.rerun()
         st.stop()
+    elif active_player.hp <= 0:
+        st.warning(f"☠️ {active_player.name} è a terra privo di sensi e non può agire in questo turno.")
+        if st.button("Passa il turno", use_container_width=True):
+            advance_turn()
+            st.rerun()
+        st.stop()
 
     if st.session_state.world_state.active_enemies:
         st.markdown("<div class='section-label'>⚔️ Modalità Combattimento</div>", unsafe_allow_html=True)
-        hero = st.session_state.world_state.party[0]
         enemy = st.session_state.world_state.active_enemies[0]
         with st.container(border=True):
             for log in st.session_state.world_state.combat_log[-3:]: st.markdown(f"<p style='font-family:Inter,sans-serif; font-size:11px; color:#adaaab; margin:2px 0;'>{log}</p>", unsafe_allow_html=True)
         if st.session_state.pending_combat_move is None:
-            st.markdown(f"<div style='font-family:\"Inter\",sans-serif; font-size:9px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#adaaab; margin:12px 0 8px 0;'>Scegli la tua mossa contro {enemy.name}</div>", unsafe_allow_html=True)
-            moves = CLASS_MOVES.get(hero.char_class, [{"name": "Attacco Base", "damage": "1d8"}])
+            st.markdown(f"<div style='font-family:\"Inter\",sans-serif; font-size:9px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#adaaab; margin:12px 0 8px 0;'>Cosa fa {active_player.name} contro {enemy.name}?</div>", unsafe_allow_html=True)
+            # Modificato: Prende le mosse in base alla classe del giocatore attivo
+            moves = CLASS_MOVES.get(active_player.char_class, [{"name": "Attacco Base", "damage": "1d8"}])
             cols = st.columns(len(moves))
             for i, m in enumerate(moves):
                 if cols[i].button(f"🗡️ {m['name']}", use_container_width=True):
@@ -355,39 +483,33 @@ def render_game_page():
                     st.rerun()
         else:
             mossa = st.session_state.pending_combat_move
-            st.info(f"Hai scelto: **{mossa['name']}**. Preparati a colpire!")
+            st.info(f"{active_player.name} prepara: **{mossa['name']}**. Preparati a colpire!")
             combat_status_placeholder = st.empty()
             if combat_status_placeholder.button("🎲 TIRA IL DADO PER COLPIRE!", use_container_width=True, type="primary"):
-                outcome = resolve_combat_round(mossa['name'], random.randint(1, 20))
+                # Passa l'azione con l'indicazione di chi la fa, se il tuo engine lo supporta (altrimenti il calcolo dovrà sapere chi agisce)
+                outcome = resolve_combat_round(mossa['name'], random.randint(1, 20)) 
                 last_logs = "\n".join(st.session_state.world_state.combat_log[-2:])
                 st.session_state.pending_combat_move = None
+                
                 if outcome == "vittoria":
                     combat_status_placeholder.markdown("""
                         <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid rgba(72,72,73,0.15);">
                             <span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--on-surface-variant);">Game Master</span>
-                            <div class="dm-dot"></div>
-                            <div class="dm-dot"></div>
-                            <div class="dm-dot"></div>
-                            <div class="dm-dot"></div>
                         </div>
                     """, unsafe_allow_html=True)
-                    scene = safe_agent_run(dm_agent, f"Narra vittoria. Log: {last_logs}", schema=StoryScene, context_name="DM Combat End")
+                    scene = safe_agent_run(dm_agent, f"Narra vittoria del party. Colpo finale di {active_player.name}. Log: {last_logs}", schema=StoryScene, context_name="DM Combat End")
                     if scene: st.session_state.last_narrative = scene.narration
                     st.session_state.world_state.active_enemies = []
-                elif outcome == "sconfitta" or st.session_state.world_state.party[0].hp <= 0:
-                    combat_status_placeholder.markdown("""
-                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid rgba(72,72,73,0.15);">
-                            <span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--on-surface-variant);">Game Master</span>
-                            <div class="dm-dot"></div>
-                            <div class="dm-dot"></div>
-                            <div class="dm-dot"></div>
-                            <div class="dm-dot"></div>
-                        </div>
-                    """, unsafe_allow_html=True)
-                    scene = safe_agent_run(dm_agent, f"Narra sconfitta. Log: {last_logs}", schema=StoryScene, context_name="DM Combat Death")
+                elif outcome == "sconfitta" or not [p for p in st.session_state.world_state.party if p.hp > 0]:
+                    # Caso gestito sopra (GAME OVER globale)
+                    scene = safe_agent_run(dm_agent, f"Narra sconfitta letale per il party. Log: {last_logs}", schema=StoryScene, context_name="DM Combat Death")
                     if scene: st.session_state.last_narrative = scene.narration
                     st.session_state.world_state.active_enemies = []
-                else: st.session_state.last_narrative = f"### Resoconto scontro:\n{last_logs}"
+                else: 
+                    st.session_state.last_narrative = f"### Resoconto scontro:\n{last_logs}"
+                
+                # Modificato: A fine turno di combattimento, passa la palla al prossimo
+                advance_turn()
                 save_game_state(st.session_state.session_id)
                 st.rerun()
             if st.button("❌ Cambia mossa", type="secondary"):
@@ -396,9 +518,15 @@ def render_game_page():
                 st.rerun()
     else:
         section_label_placeholder = st.empty()
-        section_label_placeholder.markdown("<div class='section-label'>🧭 Cosa fai?</div>", unsafe_allow_html=True)
+        section_label_placeholder.markdown(f"<div class='section-label'>🧭 Cosa fa {active_player.name}?</div>", unsafe_allow_html=True)
         azione_scelta = None 
         scene = st.session_state.current_scene
+        
+        # --- Aggiunto il pulsante per passare il turno ---
+        if st.button("⏩ Salta il turno", key="skip_turn_btn"):
+             advance_turn()
+             st.rerun()
+
         if scene and scene.choices:
             for option in scene.choices:
                 if st.button(f" {option}", use_container_width=True, key=f"btn_{option}"): azione_scelta = option
@@ -418,13 +546,19 @@ def render_game_page():
             def on_input_change():
                 if st.session_state.free_action_input:
                     st.session_state.azione_scelta_per_turn = st.session_state.free_action_input
-                    st.session_state.free_action_input = "" # Svuota l'input
+                    st.session_state.free_action_input = "" 
 
             with st.container():
                 st.markdown('<div class="pill-input-marker" style="display:none"></div>', unsafe_allow_html=True)
                 col_txt, col_send = st.columns([20, 1], gap="small", vertical_alignment="center")
                 with col_txt:
-                    st.text_input("Azione Libera", placeholder="Oppure fai di testa tua...", label_visibility="collapsed", key="free_action_input", on_change=on_input_change, autocomplete="off")
+                    # Modificato: Personalizza il placeholder con il nome
+                    placeholder_testo = f"Scrivi cosa fa {active_player.name}..."
+                    # Nel turno 1 incoraggiamo i giocatori a descrivere i propri personaggi
+                    if st.session_state.world_state.turn_number == 1:
+                        placeholder_testo = f"Descrivi l'aspetto di {active_player.name} e come reagisce alla scena..."
+                        
+                    st.text_input("Azione Libera", placeholder=placeholder_testo, label_visibility="collapsed", key="free_action_input", on_change=on_input_change, autocomplete="off")
                 with col_send:
                     if st.button("Invia", icon=":material/arrow_upward:", key="send_btn"):
                         if st.session_state.free_action_input:
@@ -433,7 +567,7 @@ def render_game_page():
             
             if st.session_state.azione_scelta_per_turn:
                 azione_scelta = st.session_state.azione_scelta_per_turn
-                st.session_state.azione_scelta_per_turn = None # Reset
+                st.session_state.azione_scelta_per_turn = None 
         else: st.warning("⏳ Devi scegliere una delle opzioni qui sopra.")
         
         st.markdown('<div class="content-spacer"></div>', unsafe_allow_html=True)
@@ -443,19 +577,24 @@ def render_game_page():
             section_label_placeholder.markdown("""
                 <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid rgba(72,72,73,0.15);">
                     <span style="font-family:'Inter',sans-serif; font-size:14px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--on-surface-variant);">Game Master</span>
-                    <div class="dm-dot"></div>
-                    <div class="dm-dot"></div>
-                    <div class="dm-dot"></div>
-                    <div class="dm-dot"></div>
                 </div>
             """, unsafe_allow_html=True)
             if user_input.lower().startswith("congedarsi"): st.session_state.world_state.active_npc_name = None
             elif user_input.lower().startswith("parlare con "): st.session_state.world_state.active_npc_name = user_input[len("parlare con "):].strip()
-            scene = process_turn(user_input)
+            
+            # Formatta l'azione includendo il nome del personaggio così l'AI capisce CHI la sta facendo
+            action_text_with_name = f"[{active_player.name}]: {user_input}"
+            
+            scene = process_turn(action_text_with_name)
+            
             if scene: st.session_state.current_scene = scene; st.session_state.last_narrative = scene.narration; trigger_ares_if_needed(st.session_state.current_scene)
             turn_num = st.session_state.world_state.turn_number
-            st.session_state.memory.add_event(text=f"Turno {turn_num}: {user_input}. Narrazione: {st.session_state.last_narrative}", turn=turn_num, event_type="exploration")
+            st.session_state.memory.add_event(text=f"Turno {turn_num} ({active_player.name}): {user_input}. Narrazione: {st.session_state.last_narrative}", turn=turn_num, event_type="exploration")
+            
             st.session_state.world_state.turn_number += 1
+            
+            # --- Modificato: Passiamo il turno al giocatore successivo prima di ricaricare ---
+            advance_turn()
             save_game_state(st.session_state.session_id)
             st.rerun()
 
