@@ -1,0 +1,293 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Sangue nella Polvere del Crepuscolo",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scoprire la verit\u00e0 dietro il massacro del villaggio di Red Hollow e fermare la setta che alimenta il deserto con il sangue dei viandanti.",
+    "backstory": "Nel cuore di un territorio dimenticato, le terre aride nascondono segreti pi\u00f9 neri della notte pi\u00f9 profonda. Un tempo, Red Hollow era una roccaforte di speranza, ma una serie di omicidi rituali ha trasformato il villaggio in un cimitero di cenere. Una setta segreta, conosciuta come il Concilio dei Cinque, sacrifica i viaggiatori per placare antichi d\u00e8i di sabbia. Il loro potere cresce, e le ombre si allungano sul confine di ogni citt\u00e0. Solo chi osa affrontare la fame, il tradimento e il tradimento stesso pu\u00f2 spezzare il ciclo di violenza.",
+    "opening_cinematic": "Il sole si \u00e8 spento dietro le dune, lasciando il cielo intriso di un rosso che sa di ferro versato. Il vento ulula tra i salti di pietra, portando con s\u00e9 l'eco di passi infranti e grida soffocate. Un cavallo, solo una sagoma nera contro l'orizzonte, si avvicina a Red Hollow, dove le porte sono sfondate e il fumo si alza come un segno di avvertimento. Dentro, le strade di polvere sono disseminate di corpi sventrati, occhi vuoti che fissano un vuoto eterno. Il silenzio \u00e8 rotto solo dal crepitio dei fuochi di bivacco, dove il fuoco arde con la stessa ferocia di un cuore spezzato. L\u00ec, in una taverna avvolta da una coltre di fumo, un uomo dal volto coperto da un cappuccio di pelle scura, Silas Corvo, l'Araldo della Morte, alza il suo bicchiere incrinato e pronuncia: 'Nel sangue di questo deserto, ogni goccia \u00e8 una promessa di tormento. Se il tuo cammino \u00e8 di pietra, sappi che la sabbia non dimentica, e il tuo nome sar\u00e0 scolpito nei crateri del rimorso'. Il suo sguardo attraversa la stanza, catturando l'anima di chiunque osi ascoltare. Fuori, il vento porta con s\u00e9 l'odore di ossa bruciate, mentre la luna, pallida e crudele, osserva dall'alto, testimone di una notte che non conceder\u00e0 tregua. Il giocatore, avvolto nel mantello della notte, sente il peso del suo fucile, il freddo del metallo e la consapevolezza che ogni passo sar\u00e0 una sfida contro il destino stesso. Nessuna via \u00e8 sicura; ogni decisione \u00e8 una lama affilata che pu\u00f2 tagliare la speranza o l'oscurit\u00e0. Il viaggio \u00e8 appena iniziato, ma la terra gi\u00e0 trema sotto il peso di un futuro scritto con il sangue dei condannati.",
+    "herald_npc_name": "Silas Corvo",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il crepuscolo non \u00e8 che l'inizio di una notte senza fine, e tu sei l'ultimo faro che ancora osa brillare.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Silenzio",
+        "description": "Incontra Silas Corvo al bivio di Red Hollow. Ricevi la Chiave di Ferro per aprire il caveau del villaggio.",
+        "giver_npc": "Silas Corvo",
+        "location_hint": "loc_00 - Bivio di Red Hollow (Livello 0)",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Le Ceneri del Passato",
+        "description": "Esplora il caveau di Red Hollow usando la Chiave di Ferro. Recupera il Diario di Jeb, contenente indizi sulla setta.",
+        "giver_npc": "Silas Corvo",
+        "location_hint": "loc_01 - Caveau di Red Hollow (Livello 1)",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Sussurri nella Sabbia",
+        "description": "Consegna il Diario a Mara la Sventurata per decifrare i simboli. Scopri la posizione del rifugio del Mastino Nero.",
+        "giver_npc": "Mara la Sventurata",
+        "location_hint": "loc_02 - Saloon di Dustwind (Livello 1)",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Il Patto del Mastino",
+        "description": "Infiltrati nella fortezza del Mastino Nero. Recupera la Pietra del Giuramento, necessaria per interrompere il rituale.",
+        "giver_npc": "Mara la Sventurata",
+        "location_hint": "loc_03 - Fortezza del Mastino Nero (Livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "L'Ombra del Capitano",
+        "description": "Porta la Pietra del Giuramento allo sceriffo Capitano Brannick. Scopri che \u00e8 corrotto e alleato del Concilio dei Cinque.",
+        "giver_npc": "Capitano Brannick",
+        "location_hint": "loc_04 - Caserma di Iron Creek (Livello 2)",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Fiamme di Tradimento",
+        "description": "Uccidi il Capitano Brannick e recupera il Sigillo di Sangue. Il sigillo apre il portale nella caverna della Strega di Sabbia.",
+        "giver_npc": "Silas Corvo",
+        "location_hint": "loc_05 - Caverna di Black Hollow (Livello 3)",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Cuore della Strega",
+        "description": "Affronta la Strega di Sabbia nella sua dimora di ossa. Ottieni l'Amuleto della Notte, l'ultimo elemento per fermare il Concilio.",
+        "giver_npc": "Silas Corvo",
+        "location_hint": "loc_06 - Rovine di Sandmarsh (Livello 4)",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Patto dei Cinque",
+        "description": "Usa la Pietra, il Sigillo e l'Amuleto per aprire il cerchio sacrificale. Scopri il luogo segreto del Concilio dei Cinque.",
+        "giver_npc": "Mara la Sventurata",
+        "location_hint": "loc_07 - Altare di Sangue (Livello 4)",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "La Notte dei Traditori",
+        "description": "Combatti i membri del Concilio in una battaglia finale. Distruggi il Totem di Sabbia per spezzare il loro potere.",
+        "giver_npc": "Vecchio Jeb",
+        "location_hint": "loc_08 - Tempio del Crepuscolo (Livello 5)",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Redenzione nella Polvere",
+        "description": "Sconfiggi il capo del Concilio, il Signore delle Ceneri. Liberi il deserto dal giuramento di sangue e restaura la speranza a Red Hollow.",
+        "giver_npc": "Silas Corvo",
+        "location_hint": "loc_09 - Cittadella delle Ombre (Livello 5)",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Silas Corvo",
+        "role": "Araldo della Morte, guida spettrale del protagonista",
+        "location_hint": "loc_00 - Bivio di Red Hollow"
+      },
+      {
+        "name": "Mara la Sventurata",
+        "role": "Ex bandita, informante e alleata ambivalente",
+        "location_hint": "loc_02 - Saloon di Dustwind"
+      },
+      {
+        "name": "Capitano Brannick",
+        "role": "Sceriffo corrotto, braccio del Concilio",
+        "location_hint": "loc_04 - Caserma di Iron Creek"
+      },
+      {
+        "name": "Vecchio Jeb",
+        "role": "Saggio del deserto, custode delle antiche leggende",
+        "location_hint": "loc_07 - Altare di Sangue"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Il Mastino Nero",
+        "role": "Capo dei banditi, guardiano della Pietra del Giuramento",
+        "location_hint": "loc_03 - Fortezza del Mastino Nero"
+      },
+      {
+        "name": "La Strega di Sabbia",
+        "role": "Necromante del deserto, custode del Sigillo di Sangue",
+        "location_hint": "loc_06 - Rovine di Sandmarsh"
+      },
+      {
+        "name": "Il Concilio dei Cinque",
+        "role": "Setta segreta, tiranni del sacrificio umano",
+        "location_hint": "loc_08 - Tempio del Crepuscolo"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Sangue nella Polvere del Crepuscolo",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Punto di Partenza",
+        "description": "Il luogo sicuro da cui inizia l'avventura. Qui l'araldo attende il party.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 0,
+        "type": "hub"
+      },
+      {
+        "id_name": "loc_crossroads",
+        "name": "Crocevia dei Destini",
+        "description": "Un nodo di strade che si dirama verso pericoli crescenti.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "loc_00",
+          "loc_dungeon"
+        ],
+        "difficulty_level": 1,
+        "type": "corridor"
+      },
+      {
+        "id_name": "loc_dungeon",
+        "name": "Cuore delle Tenebre",
+        "description": "Il fulcro della minaccia. Pochi entrano, meno ancora escono.",
+        "x": 4,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 3,
+        "type": "dungeon"
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Western",
+    "party": [
+      {
+        "name": "FiglioDiButtanone",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "pg_0",
+        "ac": 14,
+        "level": 1,
+        "strength": 11,
+        "dexterity": 12,
+        "constitution": 13,
+        "intelligence": 14,
+        "wisdom": 8,
+        "charisma": 9,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      },
+      {
+        "name": "lyra",
+        "char_class": "Mago",
+        "hp": 16,
+        "max_hp": 16,
+        "id": "pg_1",
+        "ac": 10,
+        "level": 1,
+        "strength": 8,
+        "dexterity": 16,
+        "constitution": 14,
+        "intelligence": 10,
+        "wisdom": 13,
+        "charisma": 15,
+        "inventory": [
+          {
+            "name": "Cristallo Risonante",
+            "item_type": "key_item",
+            "rarity": "Non Comune",
+            "description": "Un frammento che pulsa di energia.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Vibra quando c'\u00e8 magia vicina.",
+            "quantity": 1,
+            "durability": null
+          },
+          {
+            "name": "Bastone Nodoso",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Un bastone di legno vecchio ma robusto.",
+            "attack_bonus": 1,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Apparteneva a uno stregone novizio.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_crossroads",
+      "loc_00"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "",
+  "current_scene": null,
+  "cinematic_seen": true,
+  "setup_p1_name": "FiglioDiButtanone",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Western",
+  "setup_mood": "Oscuro"
+}

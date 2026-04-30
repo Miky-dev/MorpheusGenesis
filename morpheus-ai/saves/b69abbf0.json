@@ -1,0 +1,260 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Sangue sulla Polvere di Sabbia",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scoprire e distruggere il cuore corrotto del Concilio dei Cinque, impedendo che il loro patto di sangue avvolga l'intera frontiera.",
+    "backstory": "Nel 1879, la citt\u00e0 di Blackridge \u00e8 diventata un crocevia di peccati, dove i fuochi dei fuochi d'artificio si mescolano al fumo dei fuochi di bivacco. Un'alleanza segreta, il Concilio dei Cinque, ha stipulato un patto con forze oscure per dominare la terra arida. Gli abitanti vivono sotto il giogo di un'ombra che si allunga su ogni sentiero, e la giustizia \u00e8 solo un'eco spezzata da spari e tradimenti.",
+    "opening_cinematic": "Le ombre si allungano sulla distesa di sabbia rossa, dove il sole brucia come una lama di ferro. Il vento porta con s\u00e9 l'odore di sudore, di pistole calde e di sangue versato. Nella notte pi\u00f9 nera, un uomo avvolto in un cappotto logoro, Silas Graves, si erge davanti al saloon di Blackridge, il suo sguardo \u00e8 un abisso di cenere. 'Questa terra \u00e8 stata macchiata da un patto di carne e fuoco', sussurra, la sua voce \u00e8 un ruggito sommesso che vibra tra le travi di legno marcito. Le porte del saloon scricchiolano, rivelando volti segnati dalla fame e dalla paura. Una melodia di pianoforte spezzata si mescola al rumore dei passi di cavalli stanchi. Il silenzio \u00e8 rotto da un colpo di pistola, un eco che risuona come un avvertimento. Il cielo si tinge di rosso, e la pioggia di sabbia cade come spettri. Silas alza la mano, il suo dito indica l'orizzonte dove il Concilio dei Cinque erige la sua roccaforte di ferro. 'Il sangue pagher\u00e0 il suo debito', proclama, e la sua ombra si fonde con quella della citt\u00e0, pronta a inghiottire chiunque osi sfidare il destino. La notte \u00e8 giovane, ma la morte \u00e8 gi\u00e0 al suo fianco, pronta a reclamare ogni anima perduta nella polvere.\n",
+    "herald_npc_name": "Silas Graves",
+    "herald_location_id": "loc_01",
+    "herald_npc_reveal": "'Il vento porta il profumo del tradimento, ma \u00e8 il fuoco della vendetta che brucia dentro di me', dichiara Silas con voce di pietra.",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Saloon",
+        "description": "Il viaggio inizia al Saloon di Blackridge, dove Silas Graves ordina al giocatore di recuperare il vecchio sigillo della citt\u00e0, simbolo di speranza ormai corrotto. Pericolo livello 0.",
+        "giver_npc": "Silas Graves",
+        "location_hint": "loc_01 - Saloon di Blackridge",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Segreto di Mara",
+        "description": "Mara Whitlock rivela che il sigillo \u00e8 stato rubato da un gruppo di banditi guidati dal Serpente di Ferro. Recuperare il sigillo dalla loro caverna. Pericolo livello 1.",
+        "giver_npc": "Mara Whitlock",
+        "location_hint": "loc_02 - Caverna del Serpente",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Scontro nella Caverna",
+        "description": "Affrontare il Serpente di Ferro e i suoi scagnozzi, recuperare il sigillo e ottenere una mappa del Concilio. Pericolo livello 2.",
+        "giver_npc": "Mara Whitlock",
+        "location_hint": "loc_02 - Caverna del Serpente",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Il Patto del Prete",
+        "description": "Father Corvus confessa di aver assistito a un rituale oscuro al vecchio cimitero. Recuperare il Libro delle Ombre. Pericolo livello 2.",
+        "giver_npc": "Father Corvus",
+        "location_hint": "loc_03 - Cimitero di Blackridge",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Rituale Interrotto",
+        "description": "Interrompere il rituale di corruzione, bruciare il Libro delle Ombre e ottenere l'indizio della chiave d'argento. Pericolo livello 3.",
+        "giver_npc": "Father Corvus",
+        "location_hint": "loc_03 - Cimitero di Blackridge",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Caccia al Tagliatore",
+        "description": "Ezekiel 'Eke' Black offre una ricompensa per la testa del Serpente di Ferro. Portare la testa al Concilio per indebolirlo. Pericolo livello 3.",
+        "giver_npc": "Ezekiel 'Eke' Black",
+        "location_hint": "loc_04 - Valle delle Ossa",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "La Chiave d'Argento",
+        "description": "Usare la chiave d'argento per aprire la porta segreta della fortezza del Concilio. Pericolo livello 4.",
+        "giver_npc": "Silas Graves",
+        "location_hint": "loc_05 - Porta Segreta della Fortezza",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Labirinto di Ferro",
+        "description": "Esplorare il labirinto interno della fortezza, evitando trappole mortali e guardie corrotte. Pericolo livello 4.",
+        "giver_npc": "Silas Graves",
+        "location_hint": "loc_06 - Labirinto di Ferro",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Il Confronto con la Signora delle Ombre",
+        "description": "Affrontare la Signora delle Ombre, custode dei segreti del Concilio, per ottenere la chiave finale. Pericolo livello 5.",
+        "giver_npc": "Silas Graves",
+        "location_hint": "loc_07 - Sala del Trono Oscura",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Dissolvi il Patto",
+        "description": "Distruggere il cuore di fuoco del Concilio dei Cinque, spezzando il patto di sangue e liberare la frontiera dalla loro tirannia. Pericolo livello 5.",
+        "giver_npc": "Silas Graves",
+        "location_hint": "loc_08 - Altare del Fuoco",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Silas Graves",
+        "role": "Araldo della Morte",
+        "location_hint": "loc_01 - Saloon di Blackridge"
+      },
+      {
+        "name": "Mara Whitlock",
+        "role": "Informante e sopravvissuta",
+        "location_hint": "loc_02 - Caverna del Serpente"
+      },
+      {
+        "name": "Ezekiel 'Eke' Black",
+        "role": "Cacciatore di taglie spietato",
+        "location_hint": "loc_04 - Valle delle Ossa"
+      },
+      {
+        "name": "Father Corvus",
+        "role": "Prete corrotto",
+        "location_hint": "loc_03 - Cimitero di Blackridge"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Il Serpente di Ferro",
+        "role": "Capo dei banditi",
+        "location_hint": "loc_02 - Caverna del Serpente"
+      },
+      {
+        "name": "La Signora delle Ombre",
+        "role": "Strega del Concilio",
+        "location_hint": "loc_07 - Sala del Trono Oscura"
+      },
+      {
+        "name": "Il Concilio dei Cinque",
+        "role": "Entit\u00e0 antagonista suprema",
+        "location_hint": "loc_08 - Altare del Fuoco"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Sangue sulla Polvere di Sabbia",
+    "locations": [
+      {
+        "id_name": "loc_01",
+        "name": "Punto di Partenza",
+        "description": "Il luogo sicuro da cui inizia l'avventura. Qui l'araldo attende il party.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 0,
+        "type": "hub"
+      },
+      {
+        "id_name": "loc_crossroads",
+        "name": "Crocevia dei Destini",
+        "description": "Un nodo di strade che si dirama verso pericoli crescenti.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "loc_01",
+          "loc_dungeon"
+        ],
+        "difficulty_level": 1,
+        "type": "corridor"
+      },
+      {
+        "id_name": "loc_dungeon",
+        "name": "Cuore delle Tenebre",
+        "description": "Il fulcro della minaccia. Pochi entrano, meno ancora escono.",
+        "x": 4,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 3,
+        "type": "dungeon"
+      }
+    ],
+    "spawn_location_id": "loc_01"
+  },
+  "world_state": {
+    "theme": "Western",
+    "party": [
+      {
+        "name": "Avventuriero",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "pg_0",
+        "ac": 14,
+        "level": 1,
+        "strength": 17,
+        "dexterity": 17,
+        "constitution": 12,
+        "intelligence": 14,
+        "wisdom": 15,
+        "charisma": 12,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_01",
+    "known_locations": [
+      "loc_01",
+      "loc_crossroads"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_01": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc_01",
+  "last_narrative": "Il sole \u00e8 un coltello di ferro che fende il cielo di un rosso acido, spezzando la quiete del deserto con un ruggito di sabbia che si solleva in una tempesta di granuli dorati. Le dune si piegano come onde di sangue, e il profumo di sudore, di metallo e di cera di lampada si mescola a quello del deserto arido. Un vento secco porta con s\u00e9 l'eco di passi di cavalli e il crepitio di fuochi lontani, mentre sotto i piedi il terreno criccheggia di sabbia fresca. Il sole, ormai al tramonto, proietta lunghe ombre che si allungano sulle rovine di una vecchia stazione ferroviaria, dove una vecchia lampada a gas fatica a mantenere la luce. In questo angolo di mondo, il party si \u00e8 radunato: l'Avventuriero (Guerriero) \u00e8 l'unico presente, in attesa di un araldo che porta notizie di una missione che potrebbe cambiare il destino del deserto. Mentre l'ombra si allunga, un rumore improvviso rompe la quiete: un suono metallico, come una pistola che rimbalza su una ruota di ferro, si diffonde dalla direzione del saloon di Blackridge. L'aria si carica di tensione, e un silenzio carico di attesa si posa sul deserto. L'araldo, vestito di pelle e con una cicatrice che corre lungo la guancia, siede su un tronco di legno, fissando l'orizzonte con uno sguardo che sembra leggere l'anima dei passanti. Il suo sguardo si volta verso di te, e in un tono che sembra un sussurro di vento, ti chiede: \"Cosa fai?\"\n",
+  "current_scene": {
+    "narration": "Il sole \u00e8 un coltello di ferro che fende il cielo di un rosso acido, spezzando la quiete del deserto con un ruggito di sabbia che si solleva in una tempesta di granuli dorati. Le dune si piegano come onde di sangue, e il profumo di sudore, di metallo e di cera di lampada si mescola a quello del deserto arido. Un vento secco porta con s\u00e9 l'eco di passi di cavalli e il crepitio di fuochi lontani, mentre sotto i piedi il terreno criccheggia di sabbia fresca. Il sole, ormai al tramonto, proietta lunghe ombre che si allungano sulle rovine di una vecchia stazione ferroviaria, dove una vecchia lampada a gas fatica a mantenere la luce. In questo angolo di mondo, il party si \u00e8 radunato: l'Avventuriero (Guerriero) \u00e8 l'unico presente, in attesa di un araldo che porta notizie di una missione che potrebbe cambiare il destino del deserto. Mentre l'ombra si allunga, un rumore improvviso rompe la quiete: un suono metallico, come una pistola che rimbalza su una ruota di ferro, si diffonde dalla direzione del saloon di Blackridge. L'aria si carica di tensione, e un silenzio carico di attesa si posa sul deserto. L'araldo, vestito di pelle e con una cicatrice che corre lungo la guancia, siede su un tronco di legno, fissando l'orizzonte con uno sguardo che sembra leggere l'anima dei passanti. Il suo sguardo si volta verso di te, e in un tono che sembra un sussurro di vento, ti chiede: \"Cosa fai?\"\n",
+    "choices": [
+      "Esplora la zona",
+      "Aspetta per l'araldo"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Western",
+  "setup_mood": "Oscuro",
+  "campaign_name": "dsasdsad"
+}

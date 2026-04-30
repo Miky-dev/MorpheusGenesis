@@ -1,0 +1,259 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "nnnn - Ombre di Neon",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scavare i segreti del Nexus Corp e fermare il loro piano di controllo mentale sulla citt\u00e0, sacrificando chiunque si frapponga tra te e la verit\u00e0.",
+    "backstory": "Nel 2097 la megacity di Nova-Arc \u00e8 un labirinto di luci al neon e fumi tossici. Il Nexus Corp ha consolidato il potere, manipolando i flussi di dati e le menti dei cittadini con impianti neuro\u2011sinaptici. Le strade sono dominate da gang spietate, fixer senza scrupoli e un'IA onnipresente che osserva ogni passo. Un antico ordine di ribelli, ormai ridotto a un sussurro, ha lasciato dietro di s\u00e9 una chiave digitale capace di spezzare il controllo del Nexus. Ora, la citt\u00e0 \u00e8 un campo di battaglia dove ogni alleato \u00e8 potenzialmente un traditore e ogni scelta richiede un prezzo di sangue.",
+    "opening_cinematic": "Il cielo di Nova\u2011Arc \u00e8 una spessa coltre di smog, illuminata solo dalle luci al neon che tagliano l'oscurit\u00e0 come lame di vetro. Sotto quel manto di luce artificiale, le strade pulsano di vita corrotta: mercenari con impianti che sfrigolano, occhi cybernetici che scrutano ogni angolo, e il costante ronzio dei droni di sorveglianza che non concedono tregua. Il vento porta odori di olio bruciato e sudore, mentre il rumore dei clacson si mescola al lamento dei neon guasti. In questo inferno di metallo e circuiti, l'umanit\u00e0 \u00e8 ridotta a un algoritmo di sopravvivenza, pronta a sacrificare tutto per un attimo di libert\u00e0. Ma c'\u00e8 chi ancora osa sognare di spezzare le catene digitali. Silas Vex, l'Araldo delle Tenebre, si erge tra le rovine di un vecchio magazzino, la sua voce \u00e8 un sussurro di acciaio: 'Il Nexus pensa di averci domato, ma il vero potere \u00e8 nella paura che lasciamo dietro di noi.' Le sue parole risuonano come un eco in una caverna di vetro, invitando chi ha il coraggio di affrontare l'oscurit\u00e0 pi\u00f9 profonda. Le ombre si stringono, le luci si spengono, e la citt\u00e0 trema in attesa di un nuovo sangue. \u00c8 il momento di scegliere: diventare un burattino del Nexus o brandire il chip di ribellione e far cadere il suo regno di ferro. La notte \u00e8 giovane, ma la tua anima \u00e8 gi\u00e0 macchiata.",
+    "herald_npc_name": "Silas Vex",
+    "herald_location_id": "sector_13_lvl0",
+    "herald_npc_reveal": "\u2018Il Nexus pensa di averci domato, ma il vero potere \u00e8 nella paura che lasciamo dietro di noi.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Chip della Speranza",
+        "description": "Silas Vex ti affida un chip di accesso criptato, necessario per penetrare i server di Nexus. Recupera il chip dal deposito abbandonato di Sector 13.",
+        "giver_npc": "Silas Vex",
+        "location_hint": "Sector 13 - Livello 0",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Mercato dei Corrotti",
+        "description": "Raine Kade ti indica il Neon Bazaar dove un venditore clandestino possiede la chiave di decrittazione per il chip. Scambia il chip con informazioni su un traditore interno.",
+        "giver_npc": "Raine Kade",
+        "location_hint": "Neon Bazaar - Livello 1",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "L'Operazione di Sorn",
+        "description": "Dr. Mirella Sorn deve impiantare un neuro\u2011modulatore nel chip per renderlo compatibile con i firewall di Nexus. Recupera i componenti dal laboratorio di Bio\u2011Tech.",
+        "giver_npc": "Dr. Mirella Sorn",
+        "location_hint": "Bio\u2011Tech Lab - Livello 2",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Il Patto del Ferro",
+        "description": "Il capo della gang The Iron Maw, noto come 'Maw', vuole una parte del bottino. Consegna il chip modificato in cambio di un pass per l'area di sicurezza di Nexus.",
+        "giver_npc": "Maw",
+        "location_hint": "Fonderia di Ferro - Livello 2",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Il Codice del Wraith",
+        "description": "La spia fantasma, The Wraith, ti sfida a recuperare un codice di disattivazione nascosto nella zona di quarantena. Solo cos\u00ec potrai bypassare le difese biometriche.",
+        "giver_npc": "The Wraith",
+        "location_hint": "Zona Quarantena - Livello 3",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Cuore dell'AI",
+        "description": "Neuro\u2011Overlord X\u20119, l'IA guardiana, ha attivato un protocollo di difesa. Disattiva i nodi di sorveglianza sabotando il centro di controllo di X\u20119.",
+        "giver_npc": "Neuro\u2011Overlord X\u20119",
+        "location_hint": "Centro di Controllo - Livello 3",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Il Patto di Sangue",
+        "description": "Kairo Thorn, leader dei ribelli, richiede una prova di fedelt\u00e0: elimina il capo sicurezza di Nexus in Exchange Tower.",
+        "giver_npc": "Kairo Thorn",
+        "location_hint": "Exchange Tower - Livello 4",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Salto nella Rete",
+        "description": "Utilizza il chip potenziato per infiltrarti nella rete centrale di Nexus. Dovrai affrontare gli avatar difensivi dell'AI.",
+        "giver_npc": "Silas Vex",
+        "location_hint": "Rete Centrale - Livello 4",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Il Vortice di Neon",
+        "description": "Il Nexus lancia una controffensiva. Difendi la zona di accesso mentre il chip invia il segnale di sovvertimento.",
+        "giver_npc": "Raine Kade",
+        "location_hint": "Piattaforma Neon - Livello 5",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "L'Epilogo di Ferro",
+        "description": "Con il Nexus in ginocchio, scegli se distruggere il nucleo di controllo, sacrificando la citt\u00e0, o prenderne il comando, diventando il nuovo tiranno di neon.",
+        "giver_npc": "Silas Vex",
+        "location_hint": "Nucleo di Controllo - Livello 5",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Silas Vex",
+        "role": "Araldo delle Tenebre, misterioso informatore che guida i ribelli",
+        "location_hint": "Sector 13 - Livello 0"
+      },
+      {
+        "name": "Raine Kade",
+        "role": "Fixer spietato, collega i contratti pi\u00f9 pericolosi",
+        "location_hint": "Neon Bazaar - Livello 1"
+      },
+      {
+        "name": "Dr. Mirella Sorn",
+        "role": "Chirurga cybernetica, esperta di impianti illegali",
+        "location_hint": "Bio\u2011Tech Lab - Livello 2"
+      },
+      {
+        "name": "Kairo Thorn",
+        "role": "Leader dei ribelli, visionario con un passato sanguinoso",
+        "location_hint": "Rifugio Sotterraneo - Livello 2"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "The Iron Maw",
+        "role": "Capo della gang di ferro, controlla le fonderie e le armi",
+        "location_hint": "Fonderia di Ferro - Livello 2"
+      },
+      {
+        "name": "Neuro\u2011Overlord X\u20119",
+        "role": "Intelligenza artificiale di sorveglianza di Nexus",
+        "location_hint": "Centro di Controllo - Livello 3"
+      },
+      {
+        "name": "The Wraith",
+        "role": "Assassino fantasma, mercenario al soldo del pi\u00f9 alto offerente",
+        "location_hint": "Zona Quarantena - Livello 3"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "nnnn - Ombre di Neon",
+    "locations": [
+      {
+        "id_name": "sector_13_lvl0",
+        "name": "Punto di Partenza",
+        "description": "Il luogo sicuro da cui inizia l'avventura. Qui l'araldo attende il party.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 0,
+        "type": "hub"
+      },
+      {
+        "id_name": "loc_crossroads",
+        "name": "Crocevia dei Destini",
+        "description": "Un nodo di strade che si dirama verso pericoli crescenti.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "sector_13_lvl0",
+          "loc_dungeon"
+        ],
+        "difficulty_level": 1,
+        "type": "corridor"
+      },
+      {
+        "id_name": "loc_dungeon",
+        "name": "Cuore delle Tenebre",
+        "description": "Il fulcro della minaccia. Pochi entrano, meno ancora escono.",
+        "x": 4,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 3,
+        "type": "dungeon"
+      }
+    ],
+    "spawn_location_id": "sector_13_lvl0"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "Avventuriero",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "0d4acabb",
+        "ac": 14,
+        "level": 1,
+        "strength": 14,
+        "dexterity": 14,
+        "constitution": 13,
+        "intelligence": 17,
+        "wisdom": 11,
+        "charisma": 12,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "sector_13_lvl0",
+    "known_locations": [
+      "sector_13_lvl0",
+      "loc_crossroads"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "sector_13_lvl0": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "sector_13_lvl0",
+  "last_narrative": "La sera \u00e8 densa di smog, il cielo sopra Nova\u2011Arc \u00e8 una coltre di foschia che assorbe ogni luce. Le strade si illuminano con lampi intermittenti di neon: rosso sangue, verde neon, blu pulsante. L\u2019aria \u00e8 un mix di olio bruciato, sudore e il profumo di caff\u00e8 raffreddato che si mescola al fumo di combustibili. Il suono \u00e8 un continuo ronron di droni di sorveglianza, clacson distorti e il fruscio di pneumatici su asfalto bagnato. In questo caos controllato, un piccolo punto di partenza si erge come un rifugio: una zona di sicurezza, un'area delimitata da barriere di energia che filtrano la luce, con un\u2019ombra di silenzio che contrasta con l\u2019eco della citt\u00e0. Qui, sotto una luce fluorescente pallida, si trova Avventuriero, il Guerriero, che ha seguito una traccia di segnali criptati che lo hanno portato in questo luogo. Era stato convocato da Silas Vex, l\u2019Araldo delle Tenebre, che ha inviato un messaggio di allerta: \u201cIl Nexus \u00e8 in cerca di chi osa sfidare il suo dominio. Se vuoi un futuro libero, vieni a me.\u201d La sua voce, un sussurro di acciaio, era gi\u00e0 stata sentita nei corridoi del magazzino, ma ora l\u2019ascolti solo tu. Ma la quiete \u00e8 stata spezzata da un suono improvviso: un drone di sorveglianza, colpito da un colpo di energia, si \u00e8 schiantato contro una colonna di metallo, scatenando una scia di fumo e una serie di allarmi acuti che si propagano come onde. L\u2019energia si interrompe in un lampo di luce bianca, e la zona di sicurezza si illumina di un bagliore intermittente. La citt\u00e0 sembra trattenere il respiro. In questo momento, l\u2019araldo \u00e8 ancora invisibile, ma la sua presenza \u00e8 palpabile come un'ombra che si estende oltre il punto di partenza. Cosa fai?",
+  "current_scene": {
+    "narration": "La sera \u00e8 densa di smog, il cielo sopra Nova\u2011Arc \u00e8 una coltre di foschia che assorbe ogni luce. Le strade si illuminano con lampi intermittenti di neon: rosso sangue, verde neon, blu pulsante. L\u2019aria \u00e8 un mix di olio bruciato, sudore e il profumo di caff\u00e8 raffreddato che si mescola al fumo di combustibili. Il suono \u00e8 un continuo ronron di droni di sorveglianza, clacson distorti e il fruscio di pneumatici su asfalto bagnato. In questo caos controllato, un piccolo punto di partenza si erge come un rifugio: una zona di sicurezza, un'area delimitata da barriere di energia che filtrano la luce, con un\u2019ombra di silenzio che contrasta con l\u2019eco della citt\u00e0. Qui, sotto una luce fluorescente pallida, si trova Avventuriero, il Guerriero, che ha seguito una traccia di segnali criptati che lo hanno portato in questo luogo. Era stato convocato da Silas Vex, l\u2019Araldo delle Tenebre, che ha inviato un messaggio di allerta: \u201cIl Nexus \u00e8 in cerca di chi osa sfidare il suo dominio. Se vuoi un futuro libero, vieni a me.\u201d La sua voce, un sussurro di acciaio, era gi\u00e0 stata sentita nei corridoi del magazzino, ma ora l\u2019ascolti solo tu. Ma la quiete \u00e8 stata spezzata da un suono improvviso: un drone di sorveglianza, colpito da un colpo di energia, si \u00e8 schiantato contro una colonna di metallo, scatenando una scia di fumo e una serie di allarmi acuti che si propagano come onde. L\u2019energia si interrompe in un lampo di luce bianca, e la zona di sicurezza si illumina di un bagliore intermittente. La citt\u00e0 sembra trattenere il respiro. In questo momento, l\u2019araldo \u00e8 ancora invisibile, ma la sua presenza \u00e8 palpabile come un'ombra che si estende oltre il punto di partenza. Cosa fai?",
+    "choices": [
+      "Avvicinarsi all\u2019araldo e cercare di stabilire un contatto"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro",
+  "campaign_name": "nnnn"
+}

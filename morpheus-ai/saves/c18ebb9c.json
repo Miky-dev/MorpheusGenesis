@@ -1,0 +1,250 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Echi di Neon e Sangue",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scoprire la verit\u00e0 dietro il progetto 'Nexus' e far crollare la corporazione Axiom, responsabile del veleno che avvelena le vene della citt\u00e0.",
+    "backstory": "Nel 2147, la metropoli di Nova-Arcadia \u00e8 avvolta da piogge acide e luci al neon che mascherano la sua rovina. La megacorporazione Axiom ha instaurato un regime di sorveglianza totale, impiantando il progetto 'Nexus' nei cervelli dei cittadini per controllarne i pensieri. Un piccolo gruppo di ribelli, guidato da un enigmatico araldo, si erge contro l'oscurit\u00e0, ma ogni passo verso la verit\u00e0 \u00e8 una lama che si infila nel cuore della citt\u00e0.",
+    "opening_cinematic": "Nel silenzio rotto solo dal ronzio dei droni, le strade di Nova-Arcadia si allungano come vene di ferro, pulsanti di luce nera. Le piogge acide cadono, scolpendo fessure nei vetri infranti dei grattacieli, mentre le ombre dei cittadini si aggirano, occhi vuoti dietro impianti di realt\u00e0 aumentata. Tu, un'anima persa tra i circuiti, senti il peso di un mondo che ti ha tradito, il sapore metallico del futuro che ti brucia la gola. Un messaggio si accende sul tuo visore: 'Il sangue di neon scorre nelle nostre vene, ma il vero potere \u00e8 nella verit\u00e0 che si nasconde sotto le macerie'.\nMordecai Vrax, l'Araldo, appare tra le fiamme di un cartello rotto, la sua voce \u00e8 un sussurro di ferro: 'Nessuna luce pu\u00f2 nascondere ci\u00f2 che \u00e8 gi\u00e0 morto. Se vuoi sopravvivere, devi diventare l'oscurit\u00e0 stessa'.\nMentre le sirene della citt\u00e0 cantano la loro sinfonia di terrore, le tue mani tremano sul grip del tuo fucile, pronto a spargere sangue neon per strappare il velo di menzogne. Ogni passo ti avvicina a un abisso senza fine, ogni respiro \u00e8 un'eco di disperazione. Il futuro \u00e8 una lama affilata, pronta a tagliare la carne della tua speranza. E cos\u00ec, nel cuore della pioggia di acciaio, inizia la tua caduta verso la redenzione o l'annientamento.",
+    "herald_npc_name": "Mordecai Vrax",
+    "herald_location_id": "loc_01",
+    "herald_npc_reveal": "Il mondo \u00e8 un cimitero di sogni; noi siamo i necromanti che li risvegliano con il fuoco delle nostre armi.",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Neon",
+        "description": "Incontra l'Araldo nella zona industriale di Neon Spire per ricevere il primo incarico: recuperare un chip di accesso rubato.",
+        "giver_npc": "Mordecai Vrax",
+        "location_hint": "Neon Spire, zona industriale",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Codice di Silvia",
+        "description": "Porta il chip a Silvia Kade, la hacker clandestina, affinch\u00e9 decifri le coordinate del server Axiom.",
+        "giver_npc": "Silvia Kade",
+        "location_hint": "Rifugio sotterraneo di ByteVault",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Mercato di Ombre",
+        "description": "Scambia le informazioni decifrate con Rook Drell per ottenere un prototipo di arma EMP.",
+        "giver_npc": "Rook 'Il Mercante' Drell",
+        "location_hint": "Mercato nero di Scuria",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Scienza Controversa",
+        "description": "Consegna l'EMP al Dr. Lysander Corvi e chiedi il suo aiuto per sabotare il nodo di controllo di Nexus.",
+        "giver_npc": "Dr. Lysander Corvi",
+        "location_hint": "Laboratorio abbandonato di Helix",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Infiltrazione nella Gabbia",
+        "description": "Usa l'EMP per penetrare la zona di sicurezza di Axiom e piazzare un virus di destabilizzazione.",
+        "giver_npc": "Mordecai Vrax",
+        "location_hint": "Complesso di sicurezza di Axiom, livello 1",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Golem di Cromo",
+        "description": "Affronta il Golem di Cromo, guardiano meccanico, per accedere al cuore del server Nexus.",
+        "giver_npc": "Rook 'Il Mercante' Drell",
+        "location_hint": "Sala del server, livello 2",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Dati Sanguigni",
+        "description": "Estrai i dati sensibili dal server, ma il processo attiva una trappola di sicurezza.",
+        "giver_npc": "Silvia Kade",
+        "location_hint": "Nexus Core, livello 3",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Il Sovrintendente Nero",
+        "description": "Sconfiggi il Sovrintendente Nero, l'elite della sicurezza di Axiom, per liberare il flusso di informazioni.",
+        "giver_npc": "Mordecai Vrax",
+        "location_hint": "Fortezza di controllo, livello 4",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Fuga nella Pioggia",
+        "description": "Fuggi dal complesso con i dati, attraversando la citt\u00e0 in piena tempesta acida, evitando droni di sorveglianza.",
+        "giver_npc": "Dr. Lysander Corvi",
+        "location_hint": "Uscita di emergenza di Axiom, livello 5",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Il Direttore dell'Ombra",
+        "description": "Confronta il Direttore dell'Ombra, capo supremo di Axiom, nella sua torre sopra le nuvole, e distruggi il progetto Nexus una volta per tutte.",
+        "giver_npc": "Mordecai Vrax",
+        "location_hint": "Torre di Axiom, cima della citt\u00e0",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Mordecai Vrax",
+        "role": "Araldo dei Ribelli",
+        "location_hint": "Neon Spire, zona industriale"
+      },
+      {
+        "name": "Silvia Kade",
+        "role": "Hacker clandestina",
+        "location_hint": "Rifugio sotterraneo di ByteVault"
+      },
+      {
+        "name": "Rook 'Il Mercante' Drell",
+        "role": "Contrabbandiere di armi high-tech",
+        "location_hint": "Mercato nero di Scuria"
+      },
+      {
+        "name": "Dr. Lysander Corvi",
+        "role": "Ex-scienziato di Axiom, traditore",
+        "location_hint": "Laboratorio abbandonato di Helix"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Golem di Cromo",
+        "role": "Guardiano meccanico di Nexus",
+        "location_hint": "Sala del server, livello 2"
+      },
+      {
+        "name": "Sovrintendente Nero",
+        "role": "Comandante elite di sicurezza di Axiom",
+        "location_hint": "Fortezza di controllo, livello 4"
+      },
+      {
+        "name": "Il Direttore dell'Ombra",
+        "role": "Capo supremo di Axiom, artefice di Nexus",
+        "location_hint": "Torre di Axiom, cima della citt\u00e0"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Echi di Neon e Sangue",
+    "locations": [
+      {
+        "id_name": "loc_01",
+        "name": "Punto di Partenza",
+        "description": "Il luogo sicuro da cui inizia l'avventura. Qui l'araldo attende il party.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 0,
+        "type": "hub"
+      },
+      {
+        "id_name": "loc_crossroads",
+        "name": "Crocevia dei Destini",
+        "description": "Un nodo di strade che si dirama verso pericoli crescenti.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "loc_01",
+          "loc_dungeon"
+        ],
+        "difficulty_level": 1,
+        "type": "corridor"
+      },
+      {
+        "id_name": "loc_dungeon",
+        "name": "Cuore delle Tenebre",
+        "description": "Il fulcro della minaccia. Pochi entrano, meno ancora escono.",
+        "x": 4,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 3,
+        "type": "dungeon"
+      }
+    ],
+    "spawn_location_id": "loc_01"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "m",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "pg_0",
+        "ac": 14,
+        "level": 1,
+        "strength": 12,
+        "dexterity": 14,
+        "constitution": 13,
+        "intelligence": 9,
+        "wisdom": 11,
+        "charisma": 13,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_01",
+    "known_locations": [
+      "loc_crossroads",
+      "loc_01"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_01": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc_01",
+  "last_narrative": "",
+  "current_scene": null,
+  "cinematic_seen": true,
+  "setup_p1_name": "m",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro"
+}

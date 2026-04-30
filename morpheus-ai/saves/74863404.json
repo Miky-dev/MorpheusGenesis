@@ -1,0 +1,302 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Yo: L'Ombra del Nilo Sanguinante",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scoprire e annientare la fonte di un potere profano che corrode le vene della terra d'Egitto, prima che il sangue dei vivi venga sacrificato per placare gli antichi dei dell'oscurit\u00e0.",
+    "backstory": "Nel cuore del regno di Kemet, le acque del Nilo hanno iniziato a scurirsi, trasportando un miasma di morte. I sacerdoti hanno scoperto che una setta dimenticata, i Figli di Apep, ha risvegliato un antico sigillo sotto la Piramide di Djoser. Il sigillo, una volta rotto, rilascer\u00e0 l'energia del Serpente di Seth, una divinit\u00e0 primordiale di caos. Il faraone, ormai avvolto da visioni di morte, ha affidato al giocatore la missione di fermare la catastrofe, ma ogni passo verso la verit\u00e0 \u00e8 costellato di tradimenti, sacrifici e orrori indicibili.",
+    "opening_cinematic": "Nel silenzio della notte, il Nilo si avvolge in una nebbia nera come la pece, le sue acque, un tempo fonte di vita, ora mormorano parole di morte. Le stelle, spente dal morbo del cielo, osservano impotenti il lento scorrere di un fiume che si fa sangue. Le torri di pietra dei templi, un tempo imponenti custodi della luce, sono avvolte da ombre che strisciano come serpenti, insinuandosi nei cuori dei fedeli. Un sussurro, flebile ma incisivo, si leva dal profondo della terra: 'Ankhet, il Sussurratore, ti attende al porto dei corvi, dove il fumo della bruciatura di carne \u00e8 l'eco dei sacrifici antichi'.\nIl tuo passo risuona sulla sabbia rossa, ogni granello \u00e8 un ricordo di guerre dimenticate, ogni impronta una promessa di sangue. L'aria \u00e8 greve di incenso bruciato, ma il profumo \u00e8 mescolato a un fetore di putrefazione, segno che i morti si stanno risvegliando. Nel crepuscolo, la luna si specchia sul Nilo, ma la sua luce \u00e8 distorta, un occhio maligno che scruta l'anima di chi osa avventurarsi.\nLe ombre si allungano, avvolgendo le piramidi, le statue dei faraoni, i guardiani di pietra. Il tuo cuore batte al ritmo di un tamburo di guerra, ma il suono \u00e8 un lamento, una preghiera spezzata. Davanti a te, la porta di Djoser, scolpita con geroglifici di sangue, si apre lentamente, rivelando un corridoio che conduce al cuore stesso dell'oscurit\u00e0.\nSei pronto a varcare il confine tra il mondo dei vivi e quello dei morti, a confrontarti con gli antichi dei che non hanno mai dimenticato il loro diritto al sacrificio? Ogni passo che farai sar\u00e0 una scelta di sangue, ogni respiro un'eco di terrore. Benvenuto, viaggiatore, nella notte senza fine dell'Antico Egitto. Il tuo destino \u00e8 scritto nella sabbia, ma la sua fine \u00e8 ancora avvolta nell'ombra.",
+    "herald_npc_name": "Ankhet il Sussurratore",
+    "herald_location_id": "loc0",
+    "herald_npc_reveal": "'Il Nilo non piange pi\u00f9, ma sanguina. Segui la via del corvo, dove il silenzio \u00e8 rotto solo dal lamento dei morti.'",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Corvo",
+        "description": "Incontra Ankhet al porto dei corvi e ricevi l'indizio su una pergamena perduta che parla del sigillo sotto la Piramide di Djoser.",
+        "giver_npc": "Ankhet il Sussurratore",
+        "location_hint": "loc0 - Porto dei corvi, sotto il ponte di pietra rossa",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "La Pergamena di Djoser",
+        "description": "Recupera la pergamena nella camera sepolcrale di Djoser, custodita dal Custode di Pietra.",
+        "giver_npc": "Ankhet il Sussurratore",
+        "location_hint": "loc1 - Piramide di Djoser, camera sepolcrale",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Il Segreto della Sacerdotessa",
+        "description": "Porta la pergamena a Nefra, Alta Sacerdotessa di Iside, per decifrare il rito necessario a spezzare il sigillo.",
+        "giver_npc": "Nefra la Sacerdotessa",
+        "location_hint": "loc2 - Tempio di Iside, sala delle ombre",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "L'Offerta di Sangue",
+        "description": "Raccogli tre cuori di guerrieri caduti in battaglia, richiesti da Nefra per il rituale di purificazione.",
+        "giver_npc": "Nefra la Sacerdotessa",
+        "location_hint": "loc3 - Campo di battaglia di Karnak, rovine insanguinate",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Il Patto del Serpente",
+        "description": "Affronta il Serpente di Seth nella cripta sotterranea, impedendogli di completare l'incantesimo.",
+        "giver_npc": "Kael il Guerriero",
+        "location_hint": "loc4 - Cripta di Seth, corridoi di ossa e veleno",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Il Rito Interrotto",
+        "description": "Con l'aiuto di Nefra, interrompi il rito usando i cuori sacri, ma la Mummia del Faraone Maledetto si risveglia.",
+        "giver_npc": "Nefra la Sacerdotessa",
+        "location_hint": "loc5 - Sala del trono di Djoser, altare macchiato",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "La Caduta del Faraone",
+        "description": "Sconfiggi la Mummia del Faraone Maledetto, recupera il Bastone di Ankh e usa la sua energia per indebolire il sigillo.",
+        "giver_npc": "Ankhet il Sussurratore",
+        "location_hint": "loc6 - Camera del faraone, sarcofago incrinato",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "L'Ultimo Sigillo",
+        "description": "Porta il Bastone di Ankh al centro del sigillo sotto la piramide; il Custode di Pietra tenta di fermarti.",
+        "giver_npc": "Custode di Pietra",
+        "location_hint": "loc7 - Camera del sigillo, pietre pulsanti di energia",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "La Rottura del Velo",
+        "description": "Distruggi il sigillo, liberando l'energia di Seth; il Nilo si ingrossa di sangue e il mondo trema.",
+        "giver_npc": "Ankhet il Sussurratore",
+        "location_hint": "loc8 - Caverna del vuoto, al centro della piramide",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Il Giudizio del Fiume",
+        "description": "Affronta il Serpente di Seth in forma definitiva, sul ponte del Nilo, per chiudere la breccia e salvare il regno, pagando il prezzo pi\u00f9 caro.",
+        "giver_npc": "Kael il Guerriero",
+        "location_hint": "loc9 - Ponte dei Corvi, sotto il Nilo rosso di sangue",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Ankhet il Sussurratore",
+        "role": "Araldo delle Ombre, guida segreta del viaggiatore",
+        "location_hint": "loc0 - Porto dei corvi, vicino al mercato di Ankhara"
+      },
+      {
+        "name": "Nefra la Sacerdotessa",
+        "role": "Alta Sacerdotessa di Iside, custode dei riti proibiti",
+        "location_hint": "loc2 - Tempio di Iside, sala delle ombre"
+      },
+      {
+        "name": "Kael il Guerriero",
+        "role": "Veterano di Karnak, protettore dei confini mortali",
+        "location_hint": "loc3 - Campo di battaglia di Karnak, tra le rovine"
+      },
+      {
+        "name": "Djoser l'Archivista",
+        "role": "Custode delle scritture antiche, conoscitore dei sigilli perduti",
+        "location_hint": "loc1 - Piramide di Djoser, biblioteca sotterranea"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Il Serpente di Seth",
+        "role": "Divinit\u00e0 del caos, manifestazione serpentina del male primordiale",
+        "location_hint": "loc4 - Cripta di Seth, corridoi di veleno"
+      },
+      {
+        "name": "Mummia del Faraone Maledetto",
+        "role": "Reincarnazione del sovrano caduto, guardiano del Bastone di Ankh",
+        "location_hint": "loc6 - Camera del faraone, sarcofago incrinato"
+      },
+      {
+        "name": "Il Custode di Pietra",
+        "role": "Costrutto di granito incantato, difensore del sigillo sacro",
+        "location_hint": "loc7 - Camera del sigillo, pietre pulsanti di energia"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Yo: L'Ombra del Nilo Sanguinante",
+    "locations": [
+      {
+        "id_name": "loc0",
+        "name": "Punto di Partenza",
+        "description": "Il luogo sicuro da cui inizia l'avventura. Qui l'araldo attende il party.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 0,
+        "type": "hub"
+      },
+      {
+        "id_name": "loc_crossroads",
+        "name": "Crocevia dei Destini",
+        "description": "Un nodo di strade che si dirama verso pericoli crescenti.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "loc0",
+          "loc_dungeon"
+        ],
+        "difficulty_level": 1,
+        "type": "corridor"
+      },
+      {
+        "id_name": "loc_dungeon",
+        "name": "Cuore delle Tenebre",
+        "description": "Il fulcro della minaccia. Pochi entrano, meno ancora escono.",
+        "x": 4,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 3,
+        "type": "dungeon"
+      }
+    ],
+    "spawn_location_id": "loc0"
+  },
+  "world_state": {
+    "theme": "Antico Egitto",
+    "party": [
+      {
+        "name": "FiglioDiButtanone",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "pg_0",
+        "ac": 14,
+        "level": 1,
+        "strength": 5,
+        "dexterity": 16,
+        "constitution": 15,
+        "intelligence": 13,
+        "wisdom": 14,
+        "charisma": 15,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      },
+      {
+        "name": "lyra",
+        "char_class": "Mago",
+        "hp": 16,
+        "max_hp": 16,
+        "id": "pg_1",
+        "ac": 10,
+        "level": 1,
+        "strength": 12,
+        "dexterity": 12,
+        "constitution": 14,
+        "intelligence": 8,
+        "wisdom": 15,
+        "charisma": 12,
+        "inventory": [
+          {
+            "name": "Cristallo Risonante",
+            "item_type": "key_item",
+            "rarity": "Non Comune",
+            "description": "Un frammento che pulsa di energia.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Vibra quando c'\u00e8 magia vicina.",
+            "quantity": 1,
+            "durability": null
+          },
+          {
+            "name": "Bastone Nodoso",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Un bastone di legno vecchio ma robusto.",
+            "attack_bonus": 1,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Apparteneva a uno stregone novizio.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc0",
+    "known_locations": [
+      "loc_crossroads",
+      "loc0"
+    ],
+    "turn_number": 4,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc0": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc0",
+  "last_narrative": "Il sole al tramonto tinge di arancio le rovine di un antico tempio, e un silenzio quasi sacro avvolge la zona. Una leggera brezza porta con s\u00e9 il profumo di erbe secche e il fruscio di foglie morte. Mentre ti avvicini al centro del cortile, una figura avvolta in un mantello di velluto scuro emerge dalle ombre: Ankhet, il Sussurratore. Con occhi che sembrano riflettere le stelle, ti sussurra: \"Chi osa disturbare la pace di questo luogo? Ma se cerchi verit\u00e0, potrei condividere un segreto che il tempo ha dimenticato.\" Cosa fai?",
+  "current_scene": {
+    "narration": "Il sole al tramonto tinge di arancio le rovine di un antico tempio, e un silenzio quasi sacro avvolge la zona. Una leggera brezza porta con s\u00e9 il profumo di erbe secche e il fruscio di foglie morte. Mentre ti avvicini al centro del cortile, una figura avvolta in un mantello di velluto scuro emerge dalle ombre: Ankhet, il Sussurratore. Con occhi che sembrano riflettere le stelle, ti sussurra: \"Chi osa disturbare la pace di questo luogo? Ma se cerchi verit\u00e0, potrei condividere un segreto che il tempo ha dimenticato.\" Cosa fai?",
+    "choices": [
+      "Avvicinarmi a Ankhet e chiedere informazioni",
+      "Ignorare la figura e continuare a esplorare il tempio"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "FiglioDiButtanone",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Antico Egitto",
+  "setup_mood": "Oscuro"
+}

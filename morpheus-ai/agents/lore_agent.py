@@ -2,7 +2,7 @@ from agno.agent import Agent
 from agno.models.groq import Groq
 from contracts.schemas import StoryBible, Location, NPC, QuestCharacterBrief
 from knowledge.chroma_store import DungeonMemory
-from utils import parse_json_response
+from utils import parse_json_response, safe_agent_run
 import json
 import re
 
@@ -27,10 +27,11 @@ OPENING_CINEMATIC: Questo è l'unico campo dove la sintesi è vietata. Scrivi un
 
 === 4. PROTOCOLLO JSON (STRICT COMPLIANCE) ===
 - LINGUA: Rispondi esclusivamente in LINGUA ITALIANA. Ogni campo testuale deve essere in italiano accurato ed evocativo.
-- OUTPUT: Solo ed esclusivamente il blocco JSON. Nessun commento.
+- OUTPUT: Solo ed esclusivamente il blocco JSON. Nessun commento, nessun testo prima o dopo le parentesi graffe.
 - JSON KEYS: Usa SEMPRE doppi apici " per le chiavi.
-- ESCAPE QUOTES: Usa solo apici singoli ' all'interno dei testi.
-- NEWLINES: Usa esclusivamente \\n per i ritorni a capo nel testo.
+- ESCAPE QUOTES: Usa solo apici singoli ' all'interno dei testi narrativi.
+- ANTI-NEWLINE (CRITICO): I valori delle stringhe JSON NON devono mai contenere a capo reali (Enter). Usa SOLO \n (backslash + n) per i ritorni a capo. Un valore stringa deve stare tutto su una riga logica della struttura JSON.
+- NESSUN MARKDOWN: Non usare ```json``` o altri tag. Inizia direttamente con {{ e finisci con }}.
 
 === 5. INPUT DI GENERAZIONE ===
 TEMA: {theme_id}
@@ -92,9 +93,9 @@ def generate_story_bible(
 
     agent = Agent(
         name="Muse",
-        model=Groq(id="openai/gpt-oss-120b", temperature=0.85), # Temperatura leggermente alzata per favorire la creatività del mood
+        model=Groq(id="openai/gpt-oss-120b", temperature=0.70),  # Temperatura abbassata per output JSON più affidabile
         instructions=formatted_instructions
-    ) 
+    )
     
     # Schema completo con tutti i campi richiesti dal tuo Pydantic
     schema = {
@@ -143,36 +144,11 @@ def generate_story_bible(
         f"TITOLO: {session_display_name}. "
         "Assicurati che OGNI elemento rifletta il tono scelto e che il titolo sia unico e inerente alla storia."
     )
-    max_retries = 3
-    data = None
-    for attempt in range(max_retries):
-        try:
-            response = agent.run(prompt)
-            raw = response.content.strip()
-            
-            data = parse_json_response(raw, "Muse StoryBible")
-            
-            if data is None:
-                print(f"⚠️ Errore di parsing JSON (Tentativo {attempt+1})")
-                if attempt == max_retries - 1:
-                    raise ValueError("Impossibile parsare la Story Bible. L'AI ha restituito un formato non valido.")
-                continue
-
-            # ---> CONTROLLO ERRORI API <---
-            if "error" in data:
-                error_msg = data["error"].get("message", "Errore API sconosciuto")
-                print(f"⚠️ Errore API intercettato (Tentativo {attempt+1}): {error_msg}")
-                if attempt == max_retries - 1:
-                    raise ValueError(f"API bloccata: {error_msg}")
-                continue # Riprova
-
-            break # Se arriva qui, il JSON è buono!
-            
-        except Exception as e:
-            if attempt == max_retries - 1:
-                print(f"DEBUG: Fallimento parsing JSON al tentativo {attempt+1}")
-                raise e
-            continue
+    # Utilizziamo safe_agent_run per gestire errori e rescue logic
+    data = safe_agent_run(agent, prompt, context_name="Muse StoryBible")
+    
+    if data is None or isinstance(data, str):
+        raise ValueError("Impossibile generare la Story Bible. L'AI non ha restituito un formato JSON valido.")
 
 
     # 1. FIX MISSIONI: Gestione Alias 'quest_id' e Status

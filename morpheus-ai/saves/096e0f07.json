@@ -1,0 +1,259 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Abisso di Nebulosa Sanguinaria",
+    "narrative_style": "Oscuro",
+    "main_objective": "Spezzare il ciclo di oppressione della Nebulosa Sanguinaria, distruggendo i cuori meccanici che alimentano il suo morbo cosmico.",
+    "backstory": "In un futuro dimenticato, l'umanit\u00e0 si \u00e8 rifugiata tra le stelle, ma la scoperta della Nebulosa Sanguinaria ha portato la speranza a sanguinare. Un'entit\u00e0 artificiale, nata da un esperimento fallito, ha trasformato interi sistemi in tombe di ferro e cenere. Le poche colonie rimaste vivono sotto il giogo di tiranni meccanici, mentre la luce si spegne lentamente. Solo un'oscura coalizione di ribelli, guidata da un enigmatico Araldo, osa sfidare l'oscurit\u00e0, consapevole che ogni passo \u00e8 un passo verso la morte.",
+    "opening_cinematic": "Nel vuoto senza stelle, il silenzio \u00e8 rotto solo dal ruggito di un motore morente. Le ombre si allungano su pianeti morti, dove il sangue di stelle antiche scorre come fiumi di lava nera. Tu, pellegrino dell'abisso, senti il peso di mille occhi di ferro che ti scrutano dal profondo della Nebulosa Sanguinaria. Il vento porta con s\u00e9 l'eco di promesse infrante e di grida soffocate, mentre il cielo si tinge di un rosso cupo, segno della fine imminente. Un sussurro si fa strada tra le crepe del tuo casco: 'Non c'\u00e8 redenzione, solo sopravvivenza'. Il tuo cuore batte al ritmo di un tamburo di guerra, ma ogni battito \u00e8 un passo pi\u00f9 vicino al baratro. Le strutture di acciaio scricchiolano, pronte a crollare sotto il peso dei tuoi dubbi. Le legioni dei macchinari senzienti marciano, pronte a spazzare via chiunque osi opporsi. In questo teatro di morte, ogni scelta \u00e8 una lama affilata, ogni alleato un potenziale traditore. Il destino della galassia \u00e8 incastonato nella tua mano, ma il sangue che scorre nelle vene della Nebulosa \u00e8 pi\u00f9 denso di qualsiasi speranza. Preparati, perch\u00e9 la notte \u00e8 appena iniziata e il tuo nome sar\u00e0 inciso nella cenere delle stelle.",
+    "herald_npc_name": "Vraxus il Sussurro",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il vuoto non perdona, ma solo i coraggiosi possono ascoltare il suo canto.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Il Richiamo del Vuoto",
+        "description": "Recupera la Chiave di Tenebra nella Stazione di Oscurit\u00e0 per aprire il portale verso la Forgia di Ruggine.",
+        "giver_npc": "Vraxus il Sussurro",
+        "location_hint": "Stazione di Oscurit\u00e0, loc_01",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Cuore di Plasma",
+        "description": "Infilati nella Forgia di Ruggine e sottrai il Cuore di Plasma, necessario per alimentare l'arma di Kellor.",
+        "giver_npc": "Mara l'Infiltrata",
+        "location_hint": "Forgia di Ruggine, loc_02",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "Forgia di Ombre",
+        "description": "Porta il Cuore di Plasma a Kellor il Forgiatore e fabbrica la Lama del Vuoto.",
+        "giver_npc": "Kellor il Forgiatore",
+        "location_hint": "Caverna di Scorie, loc_03",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Scontro con Nexul",
+        "description": "Usa la Lama del Vuoto per affrontare Nexul, il Vorace, nel Tempio dell'Eco.",
+        "giver_npc": "Vraxus il Sussurro",
+        "location_hint": "Tempio dell'Eco, loc_04",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Archivio dei Sussurri",
+        "description": "Recupera i Codici Proibiti dall'Archivio dei Sussurri per svelare la debolezza della Corteccia di Ferro.",
+        "giver_npc": "Seraphine la Custode",
+        "location_hint": "Archivio dei Sussurri, loc_05",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Zona di Quarantena",
+        "description": "Sopravvivi alla piaga bio\u2011meccanica nella Zona di Quarantena, raccogliendo campioni per l'antidoto.",
+        "giver_npc": "Vraxus il Sussurro",
+        "location_hint": "Zona di Quarantena, loc_06",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Sabotaggio dell'Abyssal Warden",
+        "description": "Penetra nel Labirinto di Ferro e disattiva l'Abyssal Warden, aprendo la via al nucleo oscuro.",
+        "giver_npc": "Mara l'Infiltrata",
+        "location_hint": "Labirinto di Ferro, loc_07",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Rinforzo della Lama",
+        "description": "Porta la Lama del Vuoto a Kellor per potenziarla con l'essenza del Cuore di Plasma.",
+        "giver_npc": "Kellor il Forgiatore",
+        "location_hint": "Forgia di Ruggine, loc_02",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Oscuramento della Centrale",
+        "description": "Disattiva la Centrale Energetica per privare la Corteccia di Ferro del suo potere.",
+        "giver_npc": "Seraphine la Custode",
+        "location_hint": "Centrale Energetica, loc_08",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Il Giudizio della Corteccia",
+        "description": "Affronta la Corteccia di Ferro nel Nucleo Oscuro e distruggi il cuore della Nebulosa Sanguinaria.",
+        "giver_npc": "Vraxus il Sussurro",
+        "location_hint": "Nucleo Oscuro, loc_09",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Vraxus il Sussurro",
+        "role": "Araldo della Resistenza",
+        "location_hint": "Loc_00, la Citt\u00e0 dei Resti"
+      },
+      {
+        "name": "Mara l'Infiltrata",
+        "role": "Spia e Ladra di Segreti",
+        "location_hint": "Rifugio delle Ombre, loc_10"
+      },
+      {
+        "name": "Kellor il Forgiatore",
+        "role": "Artigiano di Armi Proibite",
+        "location_hint": "Caverna di Scorie, loc_03"
+      },
+      {
+        "name": "Seraphine la Custode",
+        "role": "Guardiana dei Codici Perduti",
+        "location_hint": "Archivio dei Sussurri, loc_05"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Nexul, il Vorace",
+        "role": "Predatore Meccanico",
+        "location_hint": "Tempio dell'Eco, loc_04"
+      },
+      {
+        "name": "Abyssal Warden",
+        "role": "Sentinella del Labirinto di Ferro",
+        "location_hint": "Labirinto di Ferro, loc_07"
+      },
+      {
+        "name": "Corteccia di Ferro",
+        "role": "Entit\u00e0 Centrale della Nebulosa",
+        "location_hint": "Nucleo Oscuro, loc_09"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Abisso di Nebulosa Sanguinaria",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Punto di Partenza",
+        "description": "Il luogo sicuro da cui inizia l'avventura. Qui l'araldo attende il party.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 0,
+        "type": "hub"
+      },
+      {
+        "id_name": "loc_crossroads",
+        "name": "Crocevia dei Destini",
+        "description": "Un nodo di strade che si dirama verso pericoli crescenti.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "loc_00",
+          "loc_dungeon"
+        ],
+        "difficulty_level": 1,
+        "type": "corridor"
+      },
+      {
+        "id_name": "loc_dungeon",
+        "name": "Cuore delle Tenebre",
+        "description": "Il fulcro della minaccia. Pochi entrano, meno ancora escono.",
+        "x": 4,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 3,
+        "type": "dungeon"
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Fantascienza",
+    "party": [
+      {
+        "name": "Valerius",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "pg_0",
+        "ac": 14,
+        "level": 1,
+        "strength": 17,
+        "dexterity": 16,
+        "constitution": 10,
+        "intelligence": 8,
+        "wisdom": 15,
+        "charisma": 8,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_crossroads",
+      "loc_00"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {
+    "loc_00": {
+      "location_lore": "Questa area \u00e8 ancora misteriosa.",
+      "npcs": [],
+      "rumors": []
+    }
+  },
+  "current_location_id": "loc_00",
+  "last_narrative": "Il tuo casco vibra sotto il rumore assordante di un motore che si spegne lentamente. L\u2019aria \u00e8 densa di un odore metallico, di polvere di asteroidi e di combustibile bruciato. Le luci dei pannelli di controllo, ormai spente, lasciano filari di ombra che si fondono con le fessure del pavimento di acciaio. Il suono di passi distanti si mescola al clangore di catene che oscillano a mezz'aria, mentre un leggero fruscio di vento alieno attraversa i corridoi. In questo luogo, chiamato \u201cPunto di Partenza\u201d, l\u2019aria \u00e8 silenziosa come una preghiera, ma \u00e8 intrisa di una tensione palpabile: il futuro della galassia sembra sospeso tra le tue mani. Valerius, il guerriero del tuo party, \u00e8 qui perch\u00e9 l\u2019araldo, un messaggero di un ordine dimenticato, ha convocato il tuo gruppo per una missione che potrebbe cambiare l\u2019esistenza stessa della Nebulosa Sanguinaria. Mentre il vento porta con s\u00e9 l\u2019eco di promesse infrante, un rumore improvviso scuote la struttura: un colpo secco, come se qualcuno avesse appena fatto cadere un enorme blocco di metallo. L\u2019ombra di un\u2019ombra si allunga sul pavimento, e un\u2019energia pulsante si diffonde, segnalando l\u2019arrivo di un nemico invisibile. Il silenzio si spezza, e l\u2019aria si fa pi\u00f9 densa di un\u2019anticipazione che non potresti ignorare. Ora, Valerius, la tua decisione pu\u00f2 cambiare il corso di questa notte. Cosa fai?",
+  "current_scene": {
+    "narration": "Il tuo casco vibra sotto il rumore assordante di un motore che si spegne lentamente. L\u2019aria \u00e8 densa di un odore metallico, di polvere di asteroidi e di combustibile bruciato. Le luci dei pannelli di controllo, ormai spente, lasciano filari di ombra che si fondono con le fessure del pavimento di acciaio. Il suono di passi distanti si mescola al clangore di catene che oscillano a mezz'aria, mentre un leggero fruscio di vento alieno attraversa i corridoi. In questo luogo, chiamato \u201cPunto di Partenza\u201d, l\u2019aria \u00e8 silenziosa come una preghiera, ma \u00e8 intrisa di una tensione palpabile: il futuro della galassia sembra sospeso tra le tue mani. Valerius, il guerriero del tuo party, \u00e8 qui perch\u00e9 l\u2019araldo, un messaggero di un ordine dimenticato, ha convocato il tuo gruppo per una missione che potrebbe cambiare l\u2019esistenza stessa della Nebulosa Sanguinaria. Mentre il vento porta con s\u00e9 l\u2019eco di promesse infrante, un rumore improvviso scuote la struttura: un colpo secco, come se qualcuno avesse appena fatto cadere un enorme blocco di metallo. L\u2019ombra di un\u2019ombra si allunga sul pavimento, e un\u2019energia pulsante si diffonde, segnalando l\u2019arrivo di un nemico invisibile. Il silenzio si spezza, e l\u2019aria si fa pi\u00f9 densa di un\u2019anticipazione che non potresti ignorare. Ora, Valerius, la tua decisione pu\u00f2 cambiare il corso di questa notte. Cosa fai?",
+    "choices": [
+      "Raccogli informazioni sull\u2019origine del rumore",
+      "Prepara le armi e attendi l\u2019araldo"
+    ],
+    "is_combat": false,
+    "allow_free_action": true,
+    "enemy_spawn": null
+  },
+  "cinematic_seen": true,
+  "setup_p1_name": "Valerius",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Fantascienza",
+  "setup_mood": "Oscuro"
+}

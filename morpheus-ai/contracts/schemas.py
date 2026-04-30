@@ -37,11 +37,11 @@ class RulesResult(BaseModel):
     needs_confirmation: bool = Field(description="True se l'azione è irreversibile/critica (HITL livello critico)")
     narrative_hint: str = Field(description="Suggerimento breve per il DM Agent su come descrivere l'esito")
 
-class ActionCheckResult(BaseModel):
+class RulesCheck(BaseModel):
     richiede_tiro: bool = Field(description="True se l'azione richiede una prova di abilità o tiro salvezza")
     caratteristica: Optional[str] = Field(default=None, description="Es. 'Destrezza', 'Forza' se richiede_tiro è True")
     cd_suggerita: Optional[int] = Field(default=None, description="La Classe Difficoltà (es. 12)")
-    motivo: str = Field(description="Breve spiegazione sul perché (es. 'Cerca di rubare un oggetto')")
+    motivo: Optional[str] = Field(default=None, description="Breve spiegazione sul perché (es. 'Cerca di rubare un oggetto')")
 
 
 

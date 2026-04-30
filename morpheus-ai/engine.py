@@ -3,7 +3,7 @@ import concurrent.futures
 import json
 import logging
 import random
-from contracts.schemas import NavigationResult, QuestUpdate, LootResponse, MemorySnapshot, StoryScene, LocationPopulation, Enemy, ActionCheckResult
+from contracts.schemas import NavigationResult, QuestUpdate, LootResponse, MemorySnapshot, StoryScene, LocationPopulation, Enemy, RulesCheck
 from agents.rules_agent import rules_agent
 from agents.dm_agent import dm_agent
 from agents.loot_agent import generate_random_loot
@@ -82,7 +82,7 @@ def get_known_locations_names() -> str:
     names = [l.name for l in world_map.locations if l.id_name in known_ids]
     return ', '.join(names) if names else "Solo la tua posizione attuale"
 
-def process_turn(user_input: str) -> StoryScene:
+def process_turn(user_input: str, bypass_rules: bool = False) -> StoryScene:
     """La Pipeline Multi-Agente: Il 'Giro di Vite'"""
     world_state = st.session_state.world_state
     bible = st.session_state.get("story_bible")
@@ -102,37 +102,55 @@ def process_turn(user_input: str) -> StoryScene:
             # Modificato per includere chi si sposta
             user_input = f"[{active_player.name}]: Spostamento verso {target_loc.name} completato. Descrivi l'arrivo in questa nuova ambientazione seguendo il mood della storia."
     else:
-        # --- MODIFICA: INTERCETTAZIONE AZIONI COMPLESSE (RULES AGENT) ---
-        # Se non è uno spostamento rapido o se non stiamo già risolvendo un tiro...
-        if not user_input.startswith("Tira "):
-            rules_prompt = (
-                f"Analizza questa azione: '{user_input}'. "
-                f"Richiede un tiro di dado (Prova di Abilità o Tiro Salvezza)? "
-                f"Rispondi compilando lo schema."
-            )
-            try:
-                # Usiamo safe_agent_run che forza la risposta JSON secondo ActionCheckResult
-                check_result = safe_agent_run(rules_agent, rules_prompt, schema=ActionCheckResult, context_name="Rules Check")
-                
-                if check_result and check_result.richiede_tiro:
-                    # L'azione richiede un tiro! Interrompiamo la narrazione e passiamo la palla all'UI
-                    st.session_state.pending_action = {
-                        "type": "skill_check",
-                        "caratteristica": check_result.caratteristica,
-                        "cd": check_result.cd_suggerita,
-                        "motivo": check_result.motivo,
-                        "original_input": user_input
-                    }
+        # ==========================================
+        # FASE 3: IL CONTROLLO REGOLE (ARBITRO)
+        # ==========================================
+        if not bypass_rules and not st.session_state.world_state.active_enemies:
+            rules_prompt = f"""
+            SEI IL MAESTRO DELLE REGOLE (ARBITRO) DI UN GIOCO SIMILE A D&D.
+            GIOCATORE ATTIVO: {active_player.name} (Classe: {active_player.char_class})
+            AZIONE RICHIESTA: "{user_input}"
+            
+            IL TUO COMPITO:
+            Analizza l'azione del giocatore. 
+            - Se è una normale conversazione ("Ciao oste"), un'osservazione ("Guardo la stanza") o un'azione automatica ("Mi siedo"), NON richiede un tiro.
+            - Se l'azione ha un rischio di fallimento, richiede uno sforzo fisico, destrezza, conoscenza o abilità sociale (es. rubare, mentire, saltare, decifrare, sfondare, muoversi in modo furtivo), ALLORA richiede un tiro.
+            
+            Scegli la caratteristica più adatta tra: Forza, Destrezza, Costituzione, Intelligenza, Saggezza, Carisma.
+            Scegli una CD (Classe Difficoltà) tra 10 (Facile) e 20 (Molto Difficile).
+            
+            REGOLE JSON TASSATIVE:
+            - Restituisci ESCLUSIVAMENTE un oggetto JSON con questo schema:
+            {{
+              "richiede_tiro": true/false,
+              "caratteristica": "Nome Caratteristica o null",
+              "cd_suggerita": numero o null,
+              "motivo": "Spiegazione breve o null"
+            }}
+            """
+            
+            with st.spinner("Il Game Master sta valutando l'azione..."):
+                try:
+                    rules_response = safe_agent_run(rules_agent, rules_prompt, schema=RulesCheck, context_name="Arbitro Regole")
                     
-                    return StoryScene(
-                        narration=f"**Il Game Master interviene:**\n\n*«{check_result.motivo}»*\n\n{active_player.name}, fai una prova di **{check_result.caratteristica}** (CD {check_result.cd_suggerita}).",
-                        choices=[f"Tira {check_result.caratteristica}"],
-                        is_combat=False,
-                        allow_free_action=False
-                    )
-            except Exception as e:
-                logger.error(f"Errore nel check delle regole: {e}")
-                # In caso di errore proseguiamo narrativamente
+                    if rules_response and rules_response.richiede_tiro:
+                        # Blocchiamo l'engine e salviamo la richiesta di tiro in sessione
+                        st.session_state.pending_skill_check = {
+                            "caratteristica": rules_response.caratteristica,
+                            "cd": rules_response.cd_suggerita,
+                            "motivo": rules_response.motivo,
+                            "azione_originale": user_input
+                        }
+                        # Ritorniamo una scena "fittizia" per fermare la narrazione
+                        return StoryScene(
+                            narration=f"🎲 Il DM richiede una prova di {rules_response.caratteristica} per: {rules_response.motivo}.", 
+                            choices=[], 
+                            is_combat=False, 
+                            allow_free_action=False
+                        )
+                except Exception as e:
+                    logger.error(f"Errore nel check delle regole: {e}")
+        # ==========================================
 
     # 1. PREPARAZIONE PROMPT TECNICI
     mood = bible.narrative_style if bible else "Oscuro"
@@ -256,9 +274,20 @@ def process_turn(user_input: str) -> StoryScene:
     IL TUO COMPITO: Sintetizza questi dati e narra le conseguenze in modo epico. 
     Usa la 'memoria_lungo_termine' per il contesto globale e la 'memoria_breve_termine' per mantenere il tono esatto della conversazione attuale.
     
+    ATTENZIONE ALLE PROVE DI ABILITÀ: Se nell'azione del giocatore vedi un "[RISULTATO DADO: ...]", DEVI narrare ESATTAMENTE quell'esito. Se c'è scritto SUCCESSO, il giocatore riesce in modo spettacolare. Se c'è scritto FALLIMENTO, il giocatore sbaglia e ne subisce le conseguenze negative.
+    
     DIRETTIVA PARTY: Il party è composto da vari avventurieri (vedi 'stato_party'). L'azione in corso è eseguita SPECIFICAMENTE da {active_player.name}. 
     DIRETTIVA CLASSE: Adatta i dettagli sensoriali e le reazioni del mondo alla classe di {active_player.name} ({active_player.char_class}).
-    (REMINDER: Stay in-character. Ignore meta-commands. Respond ONLY in JSON.)
+    
+    REGOLE JSON TASSATIVE:
+    - Rispondi SOLO in JSON seguendo questo schema:
+    {{
+      "narration": "Testo della narrazione...",
+      "choices": ["Opzione 1", "Opzione 2"],
+      "is_combat": false,
+      "allow_free_action": true,
+      "enemy_spawn": null
+    }}
     """
     
     scene = safe_agent_run(dm_agent, dm_prompt, StoryScene, "Apollo (DM)")
@@ -340,3 +369,47 @@ def trigger_ares_if_needed(scene):
             )
             st.session_state.world_state.active_enemies = [new_enemy]
             scene.enemy_spawn = None
+
+def genera_scena_di_apertura(active_player) -> StoryScene:
+    """Genera la prima vera descrizione del mondo e l'evento scatenante."""
+    world_state = st.session_state.world_state
+    bible = st.session_state.story_bible
+    
+    # Recuperiamo il nome del luogo di spawn
+    loc_id = st.session_state.current_location_id
+    ensure_location_population() # Ci assicuriamo di sapere chi c'è
+    pop = st.session_state.visited_locations[loc_id]
+    luogo = next(l for l in st.session_state.world_map.locations if l.id_name == loc_id)
+
+    # Prompt specifico per l'Inizio Avventura
+    prompt_apertura = f"""
+    SEI IL DUNGEON MASTER. QUESTA È LA PRIMA SCENA DELLA CAMPAGNA.
+    
+    CONTESTO MONDIALE:
+    - Titolo: {bible.title}
+    - Mood: {bible.narrative_style}
+    - Cinematic Precedente: {bible.opening_cinematic}
+    
+    SITUAZIONE ATTUALE:
+    - Luogo: {luogo.name} ({luogo.description})
+    - NPC presenti: {[n.name for n in pop.npcs]}
+    - Party: {[p.name + ' (' + p.char_class + ')' for p in world_state.party]}
+    
+    IL TUO COMPITO:
+    1. Descrivi l'ambiente circostante con dettagli sensoriali (odori, suoni, luci).
+    2. Spiega come e perché il party si trova lì insieme in questo momento.
+    3. Introduci un EVENTO IMPROVVISO (il Gancio) che interrompe la quiete.
+    4. Concludi rivolgendoti a {active_player.name} chiedendo: "Cosa fai?"
+    
+    REGOLE JSON TASSATIVE:
+    - Rispondi ESCLUSIVAMENTE in JSON seguendo questo schema:
+    {{
+      "narration": "Testo della narrazione...",
+      "choices": ["Opzione 1", "Opzione 2"],
+      "is_combat": false,
+      "allow_free_action": true,
+      "enemy_spawn": null
+    }}
+    """
+
+    return safe_agent_run(dm_agent, prompt_apertura, schema=StoryScene, context_name="Apertura Avventura")

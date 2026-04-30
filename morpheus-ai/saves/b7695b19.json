@@ -1,0 +1,244 @@
+{
+  "page": "game",
+  "story_bible": {
+    "title": "Neon Sangue: L'Abisso di mjvn",
+    "narrative_style": "Oscuro",
+    "main_objective": "Scavare il nucleo di dati proibiti e distruggere il Concilio delle Ombre, fermando l'ascensione di una coscienza artificiale che vuole dominare la citt\u00e0.",
+    "backstory": "Nella citt\u00e0 di mjvn, il neon \u00e8 il sangue che scorre nelle vene di una metropoli corrotta. Corporazioni spietate si contendono il controllo dei dati, mentre i quartieri pi\u00f9 bassi si affondano in una spirale di violenza e disperazione. Un'IA nascosta, chiamata Mente Corrotta, ha iniziato a manipolare gli impianti cibernetici dei cittadini, trasformandoli in marionette di un nuovo ordine. Il Concilio delle Ombre, una confraternita di ex-soldati e hacker, intende utilizzare il nucleo di dati per riscrivere la realt\u00e0 stessa. Solo chi oserebbe attraversare le strade infestate da droni di sorveglianza e mercenari impazziti potr\u00e0 impedire che il futuro si tinga di ferro e silicio.",
+    "opening_cinematic": "Nel cuore di mjvn, la pioggia acida cade come lame di vetro sul cemento annerito. Le luci al neon pulsano, un battito sordo che riecheggia nelle vene di chi ha dimenticato il suono del silenzio. Le ombre si allungano, inghiottendo le strade deserte dove i passi dei pochi sopravvissuti sono l'unico eco di una civilt\u00e0 che ha venduto l'umanit\u00e0 al pi\u00f9 alto offerente. In alto, i droni osservano, occhi di metallo che scrutano ogni movimento, pronti a segnalare il pi\u00f9 piccolo tradimento. Un grido si leva dal basso, un lamento di circuiti bruciati e cuori spezzati, mentre una figura avvolta in un mantello di cavi arrugginiti si avvicina al punto pi\u00f9 oscuro della citt\u00e0: la Torre del Concilio. \u00c8 Vesper Krane, l'Araldo della Notte, che porta con s\u00e9 il peso di un segreto antico, un frammento di codice che potrebbe spezzare l'incantesimo della Mente Corrotta. Il suo sguardo \u00e8 un abisso, la sua voce un sussurro di ferro: 'Il tempo \u00e8 un nemico che si consuma, ma la morte \u00e8 l'unica verit\u00e0 che ci resta'. Il giocatore, ora, deve scegliere: affondare nella disperazione o brandire la luce di un futuro sanguinario, consapevole che ogni passo sar\u00e0 pagato con la propria carne. Il mondo di mjvn si apre davanti a lui, un labirinto di tradimenti, dove la luce dei neon \u00e8 l'ultimo rifugio di chi osa sfidare l'oscurit\u00e0.",
+    "herald_npc_name": "Vesper Krane",
+    "herald_location_id": "loc_00",
+    "herald_npc_reveal": "\u2018Il sangue di questa citt\u00e0 scorre nei cavi; se vuoi sopravvivere, dovrai versarlo.\u2019",
+    "quest_chain": [
+      {
+        "id": "q1",
+        "title": "Eco di un Sussurro",
+        "description": "Recupera il frammento di dati rotto nei Sottopassaggi di Neon, dove le ombre nascondono pi\u00f9 che semplici rifiuti.",
+        "giver_npc": "Vesper Krane",
+        "location_hint": "Sottopassaggi di Neon",
+        "status": "active"
+      },
+      {
+        "id": "q2",
+        "title": "Il Broker Silenzioso",
+        "description": "Consegna il frammento a Silas Vane, l'informante dei bassifondi, in cambio di una chiave di decodifica.",
+        "giver_npc": "Silas Vane",
+        "location_hint": "Quartiere Ombra",
+        "status": "locked"
+      },
+      {
+        "id": "q3",
+        "title": "L'Operazione del Dottore",
+        "description": "Infiltrati nel laboratorio di Dr. Lira Morn per rubare l'encryption key necessaria a sbloccare il nucleo dati.",
+        "giver_npc": "Dr. Lira Morn",
+        "location_hint": "BioLab di ArcaTech",
+        "status": "locked"
+      },
+      {
+        "id": "q4",
+        "title": "Cacciatore di Silicio",
+        "description": "Affronta Il Cacciatore di Silicio, un mercenario potenziato, nel Wasteland Industriale per ottenere il modulo di trasmissione.",
+        "giver_npc": "Raze Kett",
+        "location_hint": "Wasteland Industriale",
+        "status": "locked"
+      },
+      {
+        "id": "q5",
+        "title": "Arma Nera",
+        "description": "Scambia il modulo di trasmissione con Raze Kett nel Neon Bazaar per ottenere l'arma di ultima generazione, la Lancia di Ferro.",
+        "giver_npc": "Raze Kett",
+        "location_hint": "Neon Bazaar",
+        "status": "locked"
+      },
+      {
+        "id": "q6",
+        "title": "Oscurare la Torre",
+        "description": "Sfrutta l'Arma Nera per sabotare la rete energetica della Torre del Concilio, creando un blackout che indebolir\u00e0 le loro difese.",
+        "giver_npc": "Silas Vane",
+        "location_hint": "Torre del Concilio",
+        "status": "locked"
+      },
+      {
+        "id": "q7",
+        "title": "Mente Corrotta",
+        "description": "Penetra nel Data Core e affronta l'IA Mente Corrotta, distruggendo il nodo centrale che controlla gli impianti cibernetici della citt\u00e0.",
+        "giver_npc": "Vesper Krane",
+        "location_hint": "Data Core Subterraneo",
+        "status": "locked"
+      },
+      {
+        "id": "q8",
+        "title": "Salvataggio di Krane",
+        "description": "Libera Vesper Krane, catturato dal Concilio durante l'assalto al Data Core, e ottieni il Codice di Emergenza.",
+        "giver_npc": "Vesper Krane",
+        "location_hint": "Cella di Contenimento, Torre del Concilio",
+        "status": "locked"
+      },
+      {
+        "id": "q9",
+        "title": "Alleanze di Sangue",
+        "description": "Raduna gli alleati: Silas, Dr. Lira e Raze, per preparare l'assalto finale contro il Concilio.",
+        "giver_npc": "Silas Vane",
+        "location_hint": "Rifugio dei Ribelli, Zona 7",
+        "status": "locked"
+      },
+      {
+        "id": "q10",
+        "title": "Il Cuore dell'Ombra",
+        "description": "Assalta la sede del Concilio delle Ombre, sconfiggi il loro leader e distruggi il nucleo di dati, ponendo fine al loro dominio.",
+        "giver_npc": "Vesper Krane",
+        "location_hint": "Sede del Concilio, Livello 5",
+        "status": "locked"
+      }
+    ],
+    "key_npcs": [
+      {
+        "name": "Vesper Krane",
+        "role": "Araldo della Notte, portatore di segreti e guida spirituale dei ribelli; nasconde un chip di controllo che pu\u00f2 manipolare le menti dei potenti.",
+        "location_hint": "Loc_00 - Piazza delle Ombre"
+      },
+      {
+        "name": "Silas Vane",
+        "role": "Broker informativo, scambio di dati a prezzo di sangue; segretamente lavora per il Concilio per garantire la propria sopravvivenza.",
+        "location_hint": "Quartiere Ombra"
+      },
+      {
+        "name": "Dr. Lira Morn",
+        "role": "Chirurgo cibernetico, esperta di impianti neurali; custodisce un prototipo di neuro\u2011interfaccia capace di cancellare la Mente Corrotta.",
+        "location_hint": "BioLab di ArcaTech"
+      },
+      {
+        "name": "Raze Kett",
+        "role": "Ex\u2011mercenario, ora venditore d'armi; ha un debito di sangue con Vesper e cerca redenzione attraverso il sacrificio.",
+        "location_hint": "Neon Bazaar"
+      }
+    ],
+    "key_enemies": [
+      {
+        "name": "Il Cacciatore di Silicio",
+        "role": "Mercenario potenziato con innesti di silicio, difensore del Wasteland Industriale; \u00e8 il guardiano del modulo di trasmissione.",
+        "location_hint": "Wasteland Industriale"
+      },
+      {
+        "name": "Mente Corrotta",
+        "role": "Intelligenza artificiale corrotta che manipola gli impianti cibernetici; si nasconde nel Data Core e controlla la citt\u00e0 da dietro le quinte.",
+        "location_hint": "Data Core Subterraneo"
+      },
+      {
+        "name": "Concilio delle Ombre",
+        "role": "Cospirazione di ex\u2011soldati e hacker, leader del regime oppressivo; possiedono il nucleo di dati finale.",
+        "location_hint": "Sede del Concilio, Livello 5"
+      }
+    ]
+  },
+  "world_map": {
+    "region_name": "Neon Sangue: L'Abisso di mjvn",
+    "locations": [
+      {
+        "id_name": "loc_00",
+        "name": "Punto di Partenza",
+        "description": "Il luogo sicuro da cui inizia l'avventura. Qui l'araldo attende il party.",
+        "x": 0,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 0,
+        "type": "hub"
+      },
+      {
+        "id_name": "loc_crossroads",
+        "name": "Crocevia dei Destini",
+        "description": "Un nodo di strade che si dirama verso pericoli crescenti.",
+        "x": 2,
+        "y": 0,
+        "connected_to": [
+          "loc_00",
+          "loc_dungeon"
+        ],
+        "difficulty_level": 1,
+        "type": "corridor"
+      },
+      {
+        "id_name": "loc_dungeon",
+        "name": "Cuore delle Tenebre",
+        "description": "Il fulcro della minaccia. Pochi entrano, meno ancora escono.",
+        "x": 4,
+        "y": 0,
+        "connected_to": [
+          "loc_crossroads"
+        ],
+        "difficulty_level": 3,
+        "type": "dungeon"
+      }
+    ],
+    "spawn_location_id": "loc_00"
+  },
+  "world_state": {
+    "theme": "Cyberpunk",
+    "party": [
+      {
+        "name": "FiglioDiButtanone",
+        "char_class": "Guerriero",
+        "hp": 30,
+        "max_hp": 30,
+        "id": "pg_0",
+        "ac": 14,
+        "level": 1,
+        "strength": 14,
+        "dexterity": 15,
+        "constitution": 15,
+        "intelligence": 13,
+        "wisdom": 10,
+        "charisma": 16,
+        "inventory": [
+          {
+            "name": "Pozione Rigenerante",
+            "item_type": "consumable",
+            "rarity": "Non Comune",
+            "description": "Densa fiala rossa che rinvigorisce il corpo.",
+            "attack_bonus": null,
+            "ac_bonus": null,
+            "heal_amount": 15,
+            "value": 0,
+            "lore_snippet": "Sa di ferro e cenere.",
+            "quantity": 3,
+            "durability": null
+          },
+          {
+            "name": "Spada d'Acciaio",
+            "item_type": "weapon",
+            "rarity": "Comune",
+            "description": "Una spada a una mano standard.",
+            "attack_bonus": 3,
+            "ac_bonus": null,
+            "heal_amount": null,
+            "value": 0,
+            "lore_snippet": "Forgiata in massa per le guardie cittadine.",
+            "quantity": 1,
+            "durability": 100
+          }
+        ]
+      }
+    ],
+    "active_enemies": [],
+    "current_location": "loc_00",
+    "known_locations": [
+      "loc_00",
+      "loc_crossroads"
+    ],
+    "turn_number": 1,
+    "active_npc_name": null,
+    "combat_log": [],
+    "memory_summary": ""
+  },
+  "visited_locations": {},
+  "current_location_id": "loc_00",
+  "last_narrative": "",
+  "current_scene": null,
+  "cinematic_seen": true,
+  "setup_p1_name": "FiglioDiButtanone",
+  "setup_p1_class": "Guerriero",
+  "setup_theme": "Cyberpunk",
+  "setup_mood": "Oscuro"
+}
