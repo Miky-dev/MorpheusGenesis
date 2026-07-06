@@ -1,6 +1,12 @@
 import random
 import os
+import sys
 from openai import OpenAI
+
+# Forza l'I/O in UTF-8 per visualizzare correttamente i caratteri accentati su Windows
+sys.stdout.reconfigure(encoding='utf-8')
+sys.stdin.reconfigure(encoding='utf-8')
+sys.stderr.reconfigure(encoding='utf-8')
 
 # Carica le variabili dal file .env se presente
 if os.path.exists(".env"):
