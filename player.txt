@@ -1,0 +1,6 @@
+[Il Tuo Personaggio]
+Nome: Kaelen
+Razza e Classe: Umano Ranger
+Tratti e Abilità: Estremamente agile e silenzioso. Ottima mira con l'arco e vista acuta. Non è molto forte fisicamente e non conosce la magia.
+Inventario Iniziale: Arco lungo, 15 frecce, un pugnale di ferro, mantello mimetico, una fiaschetta d'acqua.
+Stato Fisico: In salute, 100% Punti Ferita.

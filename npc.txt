@@ -1,57 +1,36 @@
 [Aldren Corvoscuro] - Cavaliere Errante
-
 Aspetto e Atteggiamento: Indossa un'armatura consumata dal tempo, ricoperta di graffi profondi e stemmi ormai irriconoscibili. Mantiene sempre una postura impeccabile e parla con calma, come se pesasse ogni parola.
-
 Motivazione/Segreto: Cerca disperatamente il sovrano a cui un tempo giurò fedeltà, ignaro che questi sia morto da secoli. Porta con sé una reliquia che molti ordini sono disposti a uccidere pur di ottenere.
-
 Utilità per il Giocatore: Può addestrare nelle tecniche di combattimento, scortare durante missioni pericolose e riconoscere antichi simboli nobiliari.
 
 [Lyssara] - Mercante di Curiosità Arcane
-
 Aspetto e Atteggiamento: Una donna dagli occhi color ambra e dai lunghi capelli argentati raccolti in elaborate trecce. Sorride spesso, ma il suo sguardo sembra analizzare ogni dettaglio di chi le sta davanti.
-
 Motivazione/Segreto: Colleziona manufatti magici per ricomporre un antico artefatto distrutto. Alcuni degli oggetti che vende sono stati sottratti a tombe proibite.
-
 Utilità per il Giocatore: Vende reliquie magiche, pergamene rare, ingredienti alchemici e può identificare oggetti incantati.
 
 [Fratello Edric] - Monaco Guaritore
-
 Aspetto e Atteggiamento: Indossa una semplice tunica di lino con un rosario di pietra bianca appeso alla cintura. Ha mani segnate dal lavoro e uno sguardo sereno che ispira immediata fiducia.
-
 Motivazione/Segreto: Vuole impedire il ritorno di una piaga magica che devastò il suo monastero. Conserva in segreto un grimorio proibito che potrebbe salvarlo... o condannarlo.
-
 Utilità per il Giocatore: Cura ferite e maledizioni minori, prepara rimedi naturali e conosce antichi rituali sacri.
 
 [Marek il Sussurratore] - Informatore
-
 Aspetto e Atteggiamento: Magro e sempre avvolto in un mantello scuro, compare e scompare tra la folla senza fare rumore. Parla sottovoce e conclude ogni frase con un sorriso enigmatico.
-
 Motivazione/Segreto: Vende informazioni al miglior offerente, ma sta segretamente raccogliendo prove contro una potente confraternita criminale.
-
 Utilità per il Giocatore: Rivela pettegolezzi, posizioni di bersagli, passaggi nascosti e missioni secondarie.
 
 [Brunna Forgiabrace] - Fabbra Nanica
-
 Aspetto e Atteggiamento: Bassa e robusta, porta una folta treccia color rame annerita dalla fuliggine della forgia. Ride fragorosamente mentre lavora il metallo con impressionante precisione.
-
 Motivazione/Segreto: Vuole creare l'arma perfetta per onorare il padre scomparso. Possiede un frammento di metallo celeste che nessuno dovrebbe sapere esista.
-
 Utilità per il Giocatore: Forgia e ripara armi e armature, migliora equipaggiamenti e riconosce materiali rari.
 
 [Selene Velombra] - Ranger
-
 Aspetto e Atteggiamento: Un'elfa dai capelli corvini e dagli occhi verde smeraldo, sempre accompagnata da un grande falco. Osserva ogni dettaglio dell'ambiente prima di parlare.
-
 Motivazione/Segreto: È sulle tracce di una creatura che ha distrutto il suo villaggio. In realtà conosce un antico sentiero che conduce al regno delle fate, ma ne custodisce gelosamente l'accesso.
-
 Utilità per il Giocatore: Guida attraverso foreste e montagne, individua tracce, evita imboscate e insegna tecniche di sopravvivenza.
 
 [Orik Doppio Volto] - Oste
-
 Aspetto e Atteggiamento: Un uomo corpulento dalla barba grigia e dall'aria bonaria che accoglie tutti con una risata fragorosa. Dietro il bancone ascolta ogni conversazione senza mai sembrare interessato.
-
 Motivazione/Segreto: Gestisce una rete segreta di messaggeri e contrabbandieri che opera sotto la sua locanda. Protegge una persona ricercata nascosta nelle cantine.
-
 Utilità per il Giocatore: Offre alloggio, raccoglie informazioni provenienti da tutto il regno e può mettere in contatto con individui difficili da trovare.
 
 [Neria dell'Eclisse] - Maga Errante
