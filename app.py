@@ -2,6 +2,7 @@ import random
 import os
 import sys
 import re
+import json
 from openai import OpenAI
 
 # Forza l'I/O in UTF-8 per visualizzare correttamente i caratteri accentati su Windows
@@ -35,20 +36,109 @@ def carica_mattoncini(nome_file):
         elementi = [blocco.strip() for blocco in re.split(r'\n+(?=\[)', testo) if blocco.strip()]
         return elementi if elementi else ["Nessuna informazione disponibile."]
 
+# --- CREAZIONE DINAMICA DEL PERSONAGGIO ---
+def genera_personaggio():
+    # Liste di nomi e razze
+    nomi = ["Kaelen", "Eryndor", "Tharok", "Lyra", "Grimm", "Sylas", "Vael", "Borek", "Elara", "Doran"]
+    razze = ["Umano", "Elfo", "Nano", "Mezzelfo", "Senza-volto"]
+    
+    # Dizionario per equipaggiamento iniziale
+    classi = {
+        "Guerriero": "Spadone a due mani, armatura a piastre, una pozione curativa.",
+        "Ladro": "Due pugnali, grimaldelli, mantello scuro, fiala di veleno.",
+        "Mago": "Bastone di quercia, grimorio degli incantesimi, amuleto arcano.",
+        "Ranger": "Arco lungo, 20 frecce, spada corta, razioni da viaggio.",
+        "Chierico": "Mazza ferrata, scudo sacro, simbolo divino, ampolla d'acqua santa.",
+        "Barbaro": "Ascia bipenne, abiti di pelle, fiasca di forte liquore nanico."
+    }
+    
+    # NUOVO: Lista di Background / Storie personali
+    backgrounds = [
+        "Veterano Disilluso: Hai combattuto in guerre brutali. Hai visto compagni cadere e ora cerchi un nuovo scopo, o forse solo l'oro per dimenticare.",
+        "Nobile Esiliato: La tua famiglia è stata tradita e privata delle sue terre. Viaggi in incognito per accumulare potere e riprenderti ciò che è tuo.",
+        "Ricercatore di Verità: Hai letto un frammento di un'antica profezia proibita e hai lasciato la tua casa per svelarne il mistero.",
+        "Sopravvissuto: Il tuo villaggio è stato distrutto da creature mostruose. Sei l'unico rimasto e porti le cicatrici (fisiche e mentali) di quella notte.",
+        "Fuggiasco: Hai rubato qualcosa di inestimabile a una persona molto potente e ora sei costantemente in movimento per non farti prendere.",
+        "Prescelto Riluttante: Un segno di nascita o un evento mistico ti ha marchiato. Molti si aspettano grandi cose da te, ma tu vorresti solo una vita normale e tranquilla."
+    ]
+    
+    # Estrazione casuale
+    nome_scelto = random.choice(nomi)
+    razza_scelta = random.choice(razze)
+    classe_scelta = random.choice(list(classi.keys()))
+    equipaggiamento = classi[classe_scelta]
+    storia_scelta = random.choice(backgrounds)
+    
+    # Tiro dei dadi per le statistiche (3 dadi a 6 facce, da 3 a 18)
+    forza = random.randint(3, 18)
+    destrezza = random.randint(3, 18)
+    intelligenza = random.randint(3, 18)
+    costituzione = random.randint(3, 18)
+    
+    # Creazione della scheda aggiornata
+    scheda = f"""Nome: {nome_scelto}
+Razza e Classe: {razza_scelta} {classe_scelta}
+Background: {storia_scelta}
+Equipaggiamento: {equipaggiamento}
+Statistiche:
+- FORZA: {forza} (colpire duro, sollevare, spingere)
+- DESTREZZA: {destrezza} (agilità, furtività, schivare, armi a distanza)
+- INTELLIGENZA: {intelligenza} (magia, indagare, capire meccanismi)
+- COSTITUZIONE: {costituzione} (resistenza fisica, salute)
+Punti Ferita: 100/100"""
+    
+    return scheda
+
 # --- 3. CARICAMENTO E MOTORE LOGICO ---
 ambientazioni = carica_mattoncini('ambient.txt')
 personaggi = carica_mattoncini('npc.txt')
 creature = carica_mattoncini('enemies.txt')
 
-ambient_scelta = random.choice(ambientazioni)
-npc_scelto = random.choice(personaggi)
-creatura_scelta = random.choice(creature)
+giocatori = carica_mattoncini('player.txt')
 
-giocatore_attuale = carica_mattoncini('player.txt')[0]
+print("="*60)
+print(" ⚔️  MORPHEUS GENESIS LITE - AVVIO SISTEMA  ⚔️ ")
+print("="*60)
+print(f"Dati caricati: {len(ambientazioni)} ambientazioni, {len(personaggi)} personaggi, {len(creature)} creature.")
 
-# --- 4. IL MEGA-PROMPT DI SISTEMA (CON PACING MIGLIORATO) ---
-sistema = f"""Agisci come un Dungeon Master esperto di giochi di ruolo testuali. 
-L'atmosfera del gioco è fantasy medievale e avventurosa, ricca di mistero e creature magiche.
+chat_history = []
+carica_salvataggio = False
+
+if os.path.exists("savegame.json"):
+    scelta = input("💾 Trovato un salvataggio. Vuoi riprendere la partita? (s/n): ")
+    if scelta.lower().startswith('s'):
+        with open("savegame.json", "r", encoding="utf-8") as f:
+            chat_history = json.load(f)
+        carica_salvataggio = True
+        print("\nPartita caricata con successo!\n")
+        # Stampa l'ultimo messaggio per rinfrescare la memoria
+        print(f"DUNGEON MASTER (Bentornato):\n{chat_history[-1]['content']}\n")
+
+# --- 5. AVVIO NUOVA PARTITA (Se non è stato caricato un salvataggio) ---
+if not carica_salvataggio:
+    print(f"Dati caricati: {len(ambientazioni)} ambientazioni, {len(personaggi)} personaggi, {len(creature)} creature.")
+    
+    # NUOVA FASE: TIRO DEI DADI E MOSTRA SCHEDA
+    input("\n🎲 Premi INVIO per tirare i dadi e generare il tuo personaggio...")
+    
+    giocatore_attuale = genera_personaggio() # Chiama la funzione aggiornata con nomi e inventario
+    
+    print("\n" + "="*50)
+    print(" 📜 LA TUA SCHEDA PERSONAGGIO 📜")
+    print("="*50)
+    print(giocatore_attuale)
+    print("="*50)
+    
+    input("\nPremi INVIO per farti trasportare nel mondo di gioco...")
+    print("\n(Il Master sta preparando la nuova scena, attendi...)\n")
+    
+    # Estrazioni per l'avventura
+    ambient_scelta = random.choice(ambientazioni)
+    npc_scelto = random.choice(personaggi)
+    creatura_scelta = random.choice(creature)
+
+    sistema = f"""Agisci come un Dungeon Master esperto di giochi di ruolo testuali. 
+L'atmosfera del gioco è fantasy medievale e avventurosa.
 
 === LA SCHEDA DEL GIOCATORE ===
 {giocatore_attuale}
@@ -58,40 +148,66 @@ AMBIENTAZIONE: {ambient_scelta}
 PERSONAGGIO: {npc_scelto}
 NEMICO/PERICOLO: {creatura_scelta}
 
-=== REGOLE DI STILE, RITMO E MECCANICHE ===
-1. PACING: Non rovesciare tutte le informazioni addosso al giocatore in una sola volta. 
-2. INTRODUZIONE GRADUALE: Descrivi prima i suoni, gli odori e l'ambiente. Inserisci il Personaggio in modo organico.
-3. TENSIONE: Il Nemico/Pericolo NON deve attaccare immediatamente. Fai percepire la sua presenza.
-4. RISOLUZIONE DELLE AZIONI: Valuta le azioni del giocatore basandoti ESCLUSIVAMENTE sulla "Scheda del Giocatore". Se il giocatore prova un'azione per cui è addestrato (es. furtività per un Ranger), avrà alte probabilità di successo. Se prova azioni in cui è debole (es. usare la forza bruta se è gracile), fallirà o subirà conseguenze.
-5. GESTIONE DELL'INVENTARIO: Tieni traccia dell'Inventario Iniziale del giocatore. Se usa una freccia, ricordagli che gliene restano meno.
-6. FORMATTAZIONE: Metti in **grassetto** nomi, oggetti e luoghi. Usa il *corsivo* per i suoni.
+=== REGOLE SUI DADI E SULLE AZIONI (FONDAMENTALE) ===
+4. RISOLUZIONE CON I DADI: Ogni volta che il giocatore descrive un'azione, riceverai anche un [Tiro d20]. Devi narrare l'esito incrociando questo tiro con la "Scheda del Giocatore".
+- Un tiro di 1 è un Fallimento Critico (disastroso).
+- Un tiro di 20 è un Successo Critico (spettacolare).
+- Tiri da 2 a 10 tendono a fallire, da 11 a 19 tendono ad avere successo.
+- Applica dei bonus logici basandoti sulle statistiche del giocatore.
+5. INVENTARIO E PACING: Tieni traccia delle risorse. Non rovesciare troppe informazioni insieme. Fai percepire la minaccia senza farla attaccare subito.
 
 === STRUTTURA DEL PROLOGO CHE DEVI SCRIVERE ORA ===
-- Paragrafo 1: Descrizione viscerale del luogo. Adatta la prospettiva in base alla Razza/Classe del giocatore.
+- Paragrafo 1: Descrizione viscerale del luogo.
 - Paragrafo 2: Apparizione o interazione con il Personaggio.
-- Paragrafo 3: Indizio del Pericolo o della Creatura.
+- Paragrafo 3: Indizio del Pericolo.
 - Chiusura: Vai a capo e chiedi "Cosa fai?".
 """
+    chat_history = [{"role": "system", "content": sistema}]
+    
+    try:
+        # Genera il primo messaggio (Prologo)
+        response = client.chat.completions.create(
+            model=os.environ.get("MODEL_NAME", "gpt-4o-mini"),
+            messages=chat_history,
+            temperature=0.75
+        )
+        dm_reply = response.choices[0].message.content
+        print(f"\nDUNGEON MASTER:\n{dm_reply}\n")
+        chat_history.append({"role": "assistant", "content": dm_reply})
+    except Exception as e:
+        print(f"\nErrore di connessione: {e}")
+        sys.exit()
 
-# --- 5. INIZIALIZZAZIONE DELLA MEMORIA ---
-chat_history = [
-    {"role": "system", "content": sistema}
-]
+else:
+    # Se abbiamo caricato il salvataggio, ristampiamo l'ultima risposta del DM per rinfrescare la memoria
+    ultimo_msg = chat_history[-1]["content"]
+    print(f"\nDUNGEON MASTER (Bentornato):\n{ultimo_msg}\n")
 
-print("="*60)
-print(" ⚔️  MORPHEUS GENESIS LITE - AVVIO SISTEMA  ⚔️ ")
-print("="*60)
-print(f"Dati caricati: {len(ambientazioni)} ambientazioni, {len(personaggi)} personaggi, {len(creature)} creature.")
-print("(Il Master sta preparando la scena, attendi...)\n")
 
 # --- 6. IL CICLO DI GIOCO PRINCIPALE ---
 while True:
     try:
+        # Turno del giocatore
+        player_input = input("\nAZIONE (scrivi 'esci' per SALVARE e terminare): ")
+        
+        if player_input.lower() in ["esci", "quit", "exit"]:
+            with open("savegame.json", "w", encoding="utf-8") as f:
+                json.dump(chat_history, f, ensure_ascii=False, indent=4)
+            print("\n💾 Partita salvata con successo in 'savegame.json'. Alla prossima!")
+            break
+            
+        # --- TIRO DEL DADO (d20) ---
+        tiro_dado = random.randint(1, 20)
+        messaggio_con_dado = f"{player_input}\n[Tiro d20 del sistema per questa azione: {tiro_dado}]"
+        
+        # Salvataggio dell'azione + dado nella memoria
+        chat_history.append({"role": "user", "content": messaggio_con_dado})
+
         # L'IA pensa e risponde
         response = client.chat.completions.create(
             model=os.environ.get("MODEL_NAME", "gpt-4o-mini"),
             messages=chat_history,
-            temperature=0.75 # 0.75 migliora le descrizioni narrative
+            temperature=0.75
         )
         
         # Estrazione della risposta
@@ -100,16 +216,6 @@ while True:
         
         # Salvataggio nella memoria
         chat_history.append({"role": "assistant", "content": dm_reply})
-        
-        # Turno del giocatore
-        player_input = input("AZIONE (scrivi 'esci' per terminare): ")
-        
-        if player_input.lower() in ["esci", "quit", "exit"]:
-            print("\nGrazie per aver giocato. Partita terminata.")
-            break
-            
-        # Salvataggio dell'azione nella memoria
-        chat_history.append({"role": "user", "content": player_input})
 
     except Exception as e:
         print(f"\nErrore di connessione: {e}")
