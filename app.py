@@ -2,9 +2,17 @@ import random
 import os
 from openai import OpenAI
 
+# Carica le variabili dal file .env se presente
+if os.path.exists(".env"):
+    with open(".env", "r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip() and not line.startswith("#"):
+                key, val = line.strip().split("=", 1)
+                os.environ[key.strip()] = val.strip().strip('"').strip("'")
+
 # 1. CONFIGURAZIONE API
-# Inserisci qui la tua chiave API di OpenAI (o modificalo per usare Ollama/Anthropic)
-client = OpenAI(api_key="INSERISCI_QUI_LA_TUA_CHIAVE_API") 
+# La chiave API di OpenAI viene caricata automaticamente dal file .env
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 # 2. IL LOREBOOK (I mattoncini narrativi)
 # Qui ho inserito il tuo esempio. Puoi aggiungere quanti blocchi vuoi tra le virgolette.
