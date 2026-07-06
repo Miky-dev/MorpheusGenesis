@@ -11,8 +11,11 @@ if os.path.exists(".env"):
                 os.environ[key.strip()] = val.strip().strip('"').strip("'")
 
 # 1. CONFIGURAZIONE API
-# La chiave API di OpenAI viene caricata automaticamente dal file .env
-client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+# Le chiavi e l'endpoint dell'API vengono caricati dal file .env
+client = OpenAI(
+    api_key=os.environ.get("OPENAI_API_KEY"),
+    base_url=os.environ.get("OPENAI_BASE_URL")
+)
 
 # 2. IL LOREBOOK (I mattoncini narrativi)
 # Qui ho inserito il tuo esempio. Puoi aggiungere quanti blocchi vuoi tra le virgolette.
@@ -312,7 +315,7 @@ while True:
     try:
         # L'IA pensa e risponde
         response = client.chat.completions.create(
-            model="gpt-4o-mini", # Puoi cambiare modello in gpt-4o se preferisci
+            model=os.environ.get("MODEL_NAME", "gpt-4o-mini"),
             messages=chat_history,
             temperature=0.7 # 0.7 è un buon equilibrio tra logica e creatività
         )
