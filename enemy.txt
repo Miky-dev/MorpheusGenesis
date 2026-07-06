@@ -1,0 +1,179 @@
+[Lupo delle Nebbie]
+
+Descrizione e Pericolosità: Un enorme lupo dal pelo grigio-argento, con occhi azzurri che brillano attraverso la foschia. È rapido, silenzioso e letale, capace di abbattere un uomo prima che riesca a estrarre la spada.
+
+Comportamento: Caccia in piccoli branchi e sfrutta la nebbia per isolare le prede. Attacca solo quando è certo di avere il vantaggio.
+
+Punto Debole: Il suo olfatto estremamente sensibile viene confuso dal fumo intenso e dagli aromi pungenti.
+
+Possibile Bottino (Loot): Pelle argentata, zanne affilate, occhi incantati utilizzabili per pozioni di visione notturna.
+
+[Ragno di Cristallo]
+
+Descrizione e Pericolosità: Un ragno gigantesco ricoperto da un esoscheletro trasparente simile al quarzo. I suoi morsi iniettano un veleno che irrigidisce lentamente il corpo della vittima.
+
+Comportamento: Tesse ragnatele quasi invisibili tra rocce e alberi, aspettando pazientemente che la preda rimanga intrappolata.
+
+Punto Debole: Le vibrazioni improvvise lo disorientano, rendendolo vulnerabile.
+
+Possibile Bottino (Loot): Filo di cristallo, ghiandola velenifera, frammenti del carapace.
+
+[Golem di Basalto]
+
+Descrizione e Pericolosità: Un colosso di pietra nera attraversato da vene incandescenti. Ogni suo colpo è in grado di frantumare muri e armature.
+
+Comportamento: Difende instancabilmente rovine, templi o tesori e non si ferma finché l'intruso non viene eliminato.
+
+Punto Debole: Le rune incise sulla schiena alimentano la sua magia e possono essere danneggiate.
+
+Possibile Bottino (Loot): Nucleo elementale, frammenti runici, minerali rari.
+
+[Sirena Abissale]
+
+Descrizione e Pericolosità: Una figura elegante dalla pelle azzurro pallido e dai lunghi capelli algosi, con occhi completamente neri. Il suo canto trascina i viaggiatori verso acque profonde da cui nessuno riemerge.
+
+Comportamento: Seduce le vittime con melodie ipnotiche prima di trascinarle sott'acqua.
+
+Punto Debole: Non può usare il proprio canto contro chi è completamente sordo o protegge l'udito.
+
+Possibile Bottino (Loot): Perla incantata, squame luminose, conchiglia melodica.
+
+[Idra delle Paludi]
+
+Descrizione e Pericolosità: Un enorme rettile anfibio con numerose teste ricoperte di melma verde scuro. Ogni testa può mordere indipendentemente e rigenera rapidamente le ferite.
+
+Comportamento: Rimane nascosta sotto l'acqua torbida aspettando che le prede si avvicinino alla riva.
+
+Punto Debole: Le ferite cauterizzate con fuoco impediscono la rigenerazione delle teste.
+
+Possibile Bottino (Loot): Sangue rigenerante, denti affilati, pelle resistente all'umidità.
+
+[Spettro del Giuramento]
+
+Descrizione e Pericolosità: Un guerriero etereo avvolto da un'armatura consumata e da una luce bluastra. La sua lama attraversa la carne e colpisce direttamente l'anima.
+
+Comportamento: Sorveglia tombe e reliquie, attaccando chiunque violi il proprio giuramento sacro.
+
+Punto Debole: Recitare il giuramento che protegge o restituire un oggetto sacro può placare il suo spirito senza combattere.
+
+Possibile Bottino (Loot): Essenza spettrale, spada benedetta, frammenti di armatura eterea.
+
+[Divoratore d'Ombre]
+
+Descrizione e Pericolosità: Una creatura informe composta da oscurità liquida, con decine di occhi luminosi che si aprono e chiudono sulla sua superficie. Dove passa, la luce sembra svanire completamente.
+
+Comportamento: Si muove tra le ombre e assorbe lentamente l'energia vitale delle vittime prima di colpire.
+
+Punto Debole: La luce intensa o gli incantesimi luminosi dissolvono temporaneamente il suo corpo.
+
+Possibile Bottino (Loot): Essenza d'ombra, cristallo oscuro, residui magici utilizzabili negli incantesimi.
+
+[Drago delle Tempeste]
+
+Descrizione e Pericolosità: Un gigantesco drago dalle scaglie blu acciaio attraversate da scariche elettriche. Il battito delle sue ali scatena venti devastanti e fulmini che inceneriscono interi gruppi di avventurieri.
+
+Comportamento: Difende il proprio territorio dall'alto, colpendo con fulmini prima di piombare sulle prede.
+
+Punto Debole: Durante il volo accumula enormi quantità di energia elettrica; costringerlo ad atterrare lo rende molto meno pericoloso.
+
+Possibile Bottino (Loot): Scaglie draconiche, artigli, cuore del fulmine, tesoro accumulato nel covo.
+
+[Mimic del Tesoriere]
+
+Descrizione e Pericolosità: All'apparenza è un normale baule rinforzato con ferro, ma quando una vittima si avvicina rivela una bocca colma di denti e una lunga lingua adesiva. È sorprendentemente veloce e può spezzare un braccio con un solo morso.
+
+Comportamento: Rimane immobile per giorni fingendosi un contenitore abbandonato, colpendo solo quando la preda abbassa la guardia.
+
+Punto Debole: Detesta il sale e le sostanze corrosive, che lo costringono ad aprirsi prima di attaccare.
+
+Possibile Bottino (Loot): Denti affilatissimi, saliva adesiva, monete e oggetti appartenuti alle sue vittime.
+
+[Basilisco di Pietrascura]
+
+Descrizione e Pericolosità: Un enorme rettile dalle scaglie color ardesia e dagli occhi giallo oro. Il suo sguardo può trasformare lentamente carne e pietra in un'unica massa rocciosa.
+
+Comportamento: Difende il proprio territorio con pazienza, inseguendo le vittime solo dopo averle indebolite con il suo sguardo.
+
+Punto Debole: Evita di guardare superfici riflettenti, che possono rimandargli contro il proprio potere.
+
+Possibile Bottino (Loot): Occhi di basilisco, veleno pietrificante, scaglie resistenti.
+
+[Falena del Sogno]
+
+Descrizione e Pericolosità: Un enorme insetto dalle ali iridescenti ricoperte di polvere luminosa. Non è aggressiva di per sé, ma il suo pulviscolo induce sonni profondi e incubi mortali.
+
+Comportamento: Vola silenziosamente nelle ore notturne attirata da luci e fuochi da campo.
+
+Punto Debole: Il vento forte disperde il suo pulviscolo e la rende incapace di difendersi.
+
+Possibile Bottino (Loot): Polvere onirica, ali luminose, antenne magiche.
+
+[Verme delle Profondità]
+
+Descrizione e Pericolosità: Un gigantesco verme cieco lungo decine di metri, ricoperto da placche ossee. Le sue fauci possono inghiottire un cavallo intero.
+
+Comportamento: Percepisce le vibrazioni del terreno e tende imboscate emergendo improvvisamente dal sottosuolo.
+
+Punto Debole: Le esplosioni o i forti rumori ne disorientano i sensi.
+
+Possibile Bottino (Loot): Denti enormi, pelle resistente, ghiandole digestive utilizzate dagli alchimisti.
+
+[Custode Runico]
+
+Descrizione e Pericolosità: Un'armatura vuota animata da antiche rune dorate, priva di qualsiasi essere vivente al suo interno. Combatte con precisione perfetta e non conosce paura né fatica.
+
+Comportamento: Pattuglia incessantemente sale sacre e cripte dimenticate, eliminando chiunque oltrepassi determinati sigilli.
+
+Punto Debole: Distruggere o cancellare la runa principale sul suo elmo interrompe l'incantesimo che lo anima.
+
+Possibile Bottino (Loot): Rune magiche, armatura incantata, frammenti di metallo antico.
+
+[Arpia Cinerea]
+
+Descrizione e Pericolosità: Una creatura alata dal volto umano e dagli artigli ricurvi come falci. Le sue urla penetranti possono far perdere l'equilibrio anche ai guerrieri più esperti.
+
+Comportamento: Vive sulle scogliere e attacca in stormi, cercando di spingere le prede nel vuoto.
+
+Punto Debole: Le ali sono fragili e facilmente danneggiabili da frecce o reti.
+
+Possibile Bottino (Loot): Piume magiche, artigli, corde intrecciate recuperate dai nidi.
+
+[Fungo Colossale]
+
+Descrizione e Pericolosità: Un enorme fungo ambulante alto quanto un uomo, ricoperto di spore verdastre. Il suo corpo è lento, ma ogni colpo libera nuvole tossiche.
+
+Comportamento: Si muove lentamente nelle caverne umide e difende il proprio territorio tramite spore velenose.
+
+Punto Debole: Il fuoco secca rapidamente il suo corpo impedendogli di rilasciare nuove spore.
+
+Possibile Bottino (Loot): Spore medicinali, cappello fungino gigante, essenza micotica.
+
+[Cervo Spettrale]
+
+Descrizione e Pericolosità: Un maestoso cervo dal corpo traslucido e dalle corna luminose come il chiaro di luna. Normalmente evita il conflitto, ma diventa estremamente aggressivo se il bosco viene profanato.
+
+Comportamento: Appare e scompare tra gli alberi, attirando gli intrusi in luoghi da cui è impossibile uscire.
+
+Punto Debole: Offerte di acqua pura o il ripristino dell'equilibrio naturale possono placarne l'ira.
+
+Possibile Bottino (Loot): Corna eteree, essenza spirituale, muschio sacro.
+
+[Lich del Sepolcro Eterno]
+
+Descrizione e Pericolosità: Uno scheletro avvolto in vesti regali consumate, con occhi che brillano di una luce viola innaturale. È uno dei maghi più pericolosi esistenti, capace di controllare orde di non morti.
+
+Comportamento: Evita il combattimento diretto, preferendo evocare servitori e lanciare potenti incantesimi da lontano.
+
+Punto Debole: Finché il suo filatterio rimane intatto, tornerà sempre in vita; distruggerlo è l'unico modo per eliminarlo definitivamente.
+
+Possibile Bottino (Loot): Grimorio proibito, bastone necromantico, gemme oscure, filatterio.
+
+[Fenice Cinerea]
+
+Descrizione e Pericolosità: Un enorme uccello dalle piume nere percorse da braci incandescenti. Ogni battito d'ali solleva cenere rovente e lingue di fuoco.
+
+Comportamento: È territoriale e attacca chiunque si avvicini al proprio nido, ma evita combattimenti inutili.
+
+Punto Debole: Durante la rinascita dalle proprie ceneri rimane vulnerabile per pochi istanti.
+
+Possibile Bottino (Loot): Piume della Fenice, cenere rigenerante, uovo incandescente.
