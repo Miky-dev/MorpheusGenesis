@@ -1,0 +1,129 @@
+[Kaelen il Ramingo]
+Razza e Classe: Umano Ranger
+Età: 29 anni
+Allineamento: Neutrale Buono
+Background: Sopravvissuto. Il tuo villaggio è stato distrutto da creature mostruose e porti le cicatrici (fisiche e mentali) di quella notte.
+Personalità: Taciturno, paziente e incredibilmente osservatore. Si fida delle azioni più che delle parole.
+Abilità Distintive: Maestro delle imboscate, tracciatore esperto, eccellente arciere.
+Pregio: Non abbandona mai chi considera un alleato.
+Difetto: Gli incubi del passato lo rendono diffidente verso gli sconosciuti.
+Obiettivo: Scoprire chi ha guidato l'attacco che distrusse il suo villaggio.
+Segreto: Conserva una zanna della creatura che sterminò la sua famiglia, capace di reagire alla presenza dei suoi simili.
+Equipaggiamento: Arco lungo, 20 frecce, spada corta, coltello da caccia, mantello mimetico, razioni da viaggio, pietra focaia, corda da 15 metri.
+
+[Eryndor il Devoto]
+Razza e Classe: Nano Chierico
+Età: 86 anni
+Allineamento: Legale Buono
+Background: Ricercatore di Verità. Hai letto un frammento di un'antica profezia e hai lasciato il tuo tempio per svelarne il mistero.
+Personalità: Riflessivo, paziente e profondamente compassionevole.
+Abilità Distintive: Guaritore, esperto di testi sacri, esorcista.
+Pregio: Riesce sempre a mantenere la calma.
+Difetto: È troppo disposto a concedere una seconda possibilità.
+Obiettivo: Riunire tutti i frammenti della profezia.
+Segreto: Dubita silenziosamente della divinità che serve.
+Equipaggiamento: Mazza ferrata, scudo sacro, simbolo divino, armatura di maglia, ampolla d'acqua santa, kit medico, libro delle preghiere.
+
+[Lyra l'Ombra]
+Razza e Classe: Elfa Ladra
+Età: 121 anni
+Allineamento: Caotico Neutrale
+Background: Fuggiasca. Hai rubato qualcosa di inestimabile a una persona molto potente e ora sei costantemente in movimento.
+Personalità: Ironica, intelligente e sempre pronta ad avere un piano di riserva.
+Abilità Distintive: Scassinatrice, infiltrazione, borseggio, acrobazia.
+Pregio: Si adatta rapidamente a qualsiasi situazione.
+Difetto: Fatica a fidarsi perfino dei propri alleati.
+Obiettivo: Vendere il manufatto rubato senza essere trovata.
+Segreto: L'oggetto rubato sembra comunicare con lei nei sogni.
+Equipaggiamento: Due pugnali, grimaldelli, mantello scuro, fiala di veleno, corda sottile, bombe fumogene, borsa con monete.
+
+[Tharok Spaccascudi]
+Razza e Classe: Barbaro Mezzorco
+Età: 38 anni
+Allineamento: Caotico Neutrale
+Background: Veterano Disilluso. Hai combattuto in guerre brutali. Hai visto compagni cadere e ora cerchi solo l'oro per dimenticare.
+Personalità: Diretto, impulsivo e sorprendentemente leale.
+Abilità Distintive: Combattimento con armi pesanti, resistenza straordinaria, intimidazione.
+Pregio: Non conosce la paura.
+Difetto: Agisce spesso prima di riflettere.
+Obiettivo: Accumulare abbastanza ricchezze da ritirarsi lontano dal mondo.
+Segreto: È perseguitato dai fantasmi dei compagni morti in battaglia.
+Equipaggiamento: Ascia bipenne, coltello da caccia, abiti di pelle, bracciali rinforzati, fiasca di forte liquore, kit per affilare le armi.
+
+[Seraphine delle Stelle]
+Razza e Classe: Elfa Maga
+Età: 187 anni
+Allineamento: Neutrale Buono
+Background: Accademica Esiliata. Un esperimento magico fallito ti ha costretto ad abbandonare l'accademia.
+Personalità: Curiosa, elegante e assetata di conoscenza.
+Abilità Distintive: Magia elementale, identificazione di reliquie, teletrasporto limitato.
+Pregio: Apprende rapidamente qualsiasi disciplina.
+Difetto: La curiosità spesso supera la prudenza.
+Obiettivo: Dimostrare la propria innocenza.
+Segreto: Una potente entità vive nascosta nel suo grimorio.
+Equipaggiamento: Bastone runico, grimorio, cristalli di mana, mantello incantato, pozione di mana.
+
+[Brom Rocciadura]
+Razza e Classe: Nano Guerriero
+Età: 143 anni
+Allineamento: Legale Neutrale
+Background: Guardia Reale. Hai fallito nel proteggere il tuo sovrano e hai scelto l'esilio.
+Personalità: Onorevole, severo e disciplinato.
+Abilità Distintive: Difesa con scudo, tattica militare, fabbro esperto.
+Pregio: Non infrange mai una promessa.
+Difetto: Porta il peso dei propri errori.
+Obiettivo: Riscattare il proprio onore.
+Segreto: Conosce il luogo dove è nascosta la corona perduta del suo regno.
+Equipaggiamento: Martello da guerra, scudo pesante, armatura completa, kit da fabbro, torcia.
+
+[Nymia Fogliargento]
+Razza e Classe: Druida Elfa
+Età: 264 anni
+Allineamento: Neutrale
+Background: Custode della Natura. Hai trascorso secoli proteggendo una foresta sacra.
+Personalità: Calma, saggia e profondamente legata agli animali.
+Abilità Distintive: Trasformazione animale, controllo delle piante, guarigione naturale.
+Pregio: Riesce sempre a trovare una soluzione pacifica.
+Difetto: Diffida delle grandi città.
+Obiettivo: Fermare una corruzione che sta consumando le foreste.
+Segreto: L'albero sacro che protegge sta lentamente morendo.
+Equipaggiamento: Bastone di quercia, falcetto rituale, erbe medicinali, talismani naturali.
+
+[Cassian Ventoquieto]
+Razza e Classe: Umano Bardo
+Età: 27 anni
+Allineamento: Caotico Buono
+Background: Cantastorie Errante. Hai viaggiato attraverso decine di regni raccogliendo leggende.
+Personalità: Carismatico, spiritoso e affascinante.
+Abilità Distintive: Persuasione, musica magica, conoscenza storica.
+Pregio: Riesce a infondere coraggio negli altri.
+Difetto: Parla troppo anche quando dovrebbe tacere.
+Obiettivo: Comporre la ballata perfetta.
+Segreto: Sta cercando il proprio padre, un famoso eroe scomparso.
+Equipaggiamento: Liuto, pugnale, mantello elegante, diario di viaggio, monete d'argento.
+
+[Varek il Corvo]
+Razza e Classe: Tiefling Stregone
+Età: 35 anni
+Allineamento: Neutrale
+Background: Figlio della Maledizione. La tua magia deriva da un antico patto stipulato dai tuoi antenati.
+Personalità: Freddo, enigmatico e calcolatore.
+Abilità Distintive: Magia oscura, illusioni, maledizioni.
+Pregio: Mantiene sempre il controllo.
+Difetto: Fatica a provare empatia.
+Obiettivo: Spezzare il patto che grava sulla sua stirpe.
+Segreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.
+Equipaggiamento: Bastone d'ossidiana, tomo maledetto, anello runico, mantello nero, amuleto demoniaco.
+
+[Aelric il Pellegrino]
+Razza e Classe: Umano Paladino
+Età: 34 anni
+Allineamento: Legale Buono
+Background: Campione della Luce. Hai consacrato la tua vita alla lotta contro le forze dell'oscurità.
+Personalità: Determinato, altruista e inflessibile.
+Abilità Distintive: Combattimento sacro, protezione degli alleati, individuazione del male.
+Pregio: Ispira fiducia ovunque vada.
+Difetto: Fatica ad accettare compromessi morali.
+Obiettivo: Distruggere un antico culto oscuro.
+Segreto: Il capo del culto era un tempo il suo maestro.
+Equipaggiamento: Spada lunga consacrata, scudo benedetto, armatura a piastre, simbolo sacro, pozioni curative.

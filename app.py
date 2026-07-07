@@ -36,58 +36,33 @@ def carica_mattoncini(nome_file):
         elementi = [blocco.strip() for blocco in re.split(r'\n+(?=\[)', testo) if blocco.strip()]
         return elementi if elementi else ["Nessuna informazione disponibile."]
 
-# --- CREAZIONE DINAMICA DEL PERSONAGGIO ---
+# --- CREAZIONE DINAMICA DEL PERSONAGGIO DA FILE ---
 def genera_personaggio():
-    # Liste di nomi e razze
-    nomi = ["Kaelen", "Eryndor", "Tharok", "Lyra", "Grimm", "Sylas", "Vael", "Borek", "Elara", "Doran"]
-    razze = ["Umano", "Elfo", "Nano", "Mezzelfo", "Senza-volto"]
+    # 1. Legge gli archetipi dal file txt
+    archetipi = carica_mattoncini('player.txt')
     
-    # Dizionario per equipaggiamento iniziale
-    classi = {
-        "Guerriero": "Spadone a due mani, armatura a piastre, una pozione curativa.",
-        "Ladro": "Due pugnali, grimaldelli, mantello scuro, fiala di veleno.",
-        "Mago": "Bastone di quercia, grimorio degli incantesimi, amuleto arcano.",
-        "Ranger": "Arco lungo, 20 frecce, spada corta, razioni da viaggio.",
-        "Chierico": "Mazza ferrata, scudo sacro, simbolo divino, ampolla d'acqua santa.",
-        "Barbaro": "Ascia bipenne, abiti di pelle, fiasca di forte liquore nanico."
-    }
+    # Se il file è vuoto o non esiste, usa un fallback
+    if not archetipi or archetipi[0] == "Nessuna informazione disponibile.":
+        archetipo_scelto = "[Avventuriero Sconosciuto]\nRazza e Classe: Umano Guerriero\nEquipaggiamento: Spada e scudo."
+    else:
+        archetipo_scelto = random.choice(archetipi)
     
-    # NUOVO: Lista di Background / Storie personali
-    backgrounds = [
-        "Veterano Disilluso: Hai combattuto in guerre brutali. Hai visto compagni cadere e ora cerchi un nuovo scopo, o forse solo l'oro per dimenticare.",
-        "Nobile Esiliato: La tua famiglia è stata tradita e privata delle sue terre. Viaggi in incognito per accumulare potere e riprenderti ciò che è tuo.",
-        "Ricercatore di Verità: Hai letto un frammento di un'antica profezia proibita e hai lasciato la tua casa per svelarne il mistero.",
-        "Sopravvissuto: Il tuo villaggio è stato distrutto da creature mostruose. Sei l'unico rimasto e porti le cicatrici (fisiche e mentali) di quella notte.",
-        "Fuggiasco: Hai rubato qualcosa di inestimabile a una persona molto potente e ora sei costantemente in movimento per non farti prendere.",
-        "Prescelto Riluttante: Un segno di nascita o un evento mistico ti ha marchiato. Molti si aspettano grandi cose da te, ma tu vorresti solo una vita normale e tranquilla."
-    ]
-    
-    # Estrazione casuale
-    nome_scelto = random.choice(nomi)
-    razza_scelta = random.choice(razze)
-    classe_scelta = random.choice(list(classi.keys()))
-    equipaggiamento = classi[classe_scelta]
-    storia_scelta = random.choice(backgrounds)
-    
-    # Tiro dei dadi per le statistiche (3 dadi a 6 facce, da 3 a 18)
+    # 2. Tiro dei dadi per le statistiche fisiche e mentali (3d6)
     forza = random.randint(3, 18)
     destrezza = random.randint(3, 18)
     intelligenza = random.randint(3, 18)
     costituzione = random.randint(3, 18)
     
-    # Creazione della scheda aggiornata
-    scheda = f"""Nome: {nome_scelto}
-Razza e Classe: {razza_scelta} {classe_scelta}
-Background: {storia_scelta}
-Equipaggiamento: {equipaggiamento}
-Statistiche:
+    # 3. Assembla la scheda finale (Testo base + Dadi)
+    scheda_completa = f"""{archetipo_scelto}
+Statistiche (Generate coi Dadi):
 - FORZA: {forza} (colpire duro, sollevare, spingere)
 - DESTREZZA: {destrezza} (agilità, furtività, schivare, armi a distanza)
 - INTELLIGENZA: {intelligenza} (magia, indagare, capire meccanismi)
 - COSTITUZIONE: {costituzione} (resistenza fisica, salute)
 Punti Ferita: 100/100"""
     
-    return scheda
+    return scheda_completa
 
 # --- 3. CARICAMENTO E MOTORE LOGICO ---
 ambientazioni = carica_mattoncini('ambient.txt')
@@ -102,13 +77,17 @@ print("="*60)
 print(f"Dati caricati: {len(ambientazioni)} ambientazioni, {len(personaggi)} personaggi, {len(creature)} creature.")
 
 chat_history = []
+diario = {} # <--- NUOVA VARIABILE PER IL DIARIO
 carica_salvataggio = False
 
 if os.path.exists("savegame.json"):
     scelta = input("💾 Trovato un salvataggio. Vuoi riprendere la partita? (s/n): ")
     if scelta.lower().startswith('s'):
         with open("savegame.json", "r", encoding="utf-8") as f:
-            chat_history = json.load(f)
+            save_data = json.load(f)
+            # Estraiamo separatamente la chat e il diario
+            chat_history = save_data.get("history", [])
+            diario = save_data.get("diario", {})
         carica_salvataggio = True
         print("\nPartita caricata con successo!\n")
         # Stampa l'ultimo messaggio per rinfrescare la memoria
@@ -123,6 +102,8 @@ if not carica_salvataggio:
     
     giocatore_attuale = genera_personaggio() # Chiama la funzione aggiornata con nomi e inventario
     
+    
+
     print("\n" + "="*50)
     print(" 📜 LA TUA SCHEDA PERSONAGGIO 📜")
     print("="*50)
@@ -132,10 +113,37 @@ if not carica_salvataggio:
     input("\nPremi INVIO per farti trasportare nel mondo di gioco...")
     print("\n(Il Master sta preparando la nuova scena, attendi...)\n")
     
-    # Estrazioni per l'avventura
-    ambient_scelta = random.choice(ambientazioni)
+    print("\n(Il Master sta disegnando la mappa del mondo, attendi...)\n")
+    
+    # 1. Estraiamo PIÙ ambientazioni (es. 4) per popolare le direzioni
+    # Assicurati che il file ambientazioni.txt abbia almeno 4 luoghi diversi!
+    ambient_scelta = random.sample(ambientazioni, 4)
+    
+    # 2. Estraiamo NPC e Nemico
     npc_scelto = random.choice(personaggi)
     creatura_scelta = random.choice(creature)
+
+    # 3. Costruiamo la Mappa a Nodi
+    mappa_mondo = f"""[CENTRO]: {ambient_scelta[0]} <-- (Tu sei qui)
+    [NORD]: {ambient_scelta[1]} <-- (Presenza avvistata: {npc_scelto})
+    [EST]: {ambient_scelta[2]} <-- (Pericolo rilevato: {creatura_scelta})
+    [OVEST]: {ambient_scelta[3]}
+    [SUD]: Terre Selvagge e Inesplorate"""
+
+    # 4. Inizializziamo il Diario con la mappa inclusa
+    diario = {
+        "La Tua Storia": giocatore_attuale,
+        "Mappa e Posizioni": mappa_mondo,
+        "Bestiario (Nemici Noti)": [creatura_scelta]
+    }
+
+    # --- NUOVO: CREAZIONE DEL DIARIO INIZIALE ---
+    diario = {
+        "La Tua Storia": giocatore_attuale,
+        "Luoghi Esplorati": [ambient_scelta],
+        "Personaggi Incontrati": [npc_scelto],
+        "Bestiario (Nemici Noti)": [creatura_scelta]
+    }
 
     sistema = f"""Agisci come un Dungeon Master esperto di giochi di ruolo testuali. 
 L'atmosfera del gioco è fantasy medievale e avventurosa.
@@ -143,24 +151,28 @@ L'atmosfera del gioco è fantasy medievale e avventurosa.
 === LA SCHEDA DEL GIOCATORE ===
 {giocatore_attuale}
 
-=== MATTONCINI DELLA SCENA ATTUALE ===
-AMBIENTAZIONE: {ambient_scelta}
-PERSONAGGIO: {npc_scelto}
-NEMICO/PERICOLO: {creatura_scelta}
+=== GEOGRAFIA E POSIZIONI (LA MAPPA) ===
+{mappa_mondo}
 
-=== REGOLE SUI DADI E SULLE AZIONI (FONDAMENTALE) ===
-4. RISOLUZIONE CON I DADI: Ogni volta che il giocatore descrive un'azione, riceverai anche un [Tiro d20]. Devi narrare l'esito incrociando questo tiro con la "Scheda del Giocatore".
-- Un tiro di 1 è un Fallimento Critico (disastroso).
-- Un tiro di 20 è un Successo Critico (spettacolare).
-- Tiri da 2 a 10 tendono a fallire, da 11 a 19 tendono ad avere successo.
-- Applica dei bonus logici basandoti sulle statistiche del giocatore.
-5. INVENTARIO E PACING: Tieni traccia delle risorse. Non rovesciare troppe informazioni insieme. Fai percepire la minaccia senza farla attaccare subito.
+=== REGOLE DI ESPLORAZIONE E SPOSTAMENTO ===
+1. POSIZIONE ATTUALE: Il gioco inizia con il giocatore nella zona [CENTRO]. Descrivi questo luogo nel Prologo.
+2. VIAGGIO: Se il giocatore decide di spostarsi (es. va a NORD o verso EST), cambia l'ambientazione e fai incontrare l'NPC o il Nemico associato a quella zona.
+3. COERENZA SPAZIALE: Rispetta rigorosamente i luoghi della mappa. Non far apparire l'NPC o il Nemico se il giocatore non si reca nella loro rispettiva zona.
+
+=== REGOLE SUI DADI, AZIONI E GIOCO DI RUOLO ===
+4. RISOLUZIONE CON I DADI: Ogni volta che il giocatore descrive un'azione, riceverai anche un [Tiro d20]. Narra l'esito incrociando questo tiro con le Statistiche della Scheda.
+    - Un tiro di 1 è un Fallimento Critico (disastroso).
+    - Un tiro di 20 è un Successo Critico (spettacolare).
+    - Tiri da 2 a 10 tendono a fallire, da 11 a 19 tendono ad avere successo.
+5. GIOCO DI RUOLO: Usa Personalità, Difetto, Obiettivo e Segreto del giocatore per creare tentazioni o bivi morali.
+6. BREVITÀ ESTREMA (FONDAMENTALE): Il Prologo è descrittivo, ma DOPO il prologo, ogni tua risposta deve essere un "botta e risposta" rapido. Usa MASSIMO 2-3 frasi brevi per turno. Vai dritto al punto.
+7. IL GIOCATORE È IL PROTAGONISTA: Non descrivere MAI cosa prova, cosa pensa o le azioni non dichiarate dal giocatore. Limita la tua narrazione alle conseguenze delle sue azioni e alle reazioni del mondo/PNG.
+8. FORMATTAZIONE: Metti in **grassetto** nomi e oggetti. Usa il *corsivo* per i suoni.
 
 === STRUTTURA DEL PROLOGO CHE DEVI SCRIVERE ORA ===
-- Paragrafo 1: Descrizione viscerale del luogo.
-- Paragrafo 2: Apparizione o interazione con il Personaggio.
-- Paragrafo 3: Indizio del Pericolo.
-- Chiusura: Vai a capo e chiedi "Cosa fai?".
+- Paragrafo 1 (Il Mondo): Introduci l'Ambientazione con una descrizione viscerale e immersiva. Fai capire al giocatore l'atmosfera del luogo in cui si trova (suoni, odori, luci).
+- Paragrafo 2 (Il Protagonista e lo Scopo): Inserisci organicamente il giocatore nella scena. Menziona il suo nome, la sua razza e classe, ma soprattutto il suo Obiettivo o il suo Background. Spiega brevemente perché si trova in questo luogo proprio per inseguire quel fine.
+- Paragrafo 3 (L'Innesco dell'Azione): Fai entrare in scena il Personaggio (NPC) o fai percepire l'indizio del Nemico per creare tensione e dare il via all'avventura. Termina la narrazione in modo netto, lasciando la scena in sospeso".
 """
     chat_history = [{"role": "system", "content": sistema}]
     
@@ -188,12 +200,43 @@ else:
 while True:
     try:
         # Turno del giocatore
-        player_input = input("\nAZIONE (scrivi 'esci' per SALVARE e terminare): ")
+        player_input = input("\nAZIONE (scrivi 'esci' per salvare, 'diario' per il codex): ")
         
+        # Blocca l'invio a vuoto
+        if not player_input.strip():
+            continue
+
+        # Comando per aprire il DIARIO
+        if player_input.lower() in ["diario", "codex", "scheda"]:
+            print("\n" + "="*60)
+            print(" 📖 IL TUO DIARIO DI VIAGGIO 📖")
+            print("="*60)
+            for categoria, contenuti in diario.items():
+                print(f"\n--- {categoria.upper()} ---")
+                
+                if isinstance(contenuti, list):
+                    for item in contenuti:
+                        # Se l'elemento è a sua volta una lista, lo converte e unisce
+                        if isinstance(item, list):
+                            print(", ".join(str(i).strip() for i in item) + "\n")
+                        else:
+                            # Converte forzatamente in stringa prima del ritocco
+                            print(str(item).strip() + "\n")
+                else:
+                    print(str(contenuti).strip())
+                    
+            print("="*60)
+            continue
+
+        # Salvataggio e Uscita
         if player_input.lower() in ["esci", "quit", "exit"]:
+            save_data = {
+                "history": chat_history,
+                "diario": diario
+            }
             with open("savegame.json", "w", encoding="utf-8") as f:
-                json.dump(chat_history, f, ensure_ascii=False, indent=4)
-            print("\n💾 Partita salvata con successo in 'savegame.json'. Alla prossima!")
+                json.dump(save_data, f, ensure_ascii=False, indent=4)
+            print("\n💾 Partita e Diario salvati con successo. Alla prossima!")
             break
             
         # --- TIRO DEL DADO (d20) ---

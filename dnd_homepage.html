@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velmorath — Dark Fantasy RPG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-obsidian: #0a0a0f;
+            --bg-slate: #12121a;
+            --bg-panel: #161620;
+            --bg-parchment: #1a1a24;
+            --border-gold: #c9a84c;
+            --border-bronze: #8b7355;
+            --accent-crimson: #e63946;
+            --accent-crimson-glow: rgba(230, 57, 70, 0.3);
+            --accent-blue: #4cc9f0;
+            --accent-blue-glow: rgba(76, 201, 240, 0.3);
+            --text-primary: #e8e6e3;
+            --text-secondary: #a09b8c;
+            --text-gold: #d4af37;
+            --text-muted: #6b6560;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-obsidian);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* === Background Effects === */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-gradient {
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(230, 57, 70, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(76, 201, 240, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(201, 168, 76, 0.04) 0%, transparent 40%);
+        }
+
+        .bg-noise {
+            background-image: url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+        }
+
+        .bg-grid {
+            background-image: 
+                linear-gradient(rgba(201, 168, 76, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(201, 168, 76, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 70%);
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--border-gold);
+            border-radius: 50%;
+            opacity: 0;
+            animation: float-up 12s infinite ease-in-out;
+            box-shadow: 0 0 6px var(--border-gold);
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 14s; }
+        .particle:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 11s; width: 2px; height: 2px; }
+        .particle:nth-child(3) { left: 40%; animation-delay: 4s; animation-duration: 16s; background: var(--accent-crimson); box-shadow: 0 0 6px var(--accent-crimson); }
+        .particle:nth-child(4) { left: 55%; animation-delay: 1s; animation-duration: 13s; width: 4px; height: 4px; }
+        .particle:nth-child(5) { left: 70%; animation-delay: 6s; animation-duration: 15s; background: var(--accent-blue); box-shadow: 0 0 6px var(--accent-blue); }
+        .particle:nth-child(6) { left: 85%; animation-delay: 3s; animation-duration: 12s; width: 2px; height: 2px; }
+        .particle:nth-child(7) { left: 15%; animation-delay: 8s; animation-duration: 17s; }
+        .particle:nth-child(8) { left: 60%; animation-delay: 5s; animation-duration: 10s; background: var(--accent-crimson); box-shadow: 0 0 6px var(--accent-crimson); }
+        .particle:nth-child(9) { left: 90%; animation-delay: 7s; animation-duration: 14s; width: 3px; height: 3px; }
+        .particle:nth-child(10) { left: 35%; animation-delay: 9s; animation-duration: 18s; background: var(--accent-blue); box-shadow: 0 0 6px var(--accent-blue); }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+
+        /* === Main Container === */
+        .home-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 720px;
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        /* === Logo / Title === */
+        .logo-section {
+            text-align: center;
+            position: relative;
+        }
+
+        .logo-ornament {
+            font-size: 32px;
+            color: var(--border-gold);
+            opacity: 0.6;
+            margin-bottom: 16px;
+            letter-spacing: 8px;
+        }
+
+        .game-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 900;
+            color: var(--text-gold);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            line-height: 1.1;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.2), 0 4px 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .game-title::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+            margin: 20px auto 0;
+            opacity: 0.6;
+        }
+
+        .game-subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            color: var(--text-secondary);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-top: 12px;
+        }
+
+        .game-tagline {
+            font-size: 15px;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 8px;
+            letter-spacing: 1px;
+        }
+
+        /* === Selection Cards === */
+        .selection-panel {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .panel-section {
+            background: linear-gradient(180deg, rgba(22, 22, 32, 0.9), rgba(18, 18, 26, 0.95));
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            border-radius: 16px;
+            padding: 28px 32px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .panel-section:hover {
+            border-color: rgba(201, 168, 76, 0.4);
+            box-shadow: 0 8px 40px rgba(201, 168, 76, 0.08);
+        }
+
+        .panel-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+            opacity: 0.5;
+        }
+
+        .panel-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.2), transparent);
+        }
+
+        .section-label {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            color: var(--border-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::before {
+            content: '◆';
+            font-size: 10px;
+            opacity: 0.7;
+        }
+
+        /* === Theme Selection === */
+        .theme-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        @media (min-width: 600px) {
+            .theme-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .theme-card {
+            position: relative;
+            background: rgba(10, 10, 15, 0.6);
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            border-radius: 12px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .theme-card:hover {
+            border-color: var(--border-gold);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(201, 168, 76, 0.12);
+        }
+
+        .theme-card.selected {
+            border-color: var(--border-gold);
+            background: linear-gradient(180deg, rgba(201, 168, 76, 0.1), rgba(10, 10, 15, 0.8));
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.15), inset 0 1px 0 rgba(201, 168, 76, 0.2);
+        }
+
+        .theme-card.selected::after {
+            content: '✦';
+            position: absolute;
+            top: 6px;
+            right: 8px;
+            font-size: 12px;
+            color: var(--border-gold);
+        }
+
+        .theme-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .theme-card:hover .theme-icon {
+            transform: scale(1.15);
+        }
+
+        .theme-name {
+            font-family: 'Cinzel', serif;
+            font-size: 13px;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .theme-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* === Difficulty Selection === */
+        .difficulty-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .diff-btn {
+            flex: 1;
+            min-width: 120px;
+            background: rgba(10, 10, 15, 0.6);
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            border-radius: 10px;
+            padding: 16px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diff-btn:hover {
+            border-color: var(--border-gold);
+            transform: translateY(-2px);
+        }
+
+        .diff-btn.selected {
+            border-color: var(--border-gold);
+            background: linear-gradient(180deg, rgba(201, 168, 76, 0.1), rgba(10, 10, 15, 0.8));
+            box-shadow: 0 0 16px rgba(201, 168, 76, 0.12);
+        }
+
+        .diff-btn.selected::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+        }
+
+        .diff-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .diff-name {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            color: var(--text-primary);
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .diff-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        /* Difficulty colors */
+        .diff-btn[data-diff="easy"] .diff-icon { filter: drop-shadow(0 0 6px rgba(46, 204, 113, 0.4)); }
+        .diff-btn[data-diff="normal"] .diff-icon { filter: drop-shadow(0 0 6px rgba(76, 201, 240, 0.4)); }
+        .diff-btn[data-diff="hard"] .diff-icon { filter: drop-shadow(0 0 6px rgba(230, 57, 70, 0.4)); }
+        .diff-btn[data-diff="hardcore"] .diff-icon { filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.6)); }
+
+        .diff-btn[data-diff="easy"].selected { border-color: #2ecc71; box-shadow: 0 0 16px rgba(46, 204, 113, 0.15); }
+        .diff-btn[data-diff="normal"].selected { border-color: var(--accent-blue); box-shadow: 0 0 16px rgba(76, 201, 240, 0.15); }
+        .diff-btn[data-diff="hard"].selected { border-color: var(--accent-crimson); box-shadow: 0 0 16px rgba(230, 57, 70, 0.15); }
+        .diff-btn[data-diff="hardcore"].selected { border-color: #8b0000; box-shadow: 0 0 20px rgba(139, 0, 0, 0.2); }
+
+        /* === Start Button === */
+        .start-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .start-btn {
+            width: 100%;
+            max-width: 400px;
+            height: 56px;
+            background: linear-gradient(145deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.05));
+            border: 2px solid var(--border-gold);
+            border-radius: 12px;
+            color: var(--text-gold);
+            font-family: 'Cinzel', serif;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .start-btn:hover {
+            background: linear-gradient(145deg, rgba(201, 168, 76, 0.25), rgba(201, 168, 76, 0.1));
+            box-shadow: 0 0 40px rgba(201, 168, 76, 0.25), 0 8px 30px rgba(0,0,0,0.4);
+            transform: translateY(-2px);
+            letter-spacing: 4px;
+        }
+
+        .start-btn:active {
+            transform: scale(0.98);
+        }
+
+        .start-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .start-btn:hover::before {
+            left: 100%;
+        }
+
+        .start-btn .dice-icon {
+            font-size: 22px;
+            transition: transform 0.4s ease;
+        }
+
+        .start-btn:hover .dice-icon {
+            transform: rotate(360deg);
+        }
+
+        .selection-summary {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+            letter-spacing: 1px;
+            min-height: 20px;
+        }
+
+        .selection-summary span {
+            color: var(--text-gold);
+            font-weight: 500;
+        }
+
+        /* === Footer === */
+        .home-footer {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .footer-line {
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+            margin: 0 auto 16px;
+            opacity: 0.4;
+        }
+
+        .footer-text {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Corner decorations */
+        .corner-decor {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--border-gold);
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .corner-tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
+        .corner-tr { top: 20px; right: 20px; border-left: 0; border-bottom: 0; }
+        .corner-bl { bottom: 20px; left: 20px; border-right: 0; border-top: 0; }
+        .corner-br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .home-container { padding: 24px 16px; gap: 28px; }
+            .panel-section { padding: 20px 20px; }
+            .theme-grid { grid-template-columns: repeat(2, 1fr); }
+            .difficulty-row { flex-direction: column; }
+            .diff-btn { min-width: 100%; }
+            .game-title { font-size: 32px; letter-spacing: 3px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background layers -->
+    <div class="bg-layer bg-gradient"></div>
+    <div class="bg-layer bg-noise"></div>
+    <div class="bg-layer bg-grid"></div>
+
+    <!-- Floating particles -->
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <!-- Corner decorations -->
+    <div class="corner-decor corner-tl"></div>
+    <div class="corner-decor corner-tr"></div>
+    <div class="corner-decor corner-bl"></div>
+    <div class="corner-decor corner-br"></div>
+
+    <!-- Main Content -->
+    <div class="home-container">
+        <!-- Logo -->
+        <div class="logo-section">
+            <div class="logo-ornament">⚜ ◈ ⚜</div>
+            <h1 class="game-title">Velmorath</h1>
+            <p class="game-subtitle">Dark Fantasy Text RPG</p>
+            <p class="game-tagline">"Ogni scelta scolpisce la tua leggenda..."</p>
+        </div>
+
+        <!-- Selection Panel -->
+        <div class="selection-panel">
+            <!-- Theme Selection -->
+            <div class="panel-section">
+                <div class="section-label">Scegli il Tema</div>
+                <div class="theme-grid">
+                    <div class="theme-card" data-theme="dark-fantasy" onclick="selectTheme(this)">
+                        <span class="theme-icon">🌑</span>
+                        <div class="theme-name">Dark Fantasy</div>
+                        <div class="theme-desc">Regni corrotti, magia proibita</div>
+                    </div>
+                    <div class="theme-card" data-theme="high-fantasy" onclick="selectTheme(this)">
+                        <span class="theme-icon">🏰</span>
+                        <div class="theme-name">High Fantasy</div>
+                        <div class="theme-desc">Eroi epici, draghi antichi</div>
+                    </div>
+                    <div class="theme-card" data-theme="gothic-horror" onclick="selectTheme(this)">
+                        <span class="theme-icon">🧛</span>
+                        <div class="theme-name">Gothic Horror</div>
+                        <div class="theme-desc">Vampiri, maledizioni, nebbie</div>
+                    </div>
+                    <div class="theme-card" data-theme="steampunk" onclick="selectTheme(this)">
+                        <span class="theme-icon">⚙️</span>
+                        <div class="theme-name">Steampunk</div>
+                        <div class="theme-desc">Ingranaggi, vapore, ingegno</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Difficulty Selection -->
+            <div class="panel-section">
+                <div class="section-label">Scegli la Difficoltà</div>
+                <div class="difficulty-row">
+                    <div class="diff-btn" data-diff="easy" onclick="selectDiff(this)">
+                        <span class="diff-icon">🌿</span>
+                        <div class="diff-name">Novizio</div>
+                        <div class="diff-desc">Storia fluida, combattimenti semplici</div>
+                    </div>
+                    <div class="diff-btn" data-diff="normal" onclick="selectDiff(this)">
+                        <span class="diff-icon">⚔️</span>
+                        <div class="diff-name">Avventuriero</div>
+                        <div class="diff-desc">Equilibrato, sfide stimolanti</div>
+                    </div>
+                    <div class="diff-btn" data-diff="hard" onclick="selectDiff(this)">
+                        <span class="diff-icon">🔥</span>
+                        <div class="diff-name">Veterano</div>
+                        <div class="diff-desc">Nemici letali, risorse scarse</div>
+                    </div>
+                    <div class="diff-btn" data-diff="hardcore" onclick="selectDiff(this)">
+                        <span class="diff-icon">💀</span>
+                        <div class="diff-name">Hardcore</div>
+                        <div class="diff-desc">Morte permanente, solo abilità</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start Button -->
+        <div class="start-section">
+            <button class="start-btn" onclick="startGame()">
+                <span class="dice-icon">🎲</span>
+                <span>Inizia l'Avventura</span>
+            </button>
+            <div class="selection-summary" id="summary">
+                Seleziona un tema e una difficoltà per iniziare...
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="home-footer">
+            <div class="footer-line"></div>
+            <p class="footer-text">Un'avventura testuale basata su browser</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedTheme = null;
+        let selectedDiff = null;
+
+        const themeNames = {
+            'dark-fantasy': 'Dark Fantasy',
+            'high-fantasy': 'High Fantasy',
+            'gothic-horror': 'Gothic Horror',
+            'steampunk': 'Steampunk'
+        };
+
+        const diffNames = {
+            'easy': 'Novizio',
+            'normal': 'Avventuriero',
+            'hard': 'Veterano',
+            'hardcore': 'Hardcore'
+        };
+
+        function selectTheme(el) {
+            document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedTheme = el.dataset.theme;
+            updateSummary();
+        }
+
+        function selectDiff(el) {
+            document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedDiff = el.dataset.diff;
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const summary = document.getElementById('summary');
+            if (selectedTheme && selectedDiff) {
+                summary.innerHTML = `Hai scelto: <span>${themeNames[selectedTheme]}</span> — Difficoltà: <span>${diffNames[selectedDiff]}</span>`;
+            } else if (selectedTheme) {
+                summary.innerHTML = `Tema: <span>${themeNames[selectedTheme]}</span> — Scegli una difficoltà...`;
+            } else if (selectedDiff) {
+                summary.innerHTML = `Difficoltà: <span>${diffNames[selectedDiff]}</span> — Scegli un tema...`;
+            } else {
+                summary.textContent = 'Seleziona un tema e una difficoltà per iniziare...';
+            }
+        }
+
+        function startGame() {
+            if (!selectedTheme || !selectedDiff) {
+                const summary = document.getElementById('summary');
+                summary.innerHTML = '<span style="color: var(--accent-crimson);">⚠ Devi selezionare sia un tema che una difficoltà!</span>';
+                summary.style.animation = 'none';
+                summary.offsetHeight; // trigger reflow
+                summary.style.animation = 'shake 0.4s ease';
+                return;
+            }
+            // Redirect to game (placeholder)
+            alert(`Avventura avviata!\nTema: ${themeNames[selectedTheme]}\nDifficoltà: ${diffNames[selectedDiff]}\n\nReindirizzamento all'interfaccia di gioco...`);
+            // window.location.href = 'dnd_rpg_interface.html';
+        }
+
+        // Add shake animation dynamically
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                20% { transform: translateX(-6px); }
+                40% { transform: translateX(6px); }
+                60% { transform: translateX(-4px); }
+                80% { transform: translateX(4px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Pre-select defaults for demo
+        window.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('[data-theme="dark-fantasy"]').click();
+            document.querySelector('[data-diff="normal"]').click();
+        });
+    </script>
+</body>
+</html>
