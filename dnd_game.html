@@ -597,6 +597,96 @@
             transform: none;
         }
 
+        /* --- COMBAT BANNER & STYLES --- */
+        .combat-banner {
+            background: linear-gradient(90deg, rgba(139, 26, 26, 0.4) 0%, rgba(30, 20, 20, 0.8) 100%);
+            border: 1px solid rgba(255, 68, 68, 0.5);
+            border-radius: 8px;
+            padding: 8px 14px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .combat-banner.hidden { display: none; }
+
+        .combat-banner-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .combat-enemy-name {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            color: #ff8888;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .combat-hp-bar {
+            width: 130px;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 5px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 100, 100, 0.3);
+        }
+
+        .combat-hp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff3333, #ff6666);
+            transition: width 0.3s ease;
+        }
+
+        .combat-hp-text {
+            font-size: 12px;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .flee-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ddd;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .flee-btn:hover {
+            background: rgba(255, 80, 80, 0.3);
+            border-color: #ff6666;
+            color: #fff;
+        }
+
+        .combat-toggle-btn {
+            background: linear-gradient(135deg, rgba(180, 30, 30, 0.3), rgba(120, 20, 20, 0.6));
+            border: 1px solid rgba(255, 80, 80, 0.4);
+            color: #ffcccc;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .combat-toggle-btn:hover {
+            background: linear-gradient(135deg, rgba(220, 40, 40, 0.5), rgba(160, 30, 30, 0.8));
+            border-color: #ff6666;
+            box-shadow: 0 0 10px rgba(255, 50, 50, 0.3);
+        }
+
         .input-actions {
             display: flex;
             justify-content: space-between;
@@ -1174,6 +1264,17 @@
 
             <!-- Input -->
             <div class="input-area">
+                <div id="combat-banner" class="combat-banner hidden">
+                    <div class="combat-banner-info">
+                        <span class="combat-icon">⚔️</span>
+                        <span class="combat-enemy-name" id="combat-enemy-name">Lupo delle Nebbie</span>
+                        <div class="combat-hp-bar">
+                            <div class="combat-hp-fill" id="combat-hp-fill" style="width: 100%;"></div>
+                        </div>
+                        <span class="combat-hp-text" id="combat-hp-text">45 / 45 HP</span>
+                    </div>
+                    <button class="flee-btn" onclick="fleeCombat()" title="Tenta di fuggire dal combattimento">🏳️ Fuggire</button>
+                </div>
                 <div class="input-wrapper">
                     <textarea class="action-input" id="action-input" 
                         placeholder="Descrivi la tua azione..." 
@@ -1183,16 +1284,21 @@
                         ⚔️
                     </button>
                 </div>
-                <div class="input-actions">
-                    <div class="quick-actions">
-                        <button class="quick-btn" onclick="insertAction('Guardo intorno')">👁️ Osserva</button>
-                        <button class="quick-btn" onclick="insertAction('Vado a NORD')">🧭 Nord</button>
-                        <button class="quick-btn" onclick="insertAction('Vado a EST')">🧭 Est</button>
-                        <button class="quick-btn" onclick="insertAction('Vado a OVEST')">🧭 Ovest</button>
-                        <button class="quick-btn" onclick="insertAction('Vado a SUD')">🧭 Sud</button>
+                <div class="input-actions" style="flex-direction: column; align-items: stretch; gap: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div class="quick-actions" style="flex-wrap: wrap;">
+                            <button class="quick-btn" onclick="insertAction('Guardo intorno')">👁️ Osserva</button>
+                            <button class="quick-btn" onclick="insertAction('Vado a NORD')">🧭 Nord</button>
+                            <button class="quick-btn" onclick="insertAction('Vado a EST')">🧭 Est</button>
+                            <button class="quick-btn" onclick="insertAction('Vado a OVEST')">🧭 Ovest</button>
+                            <button class="quick-btn" onclick="insertAction('Vado a SUD')">🧭 Sud</button>
+                        </div>
+                        <div class="input-hint">
+                            <kbd>Invio</kbd> per inviare
+                        </div>
                     </div>
-                    <div class="input-hint">
-                        <kbd>Invio</kbd> per inviare
+                    <div class="quick-actions" id="equipment-actions" style="flex-wrap: wrap; max-height: 70px; overflow-y: auto; padding-top: 2px;">
+                        <!-- I pulsanti dell'equipaggiamento verranno inseriti qui dinamicamente -->
                     </div>
                 </div>
             </div>
@@ -1284,6 +1390,85 @@
         });
 
         // =============================
+        //  COMBAT ENGINE UI
+        // =============================
+        function updateCombatUI(combatData) {
+            const banner = document.getElementById('combat-banner');
+            if (!banner) return;
+
+            if (combatData && combatData.active) {
+                banner.classList.remove('hidden');
+                const nameEl = document.getElementById('combat-enemy-name');
+                const fillEl = document.getElementById('combat-hp-fill');
+                const textEl = document.getElementById('combat-hp-text');
+
+                if (nameEl) nameEl.textContent = combatData.enemy_name || 'Nemico';
+                const hp = combatData.enemy_hp !== undefined ? combatData.enemy_hp : 50;
+                const maxHp = combatData.enemy_max_hp !== undefined && combatData.enemy_max_hp > 0 ? combatData.enemy_max_hp : 50;
+                const pct = Math.max(0, Math.min(100, (hp / maxHp) * 100));
+
+                if (fillEl) fillEl.style.width = `${pct}%`;
+                if (textEl) textEl.textContent = `${hp} / ${maxHp} HP`;
+            } else {
+                banner.classList.add('hidden');
+            }
+        }
+
+        function openCombatModal() {
+            const modal = document.getElementById('combat-modal');
+            if (modal) modal.classList.add('active');
+        }
+
+        function closeCombatModal() {
+            const modal = document.getElementById('combat-modal');
+            if (modal) modal.classList.remove('active');
+        }
+
+        async function startCombatWith(enemyName) {
+            closeCombatModal();
+            showLoading(true);
+            try {
+                const res = await fetch('/api/combat/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ enemy_name: enemyName })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    if (data.combat) updateCombatUI(data.combat);
+                    if (data.hp !== undefined) updateHP(data.hp);
+                    addDMMessage(data.dm_reply);
+                } else {
+                    addSystemMessage(`Errore avvio combattimento: ${data.error}`);
+                }
+            } catch (err) {
+                addSystemMessage(`Errore di connessione: ${err.message}`);
+            }
+            showLoading(false);
+        }
+
+        async function fleeCombat() {
+            showLoading(true);
+            try {
+                const res = await fetch('/api/combat/flee', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    addPlayerMessage("Tento di fuggire dal combattimento!");
+                    if (data.combat) updateCombatUI(data.combat);
+                    if (data.hp !== undefined) updateHP(data.hp);
+                    if (data.danni_subiti > 0) triggerDamageFlash(data.danni_subiti);
+                    addDMMessage(data.dm_reply);
+                    if (data.hp <= 0) triggerGameOver();
+                } else {
+                    addSystemMessage(`Errore fuga: ${data.error}`);
+                }
+            } catch (err) {
+                addSystemMessage(`Errore di connessione: ${err.message}`);
+            }
+            showLoading(false);
+        }
+
+        // =============================
         //  DANNI & GAME OVER LOGIC
         // =============================
         function updateHP(hp) {
@@ -1340,6 +1525,13 @@
 
             // Inizializza HP
             updateHP(data.hp !== undefined ? data.hp : 100);
+
+            // Inizializza UI Combattimento
+            if (data.combat) {
+                updateCombatUI(data.combat);
+            } else {
+                updateCombatUI({ active: false });
+            }
 
             // Parse personaggio
             parseCharacterSheet(data.personaggio);
@@ -1435,6 +1627,7 @@
 
             document.getElementById('char-identity').textContent = identity.join('\n');
             document.getElementById('char-equip').textContent = equip || '—';
+            renderEquipmentActions(equip);
 
             // Render stat bars
             const statsContainer = document.getElementById('char-stats');
@@ -1458,6 +1651,44 @@
                     </div>
                 `;
             }
+        }
+
+        function renderEquipmentActions(equipString) {
+            const container = document.getElementById('equipment-actions');
+            if (!container) return;
+            container.innerHTML = '';
+            if (!equipString || equipString === '—') return;
+
+            const items = equipString.split(',').map(i => i.trim()).filter(i => i.length > 0);
+            
+            items.forEach(item => {
+                let icon = '🎒';
+                let actionText = `Uso ${item}`;
+                const lower = item.toLowerCase();
+                
+                // Armi e attacchi
+                if (/spada|arco|ascia|pugnal|martello|bastone|mancina|lancia|dardo|balestra|mazza|falcetto/.test(lower)) {
+                    icon = '⚔️';
+                    actionText = `Attacco con ${item}`;
+                }
+                // Oggetti curativi e pozioni
+                else if (/pozion|ampoll|erb|kit|cura/.test(lower)) {
+                    icon = '🧪';
+                    actionText = `Uso ${item}`;
+                }
+                // Scudi o difese
+                else if (/scudo|armatur|mantell|elmo/.test(lower)) {
+                    icon = '🛡️';
+                    actionText = `Mi difendo con ${item}`;
+                }
+
+                const btn = document.createElement('button');
+                btn.className = 'quick-btn';
+                btn.style.borderColor = 'rgba(201, 168, 76, 0.35)';
+                btn.innerHTML = `${icon} <span>${escapeHTML(item)}</span>`;
+                btn.onclick = () => insertAction(actionText);
+                container.appendChild(btn);
+            });
         }
 
         // =============================
@@ -1584,6 +1815,9 @@
                         triggerDamageFlash(data.danni_subiti);
                     }
                     updateHP(data.hp);
+                    if (data.combat) {
+                        updateCombatUI(data.combat);
+                    }
                     addDMMessage(data.dm_reply);
                     if (data.hp <= 0) {
                         triggerGameOver();

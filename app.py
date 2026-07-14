@@ -6,6 +6,7 @@ import json
 import textwrap
 from openai import OpenAI
 from flask import Flask, request, jsonify, send_from_directory, session
+import combat_engine
 
 # Forza l'I/O in UTF-8 per visualizzare correttamente i caratteri accentati su Windows
 sys.stdout.reconfigure(encoding='utf-8')
@@ -135,6 +136,7 @@ game_state = {
     "diario": {},
     "personaggio": "",
     "mappa": "",
+    "combat": {"active": False},
     "attivo": False
 }
 
@@ -343,6 +345,7 @@ Devi dividere obbligatoriamente la tua risposta in due sezioni usando dei tag sp
             "tema": tema,
             "difficolta": difficolta,
             "hp": 100,
+            "combat": {"active": False},
             "attivo": True
         }
         
@@ -377,11 +380,64 @@ def ripristina_stato_da_salvataggio():
                 "tema": save_data.get("tema", "dark-fantasy"),
                 "difficolta": save_data.get("difficolta", "normal"),
                 "hp": save_data.get("hp", 100),
+                "combat": save_data.get("combat", {"active": False}),
                 "attivo": True
             }
             return True
         except Exception as e:
             print(f"Errore ripristino automatico: {e}")
+    return False
+
+
+# ============================
+#  HELPER: RILEVAMENTO COMBATTIMENTO E NEMICO
+# ============================
+def _detect_current_enemy(game_state):
+    history = game_state.get("chat_history", [])
+    known_enemies = list(combat_engine.BESTIARY_STATS.keys())
+    
+    # Controlla gli ultimi 8 messaggi in chat se menzionano un nemico noto
+    for msg in reversed(history[-8:]):
+        content_lower = msg.get("content", "").lower()
+        for k_enemy in known_enemies:
+            if k_enemy in content_lower:
+                return k_enemy
+                
+    # Controlla nel Diario -> Bestiario (Nemici Noti)
+    diario = game_state.get("diario", {})
+    bestiario = diario.get("Bestiario (Nemici Noti)", [])
+    if bestiario and isinstance(bestiario, list) and len(bestiario) > 0:
+        for nemico_diario in bestiario:
+            nem_lower = nemico_diario.lower()
+            for k_enemy in known_enemies:
+                if k_enemy in nem_lower or nem_lower in k_enemy:
+                    return k_enemy
+        return bestiario[0]
+        
+    return "Lupo delle Nebbie"
+
+def _is_combat_trigger(player_input, game_state):
+    text_lower = player_input.lower().strip()
+    
+    # Parola chiave di attacco o azione marziale/magica di scontro
+    combat_keywords = [
+        "attacc", "colpis", "fendente", "affond", "lanci", "combatt", "spada", 
+        "arco", "ascia", "pugnal", "martello", "bastone", "mancina", "lancia", "dardo", 
+        "balestra", "mazza", "falcetto", "incant", "fuoco", "fulmine", "runa", "arma"
+    ]
+    if any(k in text_lower for k in combat_keywords):
+        return True
+        
+    # Controlla se il testo corrisponde a un'arma o oggetto di difesa nell'equipaggiamento
+    personaggio = game_state.get("personaggio", "").lower()
+    for line in personaggio.split('\n'):
+        if any(hdr in line for hdr in ["equipaggiamento:", "armi:", "oggetti:"]):
+            items = line.split(":", 1)[-1].split(",")
+            for item in items:
+                item_clean = item.strip()
+                if item_clean and item_clean != "—" and item_clean in text_lower:
+                    if any(w in item_clean for w in ["spada", "arco", "ascia", "pugnal", "martello", "bastone", "mancina", "lancia", "dardo", "balestra", "mazza", "falcetto", "staffa", "lama"]):
+                        return True
     return False
 
 
@@ -401,8 +457,45 @@ def player_action():
     
     if not player_input:
         return jsonify({"success": False, "error": "Azione vuota."}), 400
+        
+    was_already_in_combat = game_state.get("combat", {}).get("active", False)
     
-    # Tiro del dado (d20)
+    # Se NON siamo già in combattimento, ma l'utente utilizza un'arma o sferra un attacco,
+    # attiviamo AUTOMATICAMENTE la modalità combattimento locale
+    if not was_already_in_combat and _is_combat_trigger(player_input, game_state):
+        enemy_name = _detect_current_enemy(game_state)
+        difficolta = game_state.get("difficolta", "normal")
+        stats = combat_engine.get_enemy_stats(enemy_name, difficolta)
+        stats["active"] = True
+        game_state["combat"] = stats
+        
+    # Se siamo in COMBATTIMENTO LOCALE (senza API LLM)
+    if game_state.get("combat", {}).get("active"):
+        res = combat_engine.risolvi_turno_combattimento(player_input, game_state)
+        if res and res.get("success"):
+            if not was_already_in_combat:
+                enemy_name_title = game_state["combat"].get("enemy_name", "Nemico")
+                intro_msg = (
+                    f"⚔️ **MODALITÀ COMBATTIMENTO ATTIVATA vs {enemy_name_title.upper()}!**\n"
+                    f"*(Da questo momento lo scontro è risolto in locale tramite dadi d20 e calcolo danni senza chiamare l'IA)*\n\n"
+                )
+                res["dm_reply"] = intro_msg + res["dm_reply"]
+                
+            game_state["chat_history"].append({"role": "user", "content": player_input})
+            game_state["chat_history"].append({"role": "assistant", "content": res["dm_reply"]})
+            
+            # Se il giocatore muore in combattimento
+            if game_state.get("hp", 100) <= 0:
+                if os.path.exists("savegame.json"):
+                    try:
+                        os.remove("savegame.json")
+                    except Exception as e:
+                        print(f"Errore rimozione salvataggio: {e}")
+                game_state["attivo"] = False
+                
+            return jsonify(res)
+            
+    # Tiro del dado (d20) per esplorazione narrative con LLM
     tiro_dado = random.randint(1, 20)
     messaggio_con_dado = f"{player_input}\n[Tiro d20 del sistema per questa azione: {tiro_dado}]"
     
@@ -454,6 +547,53 @@ def player_action():
 
 
 # ============================
+#  API: AVVIO COMBATTIMENTO LOCALE
+# ============================
+@app.route('/api/combat/start', methods=['POST'])
+def start_combat():
+    global game_state
+    if not game_state["attivo"]:
+        if not ripristina_stato_da_salvataggio():
+            return jsonify({"success": False, "error": "Nessuna partita attiva."}), 400
+            
+    data = request.get_json() or {}
+    enemy_name = data.get('enemy_name', 'Lupo delle Nebbie').strip()
+    difficolta = game_state.get("difficolta", "normal")
+    
+    stats = combat_engine.get_enemy_stats(enemy_name, difficolta)
+    stats["active"] = True
+    game_state["combat"] = stats
+    
+    msg_avvio = (
+        f"⚔️ **HA INIZIO IL COMBATTIMENTO!** ⚔️\n\n"
+        f"Un formidabile **{stats['enemy_name']}** (HP: {stats['enemy_hp']}/{stats['enemy_max_hp']} | CA: {stats['enemy_ac']}) "
+        f"si para dinanzi a te in posizione di attacco!\n"
+        f"*(Da ora in poi, le tue azioni di combattimento saranno risolte dal motore tattico locale in Python, senza consumare token API!)*"
+    )
+    game_state["chat_history"].append({"role": "assistant", "content": msg_avvio})
+    
+    return jsonify({
+        "success": True,
+        "combat": stats,
+        "dm_reply": msg_avvio,
+        "hp": game_state.get("hp", 100)
+    })
+
+@app.route('/api/combat/flee', methods=['POST'])
+def flee_combat():
+    global game_state
+    if not game_state["attivo"] or not game_state.get("combat", {}).get("active"):
+        return jsonify({"success": False, "error": "Non sei in combattimento."}), 400
+        
+    res = combat_engine.risolvi_turno_combattimento("fuga", game_state)
+    if res and res.get("success"):
+        game_state["chat_history"].append({"role": "user", "content": "Tento di fuggire dal combattimento!"})
+        game_state["chat_history"].append({"role": "assistant", "content": res["dm_reply"]})
+        return jsonify(res)
+    return jsonify({"success": False, "error": "Errore risoluzione fuga."}), 500
+
+
+# ============================
 #  API: DIARIO
 # ============================
 @app.route('/api/diary', methods=['GET'])
@@ -484,7 +624,8 @@ def save_game():
         "mappa": game_state["mappa"],
         "tema": game_state.get("tema", "dark-fantasy"),
         "difficolta": game_state.get("difficolta", "normal"),
-        "hp": game_state.get("hp", 100)
+        "hp": game_state.get("hp", 100),
+        "combat": game_state.get("combat", {"active": False})
     }
     
     with open("savegame.json", "w", encoding="utf-8") as f:
@@ -514,6 +655,7 @@ def load_game():
         "tema": save_data.get("tema", "dark-fantasy"),
         "difficolta": save_data.get("difficolta", "normal"),
         "hp": save_data.get("hp", 100),
+        "combat": save_data.get("combat", {"active": False}),
         "attivo": True
     }
     
@@ -535,6 +677,7 @@ def load_game():
         "tema": game_state["tema"],
         "difficolta": game_state["difficolta"],
         "hp": game_state["hp"],
+        "combat": game_state.get("combat", {"active": False}),
         "history": game_state["chat_history"]
     })
 
