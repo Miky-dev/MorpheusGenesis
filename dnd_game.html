@@ -868,6 +868,57 @@
         .parchment-scroll::-webkit-scrollbar { width: 5px; }
         .parchment-scroll::-webkit-scrollbar-track { background: transparent; }
         .parchment-scroll::-webkit-scrollbar-thumb { background: rgba(201, 168, 76, 0.3); border-radius: 3px; }
+
+        /* Pulsante Rivedi Prologo nel Diario */
+        .prologo-btn {
+            width: 100%;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, rgba(30, 26, 20, 0.95), rgba(42, 35, 24, 0.9));
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            border-radius: 10px;
+            color: #d4af37;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prologo-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.08), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .prologo-btn:hover {
+            border-color: rgba(201, 168, 76, 0.6);
+            box-shadow: 0 0 24px rgba(201, 168, 76, 0.15), inset 0 0 30px rgba(201, 168, 76, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .prologo-btn:hover::before {
+            opacity: 1;
+        }
+
+        .prologo-btn:active {
+            transform: translateY(0);
+        }
+
+        .prologo-btn-icon {
+            font-size: 18px;
+        }
     </style>
 </head>
 <body>
@@ -929,6 +980,10 @@
 
                 <!-- Tab: Diario -->
                 <div class="sidebar-panel" id="tab-diary">
+                    <button class="prologo-btn" id="prologo-review-btn" onclick="showParchment()" style="display:none;">
+                        <span class="prologo-btn-icon">📜</span>
+                        Rivedi il Prologo
+                    </button>
                     <div id="diary-content">
                         <p style="color:var(--text-muted);font-style:italic;">Il diario è vuoto. Inizia a esplorare!</p>
                     </div>
@@ -1040,8 +1095,12 @@
             // Parse personaggio
             parseCharacterSheet(data.personaggio);
 
-            // Mostra il prologo nella pergamena
-            showParchment(data.prologo);
+            // Salva il prologo e mostra la pergamena
+            window._prologoText = data.prologo;
+            showParchment();
+
+            // Rendi visibile il pulsante "Rivedi Prologo" nel diario
+            document.getElementById('prologo-review-btn').style.display = 'flex';
 
             // Carica il diario
             loadDiary();
@@ -1373,9 +1432,10 @@
         // =============================
         //  PERGAMENA
         // =============================
-        function showParchment(text) {
+        function showParchment() {
+            if (!window._prologoText) return;
             const body = document.getElementById('parchment-body');
-            body.innerHTML = renderMarkdown(text);
+            body.innerHTML = renderMarkdown(window._prologoText);
             // Show overlay with slight delay for smooth transition
             requestAnimationFrame(() => {
                 document.getElementById('parchment-overlay').classList.add('visible');
@@ -1385,14 +1445,6 @@
         function closeParchment() {
             const overlay = document.getElementById('parchment-overlay');
             overlay.classList.remove('visible');
-            // After close animation, add the prologo as a normal DM message in chat
-            setTimeout(() => {
-                const gameData = sessionStorage.getItem('morpheus_game_data');
-                if (gameData) {
-                    const data = JSON.parse(gameData);
-                    addDMMessage(data.prologo, true);
-                }
-            }, 800);
         }
     </script>
 </body>
