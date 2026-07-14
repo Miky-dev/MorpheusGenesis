@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Velmorath — Dark Fantasy RPG</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-obsidian: #0a0a0f;
@@ -23,7 +26,11 @@
             --text-muted: #6b6560;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         body {
             background: var(--bg-obsidian);
@@ -47,7 +54,7 @@
         }
 
         .bg-gradient {
-            background: 
+            background:
                 radial-gradient(ellipse at 20% 50%, rgba(230, 57, 70, 0.08) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 20%, rgba(76, 201, 240, 0.06) 0%, transparent 50%),
                 radial-gradient(ellipse at 50% 100%, rgba(201, 168, 76, 0.04) 0%, transparent 40%);
@@ -58,7 +65,7 @@
         }
 
         .bg-grid {
-            background-image: 
+            background-image:
                 linear-gradient(rgba(201, 168, 76, 0.03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(201, 168, 76, 0.03) 1px, transparent 1px);
             background-size: 60px 60px;
@@ -86,22 +93,100 @@
             box-shadow: 0 0 6px var(--border-gold);
         }
 
-        .particle:nth-child(1) { left: 10%; animation-delay: 0s; animation-duration: 14s; }
-        .particle:nth-child(2) { left: 25%; animation-delay: 2s; animation-duration: 11s; width: 2px; height: 2px; }
-        .particle:nth-child(3) { left: 40%; animation-delay: 4s; animation-duration: 16s; background: var(--accent-crimson); box-shadow: 0 0 6px var(--accent-crimson); }
-        .particle:nth-child(4) { left: 55%; animation-delay: 1s; animation-duration: 13s; width: 4px; height: 4px; }
-        .particle:nth-child(5) { left: 70%; animation-delay: 6s; animation-duration: 15s; background: var(--accent-blue); box-shadow: 0 0 6px var(--accent-blue); }
-        .particle:nth-child(6) { left: 85%; animation-delay: 3s; animation-duration: 12s; width: 2px; height: 2px; }
-        .particle:nth-child(7) { left: 15%; animation-delay: 8s; animation-duration: 17s; }
-        .particle:nth-child(8) { left: 60%; animation-delay: 5s; animation-duration: 10s; background: var(--accent-crimson); box-shadow: 0 0 6px var(--accent-crimson); }
-        .particle:nth-child(9) { left: 90%; animation-delay: 7s; animation-duration: 14s; width: 3px; height: 3px; }
-        .particle:nth-child(10) { left: 35%; animation-delay: 9s; animation-duration: 18s; background: var(--accent-blue); box-shadow: 0 0 6px var(--accent-blue); }
+        .particle:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 14s;
+        }
+
+        .particle:nth-child(2) {
+            left: 25%;
+            animation-delay: 2s;
+            animation-duration: 11s;
+            width: 2px;
+            height: 2px;
+        }
+
+        .particle:nth-child(3) {
+            left: 40%;
+            animation-delay: 4s;
+            animation-duration: 16s;
+            background: var(--accent-crimson);
+            box-shadow: 0 0 6px var(--accent-crimson);
+        }
+
+        .particle:nth-child(4) {
+            left: 55%;
+            animation-delay: 1s;
+            animation-duration: 13s;
+            width: 4px;
+            height: 4px;
+        }
+
+        .particle:nth-child(5) {
+            left: 70%;
+            animation-delay: 6s;
+            animation-duration: 15s;
+            background: var(--accent-blue);
+            box-shadow: 0 0 6px var(--accent-blue);
+        }
+
+        .particle:nth-child(6) {
+            left: 85%;
+            animation-delay: 3s;
+            animation-duration: 12s;
+            width: 2px;
+            height: 2px;
+        }
+
+        .particle:nth-child(7) {
+            left: 15%;
+            animation-delay: 8s;
+            animation-duration: 17s;
+        }
+
+        .particle:nth-child(8) {
+            left: 60%;
+            animation-delay: 5s;
+            animation-duration: 10s;
+            background: var(--accent-crimson);
+            box-shadow: 0 0 6px var(--accent-crimson);
+        }
+
+        .particle:nth-child(9) {
+            left: 90%;
+            animation-delay: 7s;
+            animation-duration: 14s;
+            width: 3px;
+            height: 3px;
+        }
+
+        .particle:nth-child(10) {
+            left: 35%;
+            animation-delay: 9s;
+            animation-duration: 18s;
+            background: var(--accent-blue);
+            box-shadow: 0 0 6px var(--accent-blue);
+        }
 
         @keyframes float-up {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
         }
 
         /* === Main Container === */
@@ -139,7 +224,7 @@
             letter-spacing: 6px;
             text-transform: uppercase;
             line-height: 1.1;
-            text-shadow: 0 0 40px rgba(212, 175, 55, 0.2), 0 4px 20px rgba(0,0,0,0.5);
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.2), 0 4px 20px rgba(0, 0, 0, 0.5);
             position: relative;
         }
 
@@ -240,7 +325,9 @@
         }
 
         @media (min-width: 600px) {
-            .theme-grid { grid-template-columns: repeat(4, 1fr); }
+            .theme-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         .theme-card {
@@ -363,15 +450,76 @@
         }
 
         /* Difficulty colors */
-        .diff-btn[data-diff="easy"] .diff-icon { filter: drop-shadow(0 0 6px rgba(46, 204, 113, 0.4)); }
-        .diff-btn[data-diff="normal"] .diff-icon { filter: drop-shadow(0 0 6px rgba(76, 201, 240, 0.4)); }
-        .diff-btn[data-diff="hard"] .diff-icon { filter: drop-shadow(0 0 6px rgba(230, 57, 70, 0.4)); }
-        .diff-btn[data-diff="hardcore"] .diff-icon { filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.6)); }
+        .diff-btn[data-diff="easy"] .diff-icon {
+            filter: drop-shadow(0 0 6px rgba(46, 204, 113, 0.4));
+        }
 
-        .diff-btn[data-diff="easy"].selected { border-color: #2ecc71; box-shadow: 0 0 16px rgba(46, 204, 113, 0.15); }
-        .diff-btn[data-diff="normal"].selected { border-color: var(--accent-blue); box-shadow: 0 0 16px rgba(76, 201, 240, 0.15); }
-        .diff-btn[data-diff="hard"].selected { border-color: var(--accent-crimson); box-shadow: 0 0 16px rgba(230, 57, 70, 0.15); }
-        .diff-btn[data-diff="hardcore"].selected { border-color: #8b0000; box-shadow: 0 0 20px rgba(139, 0, 0, 0.2); }
+        .diff-btn[data-diff="normal"] .diff-icon {
+            filter: drop-shadow(0 0 6px rgba(76, 201, 240, 0.4));
+        }
+
+        .diff-btn[data-diff="hard"] .diff-icon {
+            filter: drop-shadow(0 0 6px rgba(230, 57, 70, 0.4));
+        }
+
+        .diff-btn[data-diff="hardcore"] .diff-icon {
+            filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.6));
+        }
+
+        .diff-btn[data-diff="easy"].selected {
+            border-color: #2ecc71;
+            box-shadow: 0 0 16px rgba(46, 204, 113, 0.15);
+        }
+
+        .diff-btn[data-diff="normal"].selected {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 16px rgba(76, 201, 240, 0.15);
+        }
+
+        .diff-btn[data-diff="hard"].selected {
+            border-color: var(--accent-crimson);
+            box-shadow: 0 0 16px rgba(230, 57, 70, 0.15);
+        }
+
+        .diff-btn[data-diff="hardcore"].selected {
+            border-color: #8b0000;
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.2);
+        }
+
+        /* === Map Size Selection === */
+        .map-btn[data-map="small"] .diff-icon {
+            filter: drop-shadow(0 0 6px rgba(160, 200, 120, 0.4));
+        }
+
+        .map-btn[data-map="medium"] .diff-icon {
+            filter: drop-shadow(0 0 6px rgba(201, 168, 76, 0.4));
+        }
+
+        .map-btn[data-map="large"] .diff-icon {
+            filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.4));
+        }
+
+        .map-btn[data-map="small"].selected {
+            border-color: #a0c878;
+            box-shadow: 0 0 16px rgba(160, 200, 120, 0.15);
+        }
+
+        .map-btn[data-map="medium"].selected {
+            border-color: var(--border-gold);
+            box-shadow: 0 0 16px rgba(201, 168, 76, 0.15);
+        }
+
+        .map-btn[data-map="large"].selected {
+            border-color: #a855f7;
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.15);
+        }
+
+        .map-loc-count {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
 
         /* === Start Button === */
         .start-section {
@@ -408,7 +556,7 @@
 
         .start-btn:hover {
             background: linear-gradient(145deg, rgba(201, 168, 76, 0.25), rgba(201, 168, 76, 0.1));
-            box-shadow: 0 0 40px rgba(201, 168, 76, 0.25), 0 8px 30px rgba(0,0,0,0.4);
+            box-shadow: 0 0 40px rgba(201, 168, 76, 0.25), 0 8px 30px rgba(0, 0, 0, 0.4);
             transform: translateY(-2px);
             letter-spacing: 4px;
         }
@@ -424,7 +572,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
             transition: left 0.6s ease;
         }
 
@@ -486,22 +634,65 @@
             z-index: 5;
         }
 
-        .corner-tl { top: 20px; left: 20px; border-right: 0; border-bottom: 0; }
-        .corner-tr { top: 20px; right: 20px; border-left: 0; border-bottom: 0; }
-        .corner-bl { bottom: 20px; left: 20px; border-right: 0; border-top: 0; }
-        .corner-br { bottom: 20px; right: 20px; border-left: 0; border-top: 0; }
+        .corner-tl {
+            top: 20px;
+            left: 20px;
+            border-right: 0;
+            border-bottom: 0;
+        }
+
+        .corner-tr {
+            top: 20px;
+            right: 20px;
+            border-left: 0;
+            border-bottom: 0;
+        }
+
+        .corner-bl {
+            bottom: 20px;
+            left: 20px;
+            border-right: 0;
+            border-top: 0;
+        }
+
+        .corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-left: 0;
+            border-top: 0;
+        }
 
         /* Responsive */
         @media (max-width: 600px) {
-            .home-container { padding: 24px 16px; gap: 28px; }
-            .panel-section { padding: 20px 20px; }
-            .theme-grid { grid-template-columns: repeat(2, 1fr); }
-            .difficulty-row { flex-direction: column; }
-            .diff-btn { min-width: 100%; }
-            .game-title { font-size: 32px; letter-spacing: 3px; }
+            .home-container {
+                padding: 24px 16px;
+                gap: 28px;
+            }
+
+            .panel-section {
+                padding: 20px 20px;
+            }
+
+            .theme-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .difficulty-row {
+                flex-direction: column;
+            }
+
+            .diff-btn {
+                min-width: 100%;
+            }
+
+            .game-title {
+                font-size: 32px;
+                letter-spacing: 3px;
+            }
         }
     </style>
 </head>
+
 <body>
     <!-- Background layers -->
     <div class="bg-layer bg-gradient"></div>
@@ -593,13 +784,43 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Map Size Selection -->
+            <div class="panel-section">
+                <div class="section-label">Dimensione della Mappa</div>
+                <div class="difficulty-row">
+                    <div class="diff-btn map-btn" data-map="small" onclick="selectMapSize(this)">
+                        <span class="diff-icon">🏕️</span>
+                        <div class="diff-name">Piccola</div>
+                        <div class="diff-desc">Avventura breve e concentrata</div>
+                        <div class="map-loc-count">3–4 località</div>
+                    </div>
+                    <div class="diff-btn map-btn" data-map="medium" onclick="selectMapSize(this)">
+                        <span class="diff-icon">🗺️</span>
+                        <div class="diff-name">Media</div>
+                        <div class="diff-desc">Esplorazione bilanciata</div>
+                        <div class="map-loc-count">4–6 località</div>
+                    </div>
+                    <div class="diff-btn map-btn" data-map="large" onclick="selectMapSize(this)">
+                        <span class="diff-icon">🌍</span>
+                        <div class="diff-name">Grande</div>
+                        <div class="diff-desc">Vasto mondo da scoprire</div>
+                        <div class="map-loc-count">8–10 località</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Start Button -->
         <div class="start-section">
-            <button class="start-btn" onclick="startGame()">
+            <button class="start-btn" id="start-btn" onclick="startGame()">
                 <span class="dice-icon">🎲</span>
-                <span>Inizia l'Avventura</span>
+                <span id="start-btn-text">Inizia l'Avventura</span>
+            </button>
+            <button class="start-btn" id="load-btn" onclick="loadGame()"
+                style="display:none;border-color:var(--border-bronze);max-width:400px;">
+                <span>💾</span>
+                <span>Riprendi Partita Salvata</span>
             </button>
             <div class="selection-summary" id="summary">
                 Seleziona un tema e una difficoltà per iniziare...
@@ -616,6 +837,8 @@
     <script>
         let selectedTheme = null;
         let selectedDiff = null;
+        let selectedMapSize = null;
+        let isLoading = false;
 
         const themeNames = {
             'dark-fantasy': 'Dark Fantasy',
@@ -631,6 +854,12 @@
             'hardcore': 'Hardcore'
         };
 
+        const mapNames = {
+            'small': 'Piccola (3–4)',
+            'medium': 'Media (4–6)',
+            'large': 'Grande (8–10)'
+        };
+
         function selectTheme(el) {
             document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected'));
             el.classList.add('selected');
@@ -639,37 +868,137 @@
         }
 
         function selectDiff(el) {
-            document.querySelectorAll('.diff-btn').forEach(b => b.classList.remove('selected'));
+            document.querySelectorAll('.diff-btn:not(.map-btn)').forEach(b => b.classList.remove('selected'));
             el.classList.add('selected');
             selectedDiff = el.dataset.diff;
             updateSummary();
         }
 
+        function selectMapSize(el) {
+            document.querySelectorAll('.map-btn').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedMapSize = el.dataset.map;
+            updateSummary();
+        }
+
         function updateSummary() {
             const summary = document.getElementById('summary');
-            if (selectedTheme && selectedDiff) {
-                summary.innerHTML = `Hai scelto: <span>${themeNames[selectedTheme]}</span> — Difficoltà: <span>${diffNames[selectedDiff]}</span>`;
-            } else if (selectedTheme) {
-                summary.innerHTML = `Tema: <span>${themeNames[selectedTheme]}</span> — Scegli una difficoltà...`;
-            } else if (selectedDiff) {
-                summary.innerHTML = `Difficoltà: <span>${diffNames[selectedDiff]}</span> — Scegli un tema...`;
+            const parts = [];
+            if (selectedTheme) parts.push(`<span>${themeNames[selectedTheme]}</span>`);
+            if (selectedDiff) parts.push(`<span>${diffNames[selectedDiff]}</span>`);
+            if (selectedMapSize) parts.push(`Mappa <span>${mapNames[selectedMapSize]}</span>`);
+
+            if (parts.length === 3) {
+                summary.innerHTML = `Hai scelto: ${parts.join(' — ')}`;
+            } else if (parts.length > 0) {
+                const missing = [];
+                if (!selectedTheme) missing.push('tema');
+                if (!selectedDiff) missing.push('difficoltà');
+                if (!selectedMapSize) missing.push('mappa');
+                summary.innerHTML = `${parts.join(' — ')} — Scegli ${missing.join(' e ')}...`;
             } else {
-                summary.textContent = 'Seleziona un tema e una difficoltà per iniziare...';
+                summary.textContent = 'Seleziona un tema, una difficoltà e la mappa per iniziare...';
             }
         }
 
-        function startGame() {
-            if (!selectedTheme || !selectedDiff) {
+        async function startGame() {
+            if (isLoading) return;
+
+            if (!selectedTheme || !selectedDiff || !selectedMapSize) {
                 const summary = document.getElementById('summary');
-                summary.innerHTML = '<span style="color: var(--accent-crimson);">⚠ Devi selezionare sia un tema che una difficoltà!</span>';
+                summary.innerHTML = '<span style="color: var(--accent-crimson);">⚠ Devi selezionare tema, difficoltà e dimensione mappa!</span>';
                 summary.style.animation = 'none';
-                summary.offsetHeight; // trigger reflow
+                summary.offsetHeight;
                 summary.style.animation = 'shake 0.4s ease';
                 return;
             }
-            // Redirect to game (placeholder)
-            alert(`Avventura avviata!\nTema: ${themeNames[selectedTheme]}\nDifficoltà: ${diffNames[selectedDiff]}\n\nReindirizzamento all'interfaccia di gioco...`);
-            // window.location.href = 'dnd_rpg_interface.html';
+
+            // Stato di caricamento
+            isLoading = true;
+            const btn = document.getElementById('start-btn');
+            const btnText = document.getElementById('start-btn-text');
+            btn.style.pointerEvents = 'none';
+            btn.style.opacity = '0.6';
+            btnText.textContent = 'Il Master sta preparando il mondo...';
+            document.getElementById('summary').innerHTML = '<span style="color:var(--accent-blue);">⏳ Generazione del personaggio e del prologo in corso...</span>';
+
+            try {
+                const res = await fetch('/api/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        theme: selectedTheme,
+                        difficulty: selectedDiff,
+                        map_size: selectedMapSize
+                    })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    // Salva i dati di gioco in sessionStorage
+                    sessionStorage.setItem('morpheus_game_data', JSON.stringify(data));
+                    // Redirect all'interfaccia di gioco
+                    window.location.href = '/game';
+                } else {
+                    document.getElementById('summary').innerHTML = `<span style="color: var(--accent-crimson);">❌ Errore: ${data.error}</span>`;
+                    isLoading = false;
+                    btn.style.pointerEvents = '';
+                    btn.style.opacity = '';
+                    btnText.textContent = "Inizia l'Avventura";
+                }
+            } catch (err) {
+                document.getElementById('summary').innerHTML = `<span style="color: var(--accent-crimson);">❌ Errore di connessione: ${err.message}</span>`;
+                isLoading = false;
+                btn.style.pointerEvents = '';
+                btn.style.opacity = '';
+                btnText.textContent = "Inizia l'Avventura";
+            }
+        }
+
+        async function loadGame() {
+            if (isLoading) return;
+            isLoading = true;
+
+            document.getElementById('summary').innerHTML = '<span style="color:var(--accent-blue);">⏳ Caricamento partita salvata...</span>';
+
+            try {
+                const res = await fetch('/api/load', { method: 'POST' });
+                const data = await res.json();
+
+                if (data.success) {
+                    // Costruisci dati compatibili con la pagina di gioco
+                    const gameData = {
+                        success: true,
+                        personaggio: data.personaggio,
+                        mappa: data.mappa,
+                        prologo: data.ultimo_messaggio,
+                        tema: data.tema,
+                        difficolta: data.difficolta
+                    };
+                    sessionStorage.setItem('morpheus_game_data', JSON.stringify(gameData));
+                    window.location.href = '/game';
+                } else {
+                    document.getElementById('summary').innerHTML = `<span style="color: var(--accent-crimson);">❌ ${data.error}</span>`;
+                    isLoading = false;
+                }
+            } catch (err) {
+                document.getElementById('summary').innerHTML = `<span style="color: var(--accent-crimson);">❌ Errore: ${err.message}</span>`;
+                isLoading = false;
+            }
+        }
+
+        // Controlla se esiste un salvataggio
+        async function checkSave() {
+            try {
+                const res = await fetch('/api/check-save');
+                const data = await res.json();
+                if (data.exists) {
+                    document.getElementById('load-btn').style.display = 'flex';
+                }
+            } catch (err) {
+                // Ignora errori di connessione
+            }
         }
 
         // Add shake animation dynamically
@@ -685,11 +1014,14 @@
         `;
         document.head.appendChild(style);
 
-        // Pre-select defaults for demo
+        // Init
         window.addEventListener('DOMContentLoaded', () => {
             document.querySelector('[data-theme="dark-fantasy"]').click();
             document.querySelector('[data-diff="normal"]').click();
+            document.querySelector('[data-map="medium"]').click();
+            checkSave();
         });
     </script>
 </body>
+
 </html>

@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morpheus Genesis — Avventura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-obsidian: #0a0a0f;
+            --bg-slate: #12121a;
+            --bg-panel: #161620;
+            --bg-parchment: #1a1a24;
+            --bg-input: #0e0e16;
+            --border-gold: #c9a84c;
+            --border-bronze: #8b7355;
+            --accent-crimson: #e63946;
+            --accent-crimson-glow: rgba(230, 57, 70, 0.3);
+            --accent-blue: #4cc9f0;
+            --accent-blue-glow: rgba(76, 201, 240, 0.3);
+            --accent-green: #2ecc71;
+            --text-primary: #e8e6e3;
+            --text-secondary: #a09b8c;
+            --text-gold: #d4af37;
+            --text-muted: #6b6560;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg-obsidian);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* === Scrollbar personalizzata === */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-obsidian); }
+        ::-webkit-scrollbar-thumb { background: var(--border-bronze); border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--border-gold); }
+
+        /* === Top Bar === */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background: linear-gradient(180deg, rgba(22, 22, 32, 0.98), rgba(18, 18, 26, 0.95));
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+            flex-shrink: 0;
+            z-index: 100;
+        }
+
+        .top-bar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .back-btn {
+            background: none;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            color: var(--text-gold);
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .back-btn:hover {
+            background: rgba(201, 168, 76, 0.1);
+            border-color: var(--border-gold);
+        }
+
+        .game-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .game-meta {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .meta-badge {
+            font-size: 11px;
+            color: var(--text-secondary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            border-radius: 6px;
+            background: rgba(10, 10, 15, 0.5);
+        }
+
+        .meta-badge .badge-val {
+            color: var(--text-gold);
+            font-weight: 600;
+        }
+
+        /* === Main Layout === */
+        .game-layout {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* === Sidebar === */
+        .sidebar {
+            width: 320px;
+            background: linear-gradient(180deg, var(--bg-panel), var(--bg-slate));
+            border-right: 1px solid rgba(201, 168, 76, 0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-320px);
+            width: 0;
+            border: none;
+        }
+
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+            flex-shrink: 0;
+        }
+
+        .sidebar-tab {
+            flex: 1;
+            padding: 12px 8px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-tab:hover { color: var(--text-secondary); }
+
+        .sidebar-tab.active {
+            color: var(--text-gold);
+        }
+
+        .sidebar-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: var(--border-gold);
+        }
+
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 16px;
+        }
+
+        .sidebar-panel { display: none; }
+        .sidebar-panel.active { display: block; }
+
+        /* Scheda personaggio */
+        .char-section {
+            margin-bottom: 20px;
+        }
+
+        .char-section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 11px;
+            color: var(--border-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .char-section-title::before {
+            content: '◆';
+            font-size: 8px;
+            opacity: 0.6;
+        }
+
+        .char-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            white-space: pre-line;
+            word-break: break-word;
+        }
+
+        .char-text strong, .char-text b {
+            color: var(--text-primary);
+        }
+
+        .stat-bar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .stat-name {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            width: 90px;
+            flex-shrink: 0;
+        }
+
+        .stat-track {
+            flex: 1;
+            height: 6px;
+            background: rgba(10, 10, 15, 0.6);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .stat-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        .stat-fill.str { background: linear-gradient(90deg, #e63946, #ff6b6b); }
+        .stat-fill.dex { background: linear-gradient(90deg, #2ecc71, #6bff9e); }
+        .stat-fill.int { background: linear-gradient(90deg, #4cc9f0, #6be5ff); }
+        .stat-fill.con { background: linear-gradient(90deg, #f0a500, #ffc947); }
+
+        .stat-val {
+            font-size: 12px;
+            color: var(--text-primary);
+            font-weight: 600;
+            width: 24px;
+            text-align: right;
+        }
+
+        /* Diario */
+        .diary-category {
+            margin-bottom: 20px;
+        }
+
+        .diary-cat-title {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            color: var(--border-gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+        }
+
+        .diary-entry {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            padding: 6px 0;
+            white-space: pre-line;
+            word-break: break-word;
+        }
+
+        /* === Chat Area === */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Loading overlay */
+        .loading-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(10, 10, 15, 0.85);
+            z-index: 50;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .loading-overlay.visible {
+            display: flex;
+        }
+
+        .loading-dice {
+            font-size: 48px;
+            animation: dice-spin 1.5s infinite ease-in-out;
+        }
+
+        @keyframes dice-spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .loading-text {
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            color: var(--text-gold);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: pulse-text 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-text {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Messaggi */
+        .message {
+            max-width: 85%;
+            animation: msg-appear 0.4s ease-out;
+        }
+
+        @keyframes msg-appear {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.dm {
+            align-self: flex-start;
+        }
+
+        .message.player {
+            align-self: flex-end;
+        }
+
+        .msg-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .msg-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .dm .msg-avatar {
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.2), rgba(201, 168, 76, 0.05));
+            border: 1px solid rgba(201, 168, 76, 0.3);
+        }
+
+        .player .msg-avatar {
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.2), rgba(76, 201, 240, 0.05));
+            border: 1px solid rgba(76, 201, 240, 0.3);
+        }
+
+        .msg-sender {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .dm .msg-sender { color: var(--text-gold); }
+        .player .msg-sender { color: var(--accent-blue); }
+
+        .msg-body {
+            padding: 16px 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.75;
+        }
+
+        .dm .msg-body {
+            background: linear-gradient(135deg, rgba(22, 22, 32, 0.95), rgba(26, 26, 36, 0.9));
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            border-top-left-radius: 4px;
+            color: var(--text-primary);
+        }
+
+        .player .msg-body {
+            background: linear-gradient(135deg, rgba(76, 201, 240, 0.08), rgba(76, 201, 240, 0.03));
+            border: 1px solid rgba(76, 201, 240, 0.15);
+            border-top-right-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        .msg-body p { margin-bottom: 10px; }
+        .msg-body p:last-child { margin-bottom: 0; }
+
+        /* Dado indicator nel messaggio */
+        .dice-result {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .dice-result.crit-fail {
+            background: rgba(230, 57, 70, 0.15);
+            border: 1px solid rgba(230, 57, 70, 0.3);
+            color: var(--accent-crimson);
+        }
+
+        .dice-result.crit-success {
+            background: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--text-gold);
+        }
+
+        .dice-result.normal-roll {
+            background: rgba(139, 115, 85, 0.15);
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            color: var(--text-secondary);
+        }
+
+        /* === Input Area === */
+        .input-area {
+            padding: 16px 32px 20px;
+            background: linear-gradient(0deg, var(--bg-obsidian), rgba(10, 10, 15, 0.95));
+            border-top: 1px solid rgba(201, 168, 76, 0.1);
+            flex-shrink: 0;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        .action-input {
+            flex: 1;
+            background: var(--bg-input);
+            border: 1px solid rgba(139, 115, 85, 0.3);
+            border-radius: 12px;
+            padding: 14px 18px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            resize: none;
+            outline: none;
+            min-height: 48px;
+            max-height: 120px;
+            transition: border-color 0.3s ease;
+            line-height: 1.5;
+        }
+
+        .action-input::placeholder {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .action-input:focus {
+            border-color: var(--border-gold);
+            box-shadow: 0 0 12px rgba(201, 168, 76, 0.1);
+        }
+
+        .send-btn {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(145deg, rgba(201, 168, 76, 0.2), rgba(201, 168, 76, 0.08));
+            border: 1px solid var(--border-gold);
+            border-radius: 12px;
+            color: var(--text-gold);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover {
+            background: linear-gradient(145deg, rgba(201, 168, 76, 0.3), rgba(201, 168, 76, 0.12));
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.2);
+            transform: scale(1.05);
+        }
+
+        .send-btn:active { transform: scale(0.95); }
+
+        .send-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .input-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .quick-btn {
+            background: none;
+            border: 1px solid rgba(139, 115, 85, 0.25);
+            color: var(--text-muted);
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .quick-btn:hover {
+            border-color: var(--border-gold);
+            color: var(--text-gold);
+            background: rgba(201, 168, 76, 0.05);
+        }
+
+        .input-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
+        .input-hint kbd {
+            background: rgba(139, 115, 85, 0.15);
+            border: 1px solid rgba(139, 115, 85, 0.25);
+            padding: 1px 5px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* === Sidebar Toggle (Mobile) === */
+        .sidebar-toggle {
+            display: none;
+            background: none;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            color: var(--text-gold);
+            padding: 6px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-toggle:hover {
+            background: rgba(201, 168, 76, 0.1);
+        }
+
+        /* === Toast / Notification === */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: linear-gradient(135deg, rgba(22, 22, 32, 0.98), rgba(26, 26, 36, 0.95));
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            border-radius: 12px;
+            padding: 12px 24px;
+            color: var(--text-gold);
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+            z-index: 200;
+            opacity: 0;
+            transition: all 0.4s ease;
+            pointer-events: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+        }
+
+        .toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* === Responsive === */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                z-index: 90;
+                transform: translateX(-100%);
+                width: 300px;
+            }
+            .sidebar.open {
+                transform: translateX(0);
+                box-shadow: 8px 0 32px rgba(0, 0, 0, 0.5);
+            }
+            .sidebar-toggle { display: block; }
+            .chat-messages { padding: 16px; }
+            .input-area { padding: 12px 16px 16px; }
+            .game-meta { display: none; }
+            .top-bar { padding: 10px 16px; }
+            .game-logo { font-size: 14px; letter-spacing: 2px; }
+        }
+
+        /* === Welcome / Prologo speciale === */
+        .message.prologo .msg-body {
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.06), rgba(22, 22, 32, 0.95));
+            border-color: rgba(201, 168, 76, 0.25);
+            font-size: 15px;
+        }
+
+        /* HP bar in sidebar */
+        .hp-bar-container {
+            margin-top: 12px;
+            margin-bottom: 8px;
+        }
+
+        .hp-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hp-label span { color: var(--accent-green); font-weight: 600; }
+
+        .hp-track {
+            height: 8px;
+            background: rgba(10, 10, 15, 0.6);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+        }
+
+        .hp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2ecc71, #27ae60);
+            border-radius: 3px;
+            transition: width 0.6s ease;
+            box-shadow: 0 0 8px rgba(46, 204, 113, 0.3);
+        }
+
+        /* === Overlay mobile sidebar backdrop === */
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 85;
+        }
+
+        .sidebar-backdrop.visible {
+            display: block;
+        }
+
+        /* === PERGAMENA OVERLAY === */
+        .parchment-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5, 5, 8, 0);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease, background 0.8s ease;
+        }
+
+        .parchment-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+            background: rgba(5, 5, 8, 0.92);
+        }
+
+        .parchment-scroll {
+            position: relative;
+            width: min(88vw, 720px);
+            max-height: 80vh;
+            padding: 52px 48px 60px;
+            overflow-y: auto;
+            /* Parchment texture via layered gradients */
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(180, 150, 100, 0.08) 0%, transparent 70%),
+                radial-gradient(ellipse at 80% 30%, rgba(160, 130, 80, 0.06) 0%, transparent 60%),
+                linear-gradient(180deg, #1e1a14 0%, #2a2318 15%, #1f1b14 85%, #171310 100%);
+            border: 2px solid rgba(201, 168, 76, 0.35);
+            border-radius: 6px;
+            box-shadow:
+                0 0 60px rgba(201, 168, 76, 0.12),
+                0 0 120px rgba(0, 0, 0, 0.6),
+                inset 0 0 80px rgba(0, 0, 0, 0.3);
+            transform: scale(0.88) translateY(30px);
+            transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .parchment-overlay.visible .parchment-scroll {
+            transform: scale(1) translateY(0);
+        }
+
+        /* Aged corner decorations */
+        .parchment-scroll::before,
+        .parchment-scroll::after {
+            content: '◆';
+            position: absolute;
+            font-size: 12px;
+            color: rgba(201, 168, 76, 0.4);
+        }
+        .parchment-scroll::before { top: 16px; left: 20px; }
+        .parchment-scroll::after { top: 16px; right: 20px; }
+
+        .parchment-corner-bl,
+        .parchment-corner-br {
+            position: absolute;
+            bottom: 16px;
+            font-size: 12px;
+            color: rgba(201, 168, 76, 0.4);
+        }
+        .parchment-corner-bl { left: 20px; }
+        .parchment-corner-br { right: 20px; }
+
+        /* Top ornamental line */
+        .parchment-ornament {
+            text-align: center;
+            font-size: 14px;
+            letter-spacing: 10px;
+            color: rgba(201, 168, 76, 0.5);
+            margin-bottom: 28px;
+            user-select: none;
+        }
+
+        /* Title */
+        .parchment-title {
+            font-family: 'Cinzel', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: #d4af37;
+            text-align: center;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .parchment-subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            color: rgba(201, 168, 76, 0.5);
+            text-align: center;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+        }
+
+        /* Divider */
+        .parchment-divider {
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(201, 168, 76, 0.4), transparent);
+            margin: 0 0 28px;
+        }
+
+        /* Body text */
+        .parchment-body {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            line-height: 1.85;
+            color: #c8bfa8;
+            text-align: justify;
+        }
+
+        .parchment-body p {
+            margin-bottom: 16px;
+            text-indent: 1.5em;
+        }
+
+        .parchment-body p:first-child {
+            text-indent: 0;
+        }
+
+        .parchment-body p:first-child::first-letter {
+            font-family: 'Cinzel', serif;
+            font-size: 3em;
+            float: left;
+            line-height: 0.8;
+            margin: 4px 10px 0 0;
+            color: #d4af37;
+            text-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+        }
+
+        .parchment-body strong, .parchment-body b {
+            color: #e0d5c0;
+            font-weight: 600;
+        }
+
+        .parchment-body em, .parchment-body i {
+            color: #b8a88a;
+            font-style: italic;
+        }
+
+        /* Bottom prompt */
+        .parchment-continue {
+            text-align: center;
+            margin-top: 36px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(201, 168, 76, 0.15);
+        }
+
+        .parchment-continue-text {
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            color: rgba(201, 168, 76, 0.6);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: parchment-pulse 2.5s infinite ease-in-out;
+            cursor: pointer;
+        }
+
+        @keyframes parchment-pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        /* Scrollbar for parchment */
+        .parchment-scroll::-webkit-scrollbar { width: 5px; }
+        .parchment-scroll::-webkit-scrollbar-track { background: transparent; }
+        .parchment-scroll::-webkit-scrollbar-thumb { background: rgba(201, 168, 76, 0.3); border-radius: 3px; }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="top-bar-left">
+            <button class="sidebar-toggle" onclick="toggleSidebar()" title="Scheda">📜</button>
+            <span class="game-logo">Morpheus Genesis</span>
+        </div>
+        <div class="game-meta">
+            <div class="meta-badge">Tema: <span class="badge-val" id="badge-tema">—</span></div>
+            <div class="meta-badge">Diff: <span class="badge-val" id="badge-diff">—</span></div>
+        </div>
+        <div style="display:flex;gap:8px;">
+            <button class="back-btn" onclick="saveGame()">💾 Salva</button>
+            <button class="back-btn" onclick="exitGame()">🚪 Esci</button>
+        </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="game-layout">
+        
+        <!-- Sidebar: Personaggio & Diario -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-tabs">
+                <button class="sidebar-tab active" onclick="switchTab(this, 'tab-char')">📜 Scheda</button>
+                <button class="sidebar-tab" onclick="switchTab(this, 'tab-diary')">📖 Diario</button>
+            </div>
+            <div class="sidebar-content">
+                <!-- Tab: Scheda Personaggio -->
+                <div class="sidebar-panel active" id="tab-char">
+                    <div class="char-section">
+                        <div class="char-section-title">Identità</div>
+                        <div class="char-text" id="char-identity">Caricamento...</div>
+                    </div>
+
+                    <div class="char-section">
+                        <div class="char-section-title">Statistiche</div>
+                        <div id="char-stats"></div>
+                    </div>
+
+                    <div class="char-section">
+                        <div class="hp-bar-container">
+                            <div class="hp-label">
+                                Punti Ferita <span id="hp-text">100/100</span>
+                            </div>
+                            <div class="hp-track">
+                                <div class="hp-fill" id="hp-fill" style="width:100%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="char-section">
+                        <div class="char-section-title">Equipaggiamento</div>
+                        <div class="char-text" id="char-equip">—</div>
+                    </div>
+                </div>
+
+                <!-- Tab: Diario -->
+                <div class="sidebar-panel" id="tab-diary">
+                    <div id="diary-content">
+                        <p style="color:var(--text-muted);font-style:italic;">Il diario è vuoto. Inizia a esplorare!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile sidebar backdrop -->
+        <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="toggleSidebar()"></div>
+
+        <!-- Chat -->
+        <div class="chat-area">
+            <!-- Loading overlay -->
+            <div class="loading-overlay" id="loading">
+                <div class="loading-dice">🎲</div>
+                <div class="loading-text">Il Master sta narrando...</div>
+            </div>
+
+            <div class="chat-messages" id="chat-messages">
+                <!-- Messages rendered here dynamically -->
+            </div>
+
+            <!-- Input -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <textarea class="action-input" id="action-input" 
+                        placeholder="Descrivi la tua azione..." 
+                        rows="1"
+                        onkeydown="handleKeyDown(event)"></textarea>
+                    <button class="send-btn" id="send-btn" onclick="sendAction()" title="Invia azione">
+                        ⚔️
+                    </button>
+                </div>
+                <div class="input-actions">
+                    <div class="quick-actions">
+                        <button class="quick-btn" onclick="insertAction('Guardo intorno')">👁️ Osserva</button>
+                        <button class="quick-btn" onclick="insertAction('Vado a NORD')">🧭 Nord</button>
+                        <button class="quick-btn" onclick="insertAction('Vado a EST')">🧭 Est</button>
+                        <button class="quick-btn" onclick="insertAction('Vado a OVEST')">🧭 Ovest</button>
+                        <button class="quick-btn" onclick="insertAction('Vado a SUD')">🧭 Sud</button>
+                    </div>
+                    <div class="input-hint">
+                        <kbd>Invio</kbd> per inviare
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pergamena Overlay -->
+    <div class="parchment-overlay" id="parchment-overlay" onclick="closeParchment()">
+        <div class="parchment-scroll" onclick="event.stopPropagation()">
+            <span class="parchment-corner-bl">◆</span>
+            <span class="parchment-corner-br">◆</span>
+            <div class="parchment-ornament">⟡ ⟡ ⟡</div>
+            <div class="parchment-title">📜 Il Prologo</div>
+            <div class="parchment-subtitle">La tua storia ha inizio</div>
+            <hr class="parchment-divider">
+            <div class="parchment-body" id="parchment-body"></div>
+            <div class="parchment-continue">
+                <span class="parchment-continue-text" onclick="closeParchment()">▸ Clicca per iniziare l'avventura ◂</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // =============================
+        //  STATO LOCALE
+        // =============================
+        let isWaiting = false;
+
+        const themeNames = {
+            'dark-fantasy': 'Dark Fantasy',
+            'high-fantasy': 'High Fantasy',
+            'gothic-horror': 'Gothic Horror',
+            'steampunk': 'Steampunk'
+        };
+        const diffNames = {
+            'easy': 'Novizio',
+            'normal': 'Avventuriero',
+            'hard': 'Veterano',
+            'hardcore': 'Hardcore'
+        };
+
+        // =============================
+        //  INIZIALIZZAZIONE
+        // =============================
+        window.addEventListener('DOMContentLoaded', () => {
+            const gameData = sessionStorage.getItem('morpheus_game_data');
+            
+            if (gameData) {
+                const data = JSON.parse(gameData);
+                initGame(data);
+            } else {
+                // Nessun dato, torna alla homepage
+                addSystemMessage("Nessuna partita attiva. Reindirizzamento alla homepage...");
+                setTimeout(() => { window.location.href = '/'; }, 2000);
+            }
+        });
+
+        function initGame(data) {
+            // Badge meta
+            document.getElementById('badge-tema').textContent = themeNames[data.tema] || data.tema;
+            document.getElementById('badge-diff').textContent = diffNames[data.difficolta] || data.difficolta;
+
+            // Parse personaggio
+            parseCharacterSheet(data.personaggio);
+
+            // Mostra il prologo nella pergamena
+            showParchment(data.prologo);
+
+            // Carica il diario
+            loadDiary();
+        }
+
+        // =============================
+        //  PARSING SCHEDA PERSONAGGIO
+        // =============================
+        function parseCharacterSheet(text) {
+            const lines = text.split('\n');
+            let identity = [];
+            let equip = '';
+            let stats = { forza: 0, destrezza: 0, intelligenza: 0, costituzione: 0 };
+
+            for (const line of lines) {
+                const l = line.trim();
+                if (l.startsWith('- FORZA:')) {
+                    const match = l.match(/FORZA:\s*(\d+)/);
+                    if (match) stats.forza = parseInt(match[1]);
+                } else if (l.startsWith('- DESTREZZA:')) {
+                    const match = l.match(/DESTREZZA:\s*(\d+)/);
+                    if (match) stats.destrezza = parseInt(match[1]);
+                } else if (l.startsWith('- INTELLIGENZA:')) {
+                    const match = l.match(/INTELLIGENZA:\s*(\d+)/);
+                    if (match) stats.intelligenza = parseInt(match[1]);
+                } else if (l.startsWith('- COSTITUZIONE:')) {
+                    const match = l.match(/COSTITUZIONE:\s*(\d+)/);
+                    if (match) stats.costituzione = parseInt(match[1]);
+                } else if (l.startsWith('Equipaggiamento:')) {
+                    equip = l.replace('Equipaggiamento:', '').trim();
+                } else if (!l.startsWith('Statistiche') && !l.startsWith('Punti Ferita')) {
+                    identity.push(l);
+                }
+            }
+
+            document.getElementById('char-identity').textContent = identity.join('\n');
+            document.getElementById('char-equip').textContent = equip || '—';
+
+            // Render stat bars
+            const statsContainer = document.getElementById('char-stats');
+            statsContainer.innerHTML = '';
+            const statList = [
+                { name: 'Forza', val: stats.forza, cls: 'str' },
+                { name: 'Destrezza', val: stats.destrezza, cls: 'dex' },
+                { name: 'Intelligenza', val: stats.intelligenza, cls: 'int' },
+                { name: 'Costituzione', val: stats.costituzione, cls: 'con' }
+            ];
+
+            for (const s of statList) {
+                const pct = Math.round((s.val / 18) * 100);
+                statsContainer.innerHTML += `
+                    <div class="stat-bar">
+                        <span class="stat-name">${s.name}</span>
+                        <div class="stat-track">
+                            <div class="stat-fill ${s.cls}" style="width:${pct}%"></div>
+                        </div>
+                        <span class="stat-val">${s.val}</span>
+                    </div>
+                `;
+            }
+        }
+
+        // =============================
+        //  MESSAGGI CHAT
+        // =============================
+        function addDMMessage(text, isPrologo = false) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = `message dm${isPrologo ? ' prologo' : ''}`;
+            div.innerHTML = `
+                <div class="msg-header">
+                    <div class="msg-avatar">🐉</div>
+                    <span class="msg-sender">Dungeon Master</span>
+                </div>
+                <div class="msg-body">${renderMarkdown(text)}</div>
+            `;
+            container.appendChild(div);
+            scrollToBottom();
+        }
+
+        function addPlayerMessage(text, tiroDado) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'message player';
+
+            let diceHTML = '';
+            if (tiroDado !== undefined) {
+                let diceClass = 'normal-roll';
+                let diceLabel = `🎲 d20: ${tiroDado}`;
+                if (tiroDado === 1) { diceClass = 'crit-fail'; diceLabel = `💥 Fallimento Critico! d20: 1`; }
+                else if (tiroDado === 20) { diceClass = 'crit-success'; diceLabel = `✨ Successo Critico! d20: 20`; }
+                diceHTML = `<div class="dice-result ${diceClass}">${diceLabel}</div>`;
+            }
+
+            div.innerHTML = `
+                <div class="msg-header" style="justify-content:flex-end;">
+                    <span class="msg-sender">Tu</span>
+                    <div class="msg-avatar">⚔️</div>
+                </div>
+                <div class="msg-body">
+                    <p>${escapeHTML(text)}</p>
+                    ${diceHTML}
+                </div>
+            `;
+            container.appendChild(div);
+            scrollToBottom();
+        }
+
+        function addSystemMessage(text) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = 'message dm';
+            div.innerHTML = `
+                <div class="msg-body" style="text-align:center;border-color:rgba(139,115,85,0.2);font-style:italic;color:var(--text-muted);">
+                    ${escapeHTML(text)}
+                </div>
+            `;
+            container.appendChild(div);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            const chat = document.getElementById('chat-messages');
+            requestAnimationFrame(() => {
+                chat.scrollTop = chat.scrollHeight;
+            });
+        }
+
+        // =============================
+        //  RENDERING MARKDOWN → HTML
+        // =============================
+        function renderMarkdown(text) {
+            // Escape HTML first
+            let html = escapeHTML(text);
+            // Bold: **text**
+            html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+            // Italic: *text*
+            html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+            // Paragraphs
+            html = html.split('\n\n').map(p => `<p>${p.trim()}</p>`).join('');
+            // Single newlines → <br> within paragraphs
+            html = html.replace(/\n/g, '<br>');
+            return html;
+        }
+
+        function escapeHTML(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // =============================
+        //  INVIO AZIONE
+        // =============================
+        async function sendAction() {
+            if (isWaiting) return;
+
+            const input = document.getElementById('action-input');
+            const text = input.value.trim();
+            if (!text) return;
+
+            input.value = '';
+            autoResize(input);
+
+            isWaiting = true;
+            setSendEnabled(false);
+            showLoading(true);
+
+            // Mostra il messaggio del giocatore (senza dado per ora)
+            // Il dado arriverà dalla risposta del server
+
+            try {
+                const res = await fetch('/api/action', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: text })
+                });
+
+                const data = await res.json();
+
+                if (data.success) {
+                    addPlayerMessage(text, data.tiro_dado);
+                    addDMMessage(data.dm_reply);
+                } else {
+                    addPlayerMessage(text);
+                    addSystemMessage(`Errore: ${data.error}`);
+                }
+            } catch (err) {
+                addPlayerMessage(text);
+                addSystemMessage(`Errore di connessione: ${err.message}`);
+            }
+
+            isWaiting = false;
+            setSendEnabled(true);
+            showLoading(false);
+        }
+
+        function handleKeyDown(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendAction();
+            }
+        }
+
+        function insertAction(text) {
+            const input = document.getElementById('action-input');
+            input.value = text;
+            input.focus();
+        }
+
+        function setSendEnabled(enabled) {
+            document.getElementById('send-btn').disabled = !enabled;
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').classList.toggle('visible', show);
+        }
+
+        // Auto-resize textarea
+        const textarea = document.getElementById('action-input');
+        textarea.addEventListener('input', () => autoResize(textarea));
+
+        function autoResize(el) {
+            el.style.height = 'auto';
+            el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+        }
+
+        // =============================
+        //  DIARIO
+        // =============================
+        async function loadDiary() {
+            try {
+                const res = await fetch('/api/diary');
+                const data = await res.json();
+
+                if (data.success) {
+                    renderDiary(data.diario);
+                }
+            } catch (err) {
+                console.error('Errore caricamento diario:', err);
+            }
+        }
+
+        function renderDiary(diario) {
+            const container = document.getElementById('diary-content');
+            container.innerHTML = '';
+
+            for (const [categoria, contenuti] of Object.entries(diario)) {
+                const cat = document.createElement('div');
+                cat.className = 'diary-category';
+
+                let entriesHTML = '';
+                if (Array.isArray(contenuti)) {
+                    entriesHTML = contenuti.map(item => {
+                        if (typeof item === 'string') {
+                            return `<div class="diary-entry">${escapeHTML(item)}</div>`;
+                        } else if (Array.isArray(item)) {
+                            return item.map(sub => `<div class="diary-entry">${escapeHTML(sub)}</div>`).join('');
+                        }
+                        return '';
+                    }).join('');
+                } else {
+                    entriesHTML = `<div class="diary-entry">${escapeHTML(String(contenuti))}</div>`;
+                }
+
+                cat.innerHTML = `
+                    <div class="diary-cat-title">${escapeHTML(categoria)}</div>
+                    ${entriesHTML}
+                `;
+                container.appendChild(cat);
+            }
+        }
+
+        // =============================
+        //  SALVATAGGIO & USCITA
+        // =============================
+        async function saveGame() {
+            try {
+                const res = await fetch('/api/save', { method: 'POST' });
+                const data = await res.json();
+                showToast(data.success ? '💾 Partita salvata!' : `Errore: ${data.error}`);
+            } catch (err) {
+                showToast('Errore di connessione!');
+            }
+        }
+
+        function exitGame() {
+            if (confirm('Vuoi salvare prima di uscire?')) {
+                saveGame().then(() => {
+                    sessionStorage.removeItem('morpheus_game_data');
+                    window.location.href = '/';
+                });
+            } else {
+                sessionStorage.removeItem('morpheus_game_data');
+                window.location.href = '/';
+            }
+        }
+
+        // =============================
+        //  SIDEBAR & UI
+        // =============================
+        function switchTab(btn, tabId) {
+            document.querySelectorAll('.sidebar-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.sidebar-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+
+            // Ricarica diario quando si apre quel tab
+            if (tabId === 'tab-diary') loadDiary();
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            sidebar.classList.toggle('open');
+            backdrop.classList.toggle('visible');
+        }
+
+        // =============================
+        //  TOAST
+        // =============================
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.classList.add('visible');
+            setTimeout(() => toast.classList.remove('visible'), 3000);
+        }
+
+        // =============================
+        //  PERGAMENA
+        // =============================
+        function showParchment(text) {
+            const body = document.getElementById('parchment-body');
+            body.innerHTML = renderMarkdown(text);
+            // Show overlay with slight delay for smooth transition
+            requestAnimationFrame(() => {
+                document.getElementById('parchment-overlay').classList.add('visible');
+            });
+        }
+
+        function closeParchment() {
+            const overlay = document.getElementById('parchment-overlay');
+            overlay.classList.remove('visible');
+            // After close animation, add the prologo as a normal DM message in chat
+            setTimeout(() => {
+                const gameData = sessionStorage.getItem('morpheus_game_data');
+                if (gameData) {
+                    const data = JSON.parse(gameData);
+                    addDMMessage(data.prologo, true);
+                }
+            }, 800);
+        }
+    </script>
+</body>
+</html>

@@ -3,7 +3,9 @@ import os
 import sys
 import re
 import json
+import textwrap
 from openai import OpenAI
+from flask import Flask, request, jsonify, send_from_directory, session
 
 # Forza l'I/O in UTF-8 per visualizzare correttamente i caratteri accentati su Windows
 sys.stdout.reconfigure(encoding='utf-8')
@@ -64,89 +66,166 @@ Punti Ferita: 100/100"""
     
     return scheda_completa
 
-# --- 3. CARICAMENTO E MOTORE LOGICO ---
+# --- 3. CARICAMENTO DATI ---
 ambientazioni = carica_mattoncini('ambient.txt')
 personaggi = carica_mattoncini('npc.txt')
 creature = carica_mattoncini('enemies.txt')
 
-giocatori = carica_mattoncini('player.txt')
-
-print("="*60)
-print(" ⚔️  MORPHEUS GENESIS LITE - AVVIO SISTEMA  ⚔️ ")
-print("="*60)
+print("=" * 60)
+print(" ⚔️  MORPHEUS GENESIS - SERVER WEB  ⚔️ ")
+print("=" * 60)
 print(f"Dati caricati: {len(ambientazioni)} ambientazioni, {len(personaggi)} personaggi, {len(creature)} creature.")
 
-chat_history = []
-diario = {} # <--- NUOVA VARIABILE PER IL DIARIO
-carica_salvataggio = False
+# --- 4. FLASK APP ---
+app = Flask(__name__, static_folder='.', static_url_path='')
+app.secret_key = os.urandom(24)
 
-if os.path.exists("savegame.json"):
-    scelta = input("💾 Trovato un salvataggio. Vuoi riprendere la partita? (s/n): ")
-    if scelta.lower().startswith('s'):
-        with open("savegame.json", "r", encoding="utf-8") as f:
-            save_data = json.load(f)
-            # Estraiamo separatamente la chat e il diario
-            chat_history = save_data.get("history", [])
-            diario = save_data.get("diario", {})
-        carica_salvataggio = True
-        print("\nPartita caricata con successo!\n")
-        # Stampa l'ultimo messaggio per rinfrescare la memoria
-        print(f"DUNGEON MASTER (Bentornato):\n{chat_history[-1]['content']}\n")
+# Stato di gioco in-memory (single player)
+game_state = {
+    "chat_history": [],
+    "diario": {},
+    "personaggio": "",
+    "mappa": "",
+    "attivo": False
+}
 
-# --- 5. AVVIO NUOVA PARTITA (Se non è stato caricato un salvataggio) ---
-if not carica_salvataggio:
-    print(f"Dati caricati: {len(ambientazioni)} ambientazioni, {len(personaggi)} personaggi, {len(creature)} creature.")
-    
-    # NUOVA FASE: TIRO DEI DADI E MOSTRA SCHEDA
-    input("\n🎲 Premi INVIO per tirare i dadi e generare il tuo personaggio...")
-    
-    giocatore_attuale = genera_personaggio() # Chiama la funzione aggiornata con nomi e inventario
-    
-    
+# ============================
+#  MAPPATURA TEMA → TESTO
+# ============================
+TEMI = {
+    "dark-fantasy": "Dark Fantasy: regni corrotti dall'oscurità, magia proibita, atmosfera cupa e minacciosa. I colori dominanti sono il nero, il porpora e il rosso sangue.",
+    "high-fantasy": "High Fantasy: terre epiche con eroi leggendari, draghi antichi e magia potente. L'atmosfera è grandiosa e avventurosa, ispirata a Tolkien e D&D classico.",
+    "gothic-horror": "Gothic Horror: castelli infestati, vampiri, maledizioni ancestrali e nebbie eterne. L'atmosfera è claustrofobica, misteriosa e piena di orrore psicologico.",
+    "steampunk": "Steampunk: un mondo dove la tecnologia a vapore si mescola con la magia. Ingranaggi, automi, dirigibili e invenzioni bizzarre dominano il paesaggio."
+}
 
-    print("\n" + "="*50)
-    print(" 📜 LA TUA SCHEDA PERSONAGGIO 📜")
-    print("="*50)
-    print(giocatore_attuale)
-    print("="*50)
-    
-    input("\nPremi INVIO per farti trasportare nel mondo di gioco...")
-    print("\n(Il Master sta preparando la nuova scena, attendi...)\n")
-    
-    print("\n(Il Master sta disegnando la mappa del mondo, attendi...)\n")
-    
-    # 1. Estraiamo PIÙ ambientazioni (es. 4) per popolare le direzioni
-    # Assicurati che il file ambientazioni.txt abbia almeno 4 luoghi diversi!
-    ambient_scelta = random.sample(ambientazioni, 4)
-    
-    # 2. Estraiamo NPC e Nemico
-    npc_scelto = random.choice(personaggi)
-    creatura_scelta = random.choice(creature)
+DIFFICOLTA = {
+    "easy": "Novizio: i nemici sono deboli e la storia è fluida. Il giocatore ha maggiori probabilità di successo nei tiri dado. Sii generoso con le ricompense e clemente con i fallimenti.",
+    "normal": "Avventuriero: equilibrio tra sfida e narrazione. I tiri dado seguono le regole standard. Sfide stimolanti ma eque.",
+    "hard": "Veterano: i nemici sono letali e le risorse scarse. Anche tiri medio-alti possono fallire contro avversari potenti. Le conseguenze degli errori sono serie.",
+    "hardcore": "Hardcore: morte permanente possibile. Ogni errore può essere fatale. I nemici sono spietati, le trappole mortali e non c'è pietà. Solo abilità e strategia possono salvare il giocatore."
+}
 
-    # 3. Costruiamo la Mappa a Nodi
-    mappa_mondo = f"""[CENTRO]: {ambient_scelta[0]} <-- (Tu sei qui)
-    [NORD]: {ambient_scelta[1]} <-- (Presenza avvistata: {npc_scelto})
-    [EST]: {ambient_scelta[2]} <-- (Pericolo rilevato: {creatura_scelta})
-    [OVEST]: {ambient_scelta[3]}
-    [SUD]: Terre Selvagge e Inesplorate"""
 
-    # 4. Inizializziamo il Diario con la mappa inclusa
+# ============================
+#  FUNZIONE PER DISEGNARE LA PERGAMENA
+# ============================
+def stampa_pergamena(testo):
+    lunghezza_riga = 64
+    righe_formattate = []
+    
+    # Suddivide il testo del Master rispettando i paragrafi
+    for paragrafo in testo.split('\n'):
+        if paragrafo.strip() == '':
+            righe_formattate.append('')
+        else:
+            righe_formattate.extend(textwrap.wrap(paragrafo, width=lunghezza_riga))
+            
+    # Pulisce lo schermo prima di mostrare la pergamena
+    os.system('cls' if os.name == 'nt' else 'clear')
+    
+    # Disegna la pergamena
+    print("     ____________________________________________________________________")
+    print("    / \\                                                                  \\")
+    print("   |   |                                                                  |")
+    print("    \\_ |                                                                  |")
+    for riga in righe_formattate:
+        # Il <64 assicura che lo spazio a destra sia riempito correttamente
+        print(f"       |  {riga:<64}  |")
+    print("       |                                                                  |")
+    print("       |  ________________________________________________________________|")
+    print("        \\_/______________________________________________________________/")
+
+# ============================
+#  ROUTE: HOMEPAGE
+# ============================
+@app.route('/')
+def homepage():
+    return send_from_directory('.', 'dnd_homepage.html')
+
+
+@app.route('/game')
+def game_page():
+    return send_from_directory('.', 'dnd_game.html')
+
+
+# ============================
+#  API: AVVIA NUOVA PARTITA
+# ============================
+@app.route('/api/start', methods=['POST'])
+def start_game():
+    global game_state
+    
+    data = request.get_json()
+    tema = data.get('theme', 'dark-fantasy')
+    difficolta = data.get('difficulty', 'normal')
+    map_size = data.get('map_size', 'medium')
+    
+    # Determina il numero di località in base alla dimensione mappa
+    MAP_SIZES = {
+        "small": 3,
+        "medium": random.randint(4, 6),
+        "large": 10
+    }
+    num_localita = MAP_SIZES.get(map_size, 4)
+    
+    # Genera il personaggio
+    giocatore_attuale = genera_personaggio()
+    
+    # Estrai ambientazioni (limita al massimo disponibile)
+    num_amb = min(num_localita, len(ambientazioni))
+    ambient_scelta = random.sample(ambientazioni, num_amb)
+    
+    # Estrai NPC e creature (più di uno per mappe grandi)
+    num_npc = max(1, num_localita // 3)
+    num_creature = max(1, num_localita // 3)
+    npc_scelti = random.sample(personaggi, min(num_npc, len(personaggi)))
+    creature_scelte = random.sample(creature, min(num_creature, len(creature)))
+    
+    # Nomi delle direzioni per i nodi della mappa
+    DIREZIONI = [
+        "CENTRO", "NORD", "EST", "OVEST", "SUD",
+        "NORD-EST", "NORD-OVEST", "SUD-EST", "SUD-OVEST", "PROFONDITÀ"
+    ]
+    
+    # Costruisci la Mappa a Nodi dinamicamente
+    righe_mappa = []
+    for i in range(num_amb):
+        dir_label = DIREZIONI[i] if i < len(DIREZIONI) else f"ZONA-{i+1}"
+        riga = f"[{dir_label}]: {ambient_scelta[i]}"
+        
+        if i == 0:
+            riga += " <-- (Tu sei qui)"
+        elif i < len(npc_scelti) + 1 and (i - 1) < len(npc_scelti):
+            riga += f" <-- (Presenza avvistata: {npc_scelti[i - 1]})"
+        elif (i - 1 - len(npc_scelti)) >= 0 and (i - 1 - len(npc_scelti)) < len(creature_scelte):
+            idx_c = i - 1 - len(npc_scelti)
+            riga += f" <-- (Pericolo rilevato: {creature_scelte[idx_c]})"
+        
+        righe_mappa.append("    " + riga if i > 0 else riga)
+    
+    mappa_mondo = "\n".join(righe_mappa)
+    
+    # Inizializza il Diario
     diario = {
         "La Tua Storia": giocatore_attuale,
         "Mappa e Posizioni": mappa_mondo,
-        "Bestiario (Nemici Noti)": [creatura_scelta]
+        "Luoghi Esplorati": [ambient_scelta[0]],
+        "Personaggi Incontrati": npc_scelti,
+        "Bestiario (Nemici Noti)": creature_scelte
     }
-
-    # --- NUOVO: CREAZIONE DEL DIARIO INIZIALE ---
-    diario = {
-        "La Tua Storia": giocatore_attuale,
-        "Luoghi Esplorati": [ambient_scelta],
-        "Personaggi Incontrati": [npc_scelto],
-        "Bestiario (Nemici Noti)": [creatura_scelta]
-    }
-
+    
+    # Costruisci il prompt di sistema con tema e difficoltà
+    desc_tema = TEMI.get(tema, TEMI["dark-fantasy"])
+    desc_diff = DIFFICOLTA.get(difficolta, DIFFICOLTA["normal"])
+    
     sistema = f"""Agisci come un Dungeon Master esperto di giochi di ruolo testuali. 
-L'atmosfera del gioco è fantasy medievale e avventurosa.
+
+=== AMBIENTAZIONE E TONO ===
+{desc_tema}
+
+=== LIVELLO DI DIFFICOLTÀ ===
+{desc_diff}
 
 === LA SCHEDA DEL GIOCATORE ===
 {giocatore_attuale}
@@ -174,6 +253,7 @@ L'atmosfera del gioco è fantasy medievale e avventurosa.
 - Paragrafo 2 (Il Protagonista e lo Scopo): Inserisci organicamente il giocatore nella scena. Menziona il suo nome, la sua razza e classe, ma soprattutto il suo Obiettivo o il suo Background. Spiega brevemente perché si trova in questo luogo proprio per inseguire quel fine.
 - Paragrafo 3 (L'Innesco dell'Azione): Fai entrare in scena il Personaggio (NPC) o fai percepire l'indizio del Nemico per creare tensione e dare il via all'avventura. Termina la narrazione in modo netto, lasciando la scena in sospeso".
 """
+    
     chat_history = [{"role": "system", "content": sistema}]
     
     try:
@@ -184,82 +264,168 @@ L'atmosfera del gioco è fantasy medievale e avventurosa.
             temperature=0.75
         )
         dm_reply = response.choices[0].message.content
-        print(f"\nDUNGEON MASTER:\n{dm_reply}\n")
+        
         chat_history.append({"role": "assistant", "content": dm_reply})
+        
+        # Salva lo stato di gioco
+        game_state = {
+            "chat_history": chat_history,
+            "diario": diario,
+            "personaggio": giocatore_attuale,
+            "mappa": mappa_mondo,
+            "tema": tema,
+            "difficolta": difficolta,
+            "attivo": True
+        }
+        
+        return jsonify({
+            "success": True,
+            "personaggio": giocatore_attuale,
+            "mappa": mappa_mondo,
+            "prologo": dm_reply,
+            "tema": tema,
+            "difficolta": difficolta
+        })
+        
     except Exception as e:
         print(f"\nErrore di connessione: {e}")
-        sys.exit()
-
-else:
-    # Se abbiamo caricato il salvataggio, ristampiamo l'ultima risposta del DM per rinfrescare la memoria
-    ultimo_msg = chat_history[-1]["content"]
-    print(f"\nDUNGEON MASTER (Bentornato):\n{ultimo_msg}\n")
+        return jsonify({"success": False, "error": str(e)}), 500
 
 
-# --- 6. IL CICLO DI GIOCO PRINCIPALE ---
-while True:
+# ============================
+#  API: AZIONE DEL GIOCATORE
+# ============================
+@app.route('/api/action', methods=['POST'])
+def player_action():
+    global game_state
+    
+    if not game_state["attivo"]:
+        return jsonify({"success": False, "error": "Nessuna partita attiva."}), 400
+    
+    data = request.get_json()
+    player_input = data.get('action', '').strip()
+    
+    if not player_input:
+        return jsonify({"success": False, "error": "Azione vuota."}), 400
+    
+    # Tiro del dado (d20)
+    tiro_dado = random.randint(1, 20)
+    messaggio_con_dado = f"{player_input}\n[Tiro d20 del sistema per questa azione: {tiro_dado}]"
+    
+    # Aggiungi alla chat history
+    game_state["chat_history"].append({"role": "user", "content": messaggio_con_dado})
+    
     try:
-        # Turno del giocatore
-        player_input = input("\nAZIONE (scrivi 'esci' per salvare, 'diario' per il codex): ")
-        
-        # Blocca l'invio a vuoto
-        if not player_input.strip():
-            continue
-
-        # Comando per aprire il DIARIO
-        if player_input.lower() in ["diario", "codex", "scheda"]:
-            print("\n" + "="*60)
-            print(" 📖 IL TUO DIARIO DI VIAGGIO 📖")
-            print("="*60)
-            for categoria, contenuti in diario.items():
-                print(f"\n--- {categoria.upper()} ---")
-                
-                if isinstance(contenuti, list):
-                    for item in contenuti:
-                        # Se l'elemento è a sua volta una lista, lo converte e unisce
-                        if isinstance(item, list):
-                            print(", ".join(str(i).strip() for i in item) + "\n")
-                        else:
-                            # Converte forzatamente in stringa prima del ritocco
-                            print(str(item).strip() + "\n")
-                else:
-                    print(str(contenuti).strip())
-                    
-            print("="*60)
-            continue
-
-        # Salvataggio e Uscita
-        if player_input.lower() in ["esci", "quit", "exit"]:
-            save_data = {
-                "history": chat_history,
-                "diario": diario
-            }
-            with open("savegame.json", "w", encoding="utf-8") as f:
-                json.dump(save_data, f, ensure_ascii=False, indent=4)
-            print("\n💾 Partita e Diario salvati con successo. Alla prossima!")
-            break
-            
-        # --- TIRO DEL DADO (d20) ---
-        tiro_dado = random.randint(1, 20)
-        messaggio_con_dado = f"{player_input}\n[Tiro d20 del sistema per questa azione: {tiro_dado}]"
-        
-        # Salvataggio dell'azione + dado nella memoria
-        chat_history.append({"role": "user", "content": messaggio_con_dado})
-
         # L'IA pensa e risponde
         response = client.chat.completions.create(
             model=os.environ.get("MODEL_NAME", "gpt-4o-mini"),
-            messages=chat_history,
+            messages=game_state["chat_history"],
             temperature=0.75
         )
         
-        # Estrazione della risposta
         dm_reply = response.choices[0].message.content
-        print(f"\nDUNGEON MASTER:\n{dm_reply}\n")
+        game_state["chat_history"].append({"role": "assistant", "content": dm_reply})
         
-        # Salvataggio nella memoria
-        chat_history.append({"role": "assistant", "content": dm_reply})
-
+        return jsonify({
+            "success": True,
+            "dm_reply": dm_reply,
+            "tiro_dado": tiro_dado
+        })
+        
     except Exception as e:
-        print(f"\nErrore di connessione: {e}")
-        break
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
+# ============================
+#  API: DIARIO
+# ============================
+@app.route('/api/diary', methods=['GET'])
+def get_diary():
+    if not game_state["attivo"]:
+        return jsonify({"success": False, "error": "Nessuna partita attiva."}), 400
+    
+    return jsonify({
+        "success": True,
+        "diario": game_state["diario"]
+    })
+
+
+# ============================
+#  API: SALVATAGGIO
+# ============================
+@app.route('/api/save', methods=['POST'])
+def save_game():
+    if not game_state["attivo"]:
+        return jsonify({"success": False, "error": "Nessuna partita attiva."}), 400
+    
+    save_data = {
+        "history": game_state["chat_history"],
+        "diario": game_state["diario"],
+        "personaggio": game_state["personaggio"],
+        "mappa": game_state["mappa"],
+        "tema": game_state.get("tema", "dark-fantasy"),
+        "difficolta": game_state.get("difficolta", "normal")
+    }
+    
+    with open("savegame.json", "w", encoding="utf-8") as f:
+        json.dump(save_data, f, ensure_ascii=False, indent=4)
+    
+    return jsonify({"success": True, "message": "Partita salvata con successo!"})
+
+
+# ============================
+#  API: CARICAMENTO
+# ============================
+@app.route('/api/load', methods=['POST'])
+def load_game():
+    global game_state
+    
+    if not os.path.exists("savegame.json"):
+        return jsonify({"success": False, "error": "Nessun salvataggio trovato."}), 404
+    
+    with open("savegame.json", "r", encoding="utf-8") as f:
+        save_data = json.load(f)
+    
+    game_state = {
+        "chat_history": save_data.get("history", []),
+        "diario": save_data.get("diario", {}),
+        "personaggio": save_data.get("personaggio", ""),
+        "mappa": save_data.get("mappa", ""),
+        "tema": save_data.get("tema", "dark-fantasy"),
+        "difficolta": save_data.get("difficolta", "normal"),
+        "attivo": True
+    }
+    
+    # Trova l'ultimo messaggio del DM
+    ultimo_dm = ""
+    for msg in reversed(game_state["chat_history"]):
+        if msg["role"] == "assistant":
+            ultimo_dm = msg["content"]
+            break
+    
+    return jsonify({
+        "success": True,
+        "personaggio": game_state["personaggio"],
+        "mappa": game_state["mappa"],
+        "ultimo_messaggio": ultimo_dm,
+        "tema": game_state["tema"],
+        "difficolta": game_state["difficolta"]
+    })
+
+
+# ============================
+#  API: CONTROLLA SALVATAGGIO
+# ============================
+@app.route('/api/check-save', methods=['GET'])
+def check_save():
+    exists = os.path.exists("savegame.json")
+    return jsonify({"exists": exists})
+
+
+# ============================
+#  AVVIO SERVER
+# ============================
+if __name__ == '__main__':
+    print("\n🌐 Server avviato su http://localhost:5000")
+    print("   Apri il browser e vai su http://localhost:5000\n")
+    app.run(debug=True, host='0.0.0.0', port=5000)
