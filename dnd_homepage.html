@@ -974,7 +974,9 @@
                         mappa: data.mappa,
                         prologo: data.ultimo_messaggio,
                         tema: data.tema,
-                        difficolta: data.difficolta
+                        difficolta: data.difficolta,
+                        hp: data.hp,
+                        history: data.history
                     };
                     sessionStorage.setItem('morpheus_game_data', JSON.stringify(gameData));
                     window.location.href = '/game';

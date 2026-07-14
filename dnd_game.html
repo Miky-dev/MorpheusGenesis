@@ -286,6 +286,74 @@
             word-break: break-word;
         }
 
+        /* === Entity Grid (Diario) === */
+        .entity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .entity-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.2s, filter 0.2s;
+            text-align: center;
+        }
+
+        .entity-button:hover {
+            transform: scale(1.08);
+            filter: brightness(1.2);
+        }
+
+        .entity-button img {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+            margin-bottom: 8px;
+            background-color: rgba(20, 20, 20, 0.8);
+        }
+
+        .entity-button span {
+            font-size: 11px;
+            color: var(--text-secondary);
+            font-family: 'Cinzel', serif;
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        /* === Entity Overlay === */
+        .entity-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .entity-image-large {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #8e6d42;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            margin-bottom: 20px;
+        }
+
+        .entity-text-box {
+            text-align: left;
+            font-size: 16px;
+            line-height: 1.6;
+            color: #2b1f14;
+            white-space: pre-wrap;
+            width: 100%;
+        }
+
         /* === Chat Area === */
         .chat-area {
             flex: 1;
@@ -919,6 +987,104 @@
         .prologo-btn-icon {
             font-size: 18px;
         }
+
+        /* === Danno & Game Over === */
+        @keyframes screen-shake {
+            0%, 100% { transform: translate(0, 0); }
+            10%, 30%, 50%, 70%, 90% { transform: translate(-4px, 4px); }
+            20%, 40%, 60%, 80% { transform: translate(4px, -4px); }
+        }
+        .shake-anim {
+            animation: screen-shake 0.4s ease-in-out;
+        }
+        .damage-flash {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(230, 57, 70, 0.35);
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+        }
+        .damage-flash.active {
+            animation: flash-fade 0.6s forwards;
+        }
+        @keyframes flash-fade {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        .gameover-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle, rgba(20, 10, 10, 0.98) 30%, rgba(5, 2, 2, 0.99) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .gameover-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .gameover-box {
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid rgba(230, 57, 70, 0.2);
+            background: rgba(18, 10, 10, 0.8);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.8), inset 0 0 30px rgba(230, 57, 70, 0.05);
+        }
+        .gameover-overlay.visible .gameover-box {
+            transform: scale(1);
+        }
+        .gameover-skull {
+            font-size: 80px;
+            filter: drop-shadow(0 0 20px rgba(230, 57, 70, 0.6));
+            margin-bottom: 24px;
+            animation: float-skull 4s ease-in-out infinite;
+        }
+        @keyframes float-skull {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .gameover-title {
+            font-family: 'Cinzel', serif;
+            font-size: 54px;
+            font-weight: 900;
+            color: var(--accent-crimson);
+            letter-spacing: 8px;
+            margin-bottom: 18px;
+            text-shadow: 0 0 24px rgba(230, 57, 70, 0.6);
+        }
+        .gameover-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            max-width: 500px;
+            line-height: 1.6;
+        }
+        .gameover-btn {
+            background: linear-gradient(135deg, rgba(230, 57, 70, 0.2), rgba(230, 57, 70, 0.05));
+            border: 1px solid var(--accent-crimson);
+            color: var(--text-primary);
+            padding: 14px 36px;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .gameover-btn:hover {
+            background: var(--accent-crimson);
+            box-shadow: 0 0 25px var(--accent-crimson);
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -1049,8 +1215,38 @@
         </div>
     </div>
 
+    <!-- Entity Overlay -->
+    <div class="parchment-overlay" id="entity-overlay" onclick="closeEntityOverlay()">
+        <div class="parchment-scroll" onclick="event.stopPropagation()">
+            <span class="parchment-corner-bl">◆</span>
+            <span class="parchment-corner-br">◆</span>
+            <div class="entity-content">
+                <img id="entity-image" class="entity-image-large" src="" onerror="this.onerror=null; this.src='Icon/null.png';">
+                <div class="parchment-title" id="entity-title">📜 Nome Entità</div>
+            </div>
+            <hr class="parchment-divider">
+            <div class="parchment-body entity-text-box" id="entity-body"></div>
+            <div class="parchment-continue">
+                <span class="parchment-continue-text" onclick="closeEntityOverlay()">▸ Chiudi ◂</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Toast notification -->
     <div class="toast" id="toast"></div>
+
+    <!-- Damage Flash Overlay -->
+    <div class="damage-flash" id="damage-flash"></div>
+
+    <!-- Game Over Overlay -->
+    <div class="gameover-overlay" id="gameover-overlay">
+        <div class="gameover-box">
+            <div class="gameover-skull">💀</div>
+            <h1 class="gameover-title">SEI MORTO</h1>
+            <p class="gameover-subtitle">Il tuo viaggio finisce qui. Il salvataggio è stato cancellato (Morte Permanente).</p>
+            <button class="gameover-btn" onclick="window.location.href='/'">Ritorna al Menu</button>
+        </div>
+    </div>
 
     <script>
         // =============================
@@ -1087,20 +1283,121 @@
             }
         });
 
+        // =============================
+        //  DANNI & GAME OVER LOGIC
+        // =============================
+        function updateHP(hp) {
+            document.getElementById('hp-text').textContent = `${hp}/100`;
+            const fill = document.getElementById('hp-fill');
+            fill.style.width = `${hp}%`;
+            
+            if (hp <= 25) {
+                fill.style.backgroundColor = 'var(--accent-crimson)';
+                fill.style.boxShadow = '0 0 10px var(--accent-crimson)';
+            } else if (hp <= 50) {
+                fill.style.backgroundColor = '#e67e22';
+                fill.style.boxShadow = '0 0 10px #e67e22';
+            } else {
+                fill.style.backgroundColor = '#2ecc71';
+                fill.style.boxShadow = '0 0 10px rgba(46, 204, 113, 0.4)';
+            }
+        }
+
+        function triggerDamageFlash(danni) {
+            const flash = document.getElementById('damage-flash');
+            if (flash) {
+                flash.classList.remove('active');
+                void flash.offsetWidth; 
+                flash.classList.add('active');
+            }
+            
+            const body = document.body;
+            body.classList.remove('shake-anim');
+            void body.offsetWidth; 
+            body.classList.add('shake-anim');
+            setTimeout(() => {
+                body.classList.remove('shake-anim');
+            }, 400);
+
+            addSystemMessage(`🩸 ATTENZIONE! HAI SUBITO ${danni} DANNI! 🩸`);
+        }
+
+        function triggerGameOver() {
+            const overlay = document.getElementById('gameover-overlay');
+            if (overlay) {
+                overlay.classList.add('visible');
+            }
+            const input = document.getElementById('action-input');
+            if (input) input.disabled = true;
+            const sendBtn = document.getElementById('send-btn');
+            if (sendBtn) sendBtn.disabled = true;
+        }
+
         function initGame(data) {
             // Badge meta
             document.getElementById('badge-tema').textContent = themeNames[data.tema] || data.tema;
             document.getElementById('badge-diff').textContent = diffNames[data.difficolta] || data.difficolta;
 
+            // Inizializza HP
+            updateHP(data.hp !== undefined ? data.hp : 100);
+
             // Parse personaggio
             parseCharacterSheet(data.personaggio);
 
-            // Salva il prologo e mostra la pergamena
-            window._prologoText = data.prologo;
-            showParchment();
+            if (data.azione_iniziale) {
+                // Nuova partita: salva il prologo e mostra la pergamena
+                window._prologoText = data.prologo;
+                showParchment();
 
-            // Rendi visibile il pulsante "Rivedi Prologo" nel diario
-            document.getElementById('prologo-review-btn').style.display = 'flex';
+                // Rendi visibile il pulsante "Rivedi Prologo" nel diario
+                document.getElementById('prologo-review-btn').style.display = 'flex';
+
+                // Aggiunge l'azione/bivio iniziale in chat
+                addDMMessage(data.azione_iniziale, false);
+            } else if (data.history && data.history.length > 0) {
+                // Partita caricata: ricostruiamo tutta la storia dei messaggi!
+                let prologoText = "";
+                data.history.forEach(msg => {
+                    if (msg.role === 'system') {
+                        return; // Salta il prompt di sistema
+                    }
+                    if (msg.role === 'assistant') {
+                        // Se contiene il tag [PERGAMENA], estraiamo il testo pergamena
+                        if (msg.content.includes('[PERGAMENA]')) {
+                            const parti = msg.content.split("[AZIONE_INIZIALE]");
+                            prologoText = parti[0].replace("[PERGAMENA]", "").trim();
+                            const actionText = parti[1] ? parti[1].trim() : msg.content;
+                            const cleanedAction = actionText.replace(/\[DANNI:\s*-?\d+\]/g, '').trim();
+                            addDMMessage(cleanedAction, false);
+                        } else {
+                            const cleanedMsg = msg.content.replace(/\[DANNI:\s*-?\d+\]/g, '').trim();
+                            addDMMessage(cleanedMsg, false);
+                        }
+                    } else if (msg.role === 'user') {
+                        // Estrae l'azione pulita e l'eventuale tiro di dado
+                        const content = msg.content;
+                        const matchRoll = content.match(/\[Tiro d20 del sistema per questa azione:\s*(\d+)\]/);
+                        if (matchRoll) {
+                            const cleanText = content.replace(/\[Tiro d20 del sistema per questa azione:\s*\d+\]/, '').trim();
+                            const roll = parseInt(matchRoll[1]);
+                            addPlayerMessage(cleanText, roll);
+                        } else {
+                            addPlayerMessage(content);
+                        }
+                    }
+                });
+
+                if (prologoText) {
+                    window._prologoText = prologoText;
+                    document.getElementById('prologo-review-btn').style.display = 'flex';
+                } else {
+                    document.getElementById('prologo-review-btn').style.display = 'none';
+                }
+            } else {
+                // Fallback classico se non c'è history
+                addDMMessage(data.prologo, false);
+                document.getElementById('prologo-review-btn').style.display = 'none';
+            }
 
             // Carica il diario
             loadDiary();
@@ -1283,7 +1580,14 @@
 
                 if (data.success) {
                     addPlayerMessage(text, data.tiro_dado);
+                    if (data.danni_subiti > 0) {
+                        triggerDamageFlash(data.danni_subiti);
+                    }
+                    updateHP(data.hp);
                     addDMMessage(data.dm_reply);
+                    if (data.hp <= 0) {
+                        triggerGameOver();
+                    }
                 } else {
                     addPlayerMessage(text);
                     addSystemMessage(`Errore: ${data.error}`);
@@ -1344,27 +1648,44 @@
             }
         }
 
+        window.globalEntityData = [];
+
         function renderDiary(diario) {
             const container = document.getElementById('diary-content');
             container.innerHTML = '';
+            window.globalEntityData = []; // reset
 
             for (const [categoria, contenuti] of Object.entries(diario)) {
                 const cat = document.createElement('div');
                 cat.className = 'diary-category';
 
                 let entriesHTML = '';
-                if (Array.isArray(contenuti)) {
-                    entriesHTML = contenuti.map(item => {
-                        if (typeof item === 'string') {
-                            return `<div class="diary-entry">${escapeHTML(item)}</div>`;
-                        } else if (Array.isArray(item)) {
-                            return item.map(sub => `<div class="diary-entry">${escapeHTML(sub)}</div>`).join('');
-                        }
-                        return '';
-                    }).join('');
-                } else {
-                    entriesHTML = `<div class="diary-entry">${escapeHTML(String(contenuti))}</div>`;
+                // Salta "La Tua Storia" dato che è già presente nella scheda del personaggio
+                if (categoria === 'La Tua Storia') {
+                    continue;
                 }
+                
+                let folder = 'misc';
+                    if (categoria.includes('Nemici') || categoria.includes('Bestiario')) folder = 'enemies';
+                    else if (categoria.includes('Personaggi') || categoria.includes('NPC')) folder = 'npc';
+                    else if (categoria.includes('Luoghi') || categoria.includes('Mappa') || categoria.includes('Ambient')) folder = 'ambient';
+
+                    let itemsArray = Array.isArray(contenuti) ? contenuti : [contenuti];
+                    
+                    entriesHTML = '<div class="entity-grid">';
+                    
+                    itemsArray.forEach(item => {
+                        if (Array.isArray(item)) {
+                            // Se e' un array annidato, gestiamolo unendo o ciclando
+                            item.forEach(sub => {
+                                entriesHTML += createEntityButton(sub, categoria, folder);
+                            });
+                        } else if (typeof item === 'string') {
+                            entriesHTML += createEntityButton(item, categoria, folder);
+                        }
+                    });
+                    
+                    entriesHTML += '</div>';
 
                 cat.innerHTML = `
                     <div class="diary-cat-title">${escapeHTML(categoria)}</div>
@@ -1372,6 +1693,49 @@
                 `;
                 container.appendChild(cat);
             }
+        }
+
+        function createEntityButton(itemText, categoria, folder) {
+            let name = 'Sconosciuto';
+            let bodyText = itemText;
+            
+            // Cerca il pattern [Nome Entità] all'inizio
+            let match = itemText.match(/^\[(.*?)\]/);
+            if (match) {
+                name = match[1];
+                bodyText = itemText.replace(/^\[.*?\]\s*/, '').trim();
+            } else {
+                // Se non c'è il tag, usiamo un nome generico basato sulla categoria
+                name = categoria.includes('Mappa') ? 'Mappa/Posizione' : 'Appunto';
+            }
+
+            // Genera il nome file dell'immagine rimuovendo spazi e punteggiatura
+            let fileName = name.replace(/[^a-zA-Z0-9]/g, '') + '.png';
+            let imgPath = `Icon/${folder}/${fileName}`;
+
+            let entityId = window.globalEntityData.length;
+            window.globalEntityData.push({ title: name, body: bodyText, image: imgPath });
+
+            return `
+                <div class="entity-button" onclick="showEntityOverlay(${entityId})">
+                    <img src="${imgPath}" onerror="this.onerror=null; this.src='Icon/null.png';">
+                    <span>${escapeHTML(name)}</span>
+                </div>
+            `;
+        }
+
+        function showEntityOverlay(id) {
+            const data = window.globalEntityData[id];
+            if (!data) return;
+            
+            document.getElementById('entity-image').src = data.image;
+            document.getElementById('entity-title').innerText = '📜 ' + data.title;
+            document.getElementById('entity-body').innerText = data.body;
+            document.getElementById('entity-overlay').classList.add('visible');
+        }
+
+        function closeEntityOverlay() {
+            document.getElementById('entity-overlay').classList.remove('visible');
         }
 
         // =============================
