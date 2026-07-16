@@ -492,6 +492,27 @@ def player_action():
             if (bestiario and len(bestiario) > 0 and ("boss" in bestiario[0].lower() or "boss" in enemy_name.lower())) or "boss" in enemy_name.lower():
                 stats["is_boss"] = True
             game_state["combat"] = stats
+        else:
+            pos = game_state.get("posizione_attuale", {})
+            luogo_nome = pos.get("nome_luogo") or pos.get("zona_tag") or "questa zona"
+            if pos.get("nemico_zona") and pos.get("nemico_zona") in game_state.get("nemici_sconfitti", []):
+                motivo = f"Hai già sconfitto **{pos.get('nemico_zona')}** in questa area e l'hai ripulita dalle minacce."
+            else:
+                motivo = f"Ci troviamo in una **Zona Sicura ({luogo_nome})** dove non sono presenti nemici da affrontare in combattimento marziale."
+                
+            dm_reply = (
+                f"🛡️ **NESSUN NEMICO DA ATTACCARE NELLA ZONA**\n\n"
+                f"Sguaini la tua arma ed assumi una posizione di combattimento a **{luogo_nome}**, ma guardandoti con attenzione ti accorgi che non c'è alcun bersaglio ostile da attaccare qui ({motivo}).\n\n"
+                f"*(Per entrare in combattimento marziale devi prima esplorare o recarti in un'area dove è presente una minaccia ⚔️)*"
+            )
+            game_state["chat_history"].append({"role": "user", "content": player_input})
+            game_state["chat_history"].append({"role": "assistant", "content": dm_reply})
+            return jsonify({
+                "success": True,
+                "dm_reply": dm_reply,
+                "hp": game_state.get("hp", 100),
+                "tiro_dado": None
+            })
         
     # Se siamo in COMBATTIMENTO LOCALE (senza API LLM)
     if game_state.get("combat", {}).get("active"):
@@ -994,26 +1015,8 @@ Devi dividere obbligatoriamente la tua risposta in due sezioni usando dei tag sp
 #  AVVIO SERVER
 # ============================
 if __name__ == '__main__':
-    # Controlla se stdin è un TTY interattivo per consentire la scelta
-    use_cli = False
-    if '--cli' in sys.argv:
-        use_cli = True
-    elif sys.stdin.isatty():
-        print("\n⚔️  MORPHEUS GENESIS  ⚔️")
-        print("="*60)
-        print("Scegli come avviare il gioco:")
-        print("1) 🌐 Interfaccia Web (Flask Server) [Default]")
-        print("2) 🖥️  Interfaccia CLI (Terminale)")
-        try:
-            scelta = input("\nInserisci 1 o 2: ").strip()
-            if scelta == '2':
-                use_cli = True
-        except Exception:
-            pass # In caso di errore o EOF, usa Web
-            
-    if use_cli:
-        run_cli()
-    else:
-        print("\n🌐 Server avviato su http://localhost:5000")
-        print("   Apri il browser e vai su http://localhost:5000\n")
-        app.run(debug=True, host='0.0.0.0', port=5000)
+    print("\n⚔️  MORPHEUS GENESIS  ⚔️")
+    print("="*60)
+    print("🌐 Server avviato su http://localhost:5000")
+    print("   Apri il browser e vai su http://localhost:5000\n")
+    app.run(debug=True, host='0.0.0.0', port=5000)

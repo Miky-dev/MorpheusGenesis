@@ -218,6 +218,80 @@
             color: var(--text-primary);
         }
 
+        /* Nuovi stili per la scheda personaggio */
+        #char-identity {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #char-identity.expanded {
+            max-height: 1200px;
+            opacity: 1;
+            padding-top: 5px;
+        }
+
+        #char-portrait {
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+        }
+
+        #char-portrait:hover {
+            transform: scale(1.06);
+            filter: brightness(1.15);
+            box-shadow: 0 6px 15px rgba(201, 168, 76, 0.4);
+        }
+
+        .char-name-title {
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            color: var(--text-gold);
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+            text-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+        }
+
+        .char-info-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .char-info-icon {
+            font-size: 12px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .char-info-key {
+            font-weight: 600;
+            color: var(--text-primary);
+            flex-shrink: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .char-info-val {
+            color: var(--text-secondary);
+            word-break: break-word;
+        }
+
+        .char-info-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
         .stat-bar {
             display: flex;
             align-items: center;
@@ -1239,6 +1313,10 @@
             <div class="sidebar-content">
                 <!-- Tab: Scheda Personaggio -->
                 <div class="sidebar-panel active" id="tab-char">
+                    <div class="char-portrait-container" style="display:flex; flex-direction:column; align-items:center; margin-bottom:15px; margin-top:5px;">
+                        <img id="char-portrait" src="Icon/null.png" style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:2px solid var(--border-gold); box-shadow:0 4px 10px rgba(0,0,0,0.6); background-color:rgba(20,20,20,0.8);" onerror="this.onerror=null; this.src='Icon/null.png';" onclick="toggleCharacterDetails()">
+                        <div id="portrait-hint" style="font-size: 11px; color: var(--text-muted); text-align: center; margin-top: 8px; font-style: italic; cursor: pointer; letter-spacing: 0.5px;" onclick="toggleCharacterDetails()">Clicca sul ritratto per i dettagli</div>
+                    </div>
                     <div class="char-section">
                         <div class="char-section-title">Identità</div>
                         <div class="char-text" id="char-identity">Caricamento...</div>
@@ -1630,7 +1708,46 @@
         // =============================
         //  PARSING SCHEDA PERSONAGGIO
         // =============================
+        function getPlayerImagePath(characterSheetText) {
+            if (!characterSheetText) return 'Icon/null.png';
+            const match = characterSheetText.match(/\[(.*?)\]/);
+            if (!match) return 'Icon/null.png';
+            const name = match[1].trim();
+            
+            // Normalize: lowercase, remove non-alphanumeric chars
+            const cleanName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            
+            const mapping = {
+                'lyralombra': 'Lyraombra.png',
+                'aelricilpellegrino': 'aerikilpaladino.png',
+                'seraphinedellestelle': 'saraphinedellestelle.png',
+                'eryndorildevoto': 'erindorildevoto.png'
+            };
+            
+            const mappedFile = mapping[cleanName] || (cleanName + '.png');
+            return `Icon/player/${mappedFile}`;
+        }
+
+        function toggleCharacterDetails() {
+            const identityEl = document.getElementById('char-identity');
+            const hintEl = document.getElementById('portrait-hint');
+            if (identityEl) {
+                const isExpanded = identityEl.classList.toggle('expanded');
+                if (hintEl) {
+                    hintEl.textContent = isExpanded ? 'Clicca per nascondere i dettagli' : 'Clicca sul ritratto per i dettagli';
+                }
+            }
+        }
+
         function parseCharacterSheet(text) {
+            // Aggiorna immagine del player
+            const imagePath = getPlayerImagePath(text);
+            window.playerImagePath = imagePath;
+            const portraitImg = document.getElementById('char-portrait');
+            if (portraitImg) {
+                portraitImg.src = imagePath;
+            }
+
             const lines = text.split('\n');
             let identity = [];
             let equip = '';
@@ -1657,7 +1774,45 @@
                 }
             }
 
-            document.getElementById('char-identity').textContent = identity.join('\n');
+            let identityHTML = '';
+            for (const line of identity) {
+                const trimmed = line.trim();
+                if (!trimmed) continue;
+                
+                if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+                    const charName = trimmed.slice(1, -1);
+                    identityHTML += `<div class="char-name-title">${escapeHTML(charName)}</div>`;
+                } else if (trimmed.includes(':')) {
+                    const idx = trimmed.indexOf(':');
+                    const key = trimmed.substring(0, idx).trim();
+                    const val = trimmed.substring(idx + 1).trim();
+                    
+                    let icon = '•';
+                    const keyLower = key.toLowerCase();
+                    if (keyLower.includes('razza') || keyLower.includes('classe')) icon = '🛡️';
+                    else if (keyLower.includes('età') || keyLower.includes('eta')) icon = '⏳';
+                    else if (keyLower.includes('allineamento')) icon = '⚖️';
+                    else if (keyLower.includes('background') || keyLower.includes('storia')) icon = '📜';
+                    else if (keyLower.includes('personalità') || keyLower.includes('personalita')) icon = '🎭';
+                    else if (keyLower.includes('abilità') || keyLower.includes('abilita')) icon = '⚡';
+                    else if (keyLower.includes('pregio')) icon = '✨';
+                    else if (keyLower.includes('difetto')) icon = '⚠️';
+                    else if (keyLower.includes('obiettivo')) icon = '🎯';
+                    else if (keyLower.includes('segreto')) icon = '🗝️';
+                    
+                    identityHTML += `
+                        <div class="char-info-row">
+                            <span class="char-info-icon">${icon}</span>
+                            <span class="char-info-key">${escapeHTML(key)}:</span>
+                            <span class="char-info-val">${escapeHTML(val)}</span>
+                        </div>
+                    `;
+                } else {
+                    identityHTML += `<div class="char-info-text">${escapeHTML(trimmed)}</div>`;
+                }
+            }
+
+            document.getElementById('char-identity').innerHTML = identityHTML || '—';
             document.getElementById('char-equip').textContent = equip || '—';
             renderEquipmentActions(equip);
 
@@ -1755,10 +1910,14 @@
                 diceHTML = `<div class="dice-result ${diceClass}">${diceLabel}</div>`;
             }
 
+            const playerImg = window.playerImagePath || 'Icon/null.png';
+
             div.innerHTML = `
                 <div class="msg-header" style="justify-content:flex-end;">
                     <span class="msg-sender">Tu</span>
-                    <div class="msg-avatar">⚔️</div>
+                    <div class="msg-avatar" style="overflow:hidden; padding:0; background:none; border:none;">
+                        <img src="${playerImg}" style="width:100%; height:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(76, 201, 240, 0.3);" onerror="this.onerror=null; this.src='Icon/null.png';">
+                    </div>
                 </div>
                 <div class="msg-body">
                     <p>${escapeHTML(text)}</p>
@@ -1922,40 +2081,39 @@
             window.globalEntityData = []; // reset
 
             for (const [categoria, contenuti] of Object.entries(diario)) {
-                const cat = document.createElement('div');
-                cat.className = 'diary-category';
-
-                let entriesHTML = '';
-                // Salta "La Tua Storia" dato che è già presente nella scheda del personaggio
-                if (categoria === 'La Tua Storia') {
+                // Salta categorie già presenti nella scheda del personaggio
+                if (categoria === 'La Tua Storia' || categoria.includes('Protagonista') || categoria.includes('Personaggio')) {
                     continue;
                 }
                 
                 let folder = 'misc';
-                    if (categoria.includes('Nemici') || categoria.includes('Bestiario')) folder = 'enemies';
-                    else if (categoria.includes('Personaggi') || categoria.includes('NPC')) folder = 'npc';
-                    else if (categoria.includes('Luoghi') || categoria.includes('Mappa') || categoria.includes('Ambient')) folder = 'ambient';
+                if (categoria.includes('Nemici') || categoria.includes('Bestiario')) folder = 'enemies';
+                else if (categoria.includes('Personaggi') || categoria.includes('NPC')) folder = 'npc';
+                else if (categoria.includes('Luoghi') || categoria.includes('Mappa') || categoria.includes('Ambient')) folder = 'ambient';
 
-                    let itemsArray = Array.isArray(contenuti) ? contenuti : [contenuti];
-                    
-                    entriesHTML = '<div class="entity-grid">';
-                    
-                    itemsArray.forEach(item => {
-                        if (Array.isArray(item)) {
-                            // Se e' un array annidato, gestiamolo unendo o ciclando
-                            item.forEach(sub => {
-                                entriesHTML += createEntityButton(sub, categoria, folder);
-                            });
-                        } else if (typeof item === 'string') {
-                            entriesHTML += createEntityButton(item, categoria, folder);
-                        }
-                    });
-                    
-                    entriesHTML += '</div>';
+                let itemsArray = Array.isArray(contenuti) ? contenuti : [contenuti];
+                let buttonsHTML = '';
+                
+                itemsArray.forEach(item => {
+                    if (Array.isArray(item)) {
+                        item.forEach(sub => {
+                            buttonsHTML += createEntityButton(sub, categoria, folder);
+                        });
+                    } else if (typeof item === 'string') {
+                        buttonsHTML += createEntityButton(item, categoria, folder);
+                    }
+                });
+                
+                // Se non ci sono bottoni validi (o erano tutti appunti senza tag), non mostrare la categoria
+                if (buttonsHTML.trim() === '') {
+                    continue;
+                }
 
+                const cat = document.createElement('div');
+                cat.className = 'diary-category';
                 cat.innerHTML = `
                     <div class="diary-cat-title">${escapeHTML(categoria)}</div>
-                    ${entriesHTML}
+                    <div class="entity-grid">${buttonsHTML}</div>
                 `;
                 container.appendChild(cat);
             }
@@ -1971,8 +2129,13 @@
                 name = match[1];
                 bodyText = itemText.replace(/^\[.*?\]\s*/, '').trim();
             } else {
-                // Se non c'è il tag, usiamo un nome generico basato sulla categoria
-                name = categoria.includes('Mappa') ? 'Mappa/Posizione' : 'Appunto';
+                // Se non c'è il tag, usiamo un nome generico solo per le mappe
+                if (categoria.includes('Mappa')) {
+                    name = 'Mappa/Posizione';
+                } else {
+                    // Togli l'appunto generico privo di tag
+                    return '';
+                }
             }
 
             // Controlla se questa entità è il Boss Finale
