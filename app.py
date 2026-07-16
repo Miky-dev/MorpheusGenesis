@@ -77,6 +77,45 @@ def chiama_ia(messages, temperature=0.75):
                 # Altro tipo di errore, rilancia direttamente
                 raise
 
+
+def chiama_ia_premium(messages, temperature=0.7):
+    """
+    Wrapper per chiamate API con il modello premium (STORY_MODEL_NAME).
+    Usato SOLO dal LoreMasterAgent per la creazione della storia.
+    """
+    global client, _current_key_index
+    
+    model = os.environ.get("STORY_MODEL_NAME", os.environ.get("MODEL_NAME", "gpt-4o-mini"))
+    print(f"🧠 [Modello Premium] Utilizzo modello: {model}")
+    tentativi_fatti = 0
+    max_tentativi = len(GROQ_API_KEYS)
+    
+    while tentativi_fatti < max_tentativi:
+        try:
+            response = client.chat.completions.create(
+                model=model,
+                messages=messages,
+                temperature=temperature
+            )
+            return response
+        except Exception as e:
+            error_str = str(e)
+            if "429" in error_str or "rate_limit" in error_str.lower():
+                tentativi_fatti += 1
+                if tentativi_fatti < max_tentativi:
+                    _current_key_index = (_current_key_index + 1) % len(GROQ_API_KEYS)
+                    nuova_chiave = GROQ_API_KEYS[_current_key_index]
+                    client = _crea_client(nuova_chiave)
+                    print(f"⚠️  Rate limit raggiunto! Rotazione alla chiave API #{_current_key_index + 1}/{len(GROQ_API_KEYS)}...")
+                else:
+                    raise Exception(
+                        f"🚫 Tutte le {len(GROQ_API_KEYS)} chiavi API hanno raggiunto il rate limit. "
+                        f"Riprova tra qualche minuto."
+                    )
+            else:
+                raise
+
+
 # --- 2. FUNZIONE DI LETTURA FILE TXT (CORRETTA) ---
 def carica_mattoncini(nome_file):
     if not os.path.exists(nome_file):
@@ -239,7 +278,8 @@ def start_game():
             personaggi_rag=personaggi,
             creature_rag=creature,
             oggetti_rag=oggetti,
-            chiama_ia_func=chiama_ia
+            chiama_ia_func=chiama_ia,
+            chiama_ia_premium_func=chiama_ia_premium
         )
         
         chat_history = risultato_agenti["chat_history"]
@@ -261,7 +301,8 @@ def start_game():
             "combat": {"active": False},
             "attivo": True,
             "posizione_attuale": {"zona_tag": "CENTRO", "nome_luogo": "", "is_zona_sicura": True, "nemico_zona": None},
-            "nemici_sconfitti": []
+            "nemici_sconfitti": [],
+            "progressione": risultato_agenti.get("progressione", [])
         }
         _update_player_position(game_state)
         
@@ -299,7 +340,8 @@ def ripristina_stato_da_salvataggio():
                 "combat": save_data.get("combat", {"active": False}),
                 "attivo": True,
                 "posizione_attuale": save_data.get("posizione_attuale", {"zona_tag": "CENTRO", "nome_luogo": "", "is_zona_sicura": True, "nemico_zona": None}),
-                "nemici_sconfitti": save_data.get("nemici_sconfitti", [])
+                "nemici_sconfitti": save_data.get("nemici_sconfitti", []),
+                "progressione": save_data.get("progressione", [])
             }
             return True
         except Exception as e:
@@ -682,7 +724,8 @@ def save_game():
         "hp": game_state.get("hp", 100),
         "combat": game_state.get("combat", {"active": False}),
         "posizione_attuale": game_state.get("posizione_attuale", {"zona_tag": "CENTRO", "nome_luogo": "", "is_zona_sicura": True, "nemico_zona": None}),
-        "nemici_sconfitti": game_state.get("nemici_sconfitti", [])
+        "nemici_sconfitti": game_state.get("nemici_sconfitti", []),
+        "progressione": game_state.get("progressione", [])
     }
     
     with open("savegame.json", "w", encoding="utf-8") as f:
@@ -715,7 +758,8 @@ def load_game():
         "combat": save_data.get("combat", {"active": False}),
         "attivo": True,
         "posizione_attuale": save_data.get("posizione_attuale", {"zona_tag": "CENTRO", "nome_luogo": "", "is_zona_sicura": True, "nemico_zona": None}),
-        "nemici_sconfitti": save_data.get("nemici_sconfitti", [])
+        "nemici_sconfitti": save_data.get("nemici_sconfitti", []),
+        "progressione": save_data.get("progressione", [])
     }
     
     # Trova l'ultimo messaggio del DM
