@@ -180,7 +180,8 @@ class CastingDirectorAgent:
             "tot_cattivi": len(creature_scelte),
             "boss_finale_str": boss_finale_str,
             "nome_boss": nome_boss,
-            "oggetti_scelti": oggetti_scelti
+            "oggetti_scelti": oggetti_scelti,
+            "citta_con_nemici": citta_con_nemici
         }
 
 
@@ -374,16 +375,137 @@ L'ultima tappa DEVE essere lo scontro con il Boss Finale {nome_boss}.
         if not any(m.get("role") == "assistant" for m in chat_history):
             chat_history.append({"role": "assistant", "content": dm_reply})
             
+        # ==============================================================================
+        # COSTRUZIONE DELLE TAPPE STRUTTURATE E DEL PERCORSO SCRIPTATO
+        # Garantisce che OGNI singolo personaggio (NPC) e OGNI creatura selezionata
+        # abbia uno scopo reale nella storia e una tappa obbligatoria da compiere.
+        # ==============================================================================
+        tappe_strutturate = []
+        step_id = 1
+        tot_citta = cartografo_output["tot_ambientazioni"]
+        citta_nem = casting_output.get("citta_con_nemici", {})
+        citta_nem_int = {int(k): v for k, v in citta_nem.items()}
+        
+        for i in range(tot_citta):
+            nodo_grezzo = cartografo_output["nodi"][i]
+            match_tag = re.search(r'^\[(.*?)\]:\s*([^<-]+)', nodo_grezzo)
+            zona_tag = match_tag.group(1).strip() if match_tag else f"ZONA-{i+1}"
+            nome_luogo = match_tag.group(2).strip() if match_tag else "Luogo Sconosciuto"
+            
+            npc_grezzo = npc_list[i % len(npc_list)]
+            npc_nome = npc_grezzo.split('\n')[0].replace('[', '').replace(']', '').strip()
+            is_last = (i == tot_citta - 1)
+            
+            if i == 0:
+                tappe_strutturate.append({
+                    "id": step_id,
+                    "zona_tag": zona_tag,
+                    "nome_luogo": nome_luogo,
+                    "personaggio": npc_nome,
+                    "obiettivo": f"Parla con {npc_nome} a {nome_luogo} per scoprire gli indizi sulla minaccia e sbloccare il sentiero per procedere",
+                    "completato": False,
+                    "is_boss": False,
+                    "tipo": "npc"
+                })
+                step_id += 1
+                if i in citta_nem_int and not citta_nem_int[i][1]:
+                    nem_nome = citta_nem_int[i][0].split('\n')[0].replace('[', '').replace(']', '').strip()
+                    tappe_strutturate.append({
+                        "id": step_id,
+                        "zona_tag": zona_tag,
+                        "nome_luogo": nome_luogo,
+                        "personaggio": nem_nome,
+                        "obiettivo": f"Sconfiggi {nem_nome} a {nome_luogo} per mettere in sicurezza il punto di partenza",
+                        "completato": False,
+                        "is_boss": False,
+                        "tipo": "combattimento"
+                    })
+                    step_id += 1
+            elif not is_last:
+                tappe_strutturate.append({
+                    "id": step_id,
+                    "zona_tag": zona_tag,
+                    "nome_luogo": nome_luogo,
+                    "personaggio": npc_nome,
+                    "obiettivo": f"Incontra e collabora con {npc_nome} a {nome_luogo} per ottenere l'oggetto chiave, l'indizio o il permesso per avanzare",
+                    "completato": False,
+                    "is_boss": False,
+                    "tipo": "npc"
+                })
+                step_id += 1
+                if i in citta_nem_int and not citta_nem_int[i][1]:
+                    nem_nome = citta_nem_int[i][0].split('\n')[0].replace('[', '').replace(']', '').strip()
+                    tappe_strutturate.append({
+                        "id": step_id,
+                        "zona_tag": zona_tag,
+                        "nome_luogo": nome_luogo,
+                        "personaggio": nem_nome,
+                        "obiettivo": f"Affronta e sconfiggi {nem_nome} a {nome_luogo} per superare il blocco stradale e liberare la via verso la prossima tappa",
+                        "completato": False,
+                        "is_boss": False,
+                        "tipo": "combattimento"
+                    })
+                    step_id += 1
+            else:
+                tappe_strutturate.append({
+                    "id": step_id,
+                    "zona_tag": zona_tag,
+                    "nome_luogo": nome_luogo,
+                    "personaggio": npc_nome,
+                    "obiettivo": f"Raggiungi {nome_luogo} e consulta {npc_nome} per scoprire il segreto o il punto debole del Boss Finale",
+                    "completato": False,
+                    "is_boss": False,
+                    "tipo": "npc"
+                })
+                step_id += 1
+                tappe_strutturate.append({
+                    "id": step_id,
+                    "zona_tag": zona_tag,
+                    "nome_luogo": nome_luogo,
+                    "personaggio": nome_boss,
+                    "obiettivo": f"Raggiungi la tana finale a {nome_luogo} e sconfiggi il Boss Finale {nome_boss} in combattimento per completare la campagna",
+                    "completato": False,
+                    "is_boss": True,
+                    "tipo": "boss"
+                })
+                step_id += 1
+
+        progressione = [
+            f"{t['id']}. [{t['zona_tag']}] {t['obiettivo']} (coinvolge: {t['personaggio']})"
+            for t in tappe_strutturate
+        ]
+
         # Lista nemici bestiario con Boss Finale come primo elemento in evidenza
         lista_bestiario = [casting_output["boss_finale_str"]] + [c for i, c in enumerate(nemici_list) if i != 0]
         
+        lista_tappe_diario = []
+        for t in tappe_strutturate:
+            if t["id"] == 1:
+                stato = "⏳ In Corso / Obiettivo Attuale"
+                if t.get("is_boss"):
+                    titolo = f"[👑 Tappa {t['id']} (BOSS FINALE E OBIETTIVO SUPREMO): {t['zona_tag']} - {t['personaggio']}]"
+                    icona_coinvolto = "👑 Boss Finale"
+                else:
+                    titolo = f"[Tappa {t['id']}: {t['zona_tag']} - {t['personaggio']}]"
+                    icona_coinvolto = "⚔️ Nemico Ostile" if t.get("tipo") == "combattimento" else "👤 NPC Alleato/Informatore"
+                    
+                testo_step = (
+                    f"{titolo}\n"
+                    f"📍 **Luogo / Zona:** {t['nome_luogo']} ({t['zona_tag']})\n"
+                    f"{icona_coinvolto}: **{t['personaggio']}**\n"
+                    f"📖 **Punto della Narrazione:** {t['obiettivo']}\n"
+                    f"⚡ **Stato Tappa:** {stato}"
+                )
+                lista_tappe_diario.append(testo_step)
+
         diario = {
             "👑 Boss Finale e Nemici (Bestiario)": lista_bestiario,
             "📜 Personaggi Incontrati (NPC)": npc_list,
             "🗺️ Luoghi della Mappa": cartografo_output["ambientazioni_selezionate"],
             "🎒 Il Protagonista e Oggetti (Personaggio)": [
                 f"[Il Protagonista e Inventario]\n{scheda_arricchita}"
-            ] + casting_output["oggetti_scelti"]
+            ] + casting_output["oggetti_scelti"],
+            "🎯 Percorso e Tappe Obbligatorie": lista_tappe_diario
         }
         
         return {
@@ -394,6 +516,7 @@ L'ultima tappa DEVE essere lo scontro con il Boss Finale {nome_boss}.
             "azione_iniziale": testo_azione,
             "personaggio_arricchito": scheda_arricchita,
             "progressione": progressione,
+            "tappe_strutturate": tappe_strutturate,
             "statistiche_agenti": {
                 "tot_ambientazioni": cartografo_output["tot_ambientazioni"],
                 "tot_npc": casting_output["tot_npc"],

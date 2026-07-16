@@ -302,7 +302,9 @@ def start_game():
             "attivo": True,
             "posizione_attuale": {"zona_tag": "CENTRO", "nome_luogo": "", "is_zona_sicura": True, "nemico_zona": None},
             "nemici_sconfitti": [],
-            "progressione": risultato_agenti.get("progressione", [])
+            "progressione": risultato_agenti.get("progressione", []),
+            "tappe_strutturate": risultato_agenti.get("tappe_strutturate", []),
+            "tappa_attiva_idx": 0
         }
         _update_player_position(game_state)
         
@@ -341,8 +343,11 @@ def ripristina_stato_da_salvataggio():
                 "attivo": True,
                 "posizione_attuale": save_data.get("posizione_attuale", {"zona_tag": "CENTRO", "nome_luogo": "", "is_zona_sicura": True, "nemico_zona": None}),
                 "nemici_sconfitti": save_data.get("nemici_sconfitti", []),
-                "progressione": save_data.get("progressione", [])
+                "progressione": save_data.get("progressione", []),
+                "tappe_strutturate": save_data.get("tappe_strutturate", []),
+                "tappa_attiva_idx": save_data.get("tappa_attiva_idx", 0)
             }
+            _update_diary_steps(game_state)
             return True
         except Exception as e:
             print(f"Errore ripristino automatico: {e}")
@@ -491,6 +496,104 @@ def _is_combat_trigger(player_input, game_state):
     return False
 
 
+def _update_diary_steps(game_state):
+    tappe = game_state.get("tappe_strutturate", [])
+    idx_attiva = game_state.get("tappa_attiva_idx", 0)
+    
+    # Ricostruzione fallback se tappe_strutturate è vuoto (da un vecchio salvataggio o avvio precedente)
+    if not tappe and game_state.get("progressione"):
+        tappe = []
+        for idx_p, p_str in enumerate(game_state["progressione"]):
+            match_z = re.search(r'\[(.*?)\]\s*(.*?)(?:\s*\(coinvolge:\s*(.*?)\))?$', p_str)
+            zona = match_z.group(1).strip() if match_z else f"ZONA-{idx_p+1}"
+            ob = match_z.group(2).strip() if match_z else p_str
+            coinvolto = match_z.group(3).strip() if (match_z and match_z.group(3)) else "Sconosciuto"
+            is_boss = ("boss" in ob.lower() or "boss" in coinvolto.lower() or idx_p == len(game_state["progressione"])-1)
+            tappe.append({
+                "id": idx_p + 1,
+                "zona_tag": zona,
+                "nome_luogo": f"Luogo in {zona}",
+                "personaggio": coinvolto,
+                "obiettivo": ob,
+                "completato": (idx_p < idx_attiva),
+                "is_boss": is_boss,
+                "tipo": "boss" if is_boss else "npc"
+            })
+        game_state["tappe_strutturate"] = tappe
+
+    if not tappe or "diario" not in game_state:
+        return
+        
+    lista_tappe_diario = []
+    for t in tappe:
+        t_id = t.get("id", 1)
+        if t.get("completato") or t_id <= idx_attiva:
+            stato = "✅ Completata"
+        elif t_id == (idx_attiva + 1):
+            stato = "⏳ In Corso / Obiettivo Attuale"
+        else:
+            stato = "🔒 Bloccata (Da Completare in Ordine)"
+            
+        if t.get("is_boss"):
+            titolo = f"[👑 Tappa {t_id} (BOSS FINALE E OBIETTIVO SUPREMO): {t['zona_tag']} - {t['personaggio']}]"
+            icona_coinvolto = "👑 Boss Finale"
+        else:
+            titolo = f"[Tappa {t_id}: {t['zona_tag']} - {t['personaggio']}]"
+            icona_coinvolto = "⚔️ Nemico Ostile" if t.get("tipo") == "combattimento" else "👤 NPC Alleato/Informatore"
+            
+        testo_step = (
+            f"{titolo}\n"
+            f"📍 **Luogo / Zona:** {t.get('nome_luogo', '')} ({t.get('zona_tag', '')})\n"
+            f"{icona_coinvolto}: **{t.get('personaggio', '')}**\n"
+            f"📖 **Punto della Narrazione:** {t.get('obiettivo', '')}\n"
+            f"⚡ **Stato Tappa:** {stato}"
+        )
+        # I pulsanti compaiono man mano che le tappe vengono sbloccate o completate
+        if t_id <= idx_attiva + 1:
+            lista_tappe_diario.append(testo_step)
+        
+    game_state["diario"]["🎯 Percorso e Tappe Obbligatorie"] = lista_tappe_diario
+
+
+def _check_advance_step(game_state, trigger_character_name=None, is_combat_win=False, from_llm_tag=False, player_input="", dm_reply=""):
+    tappe = game_state.get("tappe_strutturate", [])
+    idx = game_state.get("tappa_attiva_idx", 0)
+    if not tappe or idx >= len(tappe):
+        return False
+    
+    tappa = tappe[idx]
+    if tappa.get("completato"):
+        return False
+        
+    avanza = False
+    if from_llm_tag:
+        avanza = True
+    elif is_combat_win and trigger_character_name:
+        nem_tappa = tappa.get("personaggio", "").lower()
+        trig_lower = trigger_character_name.lower()
+        if nem_tappa in trig_lower or trig_lower in nem_tappa or any(w in trig_lower for w in nem_tappa.split() if len(w) > 3):
+            avanza = True
+    elif not avanza and (player_input or dm_reply):
+        testo_azione = (player_input + " " + dm_reply).lower()
+        coinvolto = tappa.get("personaggio", "").strip()
+        nomi = [w.lower() for w in re.findall(r'\w+', coinvolto) if len(w) > 3]
+        luogo_parole = [w.lower() for w in re.findall(r'\w+', tappa.get("nome_luogo", "")) if len(w) > 3]
+        
+        # Se si sta parlando o interagendo con il personaggio o esplorando il luogo dello step
+        if any(n in testo_azione for n in nomi) or (luogo_parole and any(l in testo_azione for l in luogo_parole)):
+            if tappa.get("tipo") == "npc" or not tappa.get("is_boss"):
+                parole_chiave = ["parl", "dici", "rispond", "chied", "incontr", "rivel", "spieg", "raccont", "accogli", "sconfigg", "colp", "attacc", "raggiung", "esplor", "trov", "ottien", "ricev", "chiav", "salut", "avvicin", "ascolt"]
+                if any(k in testo_azione for k in parole_chiave) or any(n in dm_reply.lower() for n in nomi):
+                    avanza = True
+            
+    if avanza:
+        tappa["completato"] = True
+        game_state["tappa_attiva_idx"] = idx + 1
+        _update_diary_steps(game_state)
+        return True
+    return False
+
+
 # ============================
 #  API: AZIONE DEL GIOCATORE
 # ============================
@@ -564,6 +667,10 @@ def player_action():
                 defeated_enemy = res.get("combat", {}).get("enemy_name") or game_state.get("combat", {}).get("enemy_name")
                 if defeated_enemy and defeated_enemy not in game_state.setdefault("nemici_sconfitti", []):
                     game_state["nemici_sconfitti"].append(defeated_enemy)
+                    # Verifica se lo scontro fa avanzare la tappa corrente del percorso scriptato
+                    avanzato = _check_advance_step(game_state, trigger_character_name=defeated_enemy, is_combat_win=True)
+                    if avanzato:
+                        res["dm_reply"] += "\n\n✨ **[TAPPA OBBLIGATORIA COMPLETATA]** Hai superato con successo l'obiettivo di questa fase della storia! Il percorso e le prossime tappe si sbloccano."
                     
             if not was_already_in_combat:
                 enemy_name_title = game_state["combat"].get("enemy_name", "Nemico")
@@ -596,10 +703,46 @@ def player_action():
     _update_player_position(game_state)
     
     try:
-        # L'IA pensa e risponde
-        response = chiama_ia(game_state["chat_history"])
+        # --- AGENTE CONTROLLORE DEL DIALOGO & STEERING SCRIPTATO ---
+        messages_for_llm = list(game_state["chat_history"])
+        tappe = game_state.get("tappe_strutturate", [])
+        idx_attiva = game_state.get("tappa_attiva_idx", 0)
+        if tappe and idx_attiva < len(tappe):
+            tappa_attiva = tappe[idx_attiva]
+            steering_prompt = {
+                "role": "system",
+                "content": (
+                    f"=== DIRETTIVE SCRIPTATE DELL'AGENTE CONTROLLORE DI DIALOGO ===\n"
+                    f"TAPPA OBBLIGATORIA ATTUALE DEL PERCORSO SCRIPTATO:\n"
+                    f"- Tappa {tappa_attiva['id']}/{len(tappe)} [{tappa_attiva['zona_tag']}] a {tappa_attiva.get('nome_luogo', '')}\n"
+                    f"- Personaggio / Nemico Coinvolto: **{tappa_attiva['personaggio']}**\n"
+                    f"- Obiettivo Obbligatorio: {tappa_attiva['obiettivo']}\n\n"
+                    f"REGOLE RIGIDE DI STEERING PER TE (L'IA NARRATRICE):\n"
+                    f"1. ILLUSIONE DI LIBERTÀ (CARTA BIANCA): Il giocatore deve percepire totale libertà di scelta. Non pronunciare mai frasi meta-game (es. 'non puoi farlo perché è uno script'). Narra le conseguenze in modo immersivo e coerente.\n"
+                    f"2. INDIRIZZAMENTO OCCULTO: Qualsiasi cosa chieda o faccia il giocatore, fai girare i dialoghi, le risposte degli NPC e gli eventi narrativi in modo da guidarlo e spingerlo ad affrontare l'obiettivo della Tappa Attuale con **{tappa_attiva['personaggio']}**.\n"
+                    f"3. BLOCCO SPOSTAMENTI / PREMATURO AVANZAMENTO: Se il giocatore tenta di recarsi in zone successive, affrontare tappe avanzate o saltare l'interazione prima di aver completato l'obiettivo della Tappa Attuale, impedisci il passaggio narrativamente (es. una guardia ferma il cammino, un cancello runico esige la chiave di {tappa_attiva['personaggio']}, un evento improvviso lo richiama al dovere attuale).\n"
+                    f"4. SBLOCCO E COMPLETAMENTO TAPPA: Se e solo se in questo turno il giocatore compie l'azione che soddisfa o conclude l'obiettivo della Tappa Attuale (es. conclude il dialogo con l'NPC ottenendo le informazioni/chiavi necessarie o risolve la sfida richiesta), narra il successo E INSERISCI OBBLIGATORIAMENTE ALLA FINE ASSOLUTA DEL TUO MESSAGGIO QUESTO TAG ESATTO:\n"
+                    f"[STEP_COMPLETATO]\n"
+                    f"=============================================================="
+                )
+            }
+            messages_for_llm.append(steering_prompt)
+
+        # L'IA pensa e risponde guidata dal Controllore del Dialogo
+        response = chiama_ia(messages_for_llm)
         
         dm_reply = response.choices[0].message.content
+        
+        # Verifica se l'IA o l'interazione narrativa hanno completato la tappa scriptata
+        avanzato = False
+        if "[STEP_COMPLETATO]" in dm_reply:
+            dm_reply = dm_reply.replace("[STEP_COMPLETATO]", "").strip()
+            avanzato = _check_advance_step(game_state, from_llm_tag=True, player_input=player_input, dm_reply=dm_reply)
+        else:
+            avanzato = _check_advance_step(game_state, player_input=player_input, dm_reply=dm_reply)
+            
+        if avanzato:
+            dm_reply += "\n\n✨ **[TAPPA OBBLIGATORIA COMPLETATA]** Hai superato l'obiettivo di questa fase! Il percorso narrativo si schiude verso la prossima tappa."
         
         # --- SISTEMA DANNI E GAME OVER ---
         match_danni = re.search(r'\[DANNI:\s*(-?\d+)\]', dm_reply)
@@ -698,7 +841,8 @@ def get_diary():
     if not game_state["attivo"]:
         if not ripristina_stato_da_salvataggio():
             return jsonify({"success": False, "error": "Nessuna partita attiva."}), 400
-    
+            
+    _update_diary_steps(game_state)
     return jsonify({
         "success": True,
         "diario": game_state["diario"]
@@ -725,7 +869,9 @@ def save_game():
         "combat": game_state.get("combat", {"active": False}),
         "posizione_attuale": game_state.get("posizione_attuale", {"zona_tag": "CENTRO", "nome_luogo": "", "is_zona_sicura": True, "nemico_zona": None}),
         "nemici_sconfitti": game_state.get("nemici_sconfitti", []),
-        "progressione": game_state.get("progressione", [])
+        "progressione": game_state.get("progressione", []),
+        "tappe_strutturate": game_state.get("tappe_strutturate", []),
+        "tappa_attiva_idx": game_state.get("tappa_attiva_idx", 0)
     }
     
     with open("savegame.json", "w", encoding="utf-8") as f:
@@ -759,7 +905,9 @@ def load_game():
         "attivo": True,
         "posizione_attuale": save_data.get("posizione_attuale", {"zona_tag": "CENTRO", "nome_luogo": "", "is_zona_sicura": True, "nemico_zona": None}),
         "nemici_sconfitti": save_data.get("nemici_sconfitti", []),
-        "progressione": save_data.get("progressione", [])
+        "progressione": save_data.get("progressione", []),
+        "tappe_strutturate": save_data.get("tappe_strutturate", []),
+        "tappa_attiva_idx": save_data.get("tappa_attiva_idx", 0)
     }
     
     # Trova l'ultimo messaggio del DM

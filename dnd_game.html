@@ -2141,8 +2141,9 @@
             // Controlla se questa entità è il Boss Finale
             let isBoss = itemText.includes('👑 BOSS FINALE') || itemText.includes('BOSS FINALE E OBIETTIVO SUPREMO') || (categoria.includes('Bestiario') && window.globalEntityData.length === 0);
 
-            // Genera il nome file dell'immagine rimuovendo spazi e punteggiatura
-            let fileName = name.replace(/[^a-zA-Z0-9]/g, '') + '.png';
+            // Genera il nome file dell'immagine rimuovendo accenti, spazi e punteggiatura
+            let cleanAccents = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            let fileName = cleanAccents.replace(/[^a-zA-Z0-9]/g, '') + '.png';
             let imgPath = `Icon/${folder}/${fileName}`;
 
             let entityId = window.globalEntityData.length;
