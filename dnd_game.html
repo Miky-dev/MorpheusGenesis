@@ -328,6 +328,38 @@
             word-break: break-word;
         }
 
+        /* === Aura Magica del Boss Finale === */
+        @keyframes bossAuraGlow {
+            0% {
+                box-shadow: 0 0 15px 3px #ff0055, 0 0 25px 6px #8000ff, 0 0 35px 10px #ffcc00;
+                border-color: #ffcc00;
+            }
+            50% {
+                box-shadow: 0 0 25px 6px #ffcc00, 0 0 40px 12px #ff0055, 0 0 55px 16px #8000ff;
+                border-color: #ff0055;
+            }
+            100% {
+                box-shadow: 0 0 15px 3px #ff0055, 0 0 25px 6px #8000ff, 0 0 35px 10px #ffcc00;
+                border-color: #ffcc00;
+            }
+        }
+
+        .entity-button.boss-entity img {
+            border: 3px solid #ffcc00 !important;
+            animation: bossAuraGlow 2.5s infinite ease-in-out !important;
+        }
+
+        .entity-button.boss-entity span {
+            color: #ffcc00 !important;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(255, 204, 0, 0.8);
+        }
+
+        .entity-image-large.boss-aura {
+            border: 4px solid #ffcc00 !important;
+            animation: bossAuraGlow 2.5s infinite ease-in-out !important;
+        }
+
         /* === Entity Overlay === */
         .entity-content {
             display: flex;
@@ -1943,15 +1975,20 @@
                 name = categoria.includes('Mappa') ? 'Mappa/Posizione' : 'Appunto';
             }
 
+            // Controlla se questa entità è il Boss Finale
+            let isBoss = itemText.includes('👑 BOSS FINALE') || itemText.includes('BOSS FINALE E OBIETTIVO SUPREMO') || (categoria.includes('Bestiario') && window.globalEntityData.length === 0);
+
             // Genera il nome file dell'immagine rimuovendo spazi e punteggiatura
             let fileName = name.replace(/[^a-zA-Z0-9]/g, '') + '.png';
             let imgPath = `Icon/${folder}/${fileName}`;
 
             let entityId = window.globalEntityData.length;
-            window.globalEntityData.push({ title: name, body: bodyText, image: imgPath });
+            window.globalEntityData.push({ title: name, body: bodyText, image: imgPath, isBoss: isBoss });
+
+            let bossClass = isBoss ? ' boss-entity' : '';
 
             return `
-                <div class="entity-button" onclick="showEntityOverlay(${entityId})">
+                <div class="entity-button${bossClass}" onclick="showEntityOverlay(${entityId})">
                     <img src="${imgPath}" onerror="this.onerror=null; this.src='Icon/null.png';">
                     <span>${escapeHTML(name)}</span>
                 </div>
@@ -1962,7 +1999,14 @@
             const data = window.globalEntityData[id];
             if (!data) return;
             
-            document.getElementById('entity-image').src = data.image;
+            const imgEl = document.getElementById('entity-image');
+            imgEl.src = data.image;
+            if (data.isBoss) {
+                imgEl.classList.add('boss-aura');
+            } else {
+                imgEl.classList.remove('boss-aura');
+            }
+            
             document.getElementById('entity-title').innerText = '📜 ' + data.title;
             document.getElementById('entity-body').innerText = data.body;
             document.getElementById('entity-overlay').classList.add('visible');

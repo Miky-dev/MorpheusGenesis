@@ -231,14 +231,25 @@ def risolvi_turno_combattimento(player_action, game_state):
     if enemy_hp <= 0:
         combat["active"] = False
         loot = combat.get("loot", "Nessun bottino particolare")
-        dm_reply = (
-            f"⚔️ **TURNO DI COMBATTIMENTO** ⚔️\n\n"
-            f"{txt_attacco}\n\n"
-            f"🎉 **VITTORIA SCHIACCIANTE!**\n"
-            f"Con quest'ultimo colpo fatale, **{enemy_name}** emette un ultimo ruggito e crolla a terra esanime! Hai vinto la battaglia!\n\n"
-            f"💎 **Bottino Ottenuto:** {loot}\n\n"
-            f"*(Il combattimento è terminato. Torni in modalità Esplorazione)*"
-        )
+        if "BOSS FINALE" in enemy_name.upper() or combat.get("is_boss", False):
+            dm_reply = (
+                f"⚔️ **TURNO DI COMBATTIMENTO - SCONTRO EPICO** ⚔️\n\n"
+                f"{txt_attacco}\n\n"
+                f"👑🏆 **VITTORIA FINALE DEL GIOCO! HAI SCONFITTO IL BOSS FINALE!** 🏆👑\n"
+                f"Con un colpo leggendario che risuonerà nei secoli, **{enemy_name}** emette il suo ultimo respiro e crolla al suolo definitivamente sconfitto!\n\n"
+                f"La maledizione che gravava su queste terre si spezza e la luce torna a splendere sul mondo di Morpheus Genesis. HAI VINTO LA CAMPAGNA!\n\n"
+                f"💎 **Bottino Supremo Ottenuto:** {loot}\n\n"
+                f"*(La partita è stata completata con successo! Trionfo Eroico!)*"
+            )
+        else:
+            dm_reply = (
+                f"⚔️ **TURNO DI COMBATTIMENTO** ⚔️\n\n"
+                f"{txt_attacco}\n\n"
+                f"🎉 **VITTORIA SCHIACCIANTE!**\n"
+                f"Con quest'ultimo colpo fatale, **{enemy_name}** emette un ultimo ruggito e crolla a terra esanime! Hai vinto la battaglia!\n\n"
+                f"💎 **Bottino Ottenuto:** {loot}\n\n"
+                f"*(Il combattimento è terminato. Torni in modalità Esplorazione)*"
+            )
         return _build_response(dm_reply, d20_player, game_state["hp"], 0, 0, enemy_max_hp, True, enemy_name)
         
     # Se il nemico è ancora vivo -> Contrattacco

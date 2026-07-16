@@ -34,97 +34,61 @@ Motivazione/Segreto: Gestisce una rete segreta di messaggeri e contrabbandieri c
 Utilità per il Giocatore: Offre alloggio, raccoglie informazioni provenienti da tutto il regno e può mettere in contatto con individui difficili da trovare.
 
 [Neria dell'Eclisse] - Maga Errante
-
 Aspetto e Atteggiamento: Indossa lunghe vesti blu notte ricamate con costellazioni argentate e porta un bastone sormontato da un cristallo nero. Il suo volto tradisce un'antica stanchezza, ma i suoi occhi brillano di immensa conoscenza.
-
 Motivazione/Segreto: Cerca un rituale capace di fermare una profezia che annuncia la distruzione del mondo. È stata un tempo membro dell'ordine responsabile della stessa catastrofe che ora tenta di evitare.
-
 Utilità per il Giocatore: Traduce rune antiche, insegna incantesimi, identifica fenomeni magici e apre portali verso luoghi dimenticati.
 
 [Dorian Pietragrigia] - Cacciatore di Taglie
-
 Aspetto e Atteggiamento: Un uomo massiccio con una barba intrecciata e un mantello di pelliccia logoro. Osserva chiunque come se ne stesse già valutando il prezzo sulla propria lista di taglie.
-
 Motivazione/Segreto: Vuole catturare il criminale che ha assassinato suo fratello, senza sapere che l'uomo ora vive sotto una nuova identità.
-
 Utilità per il Giocatore: Offre missioni di caccia, conosce i rifugi dei fuorilegge e può rintracciare persone scomparse.
 
 [Elyra Lunargento] - Astrologa
-
 Aspetto e Atteggiamento: Indossa abiti ricamati con simboli celesti e porta sempre con sé un astrolabio d'argento. Parla con voce calma e spesso interrompe una conversazione per osservare il cielo.
-
 Motivazione/Segreto: Cerca una stella scomparsa dalle mappe celesti, convinta che sia in realtà un antico dio imprigionato.
-
 Utilità per il Giocatore: Interpreta presagi, individua date favorevoli e rivela informazioni su eventi cosmici e magie astrali.
 
 [Kragh] - Mercenario Orco
-
 Aspetto e Atteggiamento: Alto quasi due metri e coperto di cicatrici, porta una gigantesca ascia sulla schiena. Non ama parlare, ma mantiene sempre la parola data.
-
 Motivazione/Segreto: Sta accumulando denaro per riscattare il proprio clan ridotto in schiavitù.
-
 Utilità per il Giocatore: Può essere assunto come guardia del corpo, aiutare nei combattimenti più difficili e addestrare nell'uso delle armi pesanti.
 
 [Sorella Miriam] - Custode del Santuario
-
 Aspetto e Atteggiamento: Una donna anziana dai capelli candidi e dal volto segnato dal tempo, sempre circondata dal profumo di erbe medicinali. Accoglie chiunque con gentilezza, ma il suo sorriso svanisce quando si parla del passato.
-
 Motivazione/Segreto: Protegge un antico sigillo nascosto sotto il santuario, temendo il ritorno di una creatura dimenticata.
-
 Utilità per il Giocatore: Benedice equipaggiamenti, rimuove maledizioni e offre rifugio sicuro.
 
 [Finn Rattosvelto] - Ladro
-
 Aspetto e Atteggiamento: Un giovane agile dai capelli arruffati e dal sorriso sfacciato, con decine di grimaldelli nascosti tra gli abiti. Non resta mai fermo e tamburella continuamente le dita.
-
 Motivazione/Segreto: Ha rubato un anello apparentemente insignificante che appartiene a un potente signore oscuro.
-
 Utilità per il Giocatore: Scassina serrature, disinnesca trappole e recupera oggetti difficili da ottenere.
 
 [Thalia Erbaverde] - Erborista
-
 Aspetto e Atteggiamento: Una giovane donna con lunghi capelli castani intrecciati con foglie e piccoli fiori. Ha mani sempre macchiate di linfa e parla con entusiasmo di ogni pianta che incontra.
-
 Motivazione/Segreto: È alla ricerca del Fiore dell'Alba, una pianta leggendaria che potrebbe guarire qualsiasi malattia.
-
 Utilità per il Giocatore: Prepara pozioni, antidoti, veleni naturali e identifica piante rare.
 
 [Varok il Collezionista] - Antiquario
-
 Aspetto e Atteggiamento: Elegante e impeccabile, indossa guanti di velluto per non toccare direttamente gli oggetti antichi. Il suo negozio è stipato di reliquie provenienti da ogni angolo del regno.
-
 Motivazione/Segreto: Colleziona manufatti appartenuti ai Re Stregoni nel tentativo di ricostruire la loro storia... e il loro potere.
-
 Utilità per il Giocatore: Acquista tesori, valuta reperti e fornisce informazioni sulla loro origine.
 
 [Ysolde Nebbiabianca] - Veggente
-
 Aspetto e Atteggiamento: Una donna cieca dagli occhi lattiginosi che cammina senza bastone come se vedesse oltre il mondo materiale. Una lieve nebbia sembra seguirla ovunque.
-
 Motivazione/Segreto: Le sue visioni stanno diventando sempre più oscure e mostrano un volto che riconosce come il proprio, ma molto più giovane.
-
 Utilità per il Giocatore: Offre profezie, interpreta sogni, individua oggetti perduti e suggerisce possibili conseguenze delle decisioni.
 
 [Brom Barilferro] - Oste
-
 Aspetto e Atteggiamento: Un nano robusto dal naso rosso e dalla barba intrecciata con anelli di rame. Accoglie ogni cliente con una pinta già pronta e una battuta sempre diversa.
-
 Motivazione/Segreto: La sua locanda è costruita sopra un'antica cripta nanica che tiene nascosta a tutti.
-
 Utilità per il Giocatore: Fornisce informazioni sui viaggiatori, offre camere sicure e mette in contatto con avventurieri in cerca di compagnia.
 
 [Caelis Ventoquieto] - Bardo
-
 Aspetto e Atteggiamento: Indossa un mantello blu ricamato con note musicali dorate e porta un liuto antico sempre accordato. Ha una parlantina irresistibile e sembra conoscere una storia su chiunque.
-
 Motivazione/Segreto: Cerca la Ballata Perduta, una melodia capace di piegare la volontà dei draghi.
-
 Utilità per il Giocatore: Diffonde la reputazione dell'eroe, raccoglie notizie nelle taverne e conosce leggende dimenticate.
 
 [Helga Rocciadura] - Carovaniera
-
 Aspetto e Atteggiamento: Una donna alta e muscolosa con un mantello impolverato e stivali consumati da migliaia di chilometri. Trasmette sicurezza e affronta ogni imprevisto con sorprendente calma.
-
 Motivazione/Segreto: Sta cercando una rotta commerciale perduta che conduce a una città considerata soltanto una leggenda.
-
 Utilità per il Giocatore: Organizza viaggi, vende mappe aggiornate, trasporta merci e conosce le strade più sicure del continente.
