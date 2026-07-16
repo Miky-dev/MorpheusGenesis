@@ -361,28 +361,44 @@ def _detect_current_enemy(game_state):
     history = game_state.get("chat_history", [])
     known_enemies = list(combat_engine.BESTIARY_STATS.keys())
     
-    # Controlla gli ultimi 8 messaggi in chat se menzionano un nemico noto
+    tappe = game_state.get("tappe_strutturate", [])
+    idx_attiva = game_state.get("tappa_attiva_idx", 0)
+    tappa_attiva = tappe[idx_attiva] if (tappe and idx_attiva < len(tappe)) else {}
+    is_on_boss_step = tappa_attiva.get("is_boss", False)
+    
+    # 1. Controlla se la tappa attiva è una sfida di combattimento non ancora completata e non è il boss (se non siamo alla fine)
+    if tappa_attiva.get("tipo") in ["combattimento", "boss"] and not tappa_attiva.get("completato"):
+        if is_on_boss_step or not tappa_attiva.get("is_boss", False):
+            nem_tappa = tappa_attiva.get("personaggio", "").strip()
+            if nem_tappa:
+                return nem_tappa
+
+    # 2. Controlla gli ultimi 8 messaggi in chat se menzionano un nemico noto (escludendo il boss se non siamo all'ultima tappa)
     for msg in reversed(history[-8:]):
         content_lower = msg.get("content", "").lower()
         for k_enemy in known_enemies:
             if k_enemy in content_lower:
+                if not is_on_boss_step and any(b in k_enemy for b in ["lich", "drago", "fenice", "fungo colossale", "boss"]):
+                    continue
                 return k_enemy
                 
-    # Controlla nel Diario -> 👑 Boss Finale e Nemici (Bestiario) oppure Bestiario (Nemici Noti)
+    # 3. Controlla nel Diario -> escludendo il primo elemento (Boss Finale) se non siamo alla tappa finale!
     diario = game_state.get("diario", {})
     bestiario = diario.get("👑 Boss Finale e Nemici (Bestiario)", diario.get("Bestiario (Nemici Noti)", []))
     if bestiario and isinstance(bestiario, list) and len(bestiario) > 0:
-        for nemico_diario in bestiario:
+        start_idx = 0 if is_on_boss_step else 1
+        for nemico_diario in bestiario[start_idx:]:
             nem_lower = nemico_diario.lower()
             for k_enemy in known_enemies:
                 if k_enemy in nem_lower or nem_lower in k_enemy:
                     return k_enemy
-        # Estrae il nome tra parentesi quadre pulendo eventuali tag come 👑 BOSS FINALE:
-        match = re.search(r'\[(?:👑\s*BOSS FINALE:\s*)?([^\]]+)\]', bestiario[0], re.IGNORECASE)
-        if match:
-            return match.group(1).strip()
-        return bestiario[0].split('\n')[0].replace('[', '').replace(']', '').strip()
-        
+        if len(bestiario) > 1 and not is_on_boss_step:
+            match_nem = re.search(r'\[([^\]]+)\]', bestiario[1])
+            return match_nem.group(1).strip() if match_nem else bestiario[1].split('\n')[0].replace('[', '').replace(']', '').strip()
+        elif is_on_boss_step and len(bestiario) > 0:
+            match_b = re.search(r'\[(?:👑\s*BOSS FINALE:\s*)?([^\]]+)\]', bestiario[0], re.IGNORECASE)
+            return match_b.group(1).strip() if match_b else bestiario[0].split('\n')[0].replace('[', '').replace(']', '').strip()
+            
     return "Lupo delle Nebbie"
 
 
@@ -573,18 +589,19 @@ def _check_advance_step(game_state, trigger_character_name=None, is_combat_win=F
         trig_lower = trigger_character_name.lower()
         if nem_tappa in trig_lower or trig_lower in nem_tappa or any(w in trig_lower for w in nem_tappa.split() if len(w) > 3):
             avanza = True
-    elif not avanza and (player_input or dm_reply):
-        testo_azione = (player_input + " " + dm_reply).lower()
+    elif not avanza and dm_reply and not tappa.get("is_boss"):
+        # Verifica fallback solo su frasi inequivocabili di completamento o successo della missione/tappa per l'NPC attuale
         coinvolto = tappa.get("personaggio", "").strip()
         nomi = [w.lower() for w in re.findall(r'\w+', coinvolto) if len(w) > 3]
-        luogo_parole = [w.lower() for w in re.findall(r'\w+', tappa.get("nome_luogo", "")) if len(w) > 3]
-        
-        # Se si sta parlando o interagendo con il personaggio o esplorando il luogo dello step
-        if any(n in testo_azione for n in nomi) or (luogo_parole and any(l in testo_azione for l in luogo_parole)):
-            if tappa.get("tipo") == "npc" or not tappa.get("is_boss"):
-                parole_chiave = ["parl", "dici", "rispond", "chied", "incontr", "rivel", "spieg", "raccont", "accogli", "sconfigg", "colp", "attacc", "raggiung", "esplor", "trov", "ottien", "ricev", "chiav", "salut", "avvicin", "ascolt"]
-                if any(k in testo_azione for k in parole_chiave) or any(n in dm_reply.lower() for n in nomi):
-                    avanza = True
+        testo_azione = (player_input + " " + dm_reply).lower()
+        if nomi and any(n in testo_azione for n in nomi):
+            success_phrases = [
+                "ti consegna", "ti dona", "ti affida", "ottieni il", "ricevi il", 
+                "ti permette di accedere", "hai superato la prova", "hai dimostrato il tuo valore", 
+                "ti rivela il segreto", "ti svela", "missione compiuta", "obiettivo completato"
+            ]
+            if any(p in dm_reply.lower() for p in success_phrases):
+                avanza = True
             
     if avanza:
         tappa["completato"] = True
@@ -618,6 +635,54 @@ def player_action():
     # attiviamo AUTOMATICAMENTE la modalità combattimento locale SOLO se c'è un nemico nella posizione attuale
     if not was_already_in_combat and _is_combat_trigger(player_input, game_state):
         _update_player_position(game_state)
+        
+        tappe = game_state.get("tappe_strutturate", [])
+        idx_attiva = game_state.get("tappa_attiva_idx", 0)
+        tappa_attiva = tappe[idx_attiva] if (tappe and idx_attiva < len(tappe)) else {}
+        
+        # Verifica se l'input del giocatore tenta di attaccare il Boss Finale anzitempo
+        bestiario = game_state.get("diario", {}).get("👑 Boss Finale e Nemici (Bestiario)", [])
+        nome_boss = ""
+        for t in tappe:
+            if t.get("is_boss"):
+                nome_boss = t.get("personaggio", "").strip()
+                break
+        if not nome_boss and bestiario and len(bestiario) > 0:
+            match_b = re.search(r'\[(?:👑\s*BOSS FINALE:\s*)?([^\]]+)\]', bestiario[0], re.IGNORECASE)
+            nome_boss = match_b.group(1).strip() if match_b else bestiario[0].split('\n')[0].replace('[', '').replace(']', '').strip()
+            
+        parole_boss = set()
+        if nome_boss:
+            for w in re.findall(r'\w+', nome_boss.lower()):
+                if len(w) > 3 and w not in ["signore", "delle", "degli", "della", "grande", "reale"]:
+                    parole_boss.add(w)
+        if bestiario and len(bestiario) > 0:
+            for w in re.findall(r'\w+', bestiario[0].lower()):
+                if len(w) > 3 and w not in ["boss", "finale", "signore", "delle", "degli", "della", "grande", "reale"]:
+                    parole_boss.add(w)
+
+        is_attacking_boss = False
+        if (parole_boss and any(pb in player_input.lower() for pb in parole_boss)) or "boss" in player_input.lower():
+            is_attacking_boss = True
+            
+        if is_attacking_boss and not tappa_attiva.get("is_boss", False):
+            # IL BOSS NON È ANCORA ATTACCABILE! BLOCCO SCRIPTATO E INTERCETTAZIONE!
+            tappa_num = tappa_attiva.get("id", 1)
+            tappa_ob = tappa_attiva.get("obiettivo", "completare le tappe precedenti della storia")
+            dm_reply = (
+                f"🛡️ **ATTACCO AL BOSS BLOCCATO (PERCORSO INCOMPLETO)**\n\n"
+                f"Tenti di scagliarti o puntare la tua arma direttamente contro **{nome_boss or 'il Boss Finale'}**, ma una barriera magica, la distanza o le regole celestiali del santuario impediscono qualsiasi scontro marziale anticipato contro la minaccia suprema!\n\n"
+                f"*(Per poter affrontare il Boss Supremo in combattimento devi prima completare la **Tappa {tappa_num}** in corso: \"{tappa_ob}\")*"
+            )
+            game_state["chat_history"].append({"role": "user", "content": player_input})
+            game_state["chat_history"].append({"role": "assistant", "content": dm_reply})
+            return jsonify({
+                "success": True,
+                "dm_reply": dm_reply,
+                "hp": game_state.get("hp", 100),
+                "tiro_dado": None
+            })
+
         enemy_name = _get_active_enemy_at_location(game_state)
         
         if not enemy_name:
@@ -630,12 +695,16 @@ def player_action():
                     enemy_name = detected
                     
         if enemy_name:
+            # Assicurati che l'enemy_name non sia per sbaglio associato al boss in tappe precedenti
+            if not tappa_attiva.get("is_boss", False) and ((parole_boss and any(pb in enemy_name.lower() for pb in parole_boss)) or "boss" in enemy_name.lower()):
+                enemy_name = None
+                
+        if enemy_name:
             difficolta = game_state.get("difficolta", "normal")
             stats = combat_engine.get_enemy_stats(enemy_name, difficolta)
             stats["active"] = True
-            bestiario = game_state.get("diario", {}).get("👑 Boss Finale e Nemici (Bestiario)", [])
-            if (bestiario and len(bestiario) > 0 and ("boss" in bestiario[0].lower() or "boss" in enemy_name.lower())) or "boss" in enemy_name.lower():
-                stats["is_boss"] = True
+            is_boss_target = tappa_attiva.get("is_boss", False) and ((parole_boss and any(pb in enemy_name.lower() for pb in parole_boss)) or "boss" in enemy_name.lower())
+            stats["is_boss"] = is_boss_target
             game_state["combat"] = stats
         else:
             pos = game_state.get("posizione_attuale", {})

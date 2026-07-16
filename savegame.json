@@ -44,6 +44,9 @@
         "🎒 Il Protagonista e Oggetti (Personaggio)": [
             "[Il Protagonista e Inventario]\n[Varek il Corvo]\nRazza e Classe: Tiefling Stregone\nEtà: 35 anni\nAllineamento: Neutrale\nBackground: Figlio della Maledizione. La tua magia deriva da un antico patto stipulato dai tuoi antenati.\nPersonalità: Freddo, enigmatico e calcolatore.\nAbilità Distintive: Magia oscura, illusioni, maledizioni.\nPregio: Mantiene sempre il controllo.\nDifetto: Fatica a provare empatia.\nObiettivo: Spezzare il patto che grava sulla sua stirpe.\nSegreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.\nEquipaggiamento: Nessuna informazione disponibile.,  Bastone d'ossidiana, tomo maledetto, anello runico, mantello nero, amuleto demoniaco.\nStatistiche (Generate coi Dadi):\n- FORZA: 5 (colpire duro, sollevare, spingere)\n- DESTREZZA: 16 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 3 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 13 (resistenza fisica, salute)\nPunti Ferita: 100/100",
             "Nessuna informazione disponibile."
+        ],
+        "🎯 Percorso e Tappe Obbligatorie": [
+            "[Tappa 1: CENTRO - **Elyra Lunargento**]\n📍 **Luogo / Zona:** Luogo in CENTRO (CENTRO)\n👤 NPC Alleato/Informatore: ****Elyra Lunargento****\n📖 **Punto della Narrazione:** Ottenere il sigillo di rottura dal vecchio astrologo\n⚡ **Stato Tappa:** ⏳ In Corso / Obiettivo Attuale"
         ]
     },
     "personaggio": "[Varek il Corvo]\nRazza e Classe: Tiefling Stregone\nEtà: 35 anni\nAllineamento: Neutrale\nBackground: Figlio della Maledizione. La tua magia deriva da un antico patto stipulato dai tuoi antenati.\nPersonalità: Freddo, enigmatico e calcolatore.\nAbilità Distintive: Magia oscura, illusioni, maledizioni.\nPregio: Mantiene sempre il controllo.\nDifetto: Fatica a provare empatia.\nObiettivo: Spezzare il patto che grava sulla sua stirpe.\nSegreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.\nEquipaggiamento: Nessuna informazione disponibile.,  Bastone d'ossidiana, tomo maledetto, anello runico, mantello nero, amuleto demoniaco.\nStatistiche (Generate coi Dadi):\n- FORZA: 5 (colpire duro, sollevare, spingere)\n- DESTREZZA: 16 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 3 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 13 (resistenza fisica, salute)\nPunti Ferita: 100/100",
@@ -67,5 +70,58 @@
         "3. [EST] Recuperare un Cristallo Vivente dalla miniera, con l’aiuto della fabbri nanica (coinvolge: **Brunna Forgiabrace**)",
         "4. [OVEST] Decifrare il rituale di rottura del patto nella Biblioteca Sepolta (coinvolge: **Caelis Ventoquieto**)",
         "5. [PROFONDITÀ] Affrontare e distruggere il **Verme delle Profondità** (coinvolge: **Verme delle Profondità**)"
-    ]
+    ],
+    "tappe_strutturate": [
+        {
+            "id": 1,
+            "zona_tag": "CENTRO",
+            "nome_luogo": "Luogo in CENTRO",
+            "personaggio": "**Elyra Lunargento**",
+            "obiettivo": "Ottenere il sigillo di rottura dal vecchio astrologo",
+            "completato": false,
+            "is_boss": false,
+            "tipo": "npc"
+        },
+        {
+            "id": 2,
+            "zona_tag": "NORD",
+            "nome_luogo": "Luogo in NORD",
+            "personaggio": "**Aldren Corvoscuro**",
+            "obiettivo": "Sconfiggere lo **Spettro del Giuramento** e conquistare la Chiave del Portale",
+            "completato": false,
+            "is_boss": false,
+            "tipo": "npc"
+        },
+        {
+            "id": 3,
+            "zona_tag": "EST",
+            "nome_luogo": "Luogo in EST",
+            "personaggio": "**Brunna Forgiabrace**",
+            "obiettivo": "Recuperare un Cristallo Vivente dalla miniera, con l’aiuto della fabbri nanica",
+            "completato": false,
+            "is_boss": false,
+            "tipo": "npc"
+        },
+        {
+            "id": 4,
+            "zona_tag": "OVEST",
+            "nome_luogo": "Luogo in OVEST",
+            "personaggio": "**Caelis Ventoquieto**",
+            "obiettivo": "Decifrare il rituale di rottura del patto nella Biblioteca Sepolta",
+            "completato": false,
+            "is_boss": false,
+            "tipo": "npc"
+        },
+        {
+            "id": 5,
+            "zona_tag": "PROFONDITÀ",
+            "nome_luogo": "Luogo in PROFONDITÀ",
+            "personaggio": "**Verme delle Profondità**",
+            "obiettivo": "Affrontare e distruggere il **Verme delle Profondità**",
+            "completato": false,
+            "is_boss": true,
+            "tipo": "boss"
+        }
+    ],
+    "tappa_attiva_idx": 0
 }
