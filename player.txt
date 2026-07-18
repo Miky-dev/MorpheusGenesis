@@ -9,7 +9,7 @@ Pregio: Non abbandona mai chi considera un alleato.
 Difetto: Gli incubi del passato lo rendono diffidente verso gli sconosciuti.
 Obiettivo: Scoprire chi ha guidato l'attacco che distrusse il suo villaggio.
 Segreto: Conserva una zanna della creatura che sterminò la sua famiglia, capace di reagire alla presenza dei suoi simili.
-Equipaggiamento: Arco lungo, 20 frecce, spada corta, coltello da caccia, mantello mimetico, razioni da viaggio, pietra focaia, corda da 15 metri.
+Equipaggiamento: Arco lungo, spada corta, coltello da caccia, mantello mimetico.
 
 [Eryndor il Devoto]
 Razza e Classe: Nano Chierico
@@ -22,7 +22,7 @@ Pregio: Riesce sempre a mantenere la calma.
 Difetto: È troppo disposto a concedere una seconda possibilità.
 Obiettivo: Riunire tutti i frammenti della profezia.
 Segreto: Dubita silenziosamente della divinità che serve.
-Equipaggiamento: Mazza ferrata, scudo sacro, simbolo divino, armatura di maglia, ampolla d'acqua santa, kit medico, libro delle preghiere.
+Equipaggiamento: Mazza ferrata, scudo sacro, simbolo divino, armatura di maglia, ampolla d'acqua santa, kit medico.
 
 [Lyra l'Ombra]
 Razza e Classe: Elfa Ladra
@@ -35,7 +35,7 @@ Pregio: Si adatta rapidamente a qualsiasi situazione.
 Difetto: Fatica a fidarsi perfino dei propri alleati.
 Obiettivo: Vendere il manufatto rubato senza essere trovata.
 Segreto: L'oggetto rubato sembra comunicare con lei nei sogni.
-Equipaggiamento: Due pugnali, grimaldelli, mantello scuro, fiala di veleno, corda sottile, bombe fumogene, borsa con monete.
+Equipaggiamento: Due pugnali, fiala di veleno, bombe fumogene.
 
 [Tharok Spaccascudi]
 Razza e Classe: Barbaro Mezzorco
@@ -48,7 +48,7 @@ Pregio: Non conosce la paura.
 Difetto: Agisce spesso prima di riflettere.
 Obiettivo: Accumulare abbastanza ricchezze da ritirarsi lontano dal mondo.
 Segreto: È perseguitato dai fantasmi dei compagni morti in battaglia.
-Equipaggiamento: Ascia bipenne, coltello da caccia, abiti di pelle, bracciali rinforzati, fiasca di forte liquore, kit per affilare le armi.
+Equipaggiamento: Ascia bipenne, coltello da caccia, abiti di pelle, bracciali rinforzati.
 
 [Seraphine delle Stelle]
 Razza e Classe: Elfa Maga
@@ -61,7 +61,7 @@ Pregio: Apprende rapidamente qualsiasi disciplina.
 Difetto: La curiosità spesso supera la prudenza.
 Obiettivo: Dimostrare la propria innocenza.
 Segreto: Una potente entità vive nascosta nel suo grimorio.
-Equipaggiamento: Bastone runico, grimorio, cristalli di mana, mantello incantato, pozione di mana.
+Equipaggiamento: Bastone runico, grimorio, mantello incantato, pozione di mana.
 
 [Brom Rocciadura]
 Razza e Classe: Nano Guerriero
@@ -74,7 +74,7 @@ Pregio: Non infrange mai una promessa.
 Difetto: Porta il peso dei propri errori.
 Obiettivo: Riscattare il proprio onore.
 Segreto: Conosce il luogo dove è nascosta la corona perduta del suo regno.
-Equipaggiamento: Martello da guerra, scudo pesante, armatura completa, kit da fabbro, torcia.
+Equipaggiamento: Martello da guerra, scudo pesante, armatura completa.
 
 [Nymia Fogliargento]
 Razza e Classe: Druida Elfa
@@ -100,7 +100,7 @@ Pregio: Riesce a infondere coraggio negli altri.
 Difetto: Parla troppo anche quando dovrebbe tacere.
 Obiettivo: Comporre la ballata perfetta.
 Segreto: Sta cercando il proprio padre, un famoso eroe scomparso.
-Equipaggiamento: Liuto, pugnale, mantello elegante, diario di viaggio, monete d'argento.
+Equipaggiamento: Liuto, pugnale, mantello elegante.
 
 [Varek il Corvo]
 Razza e Classe: Tiefling Stregone
@@ -113,7 +113,7 @@ Pregio: Mantiene sempre il controllo.
 Difetto: Fatica a provare empatia.
 Obiettivo: Spezzare il patto che grava sulla sua stirpe.
 Segreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.
-Equipaggiamento: Bastone d'ossidiana, tomo maledetto, anello runico, mantello nero, amuleto demoniaco.
+Equipaggiamento: Bastone d'ossidiana, tomo maledetto, anello runico, amuleto demoniaco.
 
 [Aelric il Pellegrino]
 Razza e Classe: Umano Paladino
@@ -126,4 +126,4 @@ Pregio: Ispira fiducia ovunque vada.
 Difetto: Fatica ad accettare compromessi morali.
 Obiettivo: Distruggere un antico culto oscuro.
 Segreto: Il capo del culto era un tempo il suo maestro.
-Equipaggiamento: Spada lunga consacrata, scudo benedetto, armatura a piastre, simbolo sacro, pozioni curative.
+Equipaggiamento: Spada lunga consacrata, scudo benedetto, pozioni curative.
