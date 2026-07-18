@@ -23,6 +23,41 @@ BESTIARY_STATS = {
     "fenice cinerea": {"hp": 105, "ac": 16, "atk": 7, "dmg": (10, 18), "loot": "Piume della Fenice, cenere rigenerante, uovo incandescente"}
 }
 
+# Database Fisso degli Oggetti (Estratti da player.txt e oggetti di partenza)
+ITEMS_DB = {
+    # --- ARMI (Attacco: probabilità percentuale di colpire invece del d20) ---
+    "arco lungo": {"tipo": "attacco", "efficacia": 75},
+    "spada corta": {"tipo": "attacco", "efficacia": 80},
+    "coltello da caccia": {"tipo": "attacco", "efficacia": 85},
+    "mazza ferrata": {"tipo": "attacco", "efficacia": 70},
+    "due pugnali": {"tipo": "attacco", "efficacia": 85},
+    "ascia bipenne": {"tipo": "attacco", "efficacia": 65},
+    "martello da guerra": {"tipo": "attacco", "efficacia": 75},
+    "bastone runico": {"tipo": "attacco", "efficacia": 90},
+    "bastone di quercia": {"tipo": "attacco", "efficacia": 70},
+    "falcetto rituale": {"tipo": "attacco", "efficacia": 80},
+    
+    # --- DIFESE (Difesa: probabilità percentuale passiva di parare i danni nemici) ---
+    "scudo sacro": {"tipo": "difesa", "efficacia": 60},
+    "armatura di maglia": {"tipo": "difesa", "efficacia": 50},
+    "mantello scuro": {"tipo": "difesa", "efficacia": 40},
+    "mantello incantato": {"tipo": "difesa", "efficacia": 50},
+    "mantello mimetico": {"tipo": "difesa", "efficacia": 45},
+    "scudo pesante": {"tipo": "difesa", "efficacia": 70},
+    "armatura completa": {"tipo": "difesa", "efficacia": 75},
+    "bracciali rinforzati": {"tipo": "difesa", "efficacia": 35},
+    "amleto d'ombra del cacciatore": {"tipo": "difesa", "efficacia": 55},
+    
+    # --- CURE (Cura: % di HP ripristinati - riutilizzabili/illimitati) ---
+    "kit medico": {"tipo": "cura", "efficacia": 40},
+    "pozione di rigenerazione elfica": {"tipo": "cura", "efficacia": 50},
+    "pozione di mana": {"tipo": "cura", "efficacia": 20}, # dà anche salute in questo sistema unificato
+    "ampolla d'acqua santa": {"tipo": "cura", "efficacia": 30},
+    "razioni da viaggio": {"tipo": "cura", "efficacia": 15},
+    "erbe medicinali": {"tipo": "cura", "efficacia": 35},
+    "fiasca di forte liquore": {"tipo": "cura", "efficacia": 25},
+}
+
 def get_enemy_stats(nome_nemico, difficolta="normal"):
     """
     Restituisce le statistiche del nemico scalate per difficoltà.
@@ -111,6 +146,19 @@ def extract_player_modifiers(personaggio_str):
         ac += 2
         
     mods["ac"] = ac
+    
+    # Nuova logica: trova l'oggetto di difesa con percentuale migliore
+    best_defense_name = None
+    best_defense_pct = 0
+    for item_name, item_data in ITEMS_DB.items():
+        if item_data["tipo"] == "difesa" and item_name in lower_p:
+            if item_data["efficacia"] > best_defense_pct:
+                best_defense_pct = item_data["efficacia"]
+                best_defense_name = item_name
+                
+    mods["best_defense_name"] = best_defense_name
+    mods["best_defense_pct"] = best_defense_pct
+    
     return mods
 
 def risolvi_turno_combattimento(player_action, game_state):
@@ -160,7 +208,29 @@ def risolvi_turno_combattimento(player_action, game_state):
             return _esegui_contrattacco_nemico(dm_reply_part1, d20_flee, game_state, combat, player_mods)
 
     # 2. AZIONE DI CURA O POZIONE
-    if any(w in action_lower for w in ["cura", "pozione", "ampolla", "kit", "erbe", "medico"]):
+    personaggio_lower = game_state.get("personaggio", "").lower()
+    usato = None
+    usato_data = None
+    for item_name, item_data in ITEMS_DB.items():
+        if item_name in action_lower and item_name in personaggio_lower:
+            usato = item_name
+            usato_data = item_data
+            break
+
+    if usato_data and usato_data["tipo"] == "cura":
+        cura_flat = usato_data["efficacia"]
+        vecchi_hp = player_hp
+        player_hp = min(100, player_hp + cura_flat)
+        guarigione = player_hp - vecchi_hp
+        game_state["hp"] = player_hp
+        
+        dm_reply_part1 = (
+            f"🧪 **USO DI {usato.upper()}**\n\n"
+            f"Rapidamente usi il tuo oggetto curativo nel bel mezzo dello scontro, recuperando **+{guarigione} HP** "
+            f"(Salute attuale: {player_hp}/100)!"
+        )
+        return _esegui_contrattacco_nemico(dm_reply_part1, 0, game_state, combat, player_mods)
+    elif any(w in action_lower for w in ["cura", "pozione", "ampolla", "kit", "erbe", "medico"]):
         cura_base = random.randint(15, 28) + player_mods["costituzione"]
         vecchi_hp = player_hp
         player_hp = min(100, player_hp + cura_base)
@@ -175,7 +245,6 @@ def risolvi_turno_combattimento(player_action, game_state):
         return _esegui_contrattacco_nemico(dm_reply_part1, 0, game_state, combat, player_mods)
 
     # 3. ATTACCO O AZIONE DI COMBATTIMENTO STANDARD
-    # Determina la statistica di attacco (Forza vs Destrezza vs Intelligenza)
     if any(w in action_lower for w in ["arco", "balestra", "dardo", "pugnale", "mancina", "schiva"]):
         atk_stat = "destrezza"
     elif any(w in action_lower for w in ["bastone", "magia", "incantesimo", "fuoco", "fulmine", "runa"]):
@@ -184,48 +253,84 @@ def risolvi_turno_combattimento(player_action, game_state):
         atk_stat = "forza"
         
     mod_atk = player_mods[atk_stat]
-    d20_player = random.randint(1, 20)
-    tot_player = d20_player + mod_atk
     
     dmg_player = 0
     critico = False
     mancato = False
+    used_roll = 0
     
-    if d20_player == 20:
-        critico = True
-        dmg_player = (random.randint(6, 14) + max(1, mod_atk)) * 2
-    elif d20_player == 1 or tot_player < enemy_ac:
-        mancato = True
-        dmg_player = 0
-    else:
-        dmg_player = random.randint(5, 12) + max(1, mod_atk)
+    if usato_data and usato_data["tipo"] == "attacco":
+        atk_pct = usato_data["efficacia"]
+        d100_player = random.randint(1, 100)
+        used_roll = d100_player
         
-    if dmg_player > 0:
-        enemy_hp = max(0, enemy_hp - dmg_player)
-        combat["enemy_hp"] = enemy_hp
-        
-    # Costruzione testo attacco giocatore
-    if critico:
-        txt_attacco = (
-            f"💥 **COLPO CRITICO DEVASTANTE!** (Tiro $d20$: **20 naturale**!)\n"
-            f"Il tuo colpo perfetto trova una fessura vitale nelle difese di **{enemy_name}**, infliggendo la bellezza di **{dmg_player} danni critici**!"
-        )
-    elif mancato:
-        if d20_player == 1:
+        if d100_player <= 5: # 5% crit success
+            critico = True
+            dmg_player = (random.randint(6, 14) + max(1, mod_atk)) * 2
+        elif d100_player <= atk_pct:
+            dmg_player = random.randint(5, 12) + max(1, mod_atk)
+        else:
+            mancato = True
+            
+        if dmg_player > 0:
+            enemy_hp = max(0, enemy_hp - dmg_player)
+            combat["enemy_hp"] = enemy_hp
+            
+        if critico:
             txt_attacco = (
-                f"❌ **FALLIMENTO CRITICO!** (Tiro $d20$: **1**)\n"
-                f"Il tuo attacco manca completamente il bersaglio in un movimento maldestro, lasciandoti scoperto alle difese di **{enemy_name}**!"
+                f"💥 **COLPO CRITICO DEVASTANTE!** (Tiro Precisione: **{d100_player}%** vs {atk_pct}% Efficacia di {usato.title()})\n"
+                f"Il tuo colpo è assolutamente perfetto e trova una fessura vitale nelle difese di **{enemy_name}**, infliggendo **{dmg_player} danni critici**!"
+            )
+        elif mancato:
+            txt_attacco = (
+                f"🛡️ **ATTACCO MANCATO!** (Tiro Precisione: **{d100_player}%** vs {atk_pct}% Efficacia di {usato.title()})\n"
+                f"Porti il tuo colpo verso **{enemy_name}**, ma il colpo va a vuoto o viene respinto dalle protezioni nemiche."
             )
         else:
             txt_attacco = (
-                f"🛡️ **ATTACCO DEVIATO!** (Tiro $d20$: **{d20_player}** | Totale: {tot_player} vs CA {enemy_ac})\n"
-                f"Porti il tuo colpo verso **{enemy_name}**, ma il nemico riesce a schivare o parare l'attacco con la sua robusta corazza."
+                f"⚔️ **COLPO A SEGNO!** (Tiro Precisione: **{d100_player}%** vs {atk_pct}% Efficacia di {usato.title()})\n"
+                f"La tua arma colpisce con decisione **{enemy_name}**, causandogli **{dmg_player} danni**!"
             )
     else:
-        txt_attacco = (
-            f"⚔️ **COLPO A SEGNO!** (Tiro $d20$: **{d20_player}** | Totale: {tot_player} vs CA {enemy_ac})\n"
-            f"La tua arma colpisce con precisione ed efficacia **{enemy_name}**, causandogli **{dmg_player} danni**!"
-        )
+        # Fallback al vecchio sistema d20 se non usa un'arma specifica nel database
+        d20_player = random.randint(1, 20)
+        tot_player = d20_player + mod_atk
+        used_roll = d20_player
+        
+        if d20_player == 20:
+            critico = True
+            dmg_player = (random.randint(6, 14) + max(1, mod_atk)) * 2
+        elif d20_player == 1 or tot_player < enemy_ac:
+            mancato = True
+            dmg_player = 0
+        else:
+            dmg_player = random.randint(5, 12) + max(1, mod_atk)
+            
+        if dmg_player > 0:
+            enemy_hp = max(0, enemy_hp - dmg_player)
+            combat["enemy_hp"] = enemy_hp
+            
+        if critico:
+            txt_attacco = (
+                f"💥 **COLPO CRITICO DEVASTANTE!** (Tiro d20: **20 naturale**!)\n"
+                f"Il tuo colpo perfetto trova una fessura vitale nelle difese di **{enemy_name}**, infliggendo la bellezza di **{dmg_player} danni critici**!"
+            )
+        elif mancato:
+            if d20_player == 1:
+                txt_attacco = (
+                    f"❌ **FALLIMENTO CRITICO!** (Tiro d20: **1**)\n"
+                    f"Il tuo attacco manca completamente il bersaglio in un movimento maldestro, lasciandoti scoperto alle difese di **{enemy_name}**!"
+                )
+            else:
+                txt_attacco = (
+                    f"🛡️ **ATTACCO DEVIATO!** (Tiro d20: **{d20_player}** | Totale: {tot_player} vs CA {enemy_ac})\n"
+                    f"Porti il tuo colpo verso **{enemy_name}**, ma il nemico riesce a schivare o parare l'attacco con la sua robusta corazza."
+                )
+        else:
+            txt_attacco = (
+                f"⚔️ **COLPO A SEGNO!** (Tiro d20: **{d20_player}** | Totale: {tot_player} vs CA {enemy_ac})\n"
+                f"La tua arma colpisce con precisione ed efficacia **{enemy_name}**, causandogli **{dmg_player} danni**!"
+            )
         
     # Controlla se il nemico è morto
     if enemy_hp <= 0:
@@ -250,11 +355,11 @@ def risolvi_turno_combattimento(player_action, game_state):
                 f"💎 **Bottino Ottenuto:** {loot}\n\n"
                 f"*(Il combattimento è terminato. Torni in modalità Esplorazione)*"
             )
-        return _build_response(dm_reply, d20_player, game_state["hp"], 0, 0, enemy_max_hp, True, enemy_name)
+        return _build_response(dm_reply, used_roll, game_state["hp"], 0, 0, enemy_max_hp, True, enemy_name)
         
     # Se il nemico è ancora vivo -> Contrattacco
     dm_reply_part1 = f"⚔️ **TURNO DI COMBATTIMENTO vs {enemy_name.upper()}** ⚔️\n\n{txt_attacco}"
-    return _esegui_contrattacco_nemico(dm_reply_part1, d20_player, game_state, combat, player_mods)
+    return _esegui_contrattacco_nemico(dm_reply_part1, used_roll, game_state, combat, player_mods)
 
 
 def _esegui_contrattacco_nemico(txt_precedente, tiro_dado_giocatore, game_state, combat, player_mods):
@@ -275,24 +380,41 @@ def _esegui_contrattacco_nemico(txt_precedente, tiro_dado_giocatore, game_state,
     tot_enemy = d20_enemy + enemy_atk
     
     danni_subiti = 0
-    if d20_enemy == 20:
-        danni_subiti = int((random.randint(enemy_dmg_min, enemy_dmg_max)) * 1.5)
-        txt_nemico = (
-            f"🔥 **IL NEMICO TI INFLIGGE UN COLPO CRITICO!** (Tiro $d20$: **20** vs CA {player_ac})\n"
-            f"**{enemy_name}** contrattacca con una ferocia inaudita travolgendo le tue difese e infliggendoti **{danni_subiti} danni**!"
-        )
-    elif d20_enemy != 1 and tot_enemy >= player_ac:
-        danni_subiti = random.randint(enemy_dmg_min, enemy_dmg_max)
-        txt_nemico = (
-            f"🩸 **IL NEMICO COLPISCE!** (Tiro $d20$: **{d20_enemy}** | Totale: {tot_enemy} vs CA {player_ac})\n"
-            f"**{enemy_name}** scatta al contrattacco e ti ferisce, causandoti **{danni_subiti} danni**!"
-        )
-    else:
-        danni_subiti = 0
-        txt_nemico = (
-            f"🛡️ **CONTRATTACCO PARATO!** (Tiro $d20$ nemico: **{d20_enemy}** | Totale: {tot_enemy} vs CA {player_ac})\n"
-            f"**{enemy_name}** tenta di colpirti, ma riesci agilmente a schivare o bloccare l'attacco con il tuo equipaggiamento senza subire danni!"
-        )
+    parata_passiva = False
+    
+    best_defense_name = player_mods.get("best_defense_name")
+    best_defense_pct = player_mods.get("best_defense_pct", 0)
+    
+    # Tentativo di Parata Automatica con Percentuale
+    if best_defense_name and best_defense_pct > 0:
+        d100_def = random.randint(1, 100)
+        if d100_def <= best_defense_pct:
+            parata_passiva = True
+            danni_subiti = 0
+            txt_nemico = (
+                f"🛡️ **DIFESA AUTOMATICA RIUSCITA!** (Tiro Difesa: **{d100_def}%** vs {best_defense_pct}% Efficacia di {best_defense_name.title()})\n"
+                f"**{enemy_name}** tenta di colpirti, ma il tuo **{best_defense_name}** assorbe o devia completamente l'attacco, lasciandoti illeso!"
+            )
+            
+    if not parata_passiva:
+        if d20_enemy == 20:
+            danni_subiti = int((random.randint(enemy_dmg_min, enemy_dmg_max)) * 1.5)
+            txt_nemico = (
+                f"🔥 **IL NEMICO TI INFLIGGE UN COLPO CRITICO!** (Tiro d20: **20** vs CA {player_ac})\n"
+                f"**{enemy_name}** contrattacca con una ferocia inaudita travolgendo le tue difese e infliggendoti **{danni_subiti} danni**!"
+            )
+        elif d20_enemy != 1 and tot_enemy >= player_ac:
+            danni_subiti = random.randint(enemy_dmg_min, enemy_dmg_max)
+            txt_nemico = (
+                f"🩸 **IL NEMICO COLPISCE!** (Tiro d20: **{d20_enemy}** | Totale: {tot_enemy} vs CA {player_ac})\n"
+                f"**{enemy_name}** scatta al contrattacco e ti ferisce, causandoti **{danni_subiti} danni**!"
+            )
+        else:
+            danni_subiti = 0
+            txt_nemico = (
+                f"🛡️ **CONTRATTACCO PARATO!** (Tiro d20 nemico: **{d20_enemy}** | Totale: {tot_enemy} vs CA {player_ac})\n"
+                f"**{enemy_name}** tenta di colpirti, ma riesci agilmente a schivare o bloccare l'attacco con il tuo equipaggiamento senza subire danni!"
+            )
         
     player_hp = max(0, player_hp - danni_subiti)
     game_state["hp"] = player_hp

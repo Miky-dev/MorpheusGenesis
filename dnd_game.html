@@ -1486,15 +1486,30 @@
         // =============================
         //  INIZIALIZZAZIONE
         // =============================
-        window.addEventListener('DOMContentLoaded', () => {
-            const gameData = sessionStorage.getItem('morpheus_game_data');
-            
-            if (gameData) {
-                const data = JSON.parse(gameData);
-                initGame(data);
-            } else {
-                // Nessun dato, torna alla homepage
-                addSystemMessage("Nessuna partita attiva. Reindirizzamento alla homepage...");
+        window.addEventListener('DOMContentLoaded', async () => {
+            const sessionData = sessionStorage.getItem('morpheus_game_data');
+            if (sessionData) {
+                try {
+                    const data = JSON.parse(sessionData);
+                    initGame(data);
+                    sessionStorage.removeItem('morpheus_game_data');
+                    return;
+                } catch (e) {
+                    console.error('Errore nel parsing dei dati di sessione', e);
+                }
+            }
+
+            try {
+                const res = await fetch('/api/load', { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    initGame(data);
+                } else {
+                    addSystemMessage("Nessuna partita attiva. Reindirizzamento alla homepage...");
+                    setTimeout(() => { window.location.href = '/'; }, 2000);
+                }
+            } catch (err) {
+                addSystemMessage("Errore nel caricamento dei dati di salvataggio...");
                 setTimeout(() => { window.location.href = '/'; }, 2000);
             }
         });
@@ -1569,6 +1584,7 @@
                     if (data.danni_subiti > 0) triggerDamageFlash(data.danni_subiti);
                     addDMMessage(data.dm_reply);
                     if (data.hp <= 0) triggerGameOver();
+                    loadDiary(); // Aggiorna il diario anche in caso di fuga
                 } else {
                     addSystemMessage(`Errore fuga: ${data.error}`);
                 }
@@ -1904,9 +1920,11 @@
             let diceHTML = '';
             if (tiroDado !== undefined) {
                 let diceClass = 'normal-roll';
-                let diceLabel = `🎲 d20: ${tiroDado}`;
-                if (tiroDado === 1) { diceClass = 'crit-fail'; diceLabel = `💥 Fallimento Critico! d20: 1`; }
-                else if (tiroDado === 20) { diceClass = 'crit-success'; diceLabel = `✨ Successo Critico! d20: 20`; }
+                let diceLabel = `🎲 Tiro: ${tiroDado}`;
+                if (tiroDado === 1) { diceClass = 'crit-fail'; diceLabel = `💥 Tiro: 1`; }
+                else if (tiroDado === 20) { diceClass = 'crit-success'; diceLabel = `✨ Tiro: 20`; }
+                else if (tiroDado > 20 && tiroDado <= 5) { diceClass = 'crit-success'; } // per i d100 critici (<= 5) non gestiti bene qui, il colore è extra
+
                 diceHTML = `<div class="dice-result ${diceClass}">${diceLabel}</div>`;
             }
 
@@ -1954,6 +1972,11 @@
         function renderMarkdown(text) {
             // Escape HTML first
             let html = escapeHTML(text);
+            
+            // Rimuovi eventuali dollari generati dall'LLM (es. $d20$ o $15)
+            html = html.replace(/\$d20\$/g, 'd20');
+            html = html.replace(/\$/g, '');
+            
             // Bold: **text**
             html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
             // Italic: *text*
@@ -2013,6 +2036,7 @@
                     if (data.hp <= 0) {
                         triggerGameOver();
                     }
+                    loadDiary(); // Aggiorna il diario automaticamente senza ricaricare la pagina
                 } else {
                     addPlayerMessage(text);
                     addSystemMessage(`Errore: ${data.error}`);
@@ -2172,7 +2196,13 @@
             }
             
             document.getElementById('entity-title').innerText = '📜 ' + data.title;
-            document.getElementById('entity-body').innerText = data.body;
+            
+            // Format basic markdown and line breaks
+            let formattedBody = data.body
+                .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')
+                .replace(/\n/g, '<br>');
+                
+            document.getElementById('entity-body').innerHTML = formattedBody;
             document.getElementById('entity-overlay').classList.add('visible');
         }
 

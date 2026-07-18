@@ -284,6 +284,25 @@ Il server Web espone una suite di API RESTful utilizzate dal frontend per comuni
 
 ---
 
-## 👨‍💻 Autori e Ringraziamenti
-Sviluppato come progetto di fine corso per l'esame di **Applicazioni Integrazione e Intelligenza Artificiale** (Terzo Anno - Università).  
+## 👨‍💻 Autori e Contributi Individuali
+
+Progetto di fine corso per **Applicazioni Intelligenti** (Terzo Anno - Università).
+Il progetto è stato sviluppato equamente, abbiamo suddiviso le responsabilità architetturali garantendo una copertura omogenea dello stack tecnologico:
+
+- **Lavoro Congiunto (Gruppo)**:
+  - **Game Design & Progettazione Architetturale:** Ideazione delle meccaniche di gioco, scelta del modello Multi-Agente, bilanciamento della difficoltà.
+  - **Sviluppo della UX/UI:** Creazione dell'interfaccia grafica Web (CSS avanzato, layout, animazioni), progettazione visiva e user testing.
+  - **Prompt Engineering e Valutazione:** Strutturazione dei prompt base, testing di vari LLM (Llama, GPT) e redazione della documentazione/relazione tecnica.
+
+- **Michele Vitella (Task Specifici)**:
+  - Sviluppo in Python del **Motore Neuro-Simbolico** e della logica deterministica di Combattimento (D20 system, calcolo danni).
+  - Sviluppo parte dell'architettura **Multi-Agente** in `story_agents.py` (Cartografo, Direttore del Casting, LoreMaster).
+  - Integrazione e parsing dati nel Frontend (gestione del rendering Markdown, logica del Diario Interattivo JS).
+
+- **Mattia Volpato (Task Specifici)**:
+  - Implementazione del modulo **Guardrails** per la sicurezza dell'input e la prevenzione del Prompt Injection.
+  - Configurazione del **Server Backend API** in Flask, gestione della memoria di stato (`game_state`) e salvataggi su disco.
+  - Popolamento, setup e validazione del **Sistema RAG** tramite i file vettoriali/testuali (personaggi, ambientazioni, mostri).
+
+---
 *Morpheus Genesis — Dove l'Intelligenza Artificiale Agentica incontra la narrazione epica.*

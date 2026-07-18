@@ -388,9 +388,10 @@ L'ultima tappa DEVE essere lo scontro con il Boss Finale {nome_boss}.
         
         for i in range(tot_citta):
             nodo_grezzo = cartografo_output["nodi"][i]
-            match_tag = re.search(r'^\[(.*?)\]:\s*([^<-]+)', nodo_grezzo)
+            match_tag = re.search(r'^\[(.*?)\]:\s*(.*)', nodo_grezzo, flags=re.DOTALL)
             zona_tag = match_tag.group(1).strip() if match_tag else f"ZONA-{i+1}"
-            nome_luogo = match_tag.group(2).strip() if match_tag else "Luogo Sconosciuto"
+            testo_ambiente = match_tag.group(2).strip() if match_tag else "Luogo Sconosciuto"
+            nome_luogo = testo_ambiente.split('\n')[0].replace('[', '').replace(']', '').split('<--')[0].strip()
             
             npc_grezzo = npc_list[i % len(npc_list)]
             npc_nome = npc_grezzo.split('\n')[0].replace('[', '').replace(']', '').strip()
