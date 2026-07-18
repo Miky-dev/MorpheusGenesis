@@ -226,10 +226,9 @@ TEMI = {
 }
 
 DIFFICOLTA = {
-    "easy": "Novizio: i nemici sono deboli e la storia è fluida. Il giocatore ha maggiori probabilità di successo nei tiri dado. Sii generoso con le ricompense e clemente con i fallimenti.",
-    "normal": "Avventuriero: equilibrio tra sfida e narrazione. I tiri dado seguono le regole standard. Sfide stimolanti ma eque.",
-    "hard": "Veterano: i nemici sono letali e le risorse scarse. Anche tiri medio-alti possono fallire contro avversari potenti. Le conseguenze degli errori sono serie.",
-    "hardcore": "Hardcore: morte permanente possibile. Ogni errore può essere fatale. I nemici sono spietati, le trappole mortali e non c'è pietà. Solo abilità e strategia possono salvare il giocatore."
+    "easy": "Novizio: Fai da 'guida benevola'. I PNG sono più amichevoli e bendisposti, le trappole sono sempre preannunciate chiaramente prima che scattino, e gli errori del giocatore non sono mai puniti severamente. Dai suggerimenti e sii molto generoso con gli oggetti curativi.",
+    "normal": "Avventura: L'IA si comporta da arbitro neutrale, seguendo le classiche regole di D&D. Sfide bilanciate e narrazione standard e realistica.",
+    "hardcore": "Hardcore: Sii spietato, dark e punitivo. I PNG mentono, sono sospettosi o cercano di ingannare il giocatore, le trappole scattano senza preavviso infliggendo danni diretti, e l'ambiente stesso cerca di uccidere il protagonista ad ogni passo. Nessuna pietà per gli errori strategici."
 }
 
 

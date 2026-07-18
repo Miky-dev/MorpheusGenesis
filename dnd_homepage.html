@@ -458,10 +458,6 @@
             filter: drop-shadow(0 0 6px rgba(76, 201, 240, 0.4));
         }
 
-        .diff-btn[data-diff="hard"] .diff-icon {
-            filter: drop-shadow(0 0 6px rgba(230, 57, 70, 0.4));
-        }
-
         .diff-btn[data-diff="hardcore"] .diff-icon {
             filter: drop-shadow(0 0 8px rgba(139, 0, 0, 0.6));
         }
@@ -474,11 +470,6 @@
         .diff-btn[data-diff="normal"].selected {
             border-color: var(--accent-blue);
             box-shadow: 0 0 16px rgba(76, 201, 240, 0.15);
-        }
-
-        .diff-btn[data-diff="hard"].selected {
-            border-color: var(--accent-crimson);
-            box-shadow: 0 0 16px rgba(230, 57, 70, 0.15);
         }
 
         .diff-btn[data-diff="hardcore"].selected {
@@ -765,22 +756,17 @@
                     <div class="diff-btn" data-diff="easy" onclick="selectDiff(this)">
                         <span class="diff-icon">🌿</span>
                         <div class="diff-name">Novizio</div>
-                        <div class="diff-desc">Storia fluida, combattimenti semplici</div>
+                        <div class="diff-desc">Storia fluida, nemici deboli</div>
                     </div>
                     <div class="diff-btn" data-diff="normal" onclick="selectDiff(this)">
                         <span class="diff-icon">⚔️</span>
-                        <div class="diff-name">Avventuriero</div>
-                        <div class="diff-desc">Equilibrato, sfide stimolanti</div>
-                    </div>
-                    <div class="diff-btn" data-diff="hard" onclick="selectDiff(this)">
-                        <span class="diff-icon">🔥</span>
-                        <div class="diff-name">Veterano</div>
-                        <div class="diff-desc">Nemici letali, risorse scarse</div>
+                        <div class="diff-name">Avventura</div>
+                        <div class="diff-desc">Equilibrato, sfide standard</div>
                     </div>
                     <div class="diff-btn" data-diff="hardcore" onclick="selectDiff(this)">
                         <span class="diff-icon">💀</span>
                         <div class="diff-name">Hardcore</div>
-                        <div class="diff-desc">Morte permanente, solo abilità</div>
+                        <div class="diff-desc">Morte permanente, spietato</div>
                     </div>
                 </div>
             </div>
@@ -849,8 +835,7 @@
 
         const diffNames = {
             'easy': 'Novizio',
-            'normal': 'Avventuriero',
-            'hard': 'Veterano',
+            'normal': 'Avventura',
             'hardcore': 'Hardcore'
         };
 

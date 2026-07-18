@@ -82,11 +82,6 @@ def get_enemy_stats(nome_nemico, difficolta="normal"):
         hp = int(hp * 0.8)
         dmg_min = max(1, int(dmg_min * 0.8))
         dmg_max = max(2, int(dmg_max * 0.8))
-    elif difficolta == "hard":
-        hp = int(hp * 1.2)
-        ac += 1
-        dmg_min = int(dmg_min * 1.2)
-        dmg_max = int(dmg_max * 1.2)
     elif difficolta == "hardcore":
         hp = int(hp * 1.4)
         ac += 2
@@ -182,30 +177,35 @@ def risolvi_turno_combattimento(player_action, game_state):
     player_mods = extract_player_modifiers(game_state.get("personaggio", ""))
     
     action_lower = player_action.lower().strip()
+    difficolta = game_state.get("difficolta", "normal")
     
     # 1. TENTATIVO DI FUGA
     if any(w in action_lower for w in ["fuggi", "fuga", "scappa", "ritirata", "indietro"]):
+        flee_target = 11
+        if difficolta == "easy": flee_target = 7
+        elif difficolta == "hardcore": flee_target = 15
+        
         d20_flee = random.randint(1, 20)
         tot_flee = d20_flee + player_mods["destrezza"]
-        if tot_flee >= 11 or d20_flee == 20:
+        if tot_flee >= flee_target or d20_flee == 20:
             # Fuga riuscita!
             combat["active"] = False
             dm_reply = (
                 f"🏃 **FUGA RIUSCITA!**\n\n"
-                f"Tiro Fuga ($d20$ + Destrezza): **{d20_flee}** (Totale: {tot_flee} contro 11).\n"
+                f"Tiro Fuga ($d20$ + Destrezza): **{d20_flee}** (Totale: {tot_flee} contro {flee_target}).\n"
                 f"Con uno scatto repentino e sfruttando l'ambiente, riesci a seminare **{enemy_name}** e a ritirarti in una zona sicura, "
                 f"uscendo dal combattimento con il fiato corto ma intatto!\n\n"
                 f"*(Sei tornato in modalità Esplorazione Narrative)*"
             )
-            return _build_response(dm_reply, d20_flee, player_hp, 0, 0, enemy_max_hp, True, enemy_name)
+            return _build_response(dm_reply, d20_flee, player_hp, 0, 0, enemy_max_hp, True, enemy_name, "d20")
         else:
             # Fuga fallita -> il nemico attacca
             dm_reply_part1 = (
                 f"🏃 **TENTATIVO DI FUGA FALLITO!**\n\n"
-                f"Tiro Fuga ($d20$ + Destrezza): **{d20_flee}** (Totale: {tot_flee} contro 11).\n"
+                f"Tiro Fuga ($d20$ + Destrezza): **{d20_flee}** (Totale: {tot_flee} contro {flee_target}).\n"
                 f"Tenti di scappare, ma **{enemy_name}** ti sbarra la strada con ferocia non lasciandoti scampo!"
             )
-            return _esegui_contrattacco_nemico(dm_reply_part1, d20_flee, game_state, combat, player_mods)
+            return _esegui_contrattacco_nemico(dm_reply_part1, d20_flee, game_state, combat, player_mods, "d20")
 
     # 2. AZIONE DI CURA O POZIONE
     personaggio_lower = game_state.get("personaggio", "").lower()
@@ -219,6 +219,9 @@ def risolvi_turno_combattimento(player_action, game_state):
 
     if usato_data and usato_data["tipo"] == "cura":
         cura_flat = usato_data["efficacia"]
+        if difficolta == "easy": cura_flat = int(cura_flat * 1.5)
+        elif difficolta == "hardcore": cura_flat = int(cura_flat * 0.5)
+        
         vecchi_hp = player_hp
         player_hp = min(100, player_hp + cura_flat)
         guarigione = player_hp - vecchi_hp
@@ -229,9 +232,12 @@ def risolvi_turno_combattimento(player_action, game_state):
             f"Rapidamente usi il tuo oggetto curativo nel bel mezzo dello scontro, recuperando **+{guarigione} HP** "
             f"(Salute attuale: {player_hp}/100)!"
         )
-        return _esegui_contrattacco_nemico(dm_reply_part1, 0, game_state, combat, player_mods)
+        return _esegui_contrattacco_nemico(dm_reply_part1, 0, game_state, combat, player_mods, "none")
     elif any(w in action_lower for w in ["cura", "pozione", "ampolla", "kit", "erbe", "medico"]):
         cura_base = random.randint(15, 28) + player_mods["costituzione"]
+        if difficolta == "easy": cura_base = int(cura_base * 1.5)
+        elif difficolta == "hardcore": cura_base = int(cura_base * 0.5)
+        
         vecchi_hp = player_hp
         player_hp = min(100, player_hp + cura_base)
         guarigione = player_hp - vecchi_hp
@@ -242,7 +248,7 @@ def risolvi_turno_combattimento(player_action, game_state):
             f"Rapidamente assumi il rimedio curativo nel bel mezzo dello scontro, recuperando **+{guarigione} HP** "
             f"(Salute attuale: {player_hp}/100)!"
         )
-        return _esegui_contrattacco_nemico(dm_reply_part1, 0, game_state, combat, player_mods)
+        return _esegui_contrattacco_nemico(dm_reply_part1, 0, game_state, combat, player_mods, "none")
 
     # 3. ATTACCO O AZIONE DI COMBATTIMENTO STANDARD
     if any(w in action_lower for w in ["arco", "balestra", "dardo", "pugnale", "mancina", "schiva"]):
@@ -258,79 +264,49 @@ def risolvi_turno_combattimento(player_action, game_state):
     critico = False
     mancato = False
     used_roll = 0
+    used_tipo = "d20"
     
-    if usato_data and usato_data["tipo"] == "attacco":
-        atk_pct = usato_data["efficacia"]
-        d100_player = random.randint(1, 100)
-        used_roll = d100_player
+    # Se ha usato un'arma dal DB, ne prendiamo il nome, altrimenti testo generico
+    arma_nome = usato.title() if (usato_data and usato_data["tipo"] == "attacco") else "Il tuo attacco"
+    
+    d20_player = random.randint(1, 20)
+    tot_player = d20_player + mod_atk
+    used_roll = d20_player
+    
+    if d20_player == 20:
+        critico = True
+        dmg_player = (random.randint(6, 14) + max(1, mod_atk)) * 2
+    elif d20_player == 1 or tot_player < enemy_ac:
+        mancato = True
+        dmg_player = 0
+    else:
+        dmg_player = random.randint(5, 12) + max(1, mod_atk)
         
-        if d100_player <= 5: # 5% crit success
-            critico = True
-            dmg_player = (random.randint(6, 14) + max(1, mod_atk)) * 2
-        elif d100_player <= atk_pct:
-            dmg_player = random.randint(5, 12) + max(1, mod_atk)
-        else:
-            mancato = True
-            
-        if dmg_player > 0:
-            enemy_hp = max(0, enemy_hp - dmg_player)
-            combat["enemy_hp"] = enemy_hp
-            
-        if critico:
+    if dmg_player > 0:
+        enemy_hp = max(0, enemy_hp - dmg_player)
+        combat["enemy_hp"] = enemy_hp
+        
+    if critico:
+        txt_attacco = (
+            f"💥 **COLPO CRITICO DEVASTANTE!** (Tiro d20: **20 naturale**!)\n"
+            f"Il tuo colpo perfetto con {arma_nome} trova una fessura vitale nelle difese di **{enemy_name}**, infliggendo la bellezza di **{dmg_player} danni critici**!"
+        )
+    elif mancato:
+        if d20_player == 1:
             txt_attacco = (
-                f"💥 **COLPO CRITICO DEVASTANTE!** (Tiro Precisione: **{d100_player}%** vs {atk_pct}% Efficacia di {usato.title()})\n"
-                f"Il tuo colpo è assolutamente perfetto e trova una fessura vitale nelle difese di **{enemy_name}**, infliggendo **{dmg_player} danni critici**!"
-            )
-        elif mancato:
-            txt_attacco = (
-                f"🛡️ **ATTACCO MANCATO!** (Tiro Precisione: **{d100_player}%** vs {atk_pct}% Efficacia di {usato.title()})\n"
-                f"Porti il tuo colpo verso **{enemy_name}**, ma il colpo va a vuoto o viene respinto dalle protezioni nemiche."
+                f"❌ **FALLIMENTO CRITICO!** (Tiro d20: **1**)\n"
+                f"Il tuo attacco con {arma_nome} manca completamente il bersaglio in un movimento maldestro, lasciandoti scoperto alle difese di **{enemy_name}**!"
             )
         else:
             txt_attacco = (
-                f"⚔️ **COLPO A SEGNO!** (Tiro Precisione: **{d100_player}%** vs {atk_pct}% Efficacia di {usato.title()})\n"
-                f"La tua arma colpisce con decisione **{enemy_name}**, causandogli **{dmg_player} danni**!"
+                f"🛡️ **ATTACCO DEVIATO!** (Tiro d20: **{d20_player}** | Totale: {tot_player} vs CA {enemy_ac})\n"
+                f"Porti il tuo colpo con {arma_nome} verso **{enemy_name}**, ma il nemico riesce a schivare o parare l'attacco."
             )
     else:
-        # Fallback al vecchio sistema d20 se non usa un'arma specifica nel database
-        d20_player = random.randint(1, 20)
-        tot_player = d20_player + mod_atk
-        used_roll = d20_player
-        
-        if d20_player == 20:
-            critico = True
-            dmg_player = (random.randint(6, 14) + max(1, mod_atk)) * 2
-        elif d20_player == 1 or tot_player < enemy_ac:
-            mancato = True
-            dmg_player = 0
-        else:
-            dmg_player = random.randint(5, 12) + max(1, mod_atk)
-            
-        if dmg_player > 0:
-            enemy_hp = max(0, enemy_hp - dmg_player)
-            combat["enemy_hp"] = enemy_hp
-            
-        if critico:
-            txt_attacco = (
-                f"💥 **COLPO CRITICO DEVASTANTE!** (Tiro d20: **20 naturale**!)\n"
-                f"Il tuo colpo perfetto trova una fessura vitale nelle difese di **{enemy_name}**, infliggendo la bellezza di **{dmg_player} danni critici**!"
-            )
-        elif mancato:
-            if d20_player == 1:
-                txt_attacco = (
-                    f"❌ **FALLIMENTO CRITICO!** (Tiro d20: **1**)\n"
-                    f"Il tuo attacco manca completamente il bersaglio in un movimento maldestro, lasciandoti scoperto alle difese di **{enemy_name}**!"
-                )
-            else:
-                txt_attacco = (
-                    f"🛡️ **ATTACCO DEVIATO!** (Tiro d20: **{d20_player}** | Totale: {tot_player} vs CA {enemy_ac})\n"
-                    f"Porti il tuo colpo verso **{enemy_name}**, ma il nemico riesce a schivare o parare l'attacco con la sua robusta corazza."
-                )
-        else:
-            txt_attacco = (
-                f"⚔️ **COLPO A SEGNO!** (Tiro d20: **{d20_player}** | Totale: {tot_player} vs CA {enemy_ac})\n"
-                f"La tua arma colpisce con precisione ed efficacia **{enemy_name}**, causandogli **{dmg_player} danni**!"
-            )
+        txt_attacco = (
+            f"⚔️ **COLPO A SEGNO!** (Tiro d20: **{d20_player}** | Totale: {tot_player} vs CA {enemy_ac})\n"
+            f"{arma_nome} colpisce con precisione ed efficacia **{enemy_name}**, causandogli **{dmg_player} danni**!"
+        )
         
     # Controlla se il nemico è morto
     if enemy_hp <= 0:
@@ -355,14 +331,14 @@ def risolvi_turno_combattimento(player_action, game_state):
                 f"💎 **Bottino Ottenuto:** {loot}\n\n"
                 f"*(Il combattimento è terminato. Torni in modalità Esplorazione)*"
             )
-        return _build_response(dm_reply, used_roll, game_state["hp"], 0, 0, enemy_max_hp, True, enemy_name)
+        return _build_response(dm_reply, used_roll, game_state["hp"], 0, 0, enemy_max_hp, True, enemy_name, used_tipo)
         
     # Se il nemico è ancora vivo -> Contrattacco
     dm_reply_part1 = f"⚔️ **TURNO DI COMBATTIMENTO vs {enemy_name.upper()}** ⚔️\n\n{txt_attacco}"
-    return _esegui_contrattacco_nemico(dm_reply_part1, used_roll, game_state, combat, player_mods)
+    return _esegui_contrattacco_nemico(dm_reply_part1, used_roll, game_state, combat, player_mods, used_tipo)
 
 
-def _esegui_contrattacco_nemico(txt_precedente, tiro_dado_giocatore, game_state, combat, player_mods):
+def _esegui_contrattacco_nemico(txt_precedente, tiro_dado_giocatore, game_state, combat, player_mods, tipo_dado="d20"):
     """
     Gestisce l'attacco del nemico contro il giocatore.
     """
@@ -431,14 +407,15 @@ def _esegui_contrattacco_nemico(txt_precedente, tiro_dado_giocatore, game_state,
         f"📊 **Stato Scontro:** Tuoi HP: **{player_hp}/100** | HP **{enemy_name}**: **{enemy_hp}/{enemy_max_hp}**"
     )
     
-    return _build_response(dm_reply_full, tiro_dado_giocatore, player_hp, danni_subiti, enemy_hp, enemy_max_hp, not combat["active"], enemy_name)
+    return _build_response(dm_reply_full, tiro_dado_giocatore, player_hp, danni_subiti, enemy_hp, enemy_max_hp, not combat["active"], enemy_name, tipo_dado)
 
 
-def _build_response(dm_reply, tiro_dado, player_hp, danni_subiti, enemy_hp, enemy_max_hp, combat_ended, enemy_name="Nemico"):
+def _build_response(dm_reply, tiro_dado, player_hp, danni_subiti, enemy_hp, enemy_max_hp, combat_ended, enemy_name="Nemico", tipo_dado="d20"):
     return {
         "success": True,
         "dm_reply": dm_reply,
         "tiro_dado": tiro_dado,
+        "tipo_dado": tipo_dado,
         "hp": player_hp,
         "danni_subiti": danni_subiti,
         "combat": {

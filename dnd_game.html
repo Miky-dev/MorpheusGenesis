@@ -1912,7 +1912,9 @@
             container.innerHTML = '';
             if (!equipString || equipString === '—') return;
 
-            const items = equipString.split(',').map(i => i.trim()).filter(i => i.length > 0);
+            const items = equipString.split(',')
+                .map(i => i.trim())
+                .filter(i => i.length > 0 && i !== '.' && !i.toLowerCase().includes('nessuna informazione disponibile'));
             
             items.forEach(item => {
                 let icon = '🎒';
@@ -1962,18 +1964,24 @@
             scrollToBottom();
         }
 
-        function addPlayerMessage(text, tiroDado) {
+        function addPlayerMessage(text, tiroDado, tipoDado = 'd20') {
             const container = document.getElementById('chat-messages');
             const div = document.createElement('div');
             div.className = 'message player';
 
             let diceHTML = '';
-            if (tiroDado !== undefined) {
+            if (tiroDado !== undefined && tiroDado !== null && tiroDado !== 0) {
                 let diceClass = 'normal-roll';
                 let diceLabel = `🎲 Tiro: ${tiroDado}`;
-                if (tiroDado === 1) { diceClass = 'crit-fail'; diceLabel = `💥 Tiro: 1`; }
-                else if (tiroDado === 20) { diceClass = 'crit-success'; diceLabel = `✨ Tiro: 20`; }
-                else if (tiroDado > 20 && tiroDado <= 5) { diceClass = 'crit-success'; } // per i d100 critici (<= 5) non gestiti bene qui, il colore è extra
+                
+                if (tipoDado === 'd100') {
+                    diceLabel = `🎲 Tiro (d100): ${tiroDado}`;
+                    if (tiroDado <= 5) { diceClass = 'crit-success'; }
+                    else if (tiroDado >= 96) { diceClass = 'crit-fail'; }
+                } else {
+                    if (tiroDado === 1) { diceClass = 'crit-fail'; diceLabel = `💥 Tiro: 1`; }
+                    else if (tiroDado === 20) { diceClass = 'crit-success'; diceLabel = `✨ Tiro: 20`; }
+                }
 
                 diceHTML = `<div class="dice-result ${diceClass}">${diceLabel}</div>`;
             }
@@ -2074,7 +2082,7 @@
                 const data = await res.json();
 
                 if (data.success) {
-                    addPlayerMessage(text, data.tiro_dado);
+                    addPlayerMessage(text, data.tiro_dado, data.tipo_dado);
                     if (data.danni_subiti > 0) {
                         triggerDamageFlash(data.danni_subiti);
                     }
