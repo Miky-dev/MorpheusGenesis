@@ -188,7 +188,7 @@ L'applicazione offre un'interfaccia **Dark Fantasy moderna e immersiva**, proget
 ```text
 PROGETTO/
 ├── .env                       # Variabili d'ambiente (Chiavi API Groq e Modelli)
-├── app.py                     # Server Flask, Router REST API e gestione CLI
+├── app.py                     # Server Flask, Router REST API e Steering della narrazione
 ├── story_agents.py            # Pipeline Multi-Agente (Cartografo, Casting, LoreMaster)
 ├── combat_engine.py           # Motore matematico e di combattimento neuro-simbolico
 ├── dnd_homepage.html          # Interfaccia Web - Schermata iniziale e creazione
@@ -225,8 +225,10 @@ Le icone all'interno del diario e sulla scheda vengono risolte automaticamente p
 Apri il terminale (o PowerShell) nella cartella del progetto e installa le dipendenze essenziali:
 
 ```powershell
-pip install openai flask python-dotenv requests
+pip install openai flask
 ```
+
+> Nota: il file `.env` viene letto direttamente dal codice (senza la libreria `python-dotenv`), quindi non è una dipendenza necessaria. Allo stesso modo `requests` non è utilizzata: le uniche dipendenze richieste sono `openai` e `flask`.
 
 ### 3. Configura il file `.env`
 Crea o modifica il file `.env` nella directory principale inserendo le tue chiavi API Groq:
@@ -249,9 +251,7 @@ STORY_MODEL_NAME=openai/gpt-oss-120b
 
 ## 🚀 Guida all'Uso e Modalità di Esecuzione
 
-Morpheus Genesis supporta due modalità di gioco in base alle preferenze dell'utente:
-
-### 🌐 Modalità Interfaccia Web (Consigliata)
+### 🌐 Avvio del Server Web
 Per avviare il server grafico con supporto completo alle animazioni, effetti di danno e diario interattivo:
 
 ```powershell
@@ -259,13 +259,6 @@ python app.py
 ```
 Una volta avviato, apri il tuo browser preferito all'indirizzo:  
 👉 **`http://localhost:5000`**
-
-### 💻 Modalità CLI (Terminale Testuale)
-Per un'esperienza Old-School in puro stile avventura testuale da riga di comando senza avviare il server Web:
-
-```powershell
-python app.py --cli
-```
 
 ---
 

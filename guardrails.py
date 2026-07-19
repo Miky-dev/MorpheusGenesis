@@ -1,34 +1,16 @@
-# ==============================================================================
-# MORPHEUS GENESIS - MODULO GUARDRAILS (PALETTI DI SICUREZZA AI)
-# ==============================================================================
-# Questo modulo implementa un sistema multi-livello di protezione per impedire
-# che l'AI esca dal contesto del gioco, dimentichi le sue regole o risponda
-# a richieste non pertinenti.
-#
-# LIVELLI DI PROTEZIONE:
-# 1. RILEVAMENTO INJECTION - Analisi del testo del giocatore lato Python
-#    prima ancora di chiamare l'LLM. Blocca o sanifica gli input pericolosi.
-#
-# 2. PALETTO SYSTEM PROMPT - Un blocco di istruzioni anti-jailbreak iniettato
-#    SEMPRE come messaggio di sistema aggiuntivo in ogni chiamata all'LLM.
-#
-# 3. ANCHOR REMINDER - Un breve messaggio "reminder" del ruolo iniettato
-#    periodicamente nella chat history (ogni N turni) per ri-ancorare il contesto.
-# ==============================================================================
+# guardrails.py - sistema di protezione anti-injection e anti-jailbreak
+# rileva input pericolosi, inietta system prompt difensivo, e aggiunge
+# un reminder periodico per ri-ancorare il ruolo del DM
 
 import re
 import random
 
-# ==============================================================================
-# CONFIGURAZIONE
-# ==============================================================================
+# config
 
 # Ogni quanti turni del giocatore si inietta un "anchor reminder" nella storia
 ANCHOR_REMINDER_OGNI_N_TURNI = 8
 
-# ==============================================================================
-# 1. PATTERN DI RILEVAMENTO INJECTION (lato Python, prima dell'LLM)
-# ==============================================================================
+# pattern di injection da rilevare prima di chiamare l'LLM
 
 PATTERN_INJECTION = [
     # Tentativi di reset del contesto / regole
@@ -78,10 +60,7 @@ _COMPILED_PATTERNS = [re.compile(p, re.IGNORECASE | re.UNICODE) for p in PATTERN
 
 
 def rileva_injection(testo: str) -> dict:
-    """
-    Analizza il testo del giocatore alla ricerca di tentativi di injection o
-    richieste fuori contesto.
-    """
+    """Cerca pattern di injection o richieste fuori contesto nel testo."""
     testo_clean = testo.strip()
     for i, pattern in enumerate(_COMPILED_PATTERNS):
         match = pattern.search(testo_clean)
@@ -96,9 +75,7 @@ def rileva_injection(testo: str) -> dict:
 
 
 def genera_risposta_blocco_injection() -> str:
-    """
-    Genera una risposta narrativa immersiva per bloccare i tentativi di injection.
-    """
+    """Risposta narrativa per bloccare injection."""
     risposte = [
         "Una nebbia arcana avvolge la tua mente per un istante... le parole ti escono storte e incomprensibili. "
         "Ti scrolli di dosso la sensazione, come se qualcosa avesse cercato di contaminarti il pensiero. "
@@ -120,9 +97,7 @@ def genera_risposta_blocco_injection() -> str:
     return random.choice(risposte)
 
 
-# ==============================================================================
-# 2. BLOCCO SYSTEM PROMPT ANTI-JAILBREAK (iniettato ad ogni chiamata LLM)
-# ==============================================================================
+# system prompt anti-jailbreak (va in ogni chiamata)
 
 SYSTEM_GUARDRAIL = (
     "=== PALETTI DI SICUREZZA (PRIORITA ASSOLUTA - NON IGNORABILI) ===\n\n"
@@ -159,9 +134,7 @@ def get_guardrail_message() -> dict:
     return {"role": "system", "content": SYSTEM_GUARDRAIL}
 
 
-# ==============================================================================
-# 3. ANCHOR REMINDER (iniettato ogni N turni)
-# ==============================================================================
+# anchor reminder - si inietta ogni N turni per ri-ancorare il contesto
 
 ANCHOR_REMINDER_TEMPLATE = (
     "[REMINDER INTERNO - NON VISIBILE AL GIOCATORE]\n"
@@ -182,27 +155,11 @@ def deve_iniettare_anchor(turno_numero: int) -> bool:
     return turno_numero > 0 and (turno_numero % ANCHOR_REMINDER_OGNI_N_TURNI == 0)
 
 
-# ==============================================================================
-# 4. FUNZIONE PRINCIPALE: applica_guardrails
-# ==============================================================================
+# funzione principale
 
 def applica_guardrails(player_input: str, messages_for_llm: list, turno_numero: int = 0) -> dict:
-    """
-    Punto di ingresso principale. Applica tutti i livelli di protezione.
-
-    Args:
-        player_input:     Il testo grezzo inviato dal giocatore.
-        messages_for_llm: La lista di messaggi gia preparata per l'LLM.
-        turno_numero:     Il numero di turni giocati (per l'anchor reminder).
-
-    Returns:
-        dict con chiavi:
-          - 'bloccato': bool  -- se True, NON chiamare l'LLM
-          - 'risposta_blocco': str  -- risposta narrativa da mostrare
-          - 'messages_for_llm': list  -- lista messaggi con i guardrail aggiunti
-          - 'motivo_blocco': str  -- motivo del blocco (o 'nessuno')
-    """
-    # STEP 1: Rilevamento injection lato Python
+    """Applica tutti i livelli di protezione. Torna dict con bloccato/risposta_blocco/messages/motivo."""
+    # rilevamento injection lato python
     risultato = rileva_injection(player_input)
     if risultato["pericoloso"]:
         print(
@@ -217,10 +174,10 @@ def applica_guardrails(player_input: str, messages_for_llm: list, turno_numero: 
             "motivo_blocco": f"injection: {risultato.get('match_testo', '')}"
         }
 
-    # STEP 2: Inietta il blocco guardrail PRIMA di tutti gli altri messaggi
+    # inietta il blocco guardrail prima di tutti i messaggi
     messages_protetti = [get_guardrail_message()] + messages_for_llm
 
-    # STEP 3: Anchor reminder periodico
+    # anchor reminder periodico
     if deve_iniettare_anchor(turno_numero):
         messages_protetti.append(get_anchor_reminder())
         print(f"[GUARDRAIL] Anchor reminder iniettato al turno {turno_numero}")

@@ -1,24 +1,5 @@
-# ==============================================================================
-# 🧠 MORPHEUS GENESIS - MULTI-AGENT STORY CREATION PIPELINE
-# ==============================================================================
-# Questo modulo implementa un'architettura Multi-Agente (Agentic AI) per la
-# generazione dinamica e coerente del mondo di gioco, della mappa e della storia.
-#
-# AGENTI COINVOLTI NELLA COLLABORAZIONE:
-# 1. 🗺️ IL CARTOGRAFO (CartografoAgent):
-#    - Riceve `map_size` (small/medium/large), estrae `tot_ambientazioni` dai file RAG,
-#      e progetta la topologia della mappa a nodi e l'atmosfera tematica.
-#
-# 2. 🎭 IL DIRETTORE DEL CASTING (CastingDirectorAgent):
-#    - Riceve `tot_npc` e `tot_cattivi` in base alla grandezza della mappa, estrae i
-#      mattoncini RAG (npc.txt, enemies.txt) e li assegna strategicamente ai nodi
-#      creati dal Cartografo, dotandoli di motivazioni e segreti di trama.
-#
-# 3. 📜 IL MAESTRO DI LORE (LoreMasterAgent):
-#    - Sincronizza l'output del Cartografo e del Direttore del Casting con la scheda
-#      del giocatore e il livello di difficoltà, generando il System Prompt di campagna,
-#      il Prologo immersivo ([PERGAMENA]) e l'Hook iniziale ([AZIONE_INIZIALE]).
-# ==============================================================================
+# story_agents.py - pipeline multi-agente per la creazione del mondo
+# cartografo (mappa), direttore del casting (npc/nemici), maestro di lore (storia)
 
 import random
 import re
@@ -28,19 +9,19 @@ import textwrap
 # in base alla grandezza della mappa scelta dall'utente.
 MAP_CONFIG = {
     "small": {
-        "tot_ambientazioni": 4,  # Exactly 4 locations for compact map
+        "tot_ambientazioni": 4,
         "tot_npc": 4,
         "tot_cattivi": 2,        # Almeno la metà del numero totale di città
         "nome_tag": "Mappa Compatta (Avventura Breve)"
     },
     "medium": {
-        "tot_ambientazioni": 6,  # 6 locations for standard map
+        "tot_ambientazioni": 6,
         "tot_npc": 6,
         "tot_cattivi": 3,        # Almeno la metà del numero totale di città
         "nome_tag": "Mappa Standard (Campagna Bilanciata)"
     },
     "large": {
-        "tot_ambientazioni": 10, # 10 locations for epic odyssey
+        "tot_ambientazioni": 10,
         "tot_npc": 10,
         "tot_cattivi": 5,        # Almeno la metà del numero totale di città
         "nome_tag": "Mappa Estesa (Odissea Epica)"
@@ -54,11 +35,7 @@ DIREZIONI_MAPPA = [
 
 
 class CartografoAgent:
-    """
-    Agente 1: Il Cartografo.
-    Responsabile della creazione geografica, della selezione delle ambientazioni dal RAG
-    e della costruzione dei nodi di esplorazione coerenti con il tema.
-    """
+    """Agente Cartografo - crea la mappa e seleziona le ambientazioni dal RAG."""
     def __init__(self, ambientazioni_rag):
         self.ambientazioni_rag = ambientazioni_rag
 
@@ -91,11 +68,7 @@ class CartografoAgent:
 
 
 class CastingDirectorAgent:
-    """
-    Agente 2: Il Direttore del Casting e Quartiermastro.
-    Riceve la mappa del Cartografo, seleziona NPC, Nemici e Oggetti dal RAG.
-    Inoltre designa ufficialmente il Boss Finale da sconfiggere per vincere il gioco.
-    """
+    """Direttore del Casting - assegna NPC, nemici, boss finale e oggetti ai nodi mappa."""
     def __init__(self, personaggi_rag, creature_rag, oggetti_rag=None):
         self.personaggi_rag = personaggi_rag
         self.creature_rag = creature_rag
@@ -186,13 +159,7 @@ class CastingDirectorAgent:
 
 
 class LoreMasterAgent:
-    """
-    Agente 3: Il Maestro di Lore (Narratore Capo).
-    Sintetizza il lavoro del Cartografo e del Direttore del Casting. Costruisce il System
-    Prompt per il Dungeon Master ed esegue la prima chiamata all'IA per avviare l'avventura.
-    Inoltre arricchisce la scheda del personaggio con gli oggetti selezionati.
-    Usa il modello PREMIUM (gpt-oss-120b) per generare una storia più ricca e strutturata.
-    """
+    """Maestro di Lore - sintetizza mappa e casting, genera il system prompt e il prologo."""
     def __init__(self, chiama_ia_func, chiama_ia_premium_func=None):
         self.chiama_ia_func = chiama_ia_func
         # Il modello premium viene usato per la creazione della storia
@@ -532,11 +499,7 @@ def orchestra_creazione_mondo(map_size: str, tema: str, tema_desc: str, difficol
                               scheda_giocatore: str, ambientazioni_rag: list, personaggi_rag: list, 
                               creature_rag: list, oggetti_rag: list, chiama_ia_func, 
                               chiama_ia_premium_func=None) -> dict:
-    """
-    Funzione principale di orchestrazione della pipeline Multi-Agente per la creazione
-    del mondo, selezione del Boss Finale e degli Oggetti, e l'avvio della storia.
-    Accetta un modello premium opzionale per il LoreMasterAgent.
-    """
+    """Orchestrazione della pipeline multi-agente: mappa → casting → lore → avvio storia."""
     print(f"\n============================================================")
     print(f"🚀 AVVIO PIPELINE MULTI-AGENTE PER CREAZIONE STORIA ({map_size.upper()})")
     print(f"============================================================")

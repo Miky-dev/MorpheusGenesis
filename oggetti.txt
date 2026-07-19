@@ -1,0 +1,129 @@
+[Arco Lungo]
+Tipo: Arma da Distanza
+Descrizione: Un arco alto quanto un uomo, intagliato in legno di tasso e rinforzato con nervo animale. Le frecce scoccate fischiano nell'aria con una precisione quasi innaturale.
+Effetto Ludico: Arma da attacco a distanza, particolarmente efficace nelle mani di chi si affida alla Destrezza.
+
+[Spada Corta]
+Tipo: Arma da Mischia
+Descrizione: Una lama bilanciata e maneggevole, forgiata per la velocità più che per la forza bruta. La sua impugnatura di cuoio è consumata da innumerevoli battaglie.
+Effetto Ludico: Arma da mischia versatile, affidabile in quasi ogni scontro ravvicinato.
+
+[Coltello da Caccia]
+Tipo: Arma da Mischia
+Descrizione: Una lama corta e robusta, pensata per colpire da vicino nei momenti in cui non c'è spazio per manovre elaborate.
+Effetto Ludico: Arma leggera e rapida, ideale per attacchi furtivi e ravvicinati.
+
+[Mazza Ferrata]
+Tipo: Arma da Mischia
+Descrizione: Una mazza dalla testa rinforzata in ferro battuto, pesante abbastanza da spezzare ossa e armature con un solo colpo ben assestato.
+Effetto Ludico: Arma pesante da mischia, che privilegia la forza bruta sulla precisione.
+
+[Due Pugnali]
+Tipo: Arma da Mischia
+Descrizione: Un paio di lame gemelle, corte e affilatissime, pensate per essere impugnate una per mano in una danza di fendenti rapidi.
+Effetto Ludico: Coppia di armi leggere da mischia, perfette per chi predilige agilità e colpi ripetuti.
+
+[Ascia Bipenne]
+Tipo: Arma da Mischia
+Descrizione: Un'ascia dalla doppia lama, tanto pesante da richiedere entrambe le mani per essere brandita con efficacia in battaglia.
+Effetto Ludico: Arma da mischia a due mani, lenta ma capace di infliggere danni devastanti.
+
+[Martello da Guerra]
+Tipo: Arma da Mischia
+Descrizione: Un martello da guerra dalla testa massiccia, capace di sfondare scudi e corazze con la sola forza dell'impatto.
+Effetto Ludico: Arma pesante da mischia, pensata per travolgere le difese nemiche.
+
+[Bastone Runico]
+Tipo: Arma Magica
+Descrizione: Un lungo bastone di legno antico, avvolto in rune incise che pulsano di una debole luce bluastra quando l'incantatore ne richiama il potere.
+Effetto Ludico: Arma magica, particolarmente efficace nelle mani di chi si affida all'Intelligenza per canalizzare incantesimi.
+
+[Bastone di Quercia]
+Tipo: Arma Magica
+Descrizione: Un semplice bastone da viandante, ricavato da una quercia secolare. Chi sa ascoltarlo giura di sentirvi ancora il respiro dell'albero da cui proviene.
+Effetto Ludico: Arma magica leggera, adatta a incantatori che privilegiano equilibrio e discrezione.
+
+[Falcetto Rituale]
+Tipo: Arma Magica
+Descrizione: Una lama curva usata anticamente in cerimonie sacre, ancora intrisa di un'energia che sembra reagire alla volontà di chi la impugna.
+Effetto Ludico: Arma magica ibrida, efficace sia in combattimento ravvicinato che nella canalizzazione di piccoli incantesimi.
+
+[Scudo Sacro]
+Tipo: Accessorio Difensivo
+Descrizione: Uno scudo consacrato, decorato con simboli religiosi ormai sbiaditi. Chi lo porta giura di sentirsi protetto da una presenza silenziosa.
+Effetto Ludico: Oggetto difensivo, riduce la probabilità di subire danno pieno dagli attacchi nemici.
+
+[Armatura di Maglia]
+Tipo: Armatura
+Descrizione: Una cotta di maglia intrecciata con cura, abbastanza flessibile da non ostacolare i movimenti ma solida contro tagli e colpi di striscio.
+Effetto Ludico: Armatura di media protezione, migliora la Classe Armatura del personaggio.
+
+[Mantello Scuro]
+Tipo: Accessorio Difensivo
+Descrizione: Un mantello di stoffa pesante e scura, capace di confondersi con le ombre e attutire il rumore dei passi.
+Effetto Ludico: Accessorio difensivo leggero, utile a chi predilige furtività ed elusione.
+
+[Mantello Incantato]
+Tipo: Accessorio Difensivo
+Descrizione: Un mantello attraversato da sottili fili argentati, che paiono muoversi da soli quando il pericolo si avvicina al suo portatore.
+Effetto Ludico: Accessorio difensivo magico, offre una protezione superiore a un semplice indumento.
+
+[Mantello Mimetico]
+Tipo: Accessorio Difensivo
+Descrizione: Un mantello dai toni cangianti, capace di mimetizzarsi con l'ambiente circostante e rendere più difficile individuare chi lo indossa.
+Effetto Ludico: Accessorio difensivo pensato per l'elusione e la protezione passiva.
+
+[Scudo Pesante]
+Tipo: Accessorio Difensivo
+Descrizione: Un grande scudo da torre, pesante e ingombrante, ma capace di fermare quasi ogni colpo diretto verso chi lo regge.
+Effetto Ludico: Oggetto difensivo di alto livello, tra i più efficaci contro gli attacchi nemici.
+
+[Armatura Completa]
+Tipo: Armatura
+Descrizione: Una panoplia di piastre metalliche articolate, forgiata su misura. Pesante da indossare, ma quasi impenetrabile in battaglia.
+Effetto Ludico: Armatura pesante, la protezione più solida disponibile per la Classe Armatura del personaggio.
+
+[Bracciali Rinforzati]
+Tipo: Accessorio Difensivo
+Descrizione: Un paio di bracciali in cuoio borchiato, pensati per parare colpi di lama e attutire l'impatto delle armi contundenti.
+Effetto Ludico: Accessorio difensivo leggero, un piccolo margine di protezione che non ostacola la mobilità.
+
+[Amleto d'Ombra del Cacciatore]
+Tipo: Accessorio Difensivo
+Descrizione: Un ciondolo scuro, intagliato con il simbolo di un occhio chiuso. Si dice appartenesse a un cacciatore che non fu mai colto di sorpresa.
+Effetto Ludico: Accessorio difensivo magico, aumenta la prontezza del personaggio nell'evitare i colpi.
+
+[Kit Medico]
+Tipo: Oggetto Curativo
+Descrizione: Un rotolo di bende, unguenti e strumenti essenziali per stabilizzare una ferita nel bel mezzo del cammino.
+Effetto Ludico: Cura una quantità moderata di Punti Ferita, riutilizzabile durante l'avventura.
+
+[Pozione di Rigenerazione Elfica]
+Tipo: Oggetto Curativo
+Descrizione: Un liquido dai riflessi verde smeraldo, distillato secondo un'antica ricetta elfica. Il suo sapore ricorda la resina di pino e la rugiada del mattino.
+Effetto Ludico: Cura una quantità elevata di Punti Ferita, tra le pozioni curative più efficaci disponibili.
+
+[Pozione di Mana]
+Tipo: Oggetto Curativo
+Descrizione: Un liquido azzurro e frizzante che scalda la gola e rischiara la mente, restituendo lucidità a chi lo beve nel pieno di uno scontro.
+Effetto Ludico: Ripristina una piccola quantità di Punti Ferita, utile come rimedio rapido a basso costo.
+
+[Ampolla d'Acqua Santa]
+Tipo: Oggetto Curativo
+Descrizione: Un'ampolla sigillata contenente acqua benedetta in un tempio ormai dimenticato. Si dice lenisca tanto le ferite del corpo quanto quelle dello spirito.
+Effetto Ludico: Cura una quantità discreta di Punti Ferita, efficace anche contro afflizioni di natura oscura.
+
+[Razioni da Viaggio]
+Tipo: Oggetto Curativo
+Descrizione: Pane secco, carne salata e frutta essiccata, avvolti in un panno cerato. Nulla di raffinato, ma sufficiente a rimettere in piedi un viandante esausto.
+Effetto Ludico: Cura una piccola quantità di Punti Ferita, la risorsa curativa più semplice ed economica.
+
+[Erbe Medicinali]
+Tipo: Oggetto Curativo
+Descrizione: Un fascio di erbe raccolte lungo il cammino, dal profumo pungente. Masticate o applicate su una ferita, ne accelerano la guarigione.
+Effetto Ludico: Cura una quantità moderata di Punti Ferita, facilmente reperibile in natura.
+
+[Fiasca di Forte Liquore]
+Tipo: Oggetto Curativo
+Descrizione: Un liquore ambrato e bruciante, capace di scaldare le ossa e ridare coraggio a chi ne beve un sorso nel momento del bisogno.
+Effetto Ludico: Ripristina una piccola quantità di Punti Ferita e infonde un breve slancio di baldanza.

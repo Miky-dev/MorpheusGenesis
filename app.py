@@ -24,25 +24,21 @@ if os.path.exists(".env"):
                 key, val = line.strip().split("=", 1)
                 os.environ[key.strip()] = val.strip().strip('"').strip("'")
 
-# --- 1. CONFIGURAZIONE API CON ROTAZIONE CHIAVI ---
-# Carica tutte le chiavi API (separate da virgola nel .env)
+# config API e rotazione chiavi
 _groq_keys_raw = os.environ.get("GROQ_API_KEYS", os.environ.get("OPENAI_API_KEY", ""))
 GROQ_API_KEYS = [k.strip() for k in _groq_keys_raw.split(",") if k.strip()]
 _current_key_index = 0
 _base_url = os.environ.get("OPENAI_BASE_URL")
 
 def _crea_client(api_key):
-    """Crea un client OpenAI con la chiave specificata."""
+    """Crea un client OpenAI."""
     return OpenAI(api_key=api_key, base_url=_base_url)
 
 # Client iniziale
 client = _crea_client(GROQ_API_KEYS[0]) if GROQ_API_KEYS else OpenAI()
 
 def chiama_ia(messages, temperature=0.75):
-    """
-    Wrapper per le chiamate API con rotazione automatica delle chiavi.
-    Se riceve un errore 429 (rate limit), passa alla chiave successiva e riprova.
-    """
+    """Chiama l'API con retry su 429."""
     global client, _current_key_index
     
     model = os.environ.get("MODEL_NAME", "gpt-4o-mini")
@@ -79,11 +75,9 @@ def chiama_ia(messages, temperature=0.75):
                 raise
 
 
+# stessa logica di chiama_ia ma col modello premium, todo unificare
 def chiama_ia_premium(messages, temperature=0.7):
-    """
-    Wrapper per chiamate API con il modello premium (STORY_MODEL_NAME).
-    Usato SOLO dal LoreMasterAgent per la creazione della storia.
-    """
+    """Versione premium per la storia (usa STORY_MODEL_NAME)."""
     global client, _current_key_index
     
     model = os.environ.get("STORY_MODEL_NAME", os.environ.get("MODEL_NAME", "gpt-4o-mini"))
@@ -117,7 +111,7 @@ def chiama_ia_premium(messages, temperature=0.7):
                 raise
 
 
-# --- 2. FUNZIONE DI LETTURA FILE TXT (CORRETTA) ---
+# lettura file txt
 def carica_mattoncini(nome_file):
     if not os.path.exists(nome_file):
         print(f"⚠️  ATTENZIONE: File '{nome_file}' non trovato.")
@@ -129,7 +123,7 @@ def carica_mattoncini(nome_file):
         elementi = [blocco.strip() for blocco in re.split(r'\n+(?=\[)', testo) if blocco.strip()]
         return elementi if elementi else ["Nessuna informazione disponibile."]
 
-# --- CREAZIONE DINAMICA DEL PERSONAGGIO DA FILE ---
+# generazione personaggio
 def genera_personaggio():
     # 1. Legge gli archetipi dal file txt
     archetipi = carica_mattoncini('player.txt')
@@ -157,7 +151,7 @@ Punti Ferita: 100/100"""
     
     return scheda_completa
 
-# --- 3. CARICAMENTO DATI ---
+# caricamento dati
 ambientazioni = carica_mattoncini('ambient.txt')
 personaggi = carica_mattoncini('npc.txt')
 creature = carica_mattoncini('enemies.txt')
@@ -169,7 +163,7 @@ print("=" * 60)
 print(f"Dati caricati: {len(ambientazioni)} ambientazioni, {len(personaggi)} personaggi, {len(creature)} creature, {len(oggetti)} oggetti magici.")
 print(f"🔑 Chiavi API caricate: {len(GROQ_API_KEYS)} (rotazione automatica attiva)" if len(GROQ_API_KEYS) > 1 else f"🔑 Chiave API caricata: 1")
 
-# --- 4. FLASK APP ---
+# flask app
 app = Flask(__name__, static_folder='.', static_url_path='')
 app.secret_key = os.urandom(24)
 
@@ -186,11 +180,7 @@ game_state = {
 }
 
 def _salva_su_disco():
-    """
-    Salva il game_state corrente su savegame.json in modo silenzioso.
-    Chiamato automaticamente dal server dopo ogni azione riuscita,
-    così il salvataggio non dipende dall'auto-save del client JavaScript.
-    """
+    """Salva game_state su savegame.json (auto-save server-side)."""
     if not game_state.get("attivo"):
         return
     try:
@@ -215,9 +205,7 @@ def _salva_su_disco():
         print(f"⚠️  Errore auto-salvataggio: {e}")
 
 
-# ============================
-#  MAPPATURA TEMA → TESTO
-# ============================
+# temi e difficoltà
 TEMI = {
     "dark-fantasy": "Dark Fantasy: regni corrotti dall'oscurità, magia proibita, atmosfera cupa e minacciosa. I colori dominanti sono il nero, il porpora e il rosso sangue.",
     "high-fantasy": "High Fantasy: terre epiche con eroi leggendari, draghi antichi e magia potente. L'atmosfera è grandiosa e avventurosa, ispirata a Tolkien e D&D classico.",
@@ -232,9 +220,7 @@ DIFFICOLTA = {
 }
 
 
-# ============================
-#  ROUTE: HOMEPAGE
-# ============================
+# route homepage
 @app.route('/')
 def homepage():
     return send_from_directory('.', 'dnd_homepage.html')
@@ -245,9 +231,7 @@ def game_page():
     return send_from_directory('.', 'dnd_game.html')
 
 
-# ============================
-#  API: AVVIA NUOVA PARTITA
-# ============================
+# avvia nuova partita
 @app.route('/api/start', methods=['POST'])
 def start_game():
     global game_state
@@ -356,9 +340,7 @@ def ripristina_stato_da_salvataggio():
     return False
 
 
-# ============================
-#  HELPER: RILEVAMENTO COMBATTIMENTO E NEMICO
-# ============================
+# helper per rilevamento combattimento
 def _detect_current_enemy(game_state):
     history = game_state.get("chat_history", [])
     known_enemies = list(combat_engine.BESTIARY_STATS.keys())
@@ -614,9 +596,7 @@ def _check_advance_step(game_state, trigger_character_name=None, is_combat_win=F
     return False
 
 
-# ============================
-#  API: AZIONE DEL GIOCATORE
-# ============================
+# azione del giocatore (route principale)
 @app.route('/api/action', methods=['POST'])
 def player_action():
     global game_state
@@ -631,11 +611,8 @@ def player_action():
     if not player_input:
         return jsonify({"success": False, "error": "Azione vuota."}), 400
 
-    # =========================================================
-    # BLOCCO PREVENTIVO: RAGGIUNGIMENTO NARRATIVO DEL BOSS
-    # Intercetta qualunque tentativo di avvicinarsi/parlare/cercare
-    # il boss prima che tutte le tappe siano completate.
-    # =========================================================
+    # blocco preventivo: se il player prova ad andare dal boss prima di aver
+    # completato le tappe, intercettiamo e rispondiamo narrativamente
     _tappe_check = game_state.get("tappe_strutturate", [])
     _idx_check = game_state.get("tappa_attiva_idx", 0)
     _tappa_check = _tappe_check[_idx_check] if (_tappe_check and _idx_check < len(_tappe_check)) else {}
@@ -680,7 +657,7 @@ def player_action():
             _pers_tappa = _tappa_check.get("personaggio", "")
             _zona_tappa = _tappa_check.get("zona_tag", "")
             _luogo_tappa = _tappa_check.get("nome_luogo", _zona_tappa)
-            import random as _rnd
+            # (random è già importato in cima)
             _blocchi_narrativi = [
                 f"Una nebbia densa e innaturale si leva dal terreno non appena ti avvicini alla direzione di **{_nome_boss_check}**. "
                 f"Le tue gambe si bloccano, come se forze invisibili ti impedissero di proseguire. "
@@ -696,7 +673,7 @@ def player_action():
                 f"Un corvo posato su un ramo gracchia tre volte, come se volesse attirare la tua attenzione verso un'altra direzione. "
                 f"*Senti che dovresti prima occuparti di qualcosa di più urgente: **{_pers_tappa}** a **{_luogo_tappa}** ti aspetta.*",
             ]
-            _dm_reply = _rnd.choice(_blocchi_narrativi)
+            _dm_reply = random.choice(_blocchi_narrativi)
             game_state["chat_history"].append({"role": "user", "content": player_input})
             game_state["chat_history"].append({"role": "assistant", "content": _dm_reply})
             print(f"[BOSS LOCK] Tentativo di raggiungere '{_nome_boss_check}' bloccato. Tappa corrente: {_tappa_n}")
@@ -1013,9 +990,7 @@ def player_action():
         return jsonify({"success": False, "error": str(e)}), 500
 
 
-# ============================
-#  API: AVVIO COMBATTIMENTO LOCALE
-# ============================
+# avvio combattimento locale
 @app.route('/api/combat/start', methods=['POST'])
 def start_combat():
     global game_state
@@ -1063,9 +1038,7 @@ def flee_combat():
     return jsonify({"success": False, "error": "Errore risoluzione fuga."}), 500
 
 
-# ============================
-#  API: DIARIO
-# ============================
+# diario
 @app.route('/api/diary', methods=['GET'])
 def get_diary():
     if not game_state["attivo"]:
@@ -1079,9 +1052,7 @@ def get_diary():
     })
 
 
-# ============================
-#  API: SALVATAGGIO
-# ============================
+# salvataggio
 @app.route('/api/save', methods=['POST'])
 def save_game():
     if not game_state["attivo"]:
@@ -1110,9 +1081,7 @@ def save_game():
     return jsonify({"success": True, "message": "Partita salvata con successo!"})
 
 
-# ============================
-#  API: CARICAMENTO
-# ============================
+# caricamento
 @app.route('/api/load', methods=['POST'])
 def load_game():
     global game_state
@@ -1163,18 +1132,14 @@ def load_game():
     })
 
 
-# ============================
-#  API: CONTROLLA SALVATAGGIO
-# ============================
+# controlla se esiste un save
 @app.route('/api/check-save', methods=['GET'])
 def check_save():
     exists = os.path.exists("savegame.json")
     return jsonify({"exists": exists})
 
 
-# ============================
-#  AVVIO SERVER
-# ============================
+# avvio server
 if __name__ == '__main__':
     print("\n⚔️  MORPHEUS GENESIS  ⚔️")
     print("="*60)
