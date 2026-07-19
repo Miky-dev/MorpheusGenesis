@@ -433,26 +433,33 @@ def _update_player_position(game_state):
         return
         
     for msg in reversed(history[-6:]):
-        content_lower = msg.get("content", "").lower()
+        if msg.get("role") == "user":
+            last_user_msg = msg.get("content", "")
+            break
+    else:
+        return
         
-        for node in nodes:
-            tag_str = f"[{node['zona_tag']}]".lower()
-            if tag_str in content_lower and any(verb in content_lower for verb in ["vado", "dirigo", "raggiung", "arriv", "sei ", "ti trovi", "giung", "posizione"]):
-                game_state["posizione_attuale"] = node
-                return
-                
-        for node in nodes:
-            nome_l = node["nome_luogo"].lower()
-            if len(nome_l) >= 3 and nome_l in content_lower:
-                game_state["posizione_attuale"] = node
-                return
-                
-        for node in nodes:
-            dir_l = node["zona_tag"].lower()
-            if dir_l in ["nord", "sud", "est", "ovest", "centro", "nord-est", "nord-ovest", "sud-est", "sud-ovest"]:
-                if any(w + " " + dir_l in content_lower or w + " a " + dir_l in content_lower or w + " verso " + dir_l in content_lower or w + " in " + dir_l in content_lower for w in ["vado", "dirigo", "cammino", "corro", "viaggio", "sposto", "andare", "dirigersi", "arrivato", "giungi", "trovi"]):
+    aree_disponibili = ", ".join([f"[{n['zona_tag']}] {n['nome_luogo']}" for n in nodes])
+    prompt = f"""Analizza il messaggio del giocatore per capire se ha intenzione di viaggiare/spostarsi verso una nuova area.
+Aree della mappa: {aree_disponibili}
+Messaggio: "{last_user_msg}"
+
+Rispondi SOLO con il tag dell'area di destinazione (es. NORD, CENTRO, SUD, ecc.) se il giocatore vuole muoversi.
+Se il giocatore sta solo parlando, combattendo o facendo un'azione senza muoversi, rispondi ESATTAMENTE con: NESSUN_MOVIMENTO.
+Non aggiungere alcuna spiegazione."""
+
+    try:
+        response = chiama_ia([{"role": "user", "content": prompt}], temperature=0.0)
+        risposta_llm = response.choices[0].message.content.strip(" .\n\"'").upper()
+        
+        if "NESSUN_MOVIMENTO" not in risposta_llm:
+            for node in nodes:
+                # Confronta il tag o parte del nome del luogo
+                if node["zona_tag"].upper() == risposta_llm or risposta_llm in node["nome_luogo"].upper():
                     game_state["posizione_attuale"] = node
                     return
+    except Exception as e:
+        print(f"⚠️ Errore nell'aggiornamento posizione tramite LLM: {e}")
 
 
 def _get_active_enemy_at_location(game_state):

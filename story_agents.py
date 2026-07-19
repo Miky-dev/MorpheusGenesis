@@ -216,7 +216,7 @@ class CastingDirectorAgent:
 
 class LoreMasterAgent:
     """Maestro di Lore - sintetizza mappa e casting, genera il system prompt e il prologo (tramite Agno)."""
-    def __init__(self, chiama_ia_func=None, chiama_ia_premium_func=None):
+    def __init__(self):
         self.agent = Agent(
             name="Lore Master Agent",
             model=OpenAIChat(id=os.environ.get("PREMIUM_MODEL_NAME", "gpt-4o")),
@@ -476,8 +476,7 @@ L'ultima tappa DEVE essere lo scontro con il Boss Finale {nome_boss}.
 
 def orchestra_creazione_mondo(map_size: str, tema: str, tema_desc: str, difficolta: str, difficolta_desc: str,
                               scheda_giocatore: str, ambientazioni_rag: list, personaggi_rag: list, 
-                              creature_rag: list, oggetti_rag: list, 
-                              chiama_ia_func=None, chiama_ia_premium_func=None) -> dict:
+                              creature_rag: list, oggetti_rag: list) -> dict:
     """Orchestrazione della pipeline multi-agente usando Agno."""
     print(f"\n============================================================")
     print(f"🚀 AVVIO PIPELINE MULTI-AGENTE (AGNO) PER CREAZIONE STORIA ({map_size.upper()})")
