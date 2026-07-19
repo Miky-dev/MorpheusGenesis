@@ -4,6 +4,7 @@ import sys
 import re
 import json
 import textwrap
+import uuid
 from openai import OpenAI
 from flask import Flask, request, jsonify, send_from_directory, session
 import importlib
@@ -167,20 +168,37 @@ print(f"🔑 Chiavi API caricate: {len(GROQ_API_KEYS)} (rotazione automatica att
 app = Flask(__name__, static_folder='.', static_url_path='')
 app.secret_key = os.urandom(24)
 
-# Stato di gioco in-memory (single player)
-game_state = {
-    "chat_history": [],
-    "diario": {},
-    "personaggio": "",
-    "mappa": "",
-    "combat": {"active": False},
-    "attivo": False,
-    "posizione_attuale": {"zona_tag": "CENTRO", "nome_luogo": "Centro", "is_zona_sicura": True, "nemico_zona": None},
-    "nemici_sconfitti": []
-}
+# Stato di gioco in-memory (multi-player concorrente)
+game_states = {}
+
+def get_session_id():
+    if 'session_id' not in session:
+        session['session_id'] = str(uuid.uuid4())
+    return session['session_id']
+
+def get_game_state():
+    sid = get_session_id()
+    if sid not in game_states:
+        game_states[sid] = {
+            "chat_history": [],
+            "diario": {},
+            "personaggio": "",
+            "mappa": "",
+            "combat": {"active": False},
+            "attivo": False,
+            "posizione_attuale": {"zona_tag": "CENTRO", "nome_luogo": "Centro", "is_zona_sicura": True, "nemico_zona": None},
+            "nemici_sconfitti": []
+        }
+    return game_states[sid]
+
+def set_game_state(new_state):
+    sid = get_session_id()
+    game_states[sid] = new_state
+
 
 def _salva_su_disco():
-    """Salva game_state su savegame.json (auto-save server-side)."""
+    """Salva game_state su savegame_<sid>.json (auto-save server-side)."""
+    game_state = get_game_state()
     if not game_state.get("attivo"):
         return
     try:
@@ -199,7 +217,8 @@ def _salva_su_disco():
             "tappe_strutturate":  game_state.get("tappe_strutturate", []),
             "tappa_attiva_idx":   game_state.get("tappa_attiva_idx", 0)
         }
-        with open("savegame.json", "w", encoding="utf-8") as f:
+        os.makedirs("saves", exist_ok=True)
+        with open(f"saves/savegame_{get_session_id()}.json", "w", encoding="utf-8") as f:
             json.dump(save_data, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"⚠️  Errore auto-salvataggio: {e}")
@@ -234,7 +253,7 @@ def game_page():
 # avvia nuova partita
 @app.route('/api/start', methods=['POST'])
 def start_game():
-    global game_state
+    game_state = get_game_state()
     
     data = request.get_json()
     tema = data.get('theme', 'dark-fantasy')
@@ -273,7 +292,7 @@ def start_game():
         personaggio_finale = risultato_agenti.get("personaggio_arricchito", giocatore_attuale)
         
         # Salva lo stato di gioco in memoria
-        game_state = {
+        new_state = {
             "chat_history": chat_history,
             "diario": diario,
             "personaggio": personaggio_finale,
@@ -289,6 +308,8 @@ def start_game():
             "tappe_strutturate": risultato_agenti.get("tappe_strutturate", []),
             "tappa_attiva_idx": 0
         }
+        set_game_state(new_state)
+        game_state = get_game_state()
         _update_player_position(game_state)
         _salva_su_disco()
         
@@ -310,12 +331,13 @@ def start_game():
 
 # Ripristina automaticamente lo stato se il server è stato riavviato
 def ripristina_stato_da_salvataggio():
-    global game_state
-    if os.path.exists("savegame.json"):
+    sid = get_session_id()
+    save_path = f"saves/savegame_{sid}.json"
+    if os.path.exists(save_path):
         try:
-            with open("savegame.json", "r", encoding="utf-8") as f:
+            with open(save_path, "r", encoding="utf-8") as f:
                 save_data = json.load(f)
-            game_state = {
+            new_state = {
                 "chat_history": save_data.get("history", []),
                 "diario": save_data.get("diario", {}),
                 "personaggio": save_data.get("personaggio", ""),
@@ -331,7 +353,8 @@ def ripristina_stato_da_salvataggio():
                 "tappe_strutturate": save_data.get("tappe_strutturate", []),
                 "tappa_attiva_idx": save_data.get("tappa_attiva_idx", 0)
             }
-            _update_diary_steps(game_state)
+            set_game_state(new_state)
+            _update_diary_steps(get_game_state())
             return True
         except Exception as e:
             print(f"Errore ripristino automatico: {e}")
@@ -604,7 +627,7 @@ def _check_advance_step(game_state, trigger_character_name=None, is_combat_win=F
 # azione del giocatore (route principale)
 @app.route('/api/action', methods=['POST'])
 def player_action():
-    global game_state
+    game_state = get_game_state()
     
     if not game_state["attivo"]:
         if not ripristina_stato_da_salvataggio():
@@ -816,9 +839,10 @@ def player_action():
             
             # Se il giocatore muore in combattimento
             if game_state.get("hp", 100) <= 0:
-                if os.path.exists("savegame.json"):
+                save_path = f"saves/savegame_{get_session_id()}.json"
+                if os.path.exists(save_path):
                     try:
-                        os.remove("savegame.json")
+                        os.remove(save_path)
                     except Exception as e:
                         print(f"Errore rimozione salvataggio: {e}")
                 game_state["attivo"] = False
@@ -971,9 +995,10 @@ def player_action():
             
             if hp_attuali <= 0:
                 # Permadeath: cancella il file di salvataggio
-                if os.path.exists("savegame.json"):
+                save_path = f"saves/savegame_{get_session_id()}.json"
+                if os.path.exists(save_path):
                     try:
-                        os.remove("savegame.json")
+                        os.remove(save_path)
                     except Exception as e:
                         print(f"Errore rimozione salvataggio: {e}")
                 game_state["attivo"] = False
@@ -998,7 +1023,7 @@ def player_action():
 # avvio combattimento locale
 @app.route('/api/combat/start', methods=['POST'])
 def start_combat():
-    global game_state
+    game_state = get_game_state()
     if not game_state["attivo"]:
         if not ripristina_stato_da_salvataggio():
             return jsonify({"success": False, "error": "Nessuna partita attiva."}), 400
@@ -1031,7 +1056,7 @@ def start_combat():
 
 @app.route('/api/combat/flee', methods=['POST'])
 def flee_combat():
-    global game_state
+    game_state = get_game_state()
     if not game_state["attivo"] or not game_state.get("combat", {}).get("active"):
         return jsonify({"success": False, "error": "Non sei in combattimento."}), 400
         
@@ -1046,6 +1071,7 @@ def flee_combat():
 # diario
 @app.route('/api/diary', methods=['GET'])
 def get_diary():
+    game_state = get_game_state()
     if not game_state["attivo"]:
         if not ripristina_stato_da_salvataggio():
             return jsonify({"success": False, "error": "Nessuna partita attiva."}), 400
@@ -1060,6 +1086,7 @@ def get_diary():
 # salvataggio
 @app.route('/api/save', methods=['POST'])
 def save_game():
+    game_state = get_game_state()
     if not game_state["attivo"]:
         if not ripristina_stato_da_salvataggio():
             return jsonify({"success": False, "error": "Nessuna partita attiva."}), 400
@@ -1080,7 +1107,8 @@ def save_game():
         "tappa_attiva_idx": game_state.get("tappa_attiva_idx", 0)
     }
     
-    with open("savegame.json", "w", encoding="utf-8") as f:
+    os.makedirs("saves", exist_ok=True)
+    with open(f"saves/savegame_{get_session_id()}.json", "w", encoding="utf-8") as f:
         json.dump(save_data, f, ensure_ascii=False, indent=4)
     
     return jsonify({"success": True, "message": "Partita salvata con successo!"})
@@ -1089,15 +1117,15 @@ def save_game():
 # caricamento
 @app.route('/api/load', methods=['POST'])
 def load_game():
-    global game_state
-    
-    if not os.path.exists("savegame.json"):
+    sid = get_session_id()
+    save_path = f"saves/savegame_{sid}.json"
+    if not os.path.exists(save_path):
         return jsonify({"success": False, "error": "Nessun salvataggio trovato."}), 404
     
-    with open("savegame.json", "r", encoding="utf-8") as f:
+    with open(save_path, "r", encoding="utf-8") as f:
         save_data = json.load(f)
     
-    game_state = {
+    new_state = {
         "chat_history": save_data.get("history", []),
         "diario": save_data.get("diario", {}),
         "personaggio": save_data.get("personaggio", ""),
@@ -1115,6 +1143,8 @@ def load_game():
     }
     
     # Trova l'ultimo messaggio del DM
+    set_game_state(new_state)
+    game_state = get_game_state()
     ultimo_dm = ""
     for msg in reversed(game_state["chat_history"]):
         if msg["role"] == "assistant":
@@ -1140,7 +1170,8 @@ def load_game():
 # controlla se esiste un save
 @app.route('/api/check-save', methods=['GET'])
 def check_save():
-    exists = os.path.exists("savegame.json")
+    sid = get_session_id()
+    exists = os.path.exists(f"saves/savegame_{sid}.json")
     return jsonify({"exists": exists})
 
 
