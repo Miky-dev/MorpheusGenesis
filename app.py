@@ -262,9 +262,7 @@ def start_game():
             ambientazioni_rag=ambientazioni,
             personaggi_rag=personaggi,
             creature_rag=creature,
-            oggetti_rag=oggetti,
-            chiama_ia_func=chiama_ia,
-            chiama_ia_premium_func=chiama_ia_premium
+            oggetti_rag=oggetti
         )
         
         chat_history = risultato_agenti["chat_history"]
