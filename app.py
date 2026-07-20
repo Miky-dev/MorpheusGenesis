@@ -306,22 +306,20 @@ def start_game():
         importlib.reload(story_agents)
         importlib.reload(combat_engine)
         
-        # Determiniamo il numero base di entità richieste in base alla grandezza della mappa
+      
         req_amb = 4; req_npc = 4; req_cattivi = 2
         if map_size == "medium":
             req_amb = 6; req_npc = 6; req_cattivi = 3
         elif map_size == "large":
             req_amb = 10; req_npc = 10; req_cattivi = 5
             
-        # Compromesso Multi-Agente: Campioniamo casualmente un sottoinsieme 
-        # fornendo all'LLM 2 opzioni in più rispetto al necessario per permettergli 
-        # di fare scelte logiche (senza però sovraccaricare i token)
+      
         amb_sample = random.sample(ambientazioni, min(req_amb + 2, len(ambientazioni)))
         npc_sample = random.sample(personaggi, min(req_npc + 2, len(personaggi)))
         creature_sample = random.sample(creature, min(req_cattivi + 2, len(creature)))
         oggetti_sample = random.sample(oggetti, min(req_npc + 2, len(oggetti)))
         
-        # Delega la creazione di mappa, NPC, Nemici e Storia al team Multi-Agente
+  
         risultato_agenti = story_agents.orchestra_creazione_mondo(
             map_size=map_size,
             tema=tema,
