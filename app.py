@@ -5,6 +5,7 @@ import re
 import json
 import textwrap
 import uuid
+import datetime
 from openai import OpenAI
 from flask import Flask, request, jsonify, send_from_directory, session
 import importlib
@@ -28,6 +29,8 @@ if os.path.exists(".env"):
 # config API e rotazione chiavi
 _groq_keys_raw = os.environ.get("GROQ_API_KEYS", os.environ.get("OPENAI_API_KEY", ""))
 GROQ_API_KEYS = [k.strip() for k in _groq_keys_raw.split(",") if k.strip()]
+if GROQ_API_KEYS and not os.environ.get("OPENAI_API_KEY"):
+    os.environ["OPENAI_API_KEY"] = GROQ_API_KEYS[0]
 _current_key_index = 0
 _base_url = os.environ.get("OPENAI_BASE_URL")
 
@@ -166,12 +169,15 @@ print(f"🔑 Chiavi API caricate: {len(GROQ_API_KEYS)} (rotazione automatica att
 
 # flask app
 app = Flask(__name__, static_folder='.', static_url_path='')
-app.secret_key = os.urandom(24)
+# Usa una chiave segreta fissa per preservare la sessione tra i riavvii del server
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "morpheus_genesis_secret_key_fixed_2026")
+app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=30)
 
 # Stato di gioco in-memory (multi-player concorrente)
 game_states = {}
 
 def get_session_id():
+    session.permanent = True
     if 'session_id' not in session:
         session['session_id'] = str(uuid.uuid4())
     return session['session_id']
@@ -196,8 +202,31 @@ def set_game_state(new_state):
     game_states[sid] = new_state
 
 
+def trova_file_salvataggio(sid=None):
+    """Restituisce il percorso del file di salvataggio per la sessione o il salvataggio più recente come fallback."""
+    if not sid:
+        sid = get_session_id()
+    
+    path_sessione = f"saves/savegame_{sid}.json"
+    if os.path.exists(path_sessione):
+        return path_sessione
+        
+    # Fallback 1: Cerca il file più recente nella cartella saves/
+    if os.path.exists("saves"):
+        files = [os.path.join("saves", f) for f in os.listdir("saves") if f.startswith("savegame_") and f.endswith(".json")]
+        if files:
+            files.sort(key=lambda x: os.path.getmtime(x), reverse=True)
+            return files[0]
+            
+    # Fallback 2: savegame.json nella radice
+    if os.path.exists("savegame.json"):
+        return "savegame.json"
+        
+    return None
+
+
 def _salva_su_disco():
-    """Salva game_state su savegame_<sid>.json (auto-save server-side)."""
+    """Salva game_state su savegame_<sid>.json e su savegame.json (auto-save server-side)."""
     game_state = get_game_state()
     if not game_state.get("attivo"):
         return
@@ -218,10 +247,16 @@ def _salva_su_disco():
             "tappa_attiva_idx":   game_state.get("tappa_attiva_idx", 0)
         }
         os.makedirs("saves", exist_ok=True)
-        with open(f"saves/savegame_{get_session_id()}.json", "w", encoding="utf-8") as f:
+        sid = get_session_id()
+        with open(f"saves/savegame_{sid}.json", "w", encoding="utf-8") as f:
+            json.dump(save_data, f, ensure_ascii=False, indent=2)
+        with open("savegame.json", "w", encoding="utf-8") as f:
             json.dump(save_data, f, ensure_ascii=False, indent=2)
     except Exception as e:
-        print(f"⚠️  Errore auto-salvataggio: {e}")
+        with open("debug.log", "a", encoding="utf-8") as dlog:
+            import traceback
+            dlog.write(f"Errore salvataggio disco: {e}\n{traceback.format_exc()}\n")
+        print(f"Errore salvataggio disco: {e}")
 
 
 # temi e difficoltà
@@ -331,9 +366,8 @@ def start_game():
 
 # Ripristina automaticamente lo stato se il server è stato riavviato
 def ripristina_stato_da_salvataggio():
-    sid = get_session_id()
-    save_path = f"saves/savegame_{sid}.json"
-    if os.path.exists(save_path):
+    save_path = trova_file_salvataggio()
+    if save_path and os.path.exists(save_path):
         try:
             with open(save_path, "r", encoding="utf-8") as f:
                 save_data = json.load(f)
@@ -355,6 +389,7 @@ def ripristina_stato_da_salvataggio():
             }
             set_game_state(new_state)
             _update_diary_steps(get_game_state())
+            _salva_su_disco()
             return True
         except Exception as e:
             print(f"Errore ripristino automatico: {e}")
@@ -552,6 +587,13 @@ def _update_diary_steps(game_state):
 
     if not tappe or "diario" not in game_state:
         return
+
+    if idx_attiva >= len(tappe):
+        game_state["diario"]["🎯 Percorso e Tappe Obbligatorie"] = [
+            "🏆 **TUTTE LE TAPPE COMPLETATE! VITTORIA SUPREMA!**\n\n"
+            "Hai completato con successo l'intero percorso narrativo ed eliminato la minaccia finale. La tua leggenda è compiuta! 🎉"
+        ]
+        return
         
     lista_tappe_diario = []
     for t in tappe:
@@ -587,21 +629,29 @@ def _update_diary_steps(game_state):
 def _check_advance_step(game_state, trigger_character_name=None, is_combat_win=False, from_llm_tag=False, player_input="", dm_reply=""):
     tappe = game_state.get("tappe_strutturate", [])
     idx = game_state.get("tappa_attiva_idx", 0)
+    print(f"\n[DEBUG _check_advance_step] Chiamata con: idx={idx}, len(tappe)={len(tappe)}, from_llm_tag={from_llm_tag}, is_combat_win={is_combat_win}, trigger={trigger_character_name}")
     if not tappe or idx >= len(tappe):
+        print(f"[DEBUG _check_advance_step] USCITA ANTICIPATA: tappe vuote={not tappe}, idx({idx}) >= len(tappe)({len(tappe)})")
         return False
     
     tappa = tappe[idx]
+    print(f"[DEBUG _check_advance_step] Tappa corrente: id={tappa.get('id')}, personaggio={tappa.get('personaggio')}, completato={tappa.get('completato')}, tipo={tappa.get('tipo')}")
     if tappa.get("completato"):
+        print(f"[DEBUG _check_advance_step] USCITA: tappa già completata!")
         return False
         
     avanza = False
     if from_llm_tag:
         avanza = True
+        print(f"[DEBUG _check_advance_step] avanza=True (from_llm_tag)")
     elif is_combat_win and trigger_character_name:
         nem_tappa = tappa.get("personaggio", "").lower()
         trig_lower = trigger_character_name.lower()
         if nem_tappa in trig_lower or trig_lower in nem_tappa or any(w in trig_lower for w in nem_tappa.split() if len(w) > 3):
             avanza = True
+            print(f"[DEBUG _check_advance_step] avanza=True (combat_win match: '{trig_lower}' vs '{nem_tappa}')")
+        else:
+            print(f"[DEBUG _check_advance_step] combat_win ma NESSUN MATCH: '{trig_lower}' vs '{nem_tappa}'")
     elif not avanza and dm_reply and not tappa.get("is_boss"):
         # Verifica fallback solo su frasi inequivocabili di completamento o successo della missione/tappa per l'NPC attuale
         coinvolto = tappa.get("personaggio", "").strip()
@@ -615,12 +665,15 @@ def _check_advance_step(game_state, trigger_character_name=None, is_combat_win=F
             ]
             if any(p in dm_reply.lower() for p in success_phrases):
                 avanza = True
+                print(f"[DEBUG _check_advance_step] avanza=True (fallback phrases match)")
             
     if avanza:
         tappa["completato"] = True
         game_state["tappa_attiva_idx"] = idx + 1
+        print(f"[DEBUG _check_advance_step] ✅ AVANZAMENTO! tappa_attiva_idx ora = {idx + 1}")
         _update_diary_steps(game_state)
         return True
+    print(f"[DEBUG _check_advance_step] ❌ NON avanzato. avanza={avanza}")
     return False
 
 
@@ -772,12 +825,20 @@ def player_action():
         
         if not enemy_name:
             pos = game_state.get("posizione_attuale", {})
-            if not pos.get("is_zona_sicura", True) and not game_state.get("nemici_sconfitti", []):
-                detected = _detect_current_enemy(game_state)
-                if pos.get("nemico_zona"):
-                    enemy_name = pos.get("nemico_zona")
-                else:
-                    enemy_name = detected
+            # Combattimento se la zona ha un nemico assegnato e non è già sconfitto
+            if not pos.get("is_zona_sicura", True) and pos.get("nemico_zona"):
+                nemico_zona = pos.get("nemico_zona")
+                sconfitti = game_state.get("nemici_sconfitti", [])
+                if nemico_zona not in sconfitti:
+                    enemy_name = nemico_zona
+        
+        # Fallback basato sulla tappa attiva: se la tappa corrente è di combattimento/boss,
+        # il nemico della tappa è attaccabile anche se il tracker di posizione non si è aggiornato
+        if not enemy_name and tappa_attiva.get("tipo") in ["combattimento", "boss"]:
+            nemico_tappa = tappa_attiva.get("personaggio", "").strip()
+            sconfitti = game_state.get("nemici_sconfitti", [])
+            if nemico_tappa and nemico_tappa not in sconfitti:
+                enemy_name = nemico_tappa
                     
         if enemy_name:
             # Assicurati che l'enemy_name non sia per sbaglio associato al boss in tappe precedenti
@@ -824,7 +885,12 @@ def player_action():
                     # Verifica se lo scontro fa avanzare la tappa corrente del percorso scriptato
                     avanzato = _check_advance_step(game_state, trigger_character_name=defeated_enemy, is_combat_win=True)
                     if avanzato:
-                        res["dm_reply"] += "\n\n✨ **[TAPPA OBBLIGATORIA COMPLETATA]** Hai superato con successo l'obiettivo di questa fase della storia! Il percorso e le prossime tappe si sbloccano."
+                        idx_nuovo = game_state.get("tappa_attiva_idx", 0)
+                        tappe_tot = game_state.get("tappe_strutturate", [])
+                        if idx_nuovo >= len(tappe_tot):
+                            res["dm_reply"] += "\n\n🏆 **[VITTORIA SUPREMA - CAMPAGNA COMPLETATA!]** Hai sconfitto l'avversario finale! La campagna si conclude con un trionfo epico!"
+                        else:
+                            res["dm_reply"] += f"\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa {idx_nuovo + 1}** del percorso."
                     
             if not was_already_in_combat:
                 enemy_name_title = game_state["combat"].get("enemy_name", "Nemico")
@@ -839,12 +905,17 @@ def player_action():
             
             # Se il giocatore muore in combattimento
             if game_state.get("hp", 100) <= 0:
-                save_path = f"saves/savegame_{get_session_id()}.json"
-                if os.path.exists(save_path):
+                save_path = trova_file_salvataggio()
+                if save_path and os.path.exists(save_path):
                     try:
                         os.remove(save_path)
                     except Exception as e:
                         print(f"Errore rimozione salvataggio: {e}")
+                if os.path.exists("savegame.json"):
+                    try:
+                        os.remove("savegame.json")
+                    except Exception:
+                        pass
                 game_state["attivo"] = False
                 
             return jsonify(res)
@@ -928,15 +999,18 @@ def player_action():
                     f"della scena con eventi improvvisi, chiamate degli NPC, o ostacoli narrativi.\n\n"
 
                     f"REGOLA 4 — SBLOCCO TAPPA (completamento):\n"
-                    f"Se e SOLO se il giocatore compie in questo turno l'azione che soddisfa o conclude "
-                    f"l'obiettivo della tappa attiva, narra il successo E inserisci OBBLIGATORIAMENTE "
-                    f"alla fine assoluta del messaggio questo tag esatto:\n"
+                    f"Se il giocatore compie un'azione anche solo vagamente in linea con l'obiettivo della tappa, o se cerca di completarla, DEVI fargliela completare senza prolungare. Narra il successo E inserisci OBBLIGATORIAMENTE questo tag alla fine:\n"
                     f"[STEP_COMPLETATO]\n\n"
 
                     f"REGOLA 5 — ILLUSIONE DI LIBERTÀ:\n"
                     f"Il giocatore deve sempre percepire libertà totale. NON usare mai frasi meta-game "
                     f"come 'devi completare la tappa X' o 'non puoi andare lì perché è uno script'. "
-                    f"Ogni blocco o indirizzamento deve essere narrativo, immersivo e coerente col mondo fantasy.\n"
+                    f"Ogni blocco o indirizzamento deve essere narrativo, immersivo e coerente col mondo fantasy.\n\n"
+
+                    f"REGOLA 6 — STILE E BREVITÀ:\n"
+                    f"La risposta deve essere COMPLETA MA BREVE E CONCISA. "
+                    f"Scrivi al massimo 2-3 brevi paragrafi (circa 100-150 parole in totale). "
+                    f"Evita descrizioni prolisse, giri di parole o spiegazioni inutili. Rispondi all'azione del giocatore in modo diretto e incalzante.\n"
                     f"=============================================================="
                 )
             }
@@ -970,14 +1044,29 @@ def player_action():
         
         # Verifica se l'IA o l'interazione narrativa hanno completato la tappa scriptata
         avanzato = False
-        if "[STEP_COMPLETATO]" in dm_reply:
-            dm_reply = dm_reply.replace("[STEP_COMPLETATO]", "").strip()
+        print(f"\n[DEBUG player_action] Risposta LLM ricevuta. Controllo tag STEP_COMPLETATO...")
+        print(f"[DEBUG player_action] '[STEP_COMPLETATO]' in dm_reply = {'[STEP_COMPLETATO]' in dm_reply}")
+        print(f"[DEBUG player_action] 'STEP_COMPLETATO' in dm_reply = {'STEP_COMPLETATO' in dm_reply}")
+        print(f"[DEBUG player_action] tappa_attiva_idx PRIMA = {game_state.get('tappa_attiva_idx', 0)}")
+        if "[STEP_COMPLETATO]" in dm_reply or "STEP_COMPLETATO" in dm_reply or "[TAPPA COMPLETATA]" in dm_reply:
+            dm_reply = dm_reply.replace("[STEP_COMPLETATO]", "").replace("STEP_COMPLETATO", "").strip()
+            # Se l'LLM ha allucinato la stringa python, rimuoviamola in modo pulito
+            dm_reply = re.sub(r'✨\s*\*\*\[TAPPA COMPLETATA\]\*\*.*', '', dm_reply).strip()
+            
             avanzato = _check_advance_step(game_state, from_llm_tag=True, player_input=player_input, dm_reply=dm_reply)
+            print(f"[DEBUG player_action] Risultato _check_advance_step (from_llm_tag): {avanzato}")
         else:
             avanzato = _check_advance_step(game_state, player_input=player_input, dm_reply=dm_reply)
+            print(f"[DEBUG player_action] Risultato _check_advance_step (fallback): {avanzato}")
+        print(f"[DEBUG player_action] tappa_attiva_idx DOPO = {game_state.get('tappa_attiva_idx', 0)}")
             
         if avanzato:
-            dm_reply += "\n\n✨ **[TAPPA OBBLIGATORIA COMPLETATA]** Hai superato l'obiettivo di questa fase! Il percorso narrativo si schiude verso la prossima tappa."
+            idx_nuovo = game_state.get("tappa_attiva_idx", 0)
+            tappe_tot = game_state.get("tappe_strutturate", [])
+            if idx_nuovo >= len(tappe_tot):
+                dm_reply += "\n\n🏆 **[VITTORIA SUPREMA - CAMPAGNA COMPLETATA!]** Hai completato tutte le tappe della storia e superato ogni sfida del mondo di gioco!"
+            else:
+                dm_reply += f"\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa {idx_nuovo + 1}** del percorso."
         
         # --- SISTEMA DANNI E GAME OVER ---
         match_danni = re.search(r'\[DANNI:\s*(-?\d+)\]', dm_reply)
@@ -995,17 +1084,26 @@ def player_action():
             
             if hp_attuali <= 0:
                 # Permadeath: cancella il file di salvataggio
-                save_path = f"saves/savegame_{get_session_id()}.json"
-                if os.path.exists(save_path):
+                save_path = trova_file_salvataggio()
+                if save_path and os.path.exists(save_path):
                     try:
                         os.remove(save_path)
                     except Exception as e:
                         print(f"Errore rimozione salvataggio: {e}")
+                if os.path.exists("savegame.json"):
+                    try:
+                        os.remove("savegame.json")
+                    except Exception:
+                        pass
                 game_state["attivo"] = False
         
         # Salviamo la risposta pulita e auto-salviamo su disco
         game_state["chat_history"].append({"role": "assistant", "content": dm_reply})
         _update_player_position(game_state)
+        
+        with open("debug.log", "a", encoding="utf-8") as dlog:
+            dlog.write(f"[DEBUG player_action END] Chiamo _salva_su_disco. tappa_attiva_idx in game_state={game_state.get('tappa_attiva_idx', 0)}\n")
+        
         _salva_su_disco()  # Auto-salvataggio server-side dopo ogni risposta
         
         return jsonify({
@@ -1064,6 +1162,11 @@ def flee_combat():
     if res and res.get("success"):
         game_state["chat_history"].append({"role": "user", "content": "Tento di fuggire dal combattimento!"})
         game_state["chat_history"].append({"role": "assistant", "content": res["dm_reply"]})
+        # Se la fuga è riuscita, resetta lo stato combat
+        if not res.get("combat", {}).get("active", True):
+            game_state["combat"] = {"active": False}
+        _update_diary_steps(game_state)
+        _salva_su_disco()
         return jsonify(res)
     return jsonify({"success": False, "error": "Errore risoluzione fuga."}), 500
 
@@ -1091,35 +1194,15 @@ def save_game():
         if not ripristina_stato_da_salvataggio():
             return jsonify({"success": False, "error": "Nessuna partita attiva."}), 400
     
-    save_data = {
-        "history": game_state["chat_history"],
-        "diario": game_state["diario"],
-        "personaggio": game_state["personaggio"],
-        "mappa": game_state["mappa"],
-        "tema": game_state.get("tema", "dark-fantasy"),
-        "difficolta": game_state.get("difficolta", "normal"),
-        "hp": game_state.get("hp", 100),
-        "combat": game_state.get("combat", {"active": False}),
-        "posizione_attuale": game_state.get("posizione_attuale", {"zona_tag": "CENTRO", "nome_luogo": "", "is_zona_sicura": True, "nemico_zona": None}),
-        "nemici_sconfitti": game_state.get("nemici_sconfitti", []),
-        "progressione": game_state.get("progressione", []),
-        "tappe_strutturate": game_state.get("tappe_strutturate", []),
-        "tappa_attiva_idx": game_state.get("tappa_attiva_idx", 0)
-    }
-    
-    os.makedirs("saves", exist_ok=True)
-    with open(f"saves/savegame_{get_session_id()}.json", "w", encoding="utf-8") as f:
-        json.dump(save_data, f, ensure_ascii=False, indent=4)
-    
+    _salva_su_disco()
     return jsonify({"success": True, "message": "Partita salvata con successo!"})
 
 
 # caricamento
 @app.route('/api/load', methods=['POST'])
 def load_game():
-    sid = get_session_id()
-    save_path = f"saves/savegame_{sid}.json"
-    if not os.path.exists(save_path):
+    save_path = trova_file_salvataggio()
+    if not save_path or not os.path.exists(save_path):
         return jsonify({"success": False, "error": "Nessun salvataggio trovato."}), 404
     
     with open(save_path, "r", encoding="utf-8") as f:
@@ -1142,9 +1225,10 @@ def load_game():
         "tappa_attiva_idx": save_data.get("tappa_attiva_idx", 0)
     }
     
-    # Trova l'ultimo messaggio del DM
     set_game_state(new_state)
     game_state = get_game_state()
+    _salva_su_disco()
+    
     ultimo_dm = ""
     for msg in reversed(game_state["chat_history"]):
         if msg["role"] == "assistant":
@@ -1170,8 +1254,8 @@ def load_game():
 # controlla se esiste un save
 @app.route('/api/check-save', methods=['GET'])
 def check_save():
-    sid = get_session_id()
-    exists = os.path.exists(f"saves/savegame_{sid}.json")
+    save_path = trova_file_salvataggio()
+    exists = save_path is not None and os.path.exists(save_path)
     return jsonify({"exists": exists})
 
 

@@ -1,0 +1,125 @@
+{
+  "history": [
+    {
+      "role": "system",
+      "content": "Agisci come un Dungeon Master esperto di giochi di ruolo testuali e narrazione collaborativa.\n\n=== AMBIENTAZIONE E TONO (DARK-FANTASY) ===\nDark Fantasy: regni corrotti dall'oscurità, magia proibita, atmosfera cupa e minacciosa. I colori dominanti sono il nero, il porpora e il rosso sangue.\n\n=== LIVELLO DI DIFFICOLTÀ (EASY) ===\nNovizio: Fai da 'guida benevola'. I PNG sono più amichevoli e bendisposti, le trappole sono sempre preannunciate chiaramente prima che scattino, e gli errori del giocatore non sono mai puniti severamente. Dai suggerimenti e sii molto generoso con gli oggetti curativi.\n\n=== LA SCHEDA DEL GIOCATORE CON OGGETTI DI PARTENZA ===\n[Cassian Ventoquieto]\nRazza e Classe: Umano Bardo\nEtà: 27 anni\nAllineamento: Caotico Buono\nBackground: Cantastorie Errante. Hai viaggiato attraverso decine di regni raccogliendo leggende.\nPersonalità: Carismatico, spiritoso e affascinante.\nAbilità Distintive: Persuasione, musica magica, conoscenza storica.\nPregio: Riesce a infondere coraggio negli altri.\nDifetto: Parla troppo anche quando dovrebbe tacere.\nObiettivo: Comporre la ballata perfetta.\nSegreto: Sta cercando il proprio padre, un famoso eroe scomparso.\nEquipaggiamento: Spada Corta, Bastone di Quercia, Pozione di Mana,  Liuto, pugnale, mantello elegante.\nStatistiche (Generate coi Dadi):\n- FORZA: 12 (colpire duro, sollevare, spingere)\n- DESTREZZA: 15 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 13 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 14 (resistenza fisica, salute)\nPunti Ferita: 100/100\n\n=== GEOGRAFIA E POSIZIONI (LA MAPPA MULTI-AGENTE) ===\nIl mondo di gioco della campagna è composto esattamente da 4 località interconnesse:\n[CENTRO]: [Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Finn Rattosvelto - Ladro | 🌿 Zona Sicura)\n    [NORD]: [La Città delle Cinque Porte]\nAtmosfera: Le mura di pietra nera riflettono la luce tremolante delle torce, mentre l'odore di legna bruciata, spezie e pioggia impregna le strette vie acciottolate. Campane lontane scandiscono le ore e il brusio del mercato si mescola ai sussurri di antiche leggende.\nPunti di Interesse:\nMercato delle Ombre\nTorre dell'Astrologo Reale\nPericoli e Creature: Ladri della Gilda Nera, mutaforma infiltrati tra i cittadini, gargoyle animati durante la notte e magie proibite nascoste nei sotterranei.\nSpunto Narrativo: Ogni luna nuova uno degli antichi portoni cittadini si apre da solo, ma nessuno ricorda cosa si trovi oltre la soglia. <-- (🧑 NPC residente: Orik Doppio Volto - Oste | ⚔️ Pericolo: Golem di Basalto)\n    [EST]: [Rovine di Arkanor]\nAtmosfera: Colonne spezzate emergono da un mare di erbacce, illuminate da bagliori azzurri che filtrano tra le crepe delle antiche mura. Il silenzio è rotto soltanto dal vento che attraversa archi crollati come un lamento eterno.\nPunti di Interesse:\nSala del Trono Frantumato\nBiblioteca Sepolta\nPericoli e Creature: Cavalieri spettrali, costrutti di pietra ancora attivi, trappole runiche, fantasmi degli antichi maghi e pavimenti instabili.\nSpunto Narrativo: Una corona perduta giace ancora tra le rovine, ma ogni esploratore la descrive in un luogo diverso. <-- (🧑 NPC residente: Varok il Collezionista - Antiquario | 🌿 Zona Sicura)\n    [OVEST]: [Villaggio di Corvoscuro]\nAtmosfera: Casette di legno annerito sorgono ai margini di una vallata avvolta dalla nebbia. I camini fumano costantemente e il gracchiare dei corvi accompagna il lento scorrere del tempo.\nPunti di Interesse:\nLocanda del Corvo Nero\nVecchio Cimitero delle Lanterne\nPericoli e Creature: Licantropi, spettri erranti, corvi demoniaci, stregoni erranti e maledizioni familiari.\nSpunto Narrativo: Ogni famiglia del villaggio nasconde una stanza murata che nessuno osa aprire da generazioni. <-- (🧑 NPC residente: Ysolde Nebbiabianca - Veggente | ⚔️ 👑 BOSS FINALE: Drago delle Tempeste)\n\nATTENZIONE FONDAMENTALE SUL BOSS FINALE E SUI NUMERI:\n1. IL BOSS FINALE DA SCONFIGGERE PER COMPLETARE IL GIOCO È: **Drago delle Tempeste**.\n2. Nella mappa ci sono ESATTAMENTE 4 località/città, 4 NPC e 2 Nemici/Mostri.\n\n=== PROGRESSIONE LINEARE OBBLIGATORIA ===\nZone disponibili: CENTRO, NORD, EST, OVEST\nNPC disponibili: Finn Rattosvelto, Orik Doppio Volto, Varok il Collezionista, Ysolde Nebbiabianca\nNemici disponibili: Drago delle Tempeste, Golem di Basalto\n\nDEVI generare una sequenza di TAPPE OBBLIGATORIE (da 3 a 4 tappe) che il giocatore deve completare in ordine per raggiungere il Boss Finale.\n\n=== REGOLE SUI DADI, AZIONI E GIOCO DI RUOLO ===\n- Un tiro di 1 è un Fallimento Critico (disastroso ma narrativamente interessante).\n- Un tiro di 20 è un Successo Critico (spettacolare ed eroico).\n- Tiri da 2 a 10 tendono a fallire o riuscire con costo, da 11 a 19 tendono ad avere successo.\n\n=== STRUTTURA DELLA RISPOSTA CHE DEVI SCRIVERE ORA ===\nDevi dividere obbligatoriamente la tua risposta iniziale in TRE sezioni usando questi tag esatti:\n\n[TAPPE_STORIA]\nGenera una lista numerata di tappe obbligatorie della storia. Ogni tappa deve contenere:\n- Il numero della tappa\n- La zona dove si svolge (usando il tag della mappa, es. CENTRO, NORD, EST...)\n- L'obiettivo da completare\n- Il nome dell'NPC o nemico coinvolto\nFormato ESATTO per ogni riga: \"N. [ZONA] Descrizione dell'obiettivo (coinvolge: NomePersonaggio)\"\nL'ultima tappa DEVE essere lo scontro con il Boss Finale Drago delle Tempeste.\n\n[PERGAMENA]\n- Paragrafo 1 (Il Mondo e la Minaccia): Introduci l'Ambientazione [CENTRO] e la minaccia suprema di **Drago delle Tempeste**.\n- Paragrafo 2 (Il Protagonista e il bottino): Menziona il giocatore, la sua classe e gli oggetti speciali.\n\n[AZIONE_INIZIALE]\n- Scrivi 2-3 righe molto dirette e incalzanti in cui metti il giocatore di fronte a un'azione o a un bivio immediato.\n"
+    },
+    {
+      "role": "assistant",
+      "content": "Mi spiace, ma per poter creare il prologo e l'azione iniziale devo conoscere i dettagli della mappa di gioco (luoghi, personaggi, oggetti, ecc.) indicati nella traccia. Potresti fornirmi la mappa o gli elementi chiave su cui basare la narrazione? In questo modo potrò rispettare fedelmente le istruzioni di formato e non introdurre elementi non presenti.\n\nL'aria attorno a te freme. Cosa decidi di fare per iniziare la tua avventura?"
+    }
+  ],
+  "diario": {
+    "👑 Boss Finale e Nemici (Bestiario)": [
+      "[Drago delle Tempeste]\n👑 BOSS FINALE E OBIETTIVO SUPREMO DELLA CAMPAGNA 👑\nPer completare e vincere definitivamente il gioco, devi raggiungere la sua tana e sconfiggere questo avversario mortale in combattimento!\n\nDescrizione e Pericolosità: Un gigantesco drago dalle scaglie blu acciaio attraversate da scariche elettriche. Il battito delle sue ali scatena venti devastanti e fulmini che inceneriscono interi gruppi di avventurieri.\nComportamento: Difende il proprio territorio dall'alto, colpendo con fulmini prima di piombare sulle prede.\nPunto Debole: Durante il volo accumula enormi quantità di energia elettrica; costringerlo ad atterrare lo rende molto meno pericoloso.\nPossibile Bottino (Loot): Scaglie draconiche, artigli, cuore del fulmine, tesoro accumulato nel covo.",
+      "[Golem di Basalto]\nDescrizione e Pericolosità: Un colosso di pietra nera attraversato da vene incandescenti. Ogni suo colpo è in grado di frantumare muri e armature.\nComportamento: Difende instancabilmente rovine, templi o tesori e non si ferma finché l'intruso non viene eliminato.\nPunto Debole: Le rune incise sulla schiena alimentano la sua magia e possono essere danneggiate.\nPossibile Bottino (Loot): Nucleo elementale, frammenti runici, minerali rari."
+    ],
+    "📜 Personaggi Incontrati (NPC)": [
+      "[Finn Rattosvelto] - Ladro\nAspetto e Atteggiamento: Un giovane agile dai capelli arruffati e dal sorriso sfacciato, con decine di grimaldelli nascosti tra gli abiti. Non resta mai fermo e tamburella continuamente le dita.\nMotivazione/Segreto: Ha rubato un anello apparentemente insignificante che appartiene a un potente signore oscuro.\nUtilità per il Giocatore: Scassina serrature, disinnesca trappole e recupera oggetti difficili da ottenere.",
+      "[Orik Doppio Volto] - Oste\nAspetto e Atteggiamento: Un uomo corpulento dalla barba grigia e dall'aria bonaria che accoglie tutti con una risata fragorosa. Dietro il bancone ascolta ogni conversazione senza mai sembrare interessato.\nMotivazione/Segreto: Gestisce una rete segreta di messaggeri e contrabbandieri che opera sotto la sua locanda. Protegge una persona ricercata nascosta nelle cantine.\nUtilità per il Giocatore: Offre alloggio, raccoglie informazioni provenienti da tutto il regno e può mettere in contatto con individui difficili da trovare.",
+      "[Varok il Collezionista] - Antiquario\nAspetto e Atteggiamento: Elegante e impeccabile, indossa guanti di velluto per non toccare direttamente gli oggetti antichi. Il suo negozio è stipato di reliquie provenienti da ogni angolo del regno.\nMotivazione/Segreto: Colleziona manufatti appartenuti ai Re Stregoni nel tentativo di ricostruire la loro storia... e il loro potere.\nUtilità per il Giocatore: Acquista tesori, valuta reperti e fornisce informazioni sulla loro origine.",
+      "[Ysolde Nebbiabianca] - Veggente\nAspetto e Atteggiamento: Una donna cieca dagli occhi lattiginosi che cammina senza bastone come se vedesse oltre il mondo materiale. Una lieve nebbia sembra seguirla ovunque.\nMotivazione/Segreto: Le sue visioni stanno diventando sempre più oscure e mostrano un volto che riconosce come il proprio, ma molto più giovane.\nUtilità per il Giocatore: Offre profezie, interpreta sogni, individua oggetti perduti e suggerisce possibili conseguenze delle decisioni."
+    ],
+    "🗺️ Luoghi della Mappa": [
+      "[Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità.",
+      "[La Città delle Cinque Porte]\nAtmosfera: Le mura di pietra nera riflettono la luce tremolante delle torce, mentre l'odore di legna bruciata, spezie e pioggia impregna le strette vie acciottolate. Campane lontane scandiscono le ore e il brusio del mercato si mescola ai sussurri di antiche leggende.\nPunti di Interesse:\nMercato delle Ombre\nTorre dell'Astrologo Reale\nPericoli e Creature: Ladri della Gilda Nera, mutaforma infiltrati tra i cittadini, gargoyle animati durante la notte e magie proibite nascoste nei sotterranei.\nSpunto Narrativo: Ogni luna nuova uno degli antichi portoni cittadini si apre da solo, ma nessuno ricorda cosa si trovi oltre la soglia.",
+      "[Rovine di Arkanor]\nAtmosfera: Colonne spezzate emergono da un mare di erbacce, illuminate da bagliori azzurri che filtrano tra le crepe delle antiche mura. Il silenzio è rotto soltanto dal vento che attraversa archi crollati come un lamento eterno.\nPunti di Interesse:\nSala del Trono Frantumato\nBiblioteca Sepolta\nPericoli e Creature: Cavalieri spettrali, costrutti di pietra ancora attivi, trappole runiche, fantasmi degli antichi maghi e pavimenti instabili.\nSpunto Narrativo: Una corona perduta giace ancora tra le rovine, ma ogni esploratore la descrive in un luogo diverso.",
+      "[Villaggio di Corvoscuro]\nAtmosfera: Casette di legno annerito sorgono ai margini di una vallata avvolta dalla nebbia. I camini fumano costantemente e il gracchiare dei corvi accompagna il lento scorrere del tempo.\nPunti di Interesse:\nLocanda del Corvo Nero\nVecchio Cimitero delle Lanterne\nPericoli e Creature: Licantropi, spettri erranti, corvi demoniaci, stregoni erranti e maledizioni familiari.\nSpunto Narrativo: Ogni famiglia del villaggio nasconde una stanza murata che nessuno osa aprire da generazioni."
+    ],
+    "🎒 Il Protagonista e Oggetti (Personaggio)": [
+      "[Il Protagonista e Inventario]\n[Cassian Ventoquieto]\nRazza e Classe: Umano Bardo\nEtà: 27 anni\nAllineamento: Caotico Buono\nBackground: Cantastorie Errante. Hai viaggiato attraverso decine di regni raccogliendo leggende.\nPersonalità: Carismatico, spiritoso e affascinante.\nAbilità Distintive: Persuasione, musica magica, conoscenza storica.\nPregio: Riesce a infondere coraggio negli altri.\nDifetto: Parla troppo anche quando dovrebbe tacere.\nObiettivo: Comporre la ballata perfetta.\nSegreto: Sta cercando il proprio padre, un famoso eroe scomparso.\nEquipaggiamento: Spada Corta, Bastone di Quercia, Pozione di Mana,  Liuto, pugnale, mantello elegante.\nStatistiche (Generate coi Dadi):\n- FORZA: 12 (colpire duro, sollevare, spingere)\n- DESTREZZA: 15 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 13 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 14 (resistenza fisica, salute)\nPunti Ferita: 100/100",
+      "[Spada Corta]\nTipo: Arma da Mischia\nDescrizione: Una lama bilanciata e maneggevole, forgiata per la velocità più che per la forza bruta. La sua impugnatura di cuoio è consumata da innumerevoli battaglie.\nEffetto Ludico: Arma da mischia versatile, affidabile in quasi ogni scontro ravvicinato.",
+      "[Bastone di Quercia]\nTipo: Arma Magica\nDescrizione: Un semplice bastone da viandante, ricavato da una quercia secolare. Chi sa ascoltarlo giura di sentirvi ancora il respiro dell'albero da cui proviene.\nEffetto Ludico: Arma magica leggera, adatta a incantatori che privilegiano equilibrio e discrezione.",
+      "[Pozione di Mana]\nTipo: Oggetto Curativo\nDescrizione: Un liquido azzurro e frizzante che scalda la gola e rischiara la mente, restituendo lucidità a chi lo beve nel pieno di uno scontro.\nEffetto Ludico: Ripristina una piccola quantità di Punti Ferita, utile come rimedio rapido a basso costo."
+    ],
+    "🎯 Percorso e Tappe Obbligatorie": [
+      "[Tappa 1: CENTRO - Finn Rattosvelto - Ladro]\n📍 **Luogo / Zona:** Foresta di Sylvaris (CENTRO)\n👤 NPC Alleato/Informatore: **Finn Rattosvelto - Ladro**\n📖 **Punto della Narrazione:** Parla con Finn Rattosvelto - Ladro a Foresta di Sylvaris\n⚡ **Stato Tappa:** ⏳ In Corso / Obiettivo Attuale"
+    ]
+  },
+  "personaggio": "[Cassian Ventoquieto]\nRazza e Classe: Umano Bardo\nEtà: 27 anni\nAllineamento: Caotico Buono\nBackground: Cantastorie Errante. Hai viaggiato attraverso decine di regni raccogliendo leggende.\nPersonalità: Carismatico, spiritoso e affascinante.\nAbilità Distintive: Persuasione, musica magica, conoscenza storica.\nPregio: Riesce a infondere coraggio negli altri.\nDifetto: Parla troppo anche quando dovrebbe tacere.\nObiettivo: Comporre la ballata perfetta.\nSegreto: Sta cercando il proprio padre, un famoso eroe scomparso.\nEquipaggiamento: Spada Corta, Bastone di Quercia, Pozione di Mana,  Liuto, pugnale, mantello elegante.\nStatistiche (Generate coi Dadi):\n- FORZA: 12 (colpire duro, sollevare, spingere)\n- DESTREZZA: 15 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 13 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 14 (resistenza fisica, salute)\nPunti Ferita: 100/100",
+  "mappa": "[CENTRO]: [Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Finn Rattosvelto - Ladro | 🌿 Zona Sicura)\n    [NORD]: [La Città delle Cinque Porte]\nAtmosfera: Le mura di pietra nera riflettono la luce tremolante delle torce, mentre l'odore di legna bruciata, spezie e pioggia impregna le strette vie acciottolate. Campane lontane scandiscono le ore e il brusio del mercato si mescola ai sussurri di antiche leggende.\nPunti di Interesse:\nMercato delle Ombre\nTorre dell'Astrologo Reale\nPericoli e Creature: Ladri della Gilda Nera, mutaforma infiltrati tra i cittadini, gargoyle animati durante la notte e magie proibite nascoste nei sotterranei.\nSpunto Narrativo: Ogni luna nuova uno degli antichi portoni cittadini si apre da solo, ma nessuno ricorda cosa si trovi oltre la soglia. <-- (🧑 NPC residente: Orik Doppio Volto - Oste | ⚔️ Pericolo: Golem di Basalto)\n    [EST]: [Rovine di Arkanor]\nAtmosfera: Colonne spezzate emergono da un mare di erbacce, illuminate da bagliori azzurri che filtrano tra le crepe delle antiche mura. Il silenzio è rotto soltanto dal vento che attraversa archi crollati come un lamento eterno.\nPunti di Interesse:\nSala del Trono Frantumato\nBiblioteca Sepolta\nPericoli e Creature: Cavalieri spettrali, costrutti di pietra ancora attivi, trappole runiche, fantasmi degli antichi maghi e pavimenti instabili.\nSpunto Narrativo: Una corona perduta giace ancora tra le rovine, ma ogni esploratore la descrive in un luogo diverso. <-- (🧑 NPC residente: Varok il Collezionista - Antiquario | 🌿 Zona Sicura)\n    [OVEST]: [Villaggio di Corvoscuro]\nAtmosfera: Casette di legno annerito sorgono ai margini di una vallata avvolta dalla nebbia. I camini fumano costantemente e il gracchiare dei corvi accompagna il lento scorrere del tempo.\nPunti di Interesse:\nLocanda del Corvo Nero\nVecchio Cimitero delle Lanterne\nPericoli e Creature: Licantropi, spettri erranti, corvi demoniaci, stregoni erranti e maledizioni familiari.\nSpunto Narrativo: Ogni famiglia del villaggio nasconde una stanza murata che nessuno osa aprire da generazioni. <-- (🧑 NPC residente: Ysolde Nebbiabianca - Veggente | ⚔️ 👑 BOSS FINALE: Drago delle Tempeste)",
+  "tema": "dark-fantasy",
+  "difficolta": "easy",
+  "hp": 100,
+  "combat": {
+    "active": false
+  },
+  "posizione_attuale": {
+    "zona_tag": "CENTRO",
+    "nome_luogo": ": [Foresta di Sylvaris]",
+    "is_zona_sicura": false,
+    "nemico_zona": null
+  },
+  "nemici_sconfitti": [],
+  "progressione": [
+    "1. [CENTRO] Parla con Finn Rattosvelto - Ladro a Foresta di Sylvaris (coinvolge: Finn Rattosvelto - Ladro)",
+    "2. [NORD] Incontra e collabora con Orik Doppio Volto - Oste a La Città delle Cinque Porte (coinvolge: Orik Doppio Volto - Oste)",
+    "3. [NORD] Affronta e sconfiggi Golem di Basalto a La Città delle Cinque Porte (coinvolge: Golem di Basalto)",
+    "4. [EST] Incontra e collabora con Varok il Collezionista - Antiquario a Rovine di Arkanor (coinvolge: Varok il Collezionista - Antiquario)",
+    "5. [OVEST] Raggiungi Villaggio di Corvoscuro e consulta Ysolde Nebbiabianca - Veggente (coinvolge: Ysolde Nebbiabianca - Veggente)",
+    "6. [OVEST] Sconfiggi il Boss Finale Drago delle Tempeste a Villaggio di Corvoscuro (coinvolge: Drago delle Tempeste)"
+  ],
+  "tappe_strutturate": [
+    {
+      "id": 1,
+      "zona_tag": "CENTRO",
+      "nome_luogo": "Foresta di Sylvaris",
+      "personaggio": "Finn Rattosvelto - Ladro",
+      "obiettivo": "Parla con Finn Rattosvelto - Ladro a Foresta di Sylvaris",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 2,
+      "zona_tag": "NORD",
+      "nome_luogo": "La Città delle Cinque Porte",
+      "personaggio": "Orik Doppio Volto - Oste",
+      "obiettivo": "Incontra e collabora con Orik Doppio Volto - Oste a La Città delle Cinque Porte",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 3,
+      "zona_tag": "NORD",
+      "nome_luogo": "La Città delle Cinque Porte",
+      "personaggio": "Golem di Basalto",
+      "obiettivo": "Affronta e sconfiggi Golem di Basalto a La Città delle Cinque Porte",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "combattimento"
+    },
+    {
+      "id": 4,
+      "zona_tag": "EST",
+      "nome_luogo": "Rovine di Arkanor",
+      "personaggio": "Varok il Collezionista - Antiquario",
+      "obiettivo": "Incontra e collabora con Varok il Collezionista - Antiquario a Rovine di Arkanor",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 5,
+      "zona_tag": "OVEST",
+      "nome_luogo": "Villaggio di Corvoscuro",
+      "personaggio": "Ysolde Nebbiabianca - Veggente",
+      "obiettivo": "Raggiungi Villaggio di Corvoscuro e consulta Ysolde Nebbiabianca - Veggente",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 6,
+      "zona_tag": "OVEST",
+      "nome_luogo": "Villaggio di Corvoscuro",
+      "personaggio": "Drago delle Tempeste",
+      "obiettivo": "Sconfiggi il Boss Finale Drago delle Tempeste a Villaggio di Corvoscuro",
+      "completato": false,
+      "is_boss": true,
+      "tipo": "boss"
+    }
+  ],
+  "tappa_attiva_idx": 0
+}

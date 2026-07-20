@@ -1,0 +1,133 @@
+{
+  "history": [
+    {
+      "role": "system",
+      "content": "Agisci come un Dungeon Master esperto di giochi di ruolo testuali e narrazione collaborativa.\n\n=== AMBIENTAZIONE E TONO (DARK-FANTASY) ===\nDark Fantasy: regni corrotti dall'oscurità, magia proibita, atmosfera cupa e minacciosa. I colori dominanti sono il nero, il porpora e il rosso sangue.\n\n=== LIVELLO DI DIFFICOLTÀ (EASY) ===\nNovizio: Fai da 'guida benevola'. I PNG sono più amichevoli e bendisposti, le trappole sono sempre preannunciate chiaramente prima che scattino, e gli errori del giocatore non sono mai puniti severamente. Dai suggerimenti e sii molto generoso con gli oggetti curativi.\n\n=== LA SCHEDA DEL GIOCATORE CON OGGETTI DI PARTENZA ===\n[Varek il Corvo]\nRazza e Classe: Tiefling Stregone\nEtà: 35 anni\nAllineamento: Neutrale\nBackground: Figlio della Maledizione. La tua magia deriva da un antico patto stipulato dai tuoi antenati.\nPersonalità: Freddo, enigmatico e calcolatore.\nAbilità Distintive: Magia oscura, illusioni, maledizioni.\nPregio: Mantiene sempre il controllo.\nDifetto: Fatica a provare empatia.\nObiettivo: Spezzare il patto che grava sulla sua stirpe.\nSegreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.\nEquipaggiamento: Arco Lungo, Mantello Scuro, Martello da Guerra,  Bastone d'ossidiana, tomo maledetto, anello runico, amuleto demoniaco.\nStatistiche (Generate coi Dadi):\n- FORZA: 15 (colpire duro, sollevare, spingere)\n- DESTREZZA: 6 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 18 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 8 (resistenza fisica, salute)\nPunti Ferita: 100/100\n\n=== GEOGRAFIA E POSIZIONI (LA MAPPA MULTI-AGENTE) ===\nIl mondo di gioco della campagna è composto esattamente da 4 località interconnesse:\n[CENTRO]: [Abisso di Kar-Dum]\nAtmosfera: Gallerie immense sprofondano nell'oscurità, illuminate da vene di cristalli violacei che pulsano come cuori viventi. L'odore acre di zolfo e pietra umida accompagna il costante gocciolare dell'acqua.\nPunti di Interesse:\nMiniera dei Cristalli Viventi\nLago Nero Sotterraneo\nPericoli e Creature: Troll delle caverne, vermi colossali, pipistrelli vampirici, melme corrosive e improvvisi crolli della roccia.\nSpunto Narrativo: Nelle profondità risuona il battito di qualcosa di immenso che nessun minatore ha mai visto, ma tutti hanno sentito. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Varok il Collezionista - Antiquario | 🌿 Zona Sicura)\n    [NORD]: [Monastero di Rocca Silente]\nAtmosfera: Arroccato sulle montagne, il monastero è avvolto da una quiete quasi irreale. Il vento fa vibrare le campane di bronzo e l'aria profuma di pergamena antica, cera e neve.\nPunti di Interesse:\nArchivio delle Mille Pergamene\nGiardino delle Statue Vive\nPericoli e Creature: Monaci corrotti dalla magia, spiriti guardiani, gargoyle dormienti e trappole sacre.\nSpunto Narrativo: I monaci custodiscono un libro che cambia contenuto ogni alba, predicendo eventi futuri con inquietante precisione. <-- (🧑 NPC residente: Dorian Pietragrigia - Cacciatore di Taglie | ⚔️ Pericolo: Falena del Sogno)\n    [EST]: [Deserto di Vhar-Kesh]\nAtmosfera: Dune dorate si estendono fino all'orizzonte, illuminate da un sole impietoso durante il giorno e da un cielo colmo di stelle durante la notte. Il vento trasporta granelli di sabbia e un lieve odore di incenso proveniente da antiche rovine sepolte.\nPunti di Interesse:\nCittà Sepolta di Ash-Khar\nOasi delle Lune Gemelle\nPericoli e Creature: Scorpioni giganti, mummie risvegliate, serpenti di sabbia, tempeste che cancellano ogni traccia e miraggi incantati.\nSpunto Narrativo: Un'intera carovana scompare nello stesso punto del deserto ogni anno, lasciando dietro di sé solo impronte che conducono nel sottosuolo. <-- (🧑 NPC residente: Caelis Ventoquieto - Bardo | 🌿 Zona Sicura)\n    [OVEST]: [Cattedrale delle Stelle Cadute]\nAtmosfera: Una maestosa cattedrale in rovina giace sotto un cielo sempre crepuscolare. Frammenti di meteoriti brillano tra le navate distrutte e l'aria vibra di una magia antichissima.\nPunti di Interesse:\nAltare Celeste\nCripta degli Astronomi\nPericoli e Creature: Angeli decaduti, spiriti astrali, costrutti di cristallo, anomalie gravitazionali e magie instabili.\nSpunto Narrativo: Ogni stella cadente che colpisce la cattedrale risveglia per una notte un antico custode disposto a rispondere a una sola domanda. <-- (🧑 NPC residente: Aldren Corvoscuro - Cavaliere Errante | ⚔️ 👑 BOSS FINALE: Drago delle Tempeste)\n\nATTENZIONE FONDAMENTALE SUL BOSS FINALE E SUI NUMERI:\n1. IL BOSS FINALE DA SCONFIGGERE PER COMPLETARE IL GIOCO È: **Drago delle Tempeste**.\n2. Nella mappa ci sono ESATTAMENTE 4 località/città, 4 NPC e 2 Nemici/Mostri.\n\n=== PROGRESSIONE LINEARE OBBLIGATORIA ===\nZone disponibili: CENTRO, NORD, EST, OVEST\nNPC disponibili: Varok il Collezionista, Dorian Pietragrigia, Caelis Ventoquieto, Aldren Corvoscuro\nNemici disponibili: Drago delle Tempeste, Falena del Sogno\n\nDEVI generare una sequenza di TAPPE OBBLIGATORIE (da 3 a 4 tappe) che il giocatore deve completare in ordine per raggiungere il Boss Finale.\n\n=== REGOLE SUI DADI, AZIONI E GIOCO DI RUOLO ===\n- Un tiro di 1 è un Fallimento Critico (disastroso ma narrativamente interessante).\n- Un tiro di 20 è un Successo Critico (spettacolare ed eroico).\n- Tiri da 2 a 10 tendono a fallire o riuscire con costo, da 11 a 19 tendono ad avere successo.\n\n=== STRUTTURA DELLA RISPOSTA CHE DEVI SCRIVERE ORA ===\nDevi dividere obbligatoriamente la tua risposta iniziale in TRE sezioni usando questi tag esatti:\n\n[TAPPE_STORIA]\nGenera una lista numerata di tappe obbligatorie della storia. Ogni tappa deve contenere:\n- Il numero della tappa\n- La zona dove si svolge (usando il tag della mappa, es. CENTRO, NORD, EST...)\n- L'obiettivo da completare\n- Il nome dell'NPC o nemico coinvolto\nFormato ESATTO per ogni riga: \"N. [ZONA] Descrizione dell'obiettivo (coinvolge: NomePersonaggio)\"\nL'ultima tappa DEVE essere lo scontro con il Boss Finale Drago delle Tempeste.\n\n[PERGAMENA]\n- Paragrafo 1 (Il Mondo e la Minaccia): Introduci l'Ambientazione [CENTRO] e la minaccia suprema di **Drago delle Tempeste**.\n- Paragrafo 2 (Il Protagonista e il bottino): Menziona il giocatore, la sua classe e gli oggetti speciali.\n\n[AZIONE_INIZIALE]\n- Scrivi 2-3 righe molto dirette e incalzanti in cui metti il giocatore di fronte a un'azione o a un bivio immediato.\n"
+    },
+    {
+      "role": "assistant",
+      "content": "Nel cuore dell’Abisso di Kar‑Dum, le gallerie infinite si ergono come vene pulsanti di un corpo sotterraneo, illuminate da cristalli violacei che battono al ritmo di un’oscurità viva. Un’antica minaccia si agita nelle tenebre: il Drago delle Tempeste, una bestia di vento furioso e fulmini incatenati, che si risveglia quando le stelle cadono, pronto a spazzare via ogni speranza con una furia che riecheggia nei recessi più profondi del mondo.\n\nTu sei Varek il Corvo, un tiefling stregone dal sangue maledetto, portatore di un bastone d'ossidiana, un tomo maledetto che sussurra segreti proibiti, un amuleto demoniaco e un anello runico. Il tuo cammino è avvolto da ombre, ma il tuo mantello scuro e il martello da guerra ti ricordano che il potere per spezzare il patto familiare è già nelle tue mani—se solo saprai dove cercarlo.\n\nLe vene di cristallo pulsano più forte, e una voce roca riecheggia dal buio: “Chi cerca la chiave, deve affrontare il guardiano!” Davanti a te, la figura di Varok il Collezionista emerge dall’ombra, stringendo una chiave avvolta da un alone violetto. Decidi in un istante: afferrare la chiave o indagare il misterioso rumore che proviene dal profondo della miniera."
+    },
+    {
+      "role": "user",
+      "content": "Parla con Varok il Collezionista\n[Tiro d20 del sistema per questa azione: 9]"
+    },
+    {
+      "role": "assistant",
+      "content": "[TAPPE_STORIA]\n1. [CENTRO] Abisso di Kar-Dum: Raccogliere informazioni su un antico patto maledetto (coinvolge: Varok il Collezionista)\n2. [NORD] Monastero di Rocca Silente: Decifrare un manoscritto proibito (coinvolge: Dorian Pietragrigia)\n3. [EST] Deserto di Vhar-Kesh: Trovare un artefatto perduto (coinvolge: Caelis Ventoquieto)\n4. [OVEST] Cattedrale delle Stelle Cadute: Sconfiggere il Drago delle Tempeste (coinvolge: Aldren Corvoscuro)\n\n[PERGAMENA]\nIl mondo di Tenebre è un luogo di ombre e magie proibite, dove il Drago delle Tempeste minaccia di spazzare via ogni speranza. Tu, Varek il Corvo, tiefling stregone, sei alla ricerca di una chiave per spezzare il patto maledetto che grava sulla tua stirpe.\n\n[AZIONE_INIZIALE]\nParlando con Varok il Collezionista, la sua espressione si fa pensierosa, \"Un patto maledetto, dici? Sì, conosco qualcosa al riguardo. Ma prima, dimostrami il tuo valore.\" Varok ti porge un piccolo, intricato puzzle, \"Risolvilo, e forse ti rivelerò ciò che so.\" Il puzzle sembra semplice, ma un tiro di 9 non è sufficiente per risolverlo con facilità. Il puzzle comincia a sembrare più complesso di quanto sembrasse inizialmente, e Varok osserva con un sorriso enigmatico, \"Forse non sei pronto per le informazioni che cerchi, Varek il Corvo.\" \n\nIl puzzle ti sfida, e il tuo fallimento è palese. Varok si appoggia allo schienale della sedia, incrociando le dita, \"Per risolvere il puzzle, devi capire il linguaggio degli antichi. Non è solo questione di intelligenza, ma anche di conoscenza e discernimento.\" La porta della stanza sembra chiudersi lentamente, come se il tempo stesso stesse scorrendo via. \n\nVarok si alza in piedi, \"Tuttavia, non sono uno che si rifiuta di aiutare. Ti darò un indizio: il segreto del puzzle si trova nel manoscritto proibito custodito nel Monastero di Rocca Silente. Ma attento, il monastero non è un luogo accogliente per gli estranei.\" \n\nLa scelta è tua: puoi cercare di risolvere nuovamente il puzzle, chiedere maggiori informazioni sul manoscritto proibito o lasciare la stanza e dirigerti verso il monastero.\n\n✨ **[TAPPA OBBLIGATORIA COMPLETATA]** Hai superato l'obiettivo di questa fase! Il percorso narrativo si schiude verso la prossima tappa."
+    }
+  ],
+  "diario": {
+    "👑 Boss Finale e Nemici (Bestiario)": [
+      "[Drago delle Tempeste]\n👑 BOSS FINALE E OBIETTIVO SUPREMO DELLA CAMPAGNA 👑\nPer completare e vincere definitivamente il gioco, devi raggiungere la sua tana e sconfiggere questo avversario mortale in combattimento!\n\nDescrizione e Pericolosità: Un gigantesco drago dalle scaglie blu acciaio attraversate da scariche elettriche. Il battito delle sue ali scatena venti devastanti e fulmini che inceneriscono interi gruppi di avventurieri.\nComportamento: Difende il proprio territorio dall'alto, colpendo con fulmini prima di piombare sulle prede.\nPunto Debole: Durante il volo accumula enormi quantità di energia elettrica; costringerlo ad atterrare lo rende molto meno pericoloso.\nPossibile Bottino (Loot): Scaglie draconiche, artigli, cuore del fulmine, tesoro accumulato nel covo.",
+      "[Falena del Sogno]\nDescrizione e Pericolosità: Un enorme insetto dalle ali iridescenti ricoperte di polvere luminosa. Non è aggressiva di per sé, ma il suo pulviscolo induce sonni profondi e incubi mortali.\nComportamento: Vola silenziosamente nelle ore notturne attirata da luci e fuochi da campo.\nPunto Debole: Il vento forte disperde il suo pulviscolo e la rende incapace di difendersi.\nPossibile Bottino (Loot): Polvere onirica, ali luminose, antenne magiche."
+    ],
+    "📜 Personaggi Incontrati (NPC)": [
+      "[Varok il Collezionista] - Antiquario\nAspetto e Atteggiamento: Elegante e impeccabile, indossa guanti di velluto per non toccare direttamente gli oggetti antichi. Il suo negozio è stipato di reliquie provenienti da ogni angolo del regno.\nMotivazione/Segreto: Colleziona manufatti appartenuti ai Re Stregoni nel tentativo di ricostruire la loro storia... e il loro potere.\nUtilità per il Giocatore: Acquista tesori, valuta reperti e fornisce informazioni sulla loro origine.",
+      "[Dorian Pietragrigia] - Cacciatore di Taglie\nAspetto e Atteggiamento: Un uomo massiccio con una barba intrecciata e un mantello di pelliccia logoro. Osserva chiunque come se ne stesse già valutando il prezzo sulla propria lista di taglie.\nMotivazione/Segreto: Vuole catturare il criminale che ha assassinato suo fratello, senza sapere che l'uomo ora vive sotto una nuova identità.\nUtilità per il Giocatore: Offre missioni di caccia, conosce i rifugi dei fuorilegge e può rintracciare persone scomparse.",
+      "[Caelis Ventoquieto] - Bardo\nAspetto e Atteggiamento: Indossa un mantello blu ricamato con note musicali dorate e porta un liuto antico sempre accordato. Ha una parlantina irresistibile e sembra conoscere una storia su chiunque.\nMotivazione/Segreto: Cerca la Ballata Perduta, una melodia capace di piegare la volontà dei draghi.\nUtilità per il Giocatore: Diffonde la reputazione dell'eroe, raccoglie notizie nelle taverne e conosce leggende dimenticate.",
+      "[Aldren Corvoscuro] - Cavaliere Errante\nAspetto e Atteggiamento: Indossa un'armatura consumata dal tempo, ricoperta di graffi profondi e stemmi ormai irriconoscibili. Mantiene sempre una postura impeccabile e parla con calma, come se pesasse ogni parola.\nMotivazione/Segreto: Cerca disperatamente il sovrano a cui un tempo giurò fedeltà, ignaro che questi sia morto da secoli. Porta con sé una reliquia che molti ordini sono disposti a uccidere pur di ottenere.\nUtilità per il Giocatore: Può addestrare nelle tecniche di combattimento, scortare durante missioni pericolose e riconoscere antichi simboli nobiliari."
+    ],
+    "🗺️ Luoghi della Mappa": [
+      "[Abisso di Kar-Dum]\nAtmosfera: Gallerie immense sprofondano nell'oscurità, illuminate da vene di cristalli violacei che pulsano come cuori viventi. L'odore acre di zolfo e pietra umida accompagna il costante gocciolare dell'acqua.\nPunti di Interesse:\nMiniera dei Cristalli Viventi\nLago Nero Sotterraneo\nPericoli e Creature: Troll delle caverne, vermi colossali, pipistrelli vampirici, melme corrosive e improvvisi crolli della roccia.\nSpunto Narrativo: Nelle profondità risuona il battito di qualcosa di immenso che nessun minatore ha mai visto, ma tutti hanno sentito.",
+      "[Monastero di Rocca Silente]\nAtmosfera: Arroccato sulle montagne, il monastero è avvolto da una quiete quasi irreale. Il vento fa vibrare le campane di bronzo e l'aria profuma di pergamena antica, cera e neve.\nPunti di Interesse:\nArchivio delle Mille Pergamene\nGiardino delle Statue Vive\nPericoli e Creature: Monaci corrotti dalla magia, spiriti guardiani, gargoyle dormienti e trappole sacre.\nSpunto Narrativo: I monaci custodiscono un libro che cambia contenuto ogni alba, predicendo eventi futuri con inquietante precisione.",
+      "[Deserto di Vhar-Kesh]\nAtmosfera: Dune dorate si estendono fino all'orizzonte, illuminate da un sole impietoso durante il giorno e da un cielo colmo di stelle durante la notte. Il vento trasporta granelli di sabbia e un lieve odore di incenso proveniente da antiche rovine sepolte.\nPunti di Interesse:\nCittà Sepolta di Ash-Khar\nOasi delle Lune Gemelle\nPericoli e Creature: Scorpioni giganti, mummie risvegliate, serpenti di sabbia, tempeste che cancellano ogni traccia e miraggi incantati.\nSpunto Narrativo: Un'intera carovana scompare nello stesso punto del deserto ogni anno, lasciando dietro di sé solo impronte che conducono nel sottosuolo.",
+      "[Cattedrale delle Stelle Cadute]\nAtmosfera: Una maestosa cattedrale in rovina giace sotto un cielo sempre crepuscolare. Frammenti di meteoriti brillano tra le navate distrutte e l'aria vibra di una magia antichissima.\nPunti di Interesse:\nAltare Celeste\nCripta degli Astronomi\nPericoli e Creature: Angeli decaduti, spiriti astrali, costrutti di cristallo, anomalie gravitazionali e magie instabili.\nSpunto Narrativo: Ogni stella cadente che colpisce la cattedrale risveglia per una notte un antico custode disposto a rispondere a una sola domanda."
+    ],
+    "🎒 Il Protagonista e Oggetti (Personaggio)": [
+      "[Il Protagonista e Inventario]\n[Varek il Corvo]\nRazza e Classe: Tiefling Stregone\nEtà: 35 anni\nAllineamento: Neutrale\nBackground: Figlio della Maledizione. La tua magia deriva da un antico patto stipulato dai tuoi antenati.\nPersonalità: Freddo, enigmatico e calcolatore.\nAbilità Distintive: Magia oscura, illusioni, maledizioni.\nPregio: Mantiene sempre il controllo.\nDifetto: Fatica a provare empatia.\nObiettivo: Spezzare il patto che grava sulla sua stirpe.\nSegreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.\nEquipaggiamento: Arco Lungo, Mantello Scuro, Martello da Guerra,  Bastone d'ossidiana, tomo maledetto, anello runico, amuleto demoniaco.\nStatistiche (Generate coi Dadi):\n- FORZA: 15 (colpire duro, sollevare, spingere)\n- DESTREZZA: 6 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 18 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 8 (resistenza fisica, salute)\nPunti Ferita: 100/100",
+      "[Arco Lungo]\nTipo: Arma da Distanza\nDescrizione: Un arco alto quanto un uomo, intagliato in legno di tasso e rinforzato con nervo animale. Le frecce scoccate fischiano nell'aria con una precisione quasi innaturale.\nEffetto Ludico: Arma da attacco a distanza, particolarmente efficace nelle mani di chi si affida alla Destrezza.",
+      "[Mantello Scuro]\nTipo: Accessorio Difensivo\nDescrizione: Un mantello di stoffa pesante e scura, capace di confondersi con le ombre e attutire il rumore dei passi.\nEffetto Ludico: Accessorio difensivo leggero, utile a chi predilige furtività ed elusione.",
+      "[Martello da Guerra]\nTipo: Arma da Mischia\nDescrizione: Un martello da guerra dalla testa massiccia, capace di sfondare scudi e corazze con la sola forza dell'impatto.\nEffetto Ludico: Arma pesante da mischia, pensata per travolgere le difese nemiche."
+    ],
+    "🎯 Percorso e Tappe Obbligatorie": [
+      "[Tappa 2: NORD - Dorian Pietragrigia - Cacciatore di Taglie]\n📍 **Luogo / Zona:** Monastero di Rocca Silente (NORD)\n👤 NPC Alleato/Informatore: **Dorian Pietragrigia - Cacciatore di Taglie**\n\n🎯 **Cosa devi fare:** Incontra e collabora con Dorian Pietragrigia - Cacciatore di Taglie a Monastero di Rocca Silente\n\n⚡ **Stato:** ⏳ In Corso / Obiettivo Attuale"
+    ]
+  },
+  "personaggio": "[Varek il Corvo]\nRazza e Classe: Tiefling Stregone\nEtà: 35 anni\nAllineamento: Neutrale\nBackground: Figlio della Maledizione. La tua magia deriva da un antico patto stipulato dai tuoi antenati.\nPersonalità: Freddo, enigmatico e calcolatore.\nAbilità Distintive: Magia oscura, illusioni, maledizioni.\nPregio: Mantiene sempre il controllo.\nDifetto: Fatica a provare empatia.\nObiettivo: Spezzare il patto che grava sulla sua stirpe.\nSegreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.\nEquipaggiamento: Arco Lungo, Mantello Scuro, Martello da Guerra,  Bastone d'ossidiana, tomo maledetto, anello runico, amuleto demoniaco.\nStatistiche (Generate coi Dadi):\n- FORZA: 15 (colpire duro, sollevare, spingere)\n- DESTREZZA: 6 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 18 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 8 (resistenza fisica, salute)\nPunti Ferita: 100/100",
+  "mappa": "[CENTRO]: [Abisso di Kar-Dum]\nAtmosfera: Gallerie immense sprofondano nell'oscurità, illuminate da vene di cristalli violacei che pulsano come cuori viventi. L'odore acre di zolfo e pietra umida accompagna il costante gocciolare dell'acqua.\nPunti di Interesse:\nMiniera dei Cristalli Viventi\nLago Nero Sotterraneo\nPericoli e Creature: Troll delle caverne, vermi colossali, pipistrelli vampirici, melme corrosive e improvvisi crolli della roccia.\nSpunto Narrativo: Nelle profondità risuona il battito di qualcosa di immenso che nessun minatore ha mai visto, ma tutti hanno sentito. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Varok il Collezionista - Antiquario | 🌿 Zona Sicura)\n    [NORD]: [Monastero di Rocca Silente]\nAtmosfera: Arroccato sulle montagne, il monastero è avvolto da una quiete quasi irreale. Il vento fa vibrare le campane di bronzo e l'aria profuma di pergamena antica, cera e neve.\nPunti di Interesse:\nArchivio delle Mille Pergamene\nGiardino delle Statue Vive\nPericoli e Creature: Monaci corrotti dalla magia, spiriti guardiani, gargoyle dormienti e trappole sacre.\nSpunto Narrativo: I monaci custodiscono un libro che cambia contenuto ogni alba, predicendo eventi futuri con inquietante precisione. <-- (🧑 NPC residente: Dorian Pietragrigia - Cacciatore di Taglie | ⚔️ Pericolo: Falena del Sogno)\n    [EST]: [Deserto di Vhar-Kesh]\nAtmosfera: Dune dorate si estendono fino all'orizzonte, illuminate da un sole impietoso durante il giorno e da un cielo colmo di stelle durante la notte. Il vento trasporta granelli di sabbia e un lieve odore di incenso proveniente da antiche rovine sepolte.\nPunti di Interesse:\nCittà Sepolta di Ash-Khar\nOasi delle Lune Gemelle\nPericoli e Creature: Scorpioni giganti, mummie risvegliate, serpenti di sabbia, tempeste che cancellano ogni traccia e miraggi incantati.\nSpunto Narrativo: Un'intera carovana scompare nello stesso punto del deserto ogni anno, lasciando dietro di sé solo impronte che conducono nel sottosuolo. <-- (🧑 NPC residente: Caelis Ventoquieto - Bardo | 🌿 Zona Sicura)\n    [OVEST]: [Cattedrale delle Stelle Cadute]\nAtmosfera: Una maestosa cattedrale in rovina giace sotto un cielo sempre crepuscolare. Frammenti di meteoriti brillano tra le navate distrutte e l'aria vibra di una magia antichissima.\nPunti di Interesse:\nAltare Celeste\nCripta degli Astronomi\nPericoli e Creature: Angeli decaduti, spiriti astrali, costrutti di cristallo, anomalie gravitazionali e magie instabili.\nSpunto Narrativo: Ogni stella cadente che colpisce la cattedrale risveglia per una notte un antico custode disposto a rispondere a una sola domanda. <-- (🧑 NPC residente: Aldren Corvoscuro - Cavaliere Errante | ⚔️ 👑 BOSS FINALE: Drago delle Tempeste)",
+  "tema": "dark-fantasy",
+  "difficolta": "easy",
+  "hp": 100,
+  "combat": {
+    "active": false
+  },
+  "posizione_attuale": {
+    "zona_tag": "CENTRO",
+    "nome_luogo": ": [Abisso di Kar",
+    "is_zona_sicura": false,
+    "nemico_zona": null
+  },
+  "nemici_sconfitti": [],
+  "progressione": [
+    "1. [CENTRO] Parla con Varok il Collezionista - Antiquario a Abisso di Kar-Dum (coinvolge: Varok il Collezionista - Antiquario)",
+    "2. [NORD] Incontra e collabora con Dorian Pietragrigia - Cacciatore di Taglie a Monastero di Rocca Silente (coinvolge: Dorian Pietragrigia - Cacciatore di Taglie)",
+    "3. [NORD] Affronta e sconfiggi Falena del Sogno a Monastero di Rocca Silente (coinvolge: Falena del Sogno)",
+    "4. [EST] Incontra e collabora con Caelis Ventoquieto - Bardo a Deserto di Vhar-Kesh (coinvolge: Caelis Ventoquieto - Bardo)",
+    "5. [OVEST] Raggiungi Cattedrale delle Stelle Cadute e consulta Aldren Corvoscuro - Cavaliere Errante (coinvolge: Aldren Corvoscuro - Cavaliere Errante)",
+    "6. [OVEST] Sconfiggi il Boss Finale Drago delle Tempeste a Cattedrale delle Stelle Cadute (coinvolge: Drago delle Tempeste)"
+  ],
+  "tappe_strutturate": [
+    {
+      "id": 1,
+      "zona_tag": "CENTRO",
+      "nome_luogo": "Abisso di Kar-Dum",
+      "personaggio": "Varok il Collezionista - Antiquario",
+      "obiettivo": "Parla con Varok il Collezionista - Antiquario a Abisso di Kar-Dum",
+      "completato": true,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 2,
+      "zona_tag": "NORD",
+      "nome_luogo": "Monastero di Rocca Silente",
+      "personaggio": "Dorian Pietragrigia - Cacciatore di Taglie",
+      "obiettivo": "Incontra e collabora con Dorian Pietragrigia - Cacciatore di Taglie a Monastero di Rocca Silente",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 3,
+      "zona_tag": "NORD",
+      "nome_luogo": "Monastero di Rocca Silente",
+      "personaggio": "Falena del Sogno",
+      "obiettivo": "Affronta e sconfiggi Falena del Sogno a Monastero di Rocca Silente",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "combattimento"
+    },
+    {
+      "id": 4,
+      "zona_tag": "EST",
+      "nome_luogo": "Deserto di Vhar-Kesh",
+      "personaggio": "Caelis Ventoquieto - Bardo",
+      "obiettivo": "Incontra e collabora con Caelis Ventoquieto - Bardo a Deserto di Vhar-Kesh",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 5,
+      "zona_tag": "OVEST",
+      "nome_luogo": "Cattedrale delle Stelle Cadute",
+      "personaggio": "Aldren Corvoscuro - Cavaliere Errante",
+      "obiettivo": "Raggiungi Cattedrale delle Stelle Cadute e consulta Aldren Corvoscuro - Cavaliere Errante",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 6,
+      "zona_tag": "OVEST",
+      "nome_luogo": "Cattedrale delle Stelle Cadute",
+      "personaggio": "Drago delle Tempeste",
+      "obiettivo": "Sconfiggi il Boss Finale Drago delle Tempeste a Cattedrale delle Stelle Cadute",
+      "completato": false,
+      "is_boss": true,
+      "tipo": "boss"
+    }
+  ],
+  "tappa_attiva_idx": 1
+}

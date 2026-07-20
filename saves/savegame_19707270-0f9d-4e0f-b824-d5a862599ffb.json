@@ -1,0 +1,125 @@
+{
+  "history": [
+    {
+      "role": "system",
+      "content": "Agisci come un Dungeon Master esperto di giochi di ruolo testuali e narrazione collaborativa.\n\n=== AMBIENTAZIONE E TONO (DARK-FANTASY) ===\nDark Fantasy: regni corrotti dall'oscurità, magia proibita, atmosfera cupa e minacciosa. I colori dominanti sono il nero, il porpora e il rosso sangue.\n\n=== LIVELLO DI DIFFICOLTÀ (EASY) ===\nNovizio: Fai da 'guida benevola'. I PNG sono più amichevoli e bendisposti, le trappole sono sempre preannunciate chiaramente prima che scattino, e gli errori del giocatore non sono mai puniti severamente. Dai suggerimenti e sii molto generoso con gli oggetti curativi.\n\n=== LA SCHEDA DEL GIOCATORE CON OGGETTI DI PARTENZA ===\n[Seraphine delle Stelle]\nRazza e Classe: Elfa Maga\nEtà: 187 anni\nAllineamento: Neutrale Buono\nBackground: Accademica Esiliata. Un esperimento magico fallito ti ha costretto ad abbandonare l'accademia.\nPersonalità: Curiosa, elegante e assetata di conoscenza.\nAbilità Distintive: Magia elementale, identificazione di reliquie, teletrasporto limitato.\nPregio: Apprende rapidamente qualsiasi disciplina.\nDifetto: La curiosità spesso supera la prudenza.\nObiettivo: Dimostrare la propria innocenza.\nSegreto: Una potente entità vive nascosta nel suo grimorio.\nEquipaggiamento: Scudo Pesante, Martello da Guerra, Kit Medico,  Bastone runico, grimorio, mantello incantato, pozione di mana.\nStatistiche (Generate coi Dadi):\n- FORZA: 5 (colpire duro, sollevare, spingere)\n- DESTREZZA: 16 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 14 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 17 (resistenza fisica, salute)\nPunti Ferita: 100/100\n\n=== GEOGRAFIA E POSIZIONI (LA MAPPA MULTI-AGENTE) ===\nIl mondo di gioco della campagna è composto esattamente da 4 località interconnesse:\n[CENTRO]: [Bosco Cremisi]\nAtmosfera: Gli alberi hanno foglie rosso intenso che cadono lentamente anche in piena estate. L'odore dolciastro dei petali copre quello del sangue secco, mentre un incessante fruscio accompagna ogni passo.\nPunti di Interesse:\nRadura del Cuore Rosso\nMulino Abbandonato\nPericoli e Creature: Cervi corrotti, streghe dei rovi, corvi parlanti, liane viventi e alberi predatori.\nSpunto Narrativo: Chi raccoglie una foglia cremisi sogna sempre lo stesso volto sconosciuto, che sembra chiedere aiuto. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Sorella Miriam - Custode del Santuario | 🌿 Zona Sicura)\n    [NORD]: [Abisso di Kar-Dum]\nAtmosfera: Gallerie immense sprofondano nell'oscurità, illuminate da vene di cristalli violacei che pulsano come cuori viventi. L'odore acre di zolfo e pietra umida accompagna il costante gocciolare dell'acqua.\nPunti di Interesse:\nMiniera dei Cristalli Viventi\nLago Nero Sotterraneo\nPericoli e Creature: Troll delle caverne, vermi colossali, pipistrelli vampirici, melme corrosive e improvvisi crolli della roccia.\nSpunto Narrativo: Nelle profondità risuona il battito di qualcosa di immenso che nessun minatore ha mai visto, ma tutti hanno sentito. <-- (🧑 NPC residente: Caelis Ventoquieto - Bardo | ⚔️ Pericolo: Cervo Spettrale)\n    [EST]: [Isola delle Maree Eterne]\nAtmosfera: Onde turchesi si infrangono contro alte scogliere ricoperte di licheni argentati. Il profumo salmastro del mare si mescola a quello dei pini marittimi, mentre il richiamo dei gabbiani nasconde strani canti provenienti dalle profondità.\nPunti di Interesse:\nFaro delle Maree\nGrotta del Leviatano\nPericoli e Creature: Sirene, kraken minori, pirati maledetti, granchi corazzati e correnti marine incantate.\nSpunto Narrativo: Ogni equinozio emerge un sentiero di pietra sul mare che conduce a un tempio visibile solo per poche ore. <-- (🧑 NPC residente: Marek il Sussurratore - Informatore | 🌿 Zona Sicura)\n    [OVEST]: [Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità. <-- (🧑 NPC residente: Helga Rocciadura - Carovaniera | ⚔️ 👑 BOSS FINALE: Divoratore d'Ombre)\n\nATTENZIONE FONDAMENTALE SUL BOSS FINALE E SUI NUMERI:\n1. IL BOSS FINALE DA SCONFIGGERE PER COMPLETARE IL GIOCO È: **Divoratore d'Ombre**.\n2. Nella mappa ci sono ESATTAMENTE 4 località/città, 4 NPC e 2 Nemici/Mostri.\n\n=== PROGRESSIONE LINEARE OBBLIGATORIA ===\nZone disponibili: CENTRO, NORD, EST, OVEST\nNPC disponibili: Sorella Miriam, Caelis Ventoquieto, Marek il Sussurratore, Helga Rocciadura\nNemici disponibili: Divoratore d'Ombre, Cervo Spettrale\n\nDEVI generare una sequenza di TAPPE OBBLIGATORIE (da 3 a 4 tappe) che il giocatore deve completare in ordine per raggiungere il Boss Finale.\n\n=== REGOLE SUI DADI, AZIONI E GIOCO DI RUOLO ===\n- Un tiro di 1 è un Fallimento Critico (disastroso ma narrativamente interessante).\n- Un tiro di 20 è un Successo Critico (spettacolare ed eroico).\n- Tiri da 2 a 10 tendono a fallire o riuscire con costo, da 11 a 19 tendono ad avere successo.\n\n=== STRUTTURA DELLA RISPOSTA CHE DEVI SCRIVERE ORA ===\nDevi dividere obbligatoriamente la tua risposta iniziale in TRE sezioni usando questi tag esatti:\n\n[TAPPE_STORIA]\nGenera una lista numerata di tappe obbligatorie della storia. Ogni tappa deve contenere:\n- Il numero della tappa\n- La zona dove si svolge (usando il tag della mappa, es. CENTRO, NORD, EST...)\n- L'obiettivo da completare\n- Il nome dell'NPC o nemico coinvolto\nFormato ESATTO per ogni riga: \"N. [ZONA] Descrizione dell'obiettivo (coinvolge: NomePersonaggio)\"\nL'ultima tappa DEVE essere lo scontro con il Boss Finale Divoratore d'Ombre.\n\n[PERGAMENA]\n- Paragrafo 1 (Il Mondo e la Minaccia): Introduci l'Ambientazione [CENTRO] e la minaccia suprema di **Divoratore d'Ombre**.\n- Paragrafo 2 (Il Protagonista e il bottino): Menziona il giocatore, la sua classe e gli oggetti speciali.\n\n[AZIONE_INIZIALE]\n- Scrivi 2-3 righe molto dirette e incalzanti in cui metti il giocatore di fronte a un'azione o a un bivio immediato.\n"
+    },
+    {
+      "role": "assistant",
+      "content": "**SYSTEM PROMPT**  \nYou are the Lore Master, tasked with weaving together the fragmented outputs of the previous agents into a single, coherent narrative framework. Your role is to distill their contributions, preserve the established world‑building details, and present them as a unified backdrop for the adventure that follows. Remain faithful to any locations, factions, and lore already defined; do not introduce new elements that are not present on the supplied map. Write in an immersive, descriptive style that invites the player to step directly into the story.\n\n---\n\n[PERGAMENA]  \nNel crepuscolo di un’era dimenticata, le ombre si allungano sulle pietre antiche di **Luminara**, la città‑culla dei Guardiani della Luce. Le torri di quarzo, un tempo scintillanti, ora riflettono solo un pallido bagliore, segno di una pace fragile minacciata da voci di oscurità che si insinuano nei corridoi più reconditi.  \nLe vie di **Silvaria**, fitta di foreste di betulle argentate, custodiscono il segreto di una vecchia rune incisa su una roccia sacra, promessa di potere a chi saprà decifrarla. Lì, il vento porta sussurri di una leggenda: un artefatto perduto, la **Lama di Alba**, capace di spezzare l’oscurità più profonda.  \n\nNel cuore di **Rocca di Ferro**, una cittadina fortificata sul fianco di una montagna di pietra, gli artigiani lavorano il ferro come se fosse fuoco vivo, forgiando armi che brillano di una luce propria. Tuttavia, la tensione cresce: i mercanti parlano di una flotta di navi nere avvistata oltre il Mare Grigio, pronta a riversare il caos su tutte le terre.  \n\nMentre la luna si alza alta sopra le valli, una figura avvolta in un mantello di velluto scuro si avvicina al portale di pietra di Luminara, pronto a varcare la soglia di un destino che cambierà il corso della storia.  \n[/PERGAMENA]\n\n[AZIONE_INIZIALE]  \nIl tuo personaggio si avvicina al portale di pietra di Luminara, osservando le antiche incisioni che pulsano debolmente al chiaro di luna. Con un respiro profondo, estendi la mano verso il simbolo centrale, pronto a toccare il freddo marmo e a scoprire quale segreto si cela dietro la soglia.  \n[/AZIONE_INIZIALE]"
+    }
+  ],
+  "diario": {
+    "👑 Boss Finale e Nemici (Bestiario)": [
+      "[Divoratore d'Ombre]\n👑 BOSS FINALE E OBIETTIVO SUPREMO DELLA CAMPAGNA 👑\nPer completare e vincere definitivamente il gioco, devi raggiungere la sua tana e sconfiggere questo avversario mortale in combattimento!\n\nDescrizione e Pericolosità: Una creatura informe composta da oscurità liquida, con decine di occhi luminosi che si aprono e chiudono sulla sua superficie. Dove passa, la luce sembra svanire completamente.\nComportamento: Si muove tra le ombre e assorbe lentamente l'energia vitale delle vittime prima di colpire.\nPunto Debole: La luce intensa o gli incantesimi luminosi dissolvono temporaneamente il suo corpo.\nPossibile Bottino (Loot): Essenza d'ombra, cristallo oscuro, residui magici utilizzabili negli incantesimi.",
+      "[Cervo Spettrale]\nDescrizione e Pericolosità: Un maestoso cervo dal corpo traslucido e dalle corna luminose come il chiaro di luna. Normalmente evita il conflitto, ma diventa estremamente aggressivo se il bosco viene profanato.\nComportamento: Appare e scompare tra gli alberi, attirando gli intrusi in luoghi da cui è impossibile uscire.\nPunto Debole: Offerte di acqua pura o il ripristino dell'equilibrio naturale possono placarne l'ira.\nPossibile Bottino (Loot): Corna eteree, essenza spirituale, muschio sacro."
+    ],
+    "📜 Personaggi Incontrati (NPC)": [
+      "[Sorella Miriam] - Custode del Santuario\nAspetto e Atteggiamento: Una donna anziana dai capelli candidi e dal volto segnato dal tempo, sempre circondata dal profumo di erbe medicinali. Accoglie chiunque con gentilezza, ma il suo sorriso svanisce quando si parla del passato.\nMotivazione/Segreto: Protegge un antico sigillo nascosto sotto il santuario, temendo il ritorno di una creatura dimenticata.\nUtilità per il Giocatore: Benedice equipaggiamenti, rimuove maledizioni e offre rifugio sicuro.",
+      "[Caelis Ventoquieto] - Bardo\nAspetto e Atteggiamento: Indossa un mantello blu ricamato con note musicali dorate e porta un liuto antico sempre accordato. Ha una parlantina irresistibile e sembra conoscere una storia su chiunque.\nMotivazione/Segreto: Cerca la Ballata Perduta, una melodia capace di piegare la volontà dei draghi.\nUtilità per il Giocatore: Diffonde la reputazione dell'eroe, raccoglie notizie nelle taverne e conosce leggende dimenticate.",
+      "[Marek il Sussurratore] - Informatore\nAspetto e Atteggiamento: Magro e sempre avvolto in un mantello scuro, compare e scompare tra la folla senza fare rumore. Parla sottovoce e conclude ogni frase con un sorriso enigmatico.\nMotivazione/Segreto: Vende informazioni al miglior offerente, ma sta segretamente raccogliendo prove contro una potente confraternita criminale.\nUtilità per il Giocatore: Rivela pettegolezzi, posizioni di bersagli, passaggi nascosti e missioni secondarie.",
+      "[Helga Rocciadura] - Carovaniera\nAspetto e Atteggiamento: Una donna alta e muscolosa con un mantello impolverato e stivali consumati da migliaia di chilometri. Trasmette sicurezza e affronta ogni imprevisto con sorprendente calma.\nMotivazione/Segreto: Sta cercando una rotta commerciale perduta che conduce a una città considerata soltanto una leggenda.\nUtilità per il Giocatore: Organizza viaggi, vende mappe aggiornate, trasporta merci e conosce le strade più sicure del continente."
+    ],
+    "🗺️ Luoghi della Mappa": [
+      "[Bosco Cremisi]\nAtmosfera: Gli alberi hanno foglie rosso intenso che cadono lentamente anche in piena estate. L'odore dolciastro dei petali copre quello del sangue secco, mentre un incessante fruscio accompagna ogni passo.\nPunti di Interesse:\nRadura del Cuore Rosso\nMulino Abbandonato\nPericoli e Creature: Cervi corrotti, streghe dei rovi, corvi parlanti, liane viventi e alberi predatori.\nSpunto Narrativo: Chi raccoglie una foglia cremisi sogna sempre lo stesso volto sconosciuto, che sembra chiedere aiuto.",
+      "[Abisso di Kar-Dum]\nAtmosfera: Gallerie immense sprofondano nell'oscurità, illuminate da vene di cristalli violacei che pulsano come cuori viventi. L'odore acre di zolfo e pietra umida accompagna il costante gocciolare dell'acqua.\nPunti di Interesse:\nMiniera dei Cristalli Viventi\nLago Nero Sotterraneo\nPericoli e Creature: Troll delle caverne, vermi colossali, pipistrelli vampirici, melme corrosive e improvvisi crolli della roccia.\nSpunto Narrativo: Nelle profondità risuona il battito di qualcosa di immenso che nessun minatore ha mai visto, ma tutti hanno sentito.",
+      "[Isola delle Maree Eterne]\nAtmosfera: Onde turchesi si infrangono contro alte scogliere ricoperte di licheni argentati. Il profumo salmastro del mare si mescola a quello dei pini marittimi, mentre il richiamo dei gabbiani nasconde strani canti provenienti dalle profondità.\nPunti di Interesse:\nFaro delle Maree\nGrotta del Leviatano\nPericoli e Creature: Sirene, kraken minori, pirati maledetti, granchi corazzati e correnti marine incantate.\nSpunto Narrativo: Ogni equinozio emerge un sentiero di pietra sul mare che conduce a un tempio visibile solo per poche ore.",
+      "[Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità."
+    ],
+    "🎒 Il Protagonista e Oggetti (Personaggio)": [
+      "[Il Protagonista e Inventario]\n[Seraphine delle Stelle]\nRazza e Classe: Elfa Maga\nEtà: 187 anni\nAllineamento: Neutrale Buono\nBackground: Accademica Esiliata. Un esperimento magico fallito ti ha costretto ad abbandonare l'accademia.\nPersonalità: Curiosa, elegante e assetata di conoscenza.\nAbilità Distintive: Magia elementale, identificazione di reliquie, teletrasporto limitato.\nPregio: Apprende rapidamente qualsiasi disciplina.\nDifetto: La curiosità spesso supera la prudenza.\nObiettivo: Dimostrare la propria innocenza.\nSegreto: Una potente entità vive nascosta nel suo grimorio.\nEquipaggiamento: Scudo Pesante, Martello da Guerra, Kit Medico,  Bastone runico, grimorio, mantello incantato, pozione di mana.\nStatistiche (Generate coi Dadi):\n- FORZA: 5 (colpire duro, sollevare, spingere)\n- DESTREZZA: 16 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 14 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 17 (resistenza fisica, salute)\nPunti Ferita: 100/100",
+      "[Scudo Pesante]\nTipo: Accessorio Difensivo\nDescrizione: Un grande scudo da torre, pesante e ingombrante, ma capace di fermare quasi ogni colpo diretto verso chi lo regge.\nEffetto Ludico: Oggetto difensivo di alto livello, tra i più efficaci contro gli attacchi nemici.",
+      "[Martello da Guerra]\nTipo: Arma da Mischia\nDescrizione: Un martello da guerra dalla testa massiccia, capace di sfondare scudi e corazze con la sola forza dell'impatto.\nEffetto Ludico: Arma pesante da mischia, pensata per travolgere le difese nemiche.",
+      "[Kit Medico]\nTipo: Oggetto Curativo\nDescrizione: Un rotolo di bende, unguenti e strumenti essenziali per stabilizzare una ferita nel bel mezzo del cammino.\nEffetto Ludico: Cura una quantità moderata di Punti Ferita, riutilizzabile durante l'avventura."
+    ],
+    "🎯 Percorso e Tappe Obbligatorie": [
+      "[Tappa 1: CENTRO - Sorella Miriam - Custode del Santuario]\n📍 **Luogo / Zona:** Bosco Cremisi (CENTRO)\n👤 NPC Alleato/Informatore: **Sorella Miriam - Custode del Santuario**\n📖 **Punto della Narrazione:** Parla con Sorella Miriam - Custode del Santuario a Bosco Cremisi\n⚡ **Stato Tappa:** ⏳ In Corso / Obiettivo Attuale"
+    ]
+  },
+  "personaggio": "[Seraphine delle Stelle]\nRazza e Classe: Elfa Maga\nEtà: 187 anni\nAllineamento: Neutrale Buono\nBackground: Accademica Esiliata. Un esperimento magico fallito ti ha costretto ad abbandonare l'accademia.\nPersonalità: Curiosa, elegante e assetata di conoscenza.\nAbilità Distintive: Magia elementale, identificazione di reliquie, teletrasporto limitato.\nPregio: Apprende rapidamente qualsiasi disciplina.\nDifetto: La curiosità spesso supera la prudenza.\nObiettivo: Dimostrare la propria innocenza.\nSegreto: Una potente entità vive nascosta nel suo grimorio.\nEquipaggiamento: Scudo Pesante, Martello da Guerra, Kit Medico,  Bastone runico, grimorio, mantello incantato, pozione di mana.\nStatistiche (Generate coi Dadi):\n- FORZA: 5 (colpire duro, sollevare, spingere)\n- DESTREZZA: 16 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 14 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 17 (resistenza fisica, salute)\nPunti Ferita: 100/100",
+  "mappa": "[CENTRO]: [Bosco Cremisi]\nAtmosfera: Gli alberi hanno foglie rosso intenso che cadono lentamente anche in piena estate. L'odore dolciastro dei petali copre quello del sangue secco, mentre un incessante fruscio accompagna ogni passo.\nPunti di Interesse:\nRadura del Cuore Rosso\nMulino Abbandonato\nPericoli e Creature: Cervi corrotti, streghe dei rovi, corvi parlanti, liane viventi e alberi predatori.\nSpunto Narrativo: Chi raccoglie una foglia cremisi sogna sempre lo stesso volto sconosciuto, che sembra chiedere aiuto. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Sorella Miriam - Custode del Santuario | 🌿 Zona Sicura)\n    [NORD]: [Abisso di Kar-Dum]\nAtmosfera: Gallerie immense sprofondano nell'oscurità, illuminate da vene di cristalli violacei che pulsano come cuori viventi. L'odore acre di zolfo e pietra umida accompagna il costante gocciolare dell'acqua.\nPunti di Interesse:\nMiniera dei Cristalli Viventi\nLago Nero Sotterraneo\nPericoli e Creature: Troll delle caverne, vermi colossali, pipistrelli vampirici, melme corrosive e improvvisi crolli della roccia.\nSpunto Narrativo: Nelle profondità risuona il battito di qualcosa di immenso che nessun minatore ha mai visto, ma tutti hanno sentito. <-- (🧑 NPC residente: Caelis Ventoquieto - Bardo | ⚔️ Pericolo: Cervo Spettrale)\n    [EST]: [Isola delle Maree Eterne]\nAtmosfera: Onde turchesi si infrangono contro alte scogliere ricoperte di licheni argentati. Il profumo salmastro del mare si mescola a quello dei pini marittimi, mentre il richiamo dei gabbiani nasconde strani canti provenienti dalle profondità.\nPunti di Interesse:\nFaro delle Maree\nGrotta del Leviatano\nPericoli e Creature: Sirene, kraken minori, pirati maledetti, granchi corazzati e correnti marine incantate.\nSpunto Narrativo: Ogni equinozio emerge un sentiero di pietra sul mare che conduce a un tempio visibile solo per poche ore. <-- (🧑 NPC residente: Marek il Sussurratore - Informatore | 🌿 Zona Sicura)\n    [OVEST]: [Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità. <-- (🧑 NPC residente: Helga Rocciadura - Carovaniera | ⚔️ 👑 BOSS FINALE: Divoratore d'Ombre)",
+  "tema": "dark-fantasy",
+  "difficolta": "easy",
+  "hp": 100,
+  "combat": {
+    "active": false
+  },
+  "posizione_attuale": {
+    "zona_tag": "CENTRO",
+    "nome_luogo": ": [Bosco Cremisi]",
+    "is_zona_sicura": false,
+    "nemico_zona": null
+  },
+  "nemici_sconfitti": [],
+  "progressione": [
+    "1. [CENTRO] Parla con Sorella Miriam - Custode del Santuario a Bosco Cremisi (coinvolge: Sorella Miriam - Custode del Santuario)",
+    "2. [NORD] Incontra e collabora con Caelis Ventoquieto - Bardo a Abisso di Kar-Dum (coinvolge: Caelis Ventoquieto - Bardo)",
+    "3. [NORD] Affronta e sconfiggi Cervo Spettrale a Abisso di Kar-Dum (coinvolge: Cervo Spettrale)",
+    "4. [EST] Incontra e collabora con Marek il Sussurratore - Informatore a Isola delle Maree Eterne (coinvolge: Marek il Sussurratore - Informatore)",
+    "5. [OVEST] Raggiungi Foresta di Sylvaris e consulta Helga Rocciadura - Carovaniera (coinvolge: Helga Rocciadura - Carovaniera)",
+    "6. [OVEST] Sconfiggi il Boss Finale Divoratore d'Ombre a Foresta di Sylvaris (coinvolge: Divoratore d'Ombre)"
+  ],
+  "tappe_strutturate": [
+    {
+      "id": 1,
+      "zona_tag": "CENTRO",
+      "nome_luogo": "Bosco Cremisi",
+      "personaggio": "Sorella Miriam - Custode del Santuario",
+      "obiettivo": "Parla con Sorella Miriam - Custode del Santuario a Bosco Cremisi",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 2,
+      "zona_tag": "NORD",
+      "nome_luogo": "Abisso di Kar-Dum",
+      "personaggio": "Caelis Ventoquieto - Bardo",
+      "obiettivo": "Incontra e collabora con Caelis Ventoquieto - Bardo a Abisso di Kar-Dum",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 3,
+      "zona_tag": "NORD",
+      "nome_luogo": "Abisso di Kar-Dum",
+      "personaggio": "Cervo Spettrale",
+      "obiettivo": "Affronta e sconfiggi Cervo Spettrale a Abisso di Kar-Dum",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "combattimento"
+    },
+    {
+      "id": 4,
+      "zona_tag": "EST",
+      "nome_luogo": "Isola delle Maree Eterne",
+      "personaggio": "Marek il Sussurratore - Informatore",
+      "obiettivo": "Incontra e collabora con Marek il Sussurratore - Informatore a Isola delle Maree Eterne",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 5,
+      "zona_tag": "OVEST",
+      "nome_luogo": "Foresta di Sylvaris",
+      "personaggio": "Helga Rocciadura - Carovaniera",
+      "obiettivo": "Raggiungi Foresta di Sylvaris e consulta Helga Rocciadura - Carovaniera",
+      "completato": false,
+      "is_boss": false,
+      "tipo": "npc"
+    },
+    {
+      "id": 6,
+      "zona_tag": "OVEST",
+      "nome_luogo": "Foresta di Sylvaris",
+      "personaggio": "Divoratore d'Ombre",
+      "obiettivo": "Sconfiggi il Boss Finale Divoratore d'Ombre a Foresta di Sylvaris",
+      "completato": false,
+      "is_boss": true,
+      "tipo": "boss"
+    }
+  ],
+  "tappa_attiva_idx": 0
+}

@@ -219,9 +219,9 @@ class LoreMasterAgent:
     def __init__(self):
         self.agent = Agent(
             name="Lore Master Agent",
-            model=OpenAIChat(id=os.environ.get("PREMIUM_MODEL_NAME", "gpt-4o")),
+            model=OpenAIChat(id=os.environ.get("STORY_MODEL_NAME", os.environ.get("MODEL_NAME", "gpt-4o"))),
             instructions=[
-                "Sei il Lore Master. Sintetizza l'output degli agenti precedenti in un system prompt.",
+                "Sei il Lore Master. Il tuo compito è narrare l'inizio dell'avventura.",
                 "Genera il prologo racchiuso nel tag [PERGAMENA] e l'azione iniziale in [AZIONE_INIZIALE].",
                 "Non inventare elementi non presenti nella mappa fornita. Sii immersivo e fedele alle istruzioni di formato."
             ]
@@ -268,7 +268,7 @@ class LoreMasterAgent:
             if m:
                 nomi_zone.append(m.group(1).strip())
         
-        sistema = f"""Agisci come un Dungeon Master esperto di giochi di ruolo testuali e narrazione collaborativa.
+        sistema_gameplay = f"""Agisci come un Dungeon Master esperto di giochi di ruolo testuali e narrazione collaborativa.
 
 === AMBIENTAZIONE E TONO ({tema.upper()}) ===
 {tema_desc}
@@ -292,14 +292,19 @@ Zone disponibili: {', '.join(nomi_zone)}
 NPC disponibili: {', '.join(nomi_npc)}
 Nemici disponibili: {', '.join(nomi_nemici)}
 
-DEVI generare una sequenza di TAPPE OBBLIGATORIE (da 3 a {min(len(nomi_zone), 6)} tappe) che il giocatore deve completare in ordine per raggiungere il Boss Finale.
-
 === REGOLE SUI DADI, AZIONI E GIOCO DI RUOLO ===
 - Un tiro di 1 è un Fallimento Critico (disastroso ma narrativamente interessante).
 - Un tiro di 20 è un Successo Critico (spettacolare ed eroico).
 - Tiri da 2 a 10 tendono a fallire o riuscire con costo, da 11 a 19 tendono ad avere successo.
 
-=== STRUTTURA DELLA RISPOSTA CHE DEVI SCRIVERE ORA ===
+=== REGOLE DI RISPOSTA ===
+Rispondi SEMPRE con pura narrazione immersiva in seconda persona. NON usare MAI tag tecnici, meta-commenti o formattazione speciale nelle risposte. Scrivi solo la storia, le azioni dei personaggi e i dialoghi.
+IMPORTANTE - LUNGHEZZA: Sii completo ma CONCISO e BREVE. Le risposte devono essere di massimo 2-3 brevi paragrafi (circa 100-150 parole totali). Evita descrizioni prolisse o inutili lungaggini; la narrazione deve essere dinamica, incalzante e diretta.
+"""
+
+        # Prompt esteso SOLO per l'agente Agno (fase di creazione iniziale, NON salvato nella chat_history)
+        sistema_agente = sistema_gameplay + f"""
+=== STRUTTURA DELLA RISPOSTA CHE DEVI SCRIVERE ORA (SOLO PER QUESTA GENERAZIONE INIZIALE) ===
 Devi dividere obbligatoriamente la tua risposta iniziale in TRE sezioni usando questi tag esatti:
 
 [TAPPE_STORIA]
@@ -319,11 +324,11 @@ L'ultima tappa DEVE essere lo scontro con il Boss Finale {nome_boss}.
 - Scrivi 2-3 righe molto dirette e incalzanti in cui metti il giocatore di fronte a un'azione o a un bivio immediato.
 """
         
-        chat_history = [{"role": "system", "content": sistema}]
+        chat_history = [{"role": "system", "content": sistema_gameplay}]
         progressione = []
         
         try:
-            response = self.agent.run("Genera la progressione iniziale, il prologo e l'azione basandoti sulle istruzioni e il sistema fornito.")
+            response = self.agent.run(sistema_agente)
             dm_reply = response.content
             
             if "[TAPPE_STORIA]" in dm_reply:
@@ -338,16 +343,28 @@ L'ultima tappa DEVE essere lo scontro con il Boss Finale {nome_boss}.
                         riga = riga.strip()
                         if riga and (riga[0].isdigit() or riga.startswith('-')):
                             progressione.append(riga)
-                    dm_reply = dm_reply.replace(parti_tappe[1].split("[PERGAMENA]")[0] if "[PERGAMENA]" in parti_tappe[1] else "", "")
-                    dm_reply = dm_reply.replace("[TAPPE_STORIA]", "")
             
-            if "[AZIONE_INIZIALE]" in dm_reply:
+            if "[PERGAMENA]" in dm_reply and "[AZIONE_INIZIALE]" in dm_reply:
+                testo_pergamena = dm_reply.split("[PERGAMENA]")[1].split("[AZIONE_INIZIALE]")[0].strip()
+                testo_azione = dm_reply.split("[AZIONE_INIZIALE]")[1].strip()
+                # Puliamo la risposta per la history
+                dm_reply = f"{testo_pergamena}\n\n{testo_azione}"
+            elif "[AZIONE_INIZIALE]" in dm_reply:
                 parti = dm_reply.split("[AZIONE_INIZIALE]")
-                testo_pergamena = parti[0].replace("[PERGAMENA]", "").replace("[TAPPE_STORIA]", "").strip()
+                testo_pergamena = parti[0].replace("[PERGAMENA]", "").strip()
+                # Rimuovi eventuale spazzatura prima del prologo (come il prompt di sistema ripetuto o le tappe)
+                if "[TAPPE_STORIA]" in testo_pergamena:
+                    testo_pergamena = testo_pergamena.split("[TAPPE_STORIA]")[-1].strip()
+                # Rimuovi l'elenco delle tappe puntate/numerate rimaste in cima
+                linee_pergamena = [line for line in testo_pergamena.split('\n') if not (line.strip().startswith(('1.', '2.', '3.', '4.', '5.', '- ')))]
+                testo_pergamena = '\n'.join(linee_pergamena).strip()
+                
                 testo_azione = parti[1].strip()
+                dm_reply = f"{testo_pergamena}\n\n{testo_azione}"
             else:
                 testo_pergamena = dm_reply.replace("[PERGAMENA]", "").replace("[TAPPE_STORIA]", "").strip()
                 testo_azione = "L'aria attorno a te freme. Cosa decidi di fare per iniziare la tua avventura?"
+                dm_reply = f"{testo_pergamena}\n\n{testo_azione}"
                 
         except Exception as e:
             print(f"⚠️ Errore Agno LoreMaster: {e}. Attivazione fallback neuro-simbolico...")
