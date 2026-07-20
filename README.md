@@ -191,6 +191,7 @@ PROGETTO/
 ├── app.py                     # Server Flask, Router REST API e Steering della narrazione
 ├── story_agents.py            # Pipeline Multi-Agente (Cartografo, Casting, LoreMaster)
 ├── combat_engine.py           # Motore matematico e di combattimento neuro-simbolico
+├── guardrails.py              # Sistema di protezione anti-injection e controllo input
 ├── dnd_homepage.html          # Interfaccia Web - Schermata iniziale e creazione
 ├── dnd_game.html              # Interfaccia Web - Tavolo da gioco, Chat e Diario
 ├── player.txt                 # RAG: Database Archetipi Giocatore
@@ -270,6 +271,8 @@ Il server Web espone una suite di API RESTful utilizzate dal frontend per comuni
 | :---: | :--- | :--- | :--- |
 | `POST` | `/api/start` | `{ "classe": "Ramingo", "map_size": "small", "tema": "dark-fantasy", "difficolta": "normal" }` | Avvia la pipeline Multi-Agente (`orchestra_creazione_mondo`), genera la mappa, assegna il Boss e restituisce il prologo e l'azione iniziale. |
 | `POST` | `/api/action` | `{ "action": "Attacco il basilisco con la mia spada!" }` | Valuta l'input nel motore neuro-simbolico, esegue il tiro di dado (`tiro_dado`), calcola i danni subiti (`danni_subiti`) e restituisce la risposta del DM (`dm_reply`). |
+| `POST` | `/api/combat/start` | `{ "enemy_name": "NomeNemico" }` (Opzionale) | Avvia il combattimento marziale locale contro un nemico. Se omesso, rileva il nemico dalla zona o dal contesto narrativo. |
+| `POST` | `/api/combat/flee` | *Nessuno* | Tenta la fuga dal combattimento marziale, delegando il calcolo dell'esito al motore d20 e aggiornando la narrazione. |
 | `GET` | `/api/diary` | *Nessuno* | Restituisce l'oggetto completo del Diario strutturato con il bestiario, gli NPC e le schede del giocatore. |
 | `POST` | `/api/save` | *Nessuno* | Scrive l'intero stato della sessione (`game_state`), lo storico della chat e la progressione sul file `savegame.json`. |
 | `POST` | `/api/load` | *Nessuno* | Legge il file `savegame.json` dal disco, ripristina la memoria della chat e restituisce l'ultimo messaggio del Dungeon Master. |
@@ -296,6 +299,3 @@ Il progetto è stato sviluppato equamente, abbiamo suddiviso le responsabilità 
   - Implementazione del modulo **Guardrails** per la sicurezza dell'input e la prevenzione del Prompt Injection.
   - Configurazione del **Server Backend API** in Flask, gestione della memoria di stato (`game_state`) e salvataggi su disco.
   - Popolamento, setup e validazione del **Sistema RAG** tramite i file vettoriali/testuali (personaggi, ambientazioni, mostri).
-
----
-*Morpheus Genesis — Dove l'Intelligenza Artificiale Agentica incontra la narrazione epica.*

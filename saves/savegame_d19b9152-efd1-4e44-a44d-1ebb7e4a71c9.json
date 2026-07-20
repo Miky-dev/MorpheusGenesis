@@ -2,171 +2,123 @@
   "history": [
     {
       "role": "system",
-      "content": "Agisci come un Dungeon Master esperto di giochi di ruolo testuali e narrazione collaborativa.\n\n=== AMBIENTAZIONE E TONO (DARK-FANTASY) ===\nDark Fantasy: regni corrotti dall'oscurità, magia proibita, atmosfera cupa e minacciosa. I colori dominanti sono il nero, il porpora e il rosso sangue.\n\n=== LIVELLO DI DIFFICOLTÀ (EASY) ===\nNovizio: Fai da 'guida benevola'. I PNG sono più amichevoli e bendisposti, le trappole sono sempre preannunciate chiaramente prima che scattino, e gli errori del giocatore non sono mai puniti severamente. Dai suggerimenti e sii molto generoso con gli oggetti curativi.\n\n=== LA SCHEDA DEL GIOCATORE CON OGGETTI DI PARTENZA ===\n[Varek il Corvo]\nRazza e Classe: Tiefling Stregone\nEtà: 35 anni\nAllineamento: Neutrale\nBackground: Figlio della Maledizione. La tua magia deriva da un antico patto stipulato dai tuoi antenati.\nPersonalità: Freddo, enigmatico e calcolatore.\nAbilità Distintive: Magia oscura, illusioni, maledizioni.\nPregio: Mantiene sempre il controllo.\nDifetto: Fatica a provare empatia.\nObiettivo: Spezzare il patto che grava sulla sua stirpe.\nSegreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.\nEquipaggiamento: Falcetto Rituale, Pozione di Mana, Scudo Sacro,  Bastone d'ossidiana, tomo maledetto, anello runico, amuleto demoniaco.\nStatistiche (Generate coi Dadi):\n- FORZA: 6 (colpire duro, sollevare, spingere)\n- DESTREZZA: 14 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 12 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 12 (resistenza fisica, salute)\nPunti Ferita: 100/100\n\n=== GEOGRAFIA E POSIZIONI (LA MAPPA MULTI-AGENTE) ===\nIl mondo di gioco della campagna è composto esattamente da 4 località interconnesse:\n[CENTRO]: [Monastero di Rocca Silente]\nAtmosfera: Arroccato sulle montagne, il monastero è avvolto da una quiete quasi irreale. Il vento fa vibrare le campane di bronzo e l'aria profuma di pergamena antica, cera e neve.\nPunti di Interesse:\nArchivio delle Mille Pergamene\nGiardino delle Statue Vive\nPericoli e Creature: Monaci corrotti dalla magia, spiriti guardiani, gargoyle dormienti e trappole sacre.\nSpunto Narrativo: I monaci custodiscono un libro che cambia contenuto ogni alba, predicendo eventi futuri con inquietante precisione. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Brom Barilferro - Oste | 🌿 Zona Sicura)\n    [NORD]: [Isola delle Maree Eterne]\nAtmosfera: Onde turchesi si infrangono contro alte scogliere ricoperte di licheni argentati. Il profumo salmastro del mare si mescola a quello dei pini marittimi, mentre il richiamo dei gabbiani nasconde strani canti provenienti dalle profondità.\nPunti di Interesse:\nFaro delle Maree\nGrotta del Leviatano\nPericoli e Creature: Sirene, kraken minori, pirati maledetti, granchi corazzati e correnti marine incantate.\nSpunto Narrativo: Ogni equinozio emerge un sentiero di pietra sul mare che conduce a un tempio visibile solo per poche ore. <-- (🧑 NPC residente: Caelis Ventoquieto - Bardo | ⚔️ Pericolo: Idra delle Paludi)\n    [EST]: [Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità. <-- (🧑 NPC residente: Neria dell'Eclisse - Maga Errante | 🌿 Zona Sicura)\n    [OVEST]: [Villaggio di Corvoscuro]\nAtmosfera: Casette di legno annerito sorgono ai margini di una vallata avvolta dalla nebbia. I camini fumano costantemente e il gracchiare dei corvi accompagna il lento scorrere del tempo.\nPunti di Interesse:\nLocanda del Corvo Nero\nVecchio Cimitero delle Lanterne\nPericoli e Creature: Licantropi, spettri erranti, corvi demoniaci, stregoni erranti e maledizioni familiari.\nSpunto Narrativo: Ogni famiglia del villaggio nasconde una stanza murata che nessuno osa aprire da generazioni. <-- (🧑 NPC residente: Aldren Corvoscuro - Cavaliere Errante | ⚔️ 👑 BOSS FINALE: Golem di Basalto)\n\nATTENZIONE FONDAMENTALE SUL BOSS FINALE E SUI NUMERI:\n1. IL BOSS FINALE DA SCONFIGGERE PER COMPLETARE IL GIOCO È: **Golem di Basalto**.\n2. Nella mappa ci sono ESATTAMENTE 4 località/città, 4 NPC e 2 Nemici/Mostri.\n\n=== PROGRESSIONE LINEARE OBBLIGATORIA ===\nZone disponibili: CENTRO, NORD, EST, OVEST\nNPC disponibili: Brom Barilferro, Caelis Ventoquieto, Neria dell'Eclisse, Aldren Corvoscuro\nNemici disponibili: Golem di Basalto, Idra delle Paludi\n\n=== REGOLE SUI DADI, AZIONI E GIOCO DI RUOLO ===\n- Un tiro di 1 è un Fallimento Critico (disastroso ma narrativamente interessante).\n- Un tiro di 20 è un Successo Critico (spettacolare ed eroico).\n- Tiri da 2 a 10 tendono a fallire o riuscire con costo, da 11 a 19 tendono ad avere successo.\n\n=== REGOLE DI RISPOSTA ===\nRispondi SEMPRE con pura narrazione immersiva in seconda persona. NON usare MAI tag tecnici, meta-commenti o formattazione speciale nelle risposte. Scrivi solo la storia, le azioni dei personaggi e i dialoghi.\nIMPORTANTE - LUNGHEZZA: Sii completo ma CONCISO e BREVE. Le risposte devono essere di massimo 2-3 brevi paragrafi (circa 100-150 parole totali). Evita descrizioni prolisse o inutili lungaggini; la narrazione deve essere dinamica, incalzante e diretta.\n"
+      "content": "Agisci come un Dungeon Master esperto di giochi di ruolo testuali e narrazione collaborativa.\n\n=== AMBIENTAZIONE E TONO (DARK-FANTASY) ===\nDark Fantasy: regni corrotti dall'oscurità, magia proibita, atmosfera cupa e minacciosa. I colori dominanti sono il nero, il porpora e il rosso sangue.\n\n=== LIVELLO DI DIFFICOLTÀ (EASY) ===\nNovizio: Fai da 'guida benevola'. I PNG sono più amichevoli e bendisposti, le trappole sono sempre preannunciate chiaramente prima che scattino, e gli errori del giocatore non sono mai puniti severamente. Dai suggerimenti e sii molto generoso con gli oggetti curativi.\n\n=== LA SCHEDA DEL GIOCATORE CON OGGETTI DI PARTENZA ===\n[Lyra l'Ombra]\nRazza e Classe: Elfa Ladra\nEtà: 121 anni\nAllineamento: Caotico Neutrale\nBackground: Fuggiasca. Hai rubato qualcosa di inestimabile a una persona molto potente e ora sei costantemente in movimento.\nPersonalità: Ironica, intelligente e sempre pronta ad avere un piano di riserva.\nAbilità Distintive: Scassinatrice, infiltrazione, borseggio, acrobazia.\nPregio: Si adatta rapidamente a qualsiasi situazione.\nDifetto: Fatica a fidarsi perfino dei propri alleati.\nObiettivo: Vendere il manufatto rubato senza essere trovata.\nSegreto: L'oggetto rubato sembra comunicare con lei nei sogni.\nEquipaggiamento: Pozione di Mana, Kit Medico, Mazza Ferrata,  Due pugnali, fiala di veleno, bombe fumogene.\nStatistiche (Generate coi Dadi):\n- FORZA: 7 (colpire duro, sollevare, spingere)\n- DESTREZZA: 9 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 6 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 18 (resistenza fisica, salute)\nPunti Ferita: 100/100\n\n=== GEOGRAFIA E POSIZIONI (LA MAPPA MULTI-AGENTE) ===\nIl mondo di gioco della campagna è composto esattamente da 4 località interconnesse:\n[CENTRO]: [Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Aldren Corvoscuro - Cavaliere Errante | 🌿 Zona Sicura)\n    [NORD]: [Picco di Drakmor]\nAtmosfera: Scogliere innevate si innalzano sopra un mare di nuvole, illuminate dal bagliore rossastro di antiche vene laviche. Il vento ulula tra le rocce come un coro di draghi dimenticati e l'aria sa di ghiaccio e cenere.\nPunti di Interesse:\nFortezza del Drago Spezzato\nTempio delle Fiamme Eterne\nPericoli e Creature: Grifoni selvatici, viverne, elementali del fuoco e del ghiaccio, valanghe improvvise e cultisti al servizio di un antico drago.\nSpunto Narrativo: Ogni cento anni il cielo sopra la vetta si apre mostrando una costellazione sconosciuta che indica l'ingresso di un santuario perduto. <-- (🧑 NPC residente: Caelis Ventoquieto - Bardo | ⚔️ Pericolo: Mimic del Tesoriere)\n    [EST]: [Forgia di Thar-Gor]\nAtmosfera: Fiumi di lava scorrono tra giganteschi ponti di ferro annerito. Martelli invisibili risuonano nel vuoto e l'aria è calda, pesante e impregnata di metallo fuso.\nPunti di Interesse:\nSala delle Incudini Eterne\nCamera del Cuore Magmatico\nPericoli e Creature: Golem di ferro, salamandre di fuoco, elementali del magma, esplosioni vulcaniche e automi dimenticati.\nSpunto Narrativo: Si narra che l'ultima arma forgiata qui sia in grado di spezzare qualsiasi incantesimo, ma il suo fabbro è scomparso da secoli. <-- (🧑 NPC residente: Thalia Erbaverde - Erborista | 🌿 Zona Sicura)\n    [OVEST]: [Cattedrale delle Stelle Cadute]\nAtmosfera: Una maestosa cattedrale in rovina giace sotto un cielo sempre crepuscolare. Frammenti di meteoriti brillano tra le navate distrutte e l'aria vibra di una magia antichissima.\nPunti di Interesse:\nAltare Celeste\nCripta degli Astronomi\nPericoli e Creature: Angeli decaduti, spiriti astrali, costrutti di cristallo, anomalie gravitazionali e magie instabili.\nSpunto Narrativo: Ogni stella cadente che colpisce la cattedrale risveglia per una notte un antico custode disposto a rispondere a una sola domanda. <-- (🧑 NPC residente: Brom Barilferro - Oste | ⚔️ 👑 BOSS FINALE: Sirena Abissale)\n\nATTENZIONE FONDAMENTALE SUL BOSS FINALE E SUI NUMERI:\n1. IL BOSS FINALE DA SCONFIGGERE PER COMPLETARE IL GIOCO È: **Sirena Abissale**.\n2. Nella mappa ci sono ESATTAMENTE 4 località/città, 4 NPC e 2 Nemici/Mostri.\n\n=== PROGRESSIONE LINEARE OBBLIGATORIA ===\nZone disponibili: CENTRO, NORD, EST, OVEST\nNPC disponibili: Aldren Corvoscuro, Caelis Ventoquieto, Thalia Erbaverde, Brom Barilferro\nNemici disponibili: Sirena Abissale, Mimic del Tesoriere\n\n=== REGOLE SUI DADI, AZIONI E GIOCO DI RUOLO ===\n- Un tiro di 1 è un Fallimento Critico (disastroso ma narrativamente interessante).\n- Un tiro di 20 è un Successo Critico (spettacolare ed eroico).\n- Tiri da 2 a 10 tendono a fallire o riuscire con costo, da 11 a 19 tendono ad avere successo.\n\n=== REGOLE DI RISPOSTA ===\nRispondi SEMPRE con pura narrazione immersiva in seconda persona. NON usare MAI tag tecnici, meta-commenti o formattazione speciale nelle risposte. Scrivi solo la storia, le azioni dei personaggi e i dialoghi.\nIMPORTANTE - LUNGHEZZA: Sii completo ma CONCISO e BREVE. Le risposte devono essere di massimo 2-3 brevi paragrafi (circa 100-150 parole totali). Evita descrizioni prolisse o inutili lungaggini; la narrazione deve essere dinamica, incalzante e diretta.\n"
     },
     {
       "role": "assistant",
-      "content": "Nel cuore delle montagne, il Monastero di Rocca Silente veglia su pergameni che sussurrano il futuro, mentre l’oscurità si raduna attorno al Golem di Basalto, la pietra vivente destinata a distruggere ogni speranza.  \nVarek il Corvo, tiefling stregone dalla pelle di fuoco, porta con sé un falcetto rituale, una pozione di mana, uno scudo sacro, un bastone d’ossidiana, un tomo maledetto, un anello runico e un amuleto demoniaco, pronto a infrangere il patto che grava sulla sua stirpe.\n\nLe campane del monastero risuonano, annunciando l’alba di un nuovo giorno. Il libro profetico brilla sul leggio: decidi se chiedere a Brom Barilferro il suo segreto, o aprire subito la porta verso l’Isola delle Maree Eterne."
+      "content": "Nel cuore della Foresta di Sylvaris, una foschia argentata avvolge i tronchi antichi, mentre una voce profonda e gutturale risuona dal profondo delle stelle: la Sirena Abissale, antica entità di mare e ombra, trama di trascendere il suo regno di rovine per sommergere il mondo intero. Il suo canto promette potere, ma porta con sé l’oscurità più profonda.  \n\nTu sei Lyra l'Ombra, elfa ladra dal cuore ribelle, armata di due pugnali affilati, una mazza ferrata e una scorta di pozioni, veleni e bombe fumogene. Il manufatto rubato vibra nel tuo bagaglio, sussurrandoti segreti nei sogni e guidandoti verso una ricompensa che nessuno ha mai osato immaginare.\n\nAldren Corvoscuro ti indica il sentiero che conduce al Cerchio, ma il tuo manufatto emette un lampo di luce violenta: devi decidere subito se seguirlo o indagare la fonte del bagliore."
     },
     {
       "role": "user",
-      "content": "Parla con Brom Barilferro - Oste a Monastero di Rocca Silente\n[Tiro d20 del sistema per questa azione: 7]"
+      "content": "Parla con Aldren Corvoscuro - Cavaliere Errante a Foresta di Sylvaris\n[Tiro d20 del sistema per questa azione: 14]"
     },
     {
       "role": "assistant",
-      "content": "Brom Barilferro, l'oste del monastero, ti guarda con un misto di curiosità e diffidenza. \"Cosa vuoi sapere, Varek il Corvo?\" chiede, la sua voce bassa e rauca. Il tuo tentativo di avvicinarti e instaurare una conversazione sembra un po' goffo, e Brom si ritrae leggermente, come se temesse una trappola.\n\nLa sua espressione si fa più cauta, e si avvicina a un angolo della stanza, bisbigliando: \"Forse è meglio se parliamo più tardi, quando il monastero sarà meno affollato.\" La sua risposta non è del tutto chiara, e ti lascia con più domande che risposte.\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 2** del percorso."
+      "content": "Aldren Corvoscuro, il cavaliere errante, ti osserva con uno sguardo profondo, mentre la sua voce risuona nella foresta: \"Lyra l'Ombra, la tua fama ti precede. Sono stato inviato a cercarti, poiché solo insieme possiamo affrontare l'oscurità che minaccia di inghiottire il nostro mondo\". La sua spada, ornata di simboli antichi, sembra vibrare di una luce interna, come se percepisse la presenza del manufatto rubato.\n\n\"La Sirena Abissale sta risvegliandosi\", continua Aldren, \"e solo chi possiede il coraggio e l'astuzia necessari potrà sperare di fermarla. Sono disposto a unirmi a te in questa impresa, Lyra, ma devi dimostrarmi che sei degna di questo compito\". Il cavaliere errante si avvicina, la sua mano posata sull'elsa della spada, in attesa della tua risposta.\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 2** del percorso."
     },
     {
       "role": "user",
-      "content": "Incontra e collabora con Caelis Ventoquieto - Bardo a Isola delle Maree Eterne\n[Tiro d20 del sistema per questa azione: 18]"
+      "content": "Incontra e collabora con Caelis Ventoquieto - Bardo a Picco di Drakmor\n[Tiro d20 del sistema per questa azione: 2]"
     },
     {
       "role": "assistant",
-      "content": "Sbarchi sull'Isola delle Maree Eterne, e il vento ti porta il suono di una lira. Caelis Ventoquieto, il bardo, ti attende sulla spiaggia, il suo strumento tra le mani. La sua musica sembra danzare con le onde, e ti senti attratto da quella melodia.\n\nCaelis ti accoglie con un sorriso, e ti porge la lira. \"Suona con me, Varek il Corvo\", dice. \"Insieme, potremmo creare un'armonia che risvegli i segreti dell'isola.\" La tua collaborazione è un successo, e la musica che create insieme sembra avere il potere di placare le acque e attirare creature marine curiose.\n\nLa tua azione ha successo, e Caelis Ventoquieto ti rivela un importante indizio: \"L'Isola delle Maree Eterne nasconde un sentiero che emerge solo durante l'equinozio. Seguilo, e scoprirai un tempio nascosto, dove potrai trovare una chiave per spezzare il patto che grava sulla tua stirpe.\"\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 3** del percorso."
+      "content": "Mentre ti avvicini al Picco di Drakmor, una valanga improvvisa ti travolge, separandoti dalla tua destinazione. La neve ti avvolge, e per un attimo, tutto diventa buio e silenzio. Quando riemergi, ti ritrovi solo, con la neve che ti arriva alle ginocchia. Caelis Ventoquieto, il bardo, è da qualche parte lì intorno, ma la valanga ha cancellato le tue tracce.\n\nUna voce lontana, portata dal vento, giunge alle tue orecchie: \"Lyra l'Ombra... ascolta!\". La voce di Caelis Ventoquieto sembra provenire da una grotta vicina, ma la neve alta e la visibilità ridotta rendono difficile capire da dove viene esattamente. Devi trovare un modo per raggiungere la grotta e Caelis, prima che la situazione peggiori."
     },
     {
       "role": "user",
-      "content": "Affronta e sconfiggi Idra delle Paludi a Isola delle Maree Eterne"
+      "content": "Incontra e collabora con Caelis Ventoquieto - Bardo a Picco di Drakmor\n[Tiro d20 del sistema per questa azione: 15]"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **MODALITÀ COMBATTIMENTO ATTIVATA vs IDRA DELLE PALUDI!**\n*(Da questo momento lo scontro è risolto in locale tramite dadi d20 e calcolo danni senza chiamare l'IA)*\n\n⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **10**, tot 8 vs CA 15)\nPorti il tuo colpo con Il tuo attacco verso **Idra Delle Paludi**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 43% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **100/100** | HP **Idra Delle Paludi**: **78/78**"
+      "content": "Riesci a trovare la grotta, nonostante la neve e la visibilità ridotta. All'interno, Caelis Ventoquieto ti aspetta, il suo liuto tra le mani. La sua musica è ipnotica, e sembra che le note stesse ti guidino verso di lui. \"Lyra l'Ombra, finalmente\", dice con un sorriso, \"il destino ci unisce in questo luogo remoto. La Sirena Abissale sta per risvegliarsi, e solo insieme possiamo sperare di fermarla\".\n\nCaelis inizia a suonare una melodia struggente, e le note sembrano prendere forma, creando un sentiero di luce che conduce fuori dalla grotta. \"Segui questo sentiero\", ti dice, \"e ti condurrà a Thalia Erbaverde, l'erborista. Lei possiede conoscenze cruciali per la nostra missione\". Il bardo ti porge un piccolo oggetto: una fiala di cristallo contenente una pozione rara. \"Questa ti aiuterà nel tuo viaggio\", aggiunge.\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 3** del percorso."
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "attacca sirena abissale"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **12**, tot 13 vs CA 15)\nPorti il tuo colpo con Il tuo attacco verso **Idra Delle Paludi**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 9, tot 16 vs CA 16)\n**Idra Delle Paludi** scatta al contrattacco e ti ferisce, causandoti **14 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **86/100** | HP **Idra Delle Paludi**: **78/78**"
+      "content": "🛡️ **ATTACCO AL BOSS BLOCCATO (PERCORSO INCOMPLETO)**\n\nTenti di scagliarti o puntare la tua arma direttamente contro **Sirena Abissale**, ma una barriera magica, la distanza o le regole celestiali del santuario impediscono qualsiasi scontro marziale anticipato contro la minaccia suprema!\n\n*(Per poter affrontare il Boss Supremo in combattimento devi prima completare la **Tappa 3** in corso: \"Affronta e sconfiggi Mimic del Tesoriere a Picco di Drakmor\")*"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "attacca mimic del tesoriere"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **11**, tot 12 vs CA 15)\nPorti il tuo colpo con Il tuo attacco verso **Idra Delle Paludi**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 22% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **86/100** | HP **Idra Delle Paludi**: **78/78**"
+      "content": "⚔️ **MODALITÀ COMBATTIMENTO ATTIVATA vs MIMIC DEL TESORIERE!**\n*(Da questo momento lo scontro è risolto in locale tramite dadi d20 e calcolo danni senza chiamare l'IA)*\n\n⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **5**, tot 3 vs CA 14)\nPorti il tuo colpo con Il tuo attacco verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 10, tot 15 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **10 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **90/100** | HP **Mimic Del Tesoriere**: **46/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 16+1 = 17 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **8 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 29% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **86/100** | HP **Idra Delle Paludi**: **70/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 16+-2 = 14 vs CA 14)\nMazza Ferrata colpisce con precisione ed efficacia **Mimic Del Tesoriere**, causandogli **12 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 13, tot 18 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **5 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **85/100** | HP **Mimic Del Tesoriere**: **34/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 19+1 = 20 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **9 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 52% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **86/100** | HP **Idra Delle Paludi**: **61/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 19+-2 = 17 vs CA 14)\nMazza Ferrata colpisce con precisione ed efficacia **Mimic Del Tesoriere**, causandogli **10 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 10, tot 15 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **10 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **75/100** | HP **Mimic Del Tesoriere**: **24/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n❌ **FALLIMENTO CRITICO!** (d20: **1**)\nIl tuo attacco con Il tuo attacco manca completamente il bersaglio in un movimento maldestro, lasciandoti scoperto alle difese di **Idra Delle Paludi**!\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 23% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **86/100** | HP **Idra Delle Paludi**: **61/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **2**, tot 0 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 10, tot 15 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **6 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **69/100** | HP **Mimic Del Tesoriere**: **24/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **9**, tot 10 vs CA 15)\nPorti il tuo colpo con Il tuo attacco verso **Idra Delle Paludi**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 12, tot 19 vs CA 16)\n**Idra Delle Paludi** scatta al contrattacco e ti ferisce, causandoti **11 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **75/100** | HP **Idra Delle Paludi**: **61/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **10**, tot 8 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 15, tot 20 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **5 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **64/100** | HP **Mimic Del Tesoriere**: **24/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 19+1 = 20 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **8 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 11, tot 18 vs CA 16)\n**Idra Delle Paludi** scatta al contrattacco e ti ferisce, causandoti **13 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **62/100** | HP **Idra Delle Paludi**: **53/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **2**, tot 0 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 17, tot 22 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **6 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **58/100** | HP **Mimic Del Tesoriere**: **24/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 16+1 = 17 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **8 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 1% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **62/100** | HP **Idra Delle Paludi**: **45/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **11**, tot 9 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 12, tot 17 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **6 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **52/100** | HP **Mimic Del Tesoriere**: **24/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **7**, tot 8 vs CA 15)\nPorti il tuo colpo con Il tuo attacco verso **Idra Delle Paludi**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 12, tot 19 vs CA 16)\n**Idra Delle Paludi** scatta al contrattacco e ti ferisce, causandoti **10 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **52/100** | HP **Idra Delle Paludi**: **45/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **9**, tot 7 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 16, tot 21 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **6 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **46/100** | HP **Mimic Del Tesoriere**: **24/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **13**, tot 14 vs CA 15)\nPorti il tuo colpo con Il tuo attacco verso **Idra Delle Paludi**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 12% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **52/100** | HP **Idra Delle Paludi**: **45/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 19+-2 = 17 vs CA 14)\nMazza Ferrata colpisce con precisione ed efficacia **Mimic Del Tesoriere**, causandogli **12 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 11, tot 16 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **7 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **39/100** | HP **Mimic Del Tesoriere**: **12/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 16+1 = 17 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **8 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 29% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **52/100** | HP **Idra Delle Paludi**: **37/78**"
-    },
-    {
-      "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
-    },
-    {
-      "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **13**, tot 14 vs CA 15)\nPorti il tuo colpo con Il tuo attacco verso **Idra Delle Paludi**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 14, tot 21 vs CA 16)\n**Idra Delle Paludi** scatta al contrattacco e ti ferisce, causandoti **10 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **42/100** | HP **Idra Delle Paludi**: **37/78**"
-    },
-    {
-      "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
-    },
-    {
-      "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 19+1 = 20 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **12 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 49% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **42/100** | HP **Idra Delle Paludi**: **25/78**"
-    },
-    {
-      "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
-    },
-    {
-      "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 15+1 = 16 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **9 danni**!\n\n--- CONTRATTACCO NEMICO ---\nIl contrattacco di **Idra Delle Paludi** va a vuoto! (d20 nemico: 5, tot 12 — la tua CA 16 regge)\n\n📊 **Stato Scontro:** Tuoi HP: **42/100** | HP **Idra Delle Paludi**: **16/78**"
-    },
-    {
-      "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
-    },
-    {
-      "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **10**, tot 11 vs CA 15)\nPorti il tuo colpo con Il tuo attacco verso **Idra Delle Paludi**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 19, tot 26 vs CA 16)\n**Idra Delle Paludi** scatta al contrattacco e ti ferisce, causandoti **9 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **33/100** | HP **Idra Delle Paludi**: **16/78**"
-    },
-    {
-      "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
-    },
-    {
-      "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **11**, tot 12 vs CA 15)\nPorti il tuo colpo con Il tuo attacco verso **Idra Delle Paludi**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 11, tot 18 vs CA 16)\n**Idra Delle Paludi** scatta al contrattacco e ti ferisce, causandoti **8 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **25/100** | HP **Idra Delle Paludi**: **16/78**"
-    },
-    {
-      "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
-    },
-    {
-      "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 18+1 = 19 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **7 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 49% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **25/100** | HP **Idra Delle Paludi**: **9/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **6**, tot 4 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\nIl contrattacco di **Mimic Del Tesoriere** va a vuoto! (d20 nemico: 3, tot 8 — la tua CA 11 regge)\n\n📊 **Stato Scontro:** Tuoi HP: **39/100** | HP **Mimic Del Tesoriere**: **12/46**"
     },
     {
       "role": "user",
@@ -174,161 +126,149 @@
     },
     {
       "role": "assistant",
-      "content": "🧪 **USO DI POZIONE DI MANA**\n\nRapidamente usi il tuo oggetto curativo nel bel mezzo dello scontro, recuperando **+30 HP** (Salute attuale: 55/100)!\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 44% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **55/100** | HP **Idra Delle Paludi**: **9/78**"
+      "content": "🧪 **USO DI POZIONE DI MANA**\n\nRapidamente usi il tuo oggetto curativo nel bel mezzo dello scontro, recuperando **+30 HP** (Salute attuale: 69/100)!\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 9, tot 14 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **9 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **60/100** | HP **Mimic Del Tesoriere**: **12/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "accarezzalo"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO vs IDRA DELLE PALUDI** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 16+1 = 17 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **7 danni**!\n\n--- CONTRATTACCO NEMICO ---\n🛡️ **DIFESA AUTOMATICA RIUSCITA!** (d100: 52% vs 60% di Scudo Sacro)\n**Idra Delle Paludi** tenta di colpirti, ma il tuo **scudo sacro** assorbe o devia completamente l'attacco, lasciandoti illeso!\n\n📊 **Stato Scontro:** Tuoi HP: **55/100** | HP **Idra Delle Paludi**: **2/78**"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **5**, tot 3 vs CA 14)\nPorti il tuo colpo con Il tuo attacco verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\nIl contrattacco di **Mimic Del Tesoriere** va a vuoto! (d20 nemico: 1, tot 6 — la tua CA 11 regge)\n\n📊 **Stato Scontro:** Tuoi HP: **60/100** | HP **Mimic Del Tesoriere**: **12/46**"
     },
     {
       "role": "user",
-      "content": "Attacco con Bastone d'ossidiana"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "⚔️ **TURNO DI COMBATTIMENTO** ⚔️\n\n⚔️ **COLPO A SEGNO!** (d20: 15+1 = 16 vs CA 15)\nIl tuo attacco colpisce con precisione ed efficacia **Idra Delle Paludi**, causandogli **8 danni**!\n\n🎉 **VITTORIA SCHIACCIANTE!**\nCon quest'ultimo colpo fatale, **Idra Delle Paludi** emette un ultimo ruggito e crolla a terra esanime! Hai vinto la battaglia!\n\n*(Il combattimento è terminato. Torni in modalità Esplorazione)*\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 4** del percorso."
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **9**, tot 7 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 11, tot 16 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **9 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **51/100** | HP **Mimic Del Tesoriere**: **12/46**"
     },
     {
       "role": "user",
-      "content": "Incontra e collabora con Neria dell'Eclisse - Maga Errante a Foresta di Sylvaris\n[Tiro d20 del sistema per questa azione: 11]"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "Ti addentri nella Foresta di Sylvaris, cercando Neria dell'Eclisse. Dopo un po' di cammino, senti un rumore di foglie e rami spezzati. Si fa avanti una figura incappucciata, che si rivela essere Neria.\n\n\"Salve, Varek il Corvo\", dice Neria, con voce misteriosa. \"Sono stata aspettando il tuo arrivo. Ho informazioni importanti sulla tua stirpe e sul patto che grava su di te.\"\n\nNeria inizia a parlare, rivelando dettagli sulla storia della tua famiglia e sul modo per rompere il patto. La sua conoscenza è vasta e precisa, e ti senti grato per la sua collaborazione.\n\nTuttavia, il tuo tiro di destrezza non è stato perfetto, e Neria sembra notare qualcosa di strano nel tuo comportamento. \"C'è qualcosa che non va, Varek?\" chiede, con un'ombra di sospetto nella voce.\n\n📊 **Stato dell'incontro:** Collaborazione in corso, ma con un leggero sospetto da parte di Neria."
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **11**, tot 9 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 14, tot 19 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **8 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **43/100** | HP **Mimic Del Tesoriere**: **12/46**"
     },
     {
       "role": "user",
-      "content": "no tutto bene\n[Tiro d20 del sistema per questa azione: 7]"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "Prosegui la conversazione con Neria, cercando di approfondire la tua conoscenza sul patto e sulla storia della tua famiglia. Tuttavia, il tuo tiro di intelligenza non è stato particolarmente alto, e ti senti un po' confuso dalle parole di Neria.\n\n\"Mi dispiace, Neria\", dici, \"ma non sono sicuro di capire appieno il significato di ciò che stai dicendo. Potresti spiegarmi meglio?\"\n\nNeria ti guarda con un'espressione paziente e ti ripete le informazioni in modo più lento e chiaro. \"Il patto è stato stipulato dai tuoi antenati per ottenere potere e protezione\", spiega. \"Tuttavia, questo potere è stato ottenuto a costo di una grande perdita. Per rompere il patto, devi trovare il modo di ripagare il debito contratto dai tuoi antenati.\"\n\n📊 **Stato dell'incontro:** Collaborazione in corso, ma con un leggero ritardo nella comprensione da parte tua."
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **3**, tot 1 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\n🩸 **IL NEMICO COLPISCE!** (d20: 7, tot 12 vs CA 11)\n**Mimic Del Tesoriere** scatta al contrattacco e ti ferisce, causandoti **7 danni**!\n\n📊 **Stato Scontro:** Tuoi HP: **36/100** | HP **Mimic Del Tesoriere**: **12/46**"
     },
     {
       "role": "user",
-      "content": "Incontra e collabora con Neria dell'Eclisse - Maga Errante a Foresta di Sylvaris\n[Tiro d20 del sistema per questa azione: 13]"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "Ti addentri nella Foresta di Sylvaris, cercando Neria dell'Eclisse. Dopo un po' di cammino, senti un rumore di foglie e rami spezzati. Si fa avanti una figura incappucciata, che si rivela essere Neria.\n\n\"Salve, Varek il Corvo\", dice Neria, con voce misteriosa. \"Sono stata aspettando il tuo arrivo. Ho informazioni importanti sulla tua stirpe e sul patto che grava su di te.\"\n\nNeria inizia a parlare, rivelando dettagli sulla storia della tua famiglia e sul modo per rompere il patto. La sua conoscenza è vasta e precisa, e ti senti grato per la sua collaborazione.\n\nIl tuo tiro di destrezza è stato sufficiente, e Neria sembra apprezzare la tua attenzione e la tua disponibilità a imparare. \"Sono impressionata dalla tua determinazione, Varek\", dice. \"Insieme, possiamo scoprire il modo per rompere il patto e liberare la tua stirpe dal suo peso.\"\n\n📊 **Stato dell'incontro:** Collaborazione riuscita, con un buon livello di comprensione e di fiducia reciproca.\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 5** del percorso."
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **15**, tot 13 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\nIl contrattacco di **Mimic Del Tesoriere** va a vuoto! (d20 nemico: 1, tot 6 — la tua CA 11 regge)\n\n📊 **Stato Scontro:** Tuoi HP: **36/100** | HP **Mimic Del Tesoriere**: **12/46**"
     },
     {
       "role": "user",
-      "content": "atacca\n[Tiro d20 del sistema per questa azione: 11]"
-    },
-    {
-      "role": "user",
-      "content": "attacca"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "🛡️ **NESSUN NEMICO DA ATTACCARE NELLA ZONA**\n\nSguaini la tua arma ed assumi una posizione di combattimento a **: [Foresta di Sylvaris]**, ma guardandoti con attenzione ti accorgi che non c'è alcun bersaglio ostile da attaccare qui (Ci troviamo in una **Zona Sicura (: [Foresta di Sylvaris])** dove non sono presenti nemici da affrontare in combattimento marziale.).\n\n*(Per entrare in combattimento marziale devi prima esplorare o recarti in un'area dove è presente una minaccia ⚔️)*"
+      "content": "⚔️ **TURNO DI COMBATTIMENTO vs MIMIC DEL TESORIERE** ⚔️\n\n🛡️ **ATTACCO DEVIATO!** (d20: **9**, tot 7 vs CA 14)\nPorti il tuo colpo con Mazza Ferrata verso **Mimic Del Tesoriere**, ma il nemico riesce a schivare o parare l'attacco.\n\n--- CONTRATTACCO NEMICO ---\nIl contrattacco di **Mimic Del Tesoriere** va a vuoto! (d20 nemico: 1, tot 6 — la tua CA 11 regge)\n\n📊 **Stato Scontro:** Tuoi HP: **36/100** | HP **Mimic Del Tesoriere**: **12/46**"
     },
     {
       "role": "user",
-      "content": "Incontra e collabora con Neria dell'Eclisse - Maga Errante a Foresta di Sylvaris\n[Tiro d20 del sistema per questa azione: 10]"
+      "content": "Attacco con Mazza Ferrata"
     },
     {
       "role": "assistant",
-      "content": "Ti addentri nella Foresta di Sylvaris, cercando Neria dell'Eclisse. Dopo un po' di cammino, senti un rumore di foglie e rami spezzati. Si fa avanti una figura incappucciata, che si rivela essere Neria.\n\n\"Salve, Varek il Corvo\", dice Neria, con voce misteriosa. \"Sono stata aspettando il tuo arrivo. Ho informazioni importanti sulla tua stirpe e sul patto che grava su di te.\"\n\nNeria inizia a parlare, rivelando dettagli sulla storia della tua famiglia e sul modo per rompere il patto. La sua conoscenza è vasta e precisa, e ti senti grato per la sua collaborazione.\n\nIl tuo tiro di destrezza è stato sufficiente, e Neria sembra apprezzare la tua attenzione e la tua disponibilità a imparare. \"Sono impressionata dalla tua determinazione, Varek\", dice. \"Insieme, possiamo scoprire il modo per rompere il patto e liberare la tua stirpe dal suo peso.\"\n\nTuttavia, noti che Neria sembra un po' preoccupata e guarda intorno con aria circospetta. \"Dobbiamo essere cauti, Varek\", dice. \"Ci sono occhi e orecchie che ci osservano e ascoltano. Non possiamo permettere che i nostri piani cadano nelle mani sbagliate.\"\n\n📊 **Stato dell'incontro:** Collaborazione in corso, con un buon livello di comprensione e di fiducia reciproca.\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 5** del percorso."
+      "content": "⚔️ **TURNO DI COMBATTIMENTO** ⚔️\n\n💥 **COLPO CRITICO DEVASTANTE!** (d20: **20 naturale**!)\nIl tuo colpo perfetto con Mazza Ferrata trova una fessura vitale nelle difese di **Mimic Del Tesoriere**, infliggendo la bellezza di **20 danni critici**!\n\n🎉 **VITTORIA SCHIACCIANTE!**\nCon quest'ultimo colpo fatale, **Mimic Del Tesoriere** emette un ultimo ruggito e crolla a terra esanime! Hai vinto la battaglia!\n\n*(Il combattimento è terminato. Torni in modalità Esplorazione)*\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 4** del percorso."
     },
     {
       "role": "user",
-      "content": "Incontra e collabora con Neria dell'Eclisse - Maga Errante a Foresta di Sylvaris\n[Tiro d20 del sistema per questa azione: 16]"
+      "content": "Incontra e collabora con Thalia Erbaverde - Erborista a Forgia di Thar-Gor\n[Tiro d20 del sistema per questa azione: 12]"
     },
     {
       "role": "assistant",
-      "content": "Ti addentri nella Foresta di Sylvaris, cercando Neria dell'Eclisse. Dopo un po' di cammino, senti un rumore di foglie e rami spezzati. Si fa avanti una figura incappucciata, che si rivela essere Neria.\n\n\"Salve, Varek il Corvo\", dice Neria, con voce misteriosa. \"Sono stata aspettando il tuo arrivo. Ho informazioni importanti sulla tua stirpe e sul patto che grava su di te.\"\n\nNeria inizia a parlare, rivelando dettagli sulla storia della tua famiglia e sul modo per rompere il patto. La sua conoscenza è vasta e precisa, e ti senti grato per la sua collaborazione.\n\nIl tuo tiro di destrezza è stato eccellente, e Neria sembra impressionata dalla tua abilità e dalla tua determinazione. \"Sei un vero guerriero, Varek\", dice. \"Insieme, possiamo scoprire il modo per rompere il patto e liberare la tua stirpe dal suo peso.\"\n\nNeria ti rivela che il patto può essere rotto solo con l'aiuto di un oggetto antico e potente, nascosto in una località segreta. \"L'oggetto si chiama 'La Chiave della Liberazione'\", dice. \"È nascosto in un tempio antico, dove solo coloro che sono puri di cuore e forti di spirito possono accedere.\"\n\n📊 **Stato dell'incontro:** Collaborazione riuscita, con un alto livello di comprensione e di fiducia reciproca.\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 5** del percorso."
+      "content": "🌿 **INCONTRO CON THALIA ERBAVERDE**\n\nArrivi alla Forgia di Thar-Gor, un luogo di fuoco e acciaio, dove incontri Thalia Erbaverde, un'erborista dalle mani verdi e dagli occhi brillanti. Lei ti accoglie con un sorriso e ti invita a seguirla nel suo giardino segreto, nascosto tra le fiamme e il fumo della forgia.\n\nThalia ti mostra le sue piante rare e ti spiega le loro proprietà uniche. \"Questa\", dice, indicando una pianta con foglie lucenti, \"è la Lunaargenta, una pianta che solo una volta all'anno fiorisce sotto la luce della luna piena. Le sue foglie hanno il potere di curare le ferite più profonde\".\n\nThalia ti porge un piccolo sacchetto contenente alcune di queste foglie. \"Prendi, Lyra. Potrebbero esserti utili nel tuo viaggio\".\n\n📊 **Stato:** +10 HP per le foglie curative di Lunaargenta\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 5** del percorso."
     },
     {
       "role": "user",
-      "content": "Incontra e collabora con Neria dell'Eclisse - Maga Errante a Foresta di Sylvaris\n[Tiro d20 del sistema per questa azione: 11]"
+      "content": "Raggiungi Cattedrale delle Stelle Cadute e consulta Brom Barilferro - Oste\n[Tiro d20 del sistema per questa azione: 18]"
     },
     {
       "role": "assistant",
-      "content": "Ti addentri nella Foresta di Sylvaris, cercando Neria dell'Eclisse. Dopo un po' di cammino, senti un rumore di foglie e rami spezzati. Si fa avanti una figura incappucciata, che si rivela essere Neria.\n\n\"Salve, Varek il Corvo\", dice Neria, con voce misteriosa. \"Sono stata aspettando il tuo arrivo. Ho informazioni importanti sulla tua stirpe e sul patto che grava su di te.\"\n\nNeria inizia a parlare, rivelando dettagli sulla storia della tua famiglia e sul modo per rompere il patto. La sua conoscenza è vasta e precisa, e ti senti grato per la sua collaborazione.\n\nIl tuo tiro di destrezza è stato sufficiente, e Neria sembra apprezzare la tua attenzione e la tua disponibilità a imparare. \"Sono impressionata dalla tua determinazione, Varek\", dice. \"Insieme, possiamo scoprire il modo per rompere il patto e liberare la tua stirpe dal suo peso.\"\n\nNeria ti consegna un piccolo oggetto, un amuleto di legno con un simbolo intricato. \"Questo amuleto ti aiuterà a proteggerti dalle energie negative che ti circondano\", dice. \"Ma ricorda, Varek, il vero potere sta dentro di te. Devi credere in te stesso e nelle tue capacità.\"\n\n📊 **Stato dell'incontro:** Collaborazione riuscita, con un buon livello di comprensione e di fiducia reciproca.\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 5** del percorso."
-    },
-    {
-      "role": "user",
-      "content": "Raggiungi Villaggio di Corvoscuro e consulta Aldren Corvoscuro - Cavaliere Errante\n[Tiro d20 del sistema per questa azione: 19]"
-    },
-    {
-      "role": "assistant",
-      "content": "Ti dirigi verso il Villaggio di Corvoscuro, un luogo avvolto nella nebbia e nel mistero. Dopo un po' di cammino, arrivi al villaggio e noti che è circondato da una fossa profonda e da un muro di legno. Il cancello del villaggio è aperto, e ti fa segno di entrare.\n\nUna volta dentro, noti che il villaggio è piccolo e tranquillo, con poche case e una piazza centrale. Al centro della piazza c'è una grande statua di un cavaliere, e accanto a essa c'è un uomo con l'armatura e il mantello di un cavaliere errante.\n\n\"Lui è Aldren Corvoscuro\", ti dice un abitante del villaggio. \"È un cavaliere errante che ha giurato di proteggere il villaggio e i suoi abitanti. È un uomo coraggioso e onorevole, e sono sicuro che sarà felice di parlare con te.\"\n\nTi avvicini ad Aldren e lo saluti. Lui ti guarda con un'espressione seria e ti chiede cosa ti porta al villaggio.\n\nIl tuo tiro di destrezza è stato eccellente, e Aldren sembra impressionato dalla tua abilità e dalla tua determinazione. \"Sei un vero guerriero, Varek\", dice. \"Sono felice di aiutarti in qualsiasi modo possa. Cosa vuoi sapere?\"\n\nAldren ti rivela che il Golem di Basalto, il boss finale, si trova in una caverna vicina al villaggio. \"È un luogo pericoloso\", dice. \"Ma se sei determinato a sconfiggere il Golem, ti darò tutte le informazioni che posso. Devi essere cauto, però. Il Golem è un avversario formidabile, e non sarà facile da sconfiggere.\"\n\n📊 **Stato dell'incontro:** Consultazione riuscita, con un alto livello di fiducia e di collaborazione.\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 6** del percorso."
+      "content": "⛪️ **ARRIVO ALLA CATTEDRALE DELLE STELLE CADUTE**\n\nArrivi alla Cattedrale delle Stelle Cadute, un luogo di antica bellezza e mistero. La cattedrale è circondata da un'atmosfera di pace e tranquillità, e le stelle cadute sembrano aver lasciato un'impronta indelebile sul luogo.\n\nAll'interno della cattedrale, incontri Brom Barilferro, un oste sagace e conoscitore dei segreti della cattedrale. Lui ti accoglie con un sorriso e ti invita a sederti con lui.\n\n\"Lyra, ho sentito parlare di te\", dice Brom. \"Sei una donna coraggiosa e determinata. Ma il percorso che hai intrapreso è pieno di pericoli. La Sirena Abissale non è un'avversaria da sottovalutare\".\n\nBrom ti porge un piccolo oggetto, un frammento di stella caduta. \"Questo ti aiuterà a trovare la strada giusta. Ma ricorda, il vero pericolo non è la Sirena, ma il tuo stesso cuore\".\n\n✨ **[TAPPA COMPLETATA]** Hai superato l'obiettivo! Ti attende la **Tappa 6** del percorso."
     }
   ],
   "diario": {
     "👑 Boss Finale e Nemici (Bestiario)": [
-      "[Golem di Basalto]\n👑 BOSS FINALE E OBIETTIVO SUPREMO DELLA CAMPAGNA 👑\nPer completare e vincere definitivamente il gioco, devi raggiungere la sua tana e sconfiggere questo avversario mortale in combattimento!\n\nDescrizione e Pericolosità: Un colosso di pietra nera attraversato da vene incandescenti. Ogni suo colpo è in grado di frantumare muri e armature.\nComportamento: Difende instancabilmente rovine, templi o tesori e non si ferma finché l'intruso non viene eliminato.\nPunto Debole: Le rune incise sulla schiena alimentano la sua magia e possono essere danneggiate.\nPossibile Bottino (Loot): Nucleo elementale, frammenti runici, minerali rari.",
-      "[Idra delle Paludi]\nDescrizione e Pericolosità: Un enorme rettile anfibio con numerose teste ricoperte di melma verde scuro. Ogni testa può mordere indipendentemente e rigenera rapidamente le ferite.\nComportamento: Rimane nascosta sotto l'acqua torbida aspettando che le prede si avvicinino alla riva.\nPunto Debole: Le ferite cauterizzate con fuoco impediscono la rigenerazione delle teste.\nPossibile Bottino (Loot): Sangue rigenerante, denti affilati, pelle resistente all'umidità."
+      "[Sirena Abissale]\n👑 BOSS FINALE E OBIETTIVO SUPREMO DELLA CAMPAGNA 👑\nPer completare e vincere definitivamente il gioco, devi raggiungere la sua tana e sconfiggere questo avversario mortale in combattimento!\n\nDescrizione e Pericolosità: Una figura elegante dalla pelle azzurro pallido e dai lunghi capelli algosi, con occhi completamente neri. Il suo canto trascina i viaggiatori verso acque profonde da cui nessuno riemerge.\nComportamento: Seduce le vittime con melodie ipnotiche prima di trascinarle sott'acqua.\nPunto Debole: Non può usare il proprio canto contro chi è completamente sordo o protegge l'udito.\nPossibile Bottino (Loot): Perla incantata, squame luminose, conchiglia melodica.",
+      "[Mimic del Tesoriere]\nDescrizione e Pericolosità: All'apparenza è un normale baule rinforzato con ferro, ma quando una vittima si avvicina rivela una bocca colma di denti e una lunga lingua adesiva. È sorprendentemente veloce e può spezzare un braccio con un solo morso.\nComportamento: Rimane immobile per giorni fingendosi un contenitore abbandonato, colpendo solo quando la preda abbassa la guardia.\nPunto Debole: Detesta il sale e le sostanze corrosive, che lo costringono ad aprirsi prima di attaccare.\nPossibile Bottino (Loot): Denti affilatissimi, saliva adesiva, monete e oggetti appartenuti alle sue vittime."
     ],
     "📜 Personaggi Incontrati (NPC)": [
-      "[Brom Barilferro] - Oste\nAspetto e Atteggiamento: Un nano robusto dal naso rosso e dalla barba intrecciata con anelli di rame. Accoglie ogni cliente con una pinta già pronta e una battuta sempre diversa.\nMotivazione/Segreto: La sua locanda è costruita sopra un'antica cripta nanica che tiene nascosta a tutti.\nUtilità per il Giocatore: Fornisce informazioni sui viaggiatori, offre camere sicure e mette in contatto con avventurieri in cerca di compagnia.",
+      "[Aldren Corvoscuro] - Cavaliere Errante\nAspetto e Atteggiamento: Indossa un'armatura consumata dal tempo, ricoperta di graffi profondi e stemmi ormai irriconoscibili. Mantiene sempre una postura impeccabile e parla con calma, come se pesasse ogni parola.\nMotivazione/Segreto: Cerca disperatamente il sovrano a cui un tempo giurò fedeltà, ignaro che questi sia morto da secoli. Porta con sé una reliquia che molti ordini sono disposti a uccidere pur di ottenere.\nUtilità per il Giocatore: Può addestrare nelle tecniche di combattimento, scortare durante missioni pericolose e riconoscere antichi simboli nobiliari.",
       "[Caelis Ventoquieto] - Bardo\nAspetto e Atteggiamento: Indossa un mantello blu ricamato con note musicali dorate e porta un liuto antico sempre accordato. Ha una parlantina irresistibile e sembra conoscere una storia su chiunque.\nMotivazione/Segreto: Cerca la Ballata Perduta, una melodia capace di piegare la volontà dei draghi.\nUtilità per il Giocatore: Diffonde la reputazione dell'eroe, raccoglie notizie nelle taverne e conosce leggende dimenticate.",
-      "[Neria dell'Eclisse] - Maga Errante\nAspetto e Atteggiamento: Indossa lunghe vesti blu notte ricamate con costellazioni argentate e porta un bastone sormontato da un cristallo nero. Il suo volto tradisce un'antica stanchezza, ma i suoi occhi brillano di immensa conoscenza.\nMotivazione/Segreto: Cerca un rituale capace di fermare una profezia che annuncia la distruzione del mondo. È stata un tempo membro dell'ordine responsabile della stessa catastrofe che ora tenta di evitare.\nUtilità per il Giocatore: Traduce rune antiche, insegna incantesimi, identifica fenomeni magici e apre portali verso luoghi dimenticati.",
-      "[Aldren Corvoscuro] - Cavaliere Errante\nAspetto e Atteggiamento: Indossa un'armatura consumata dal tempo, ricoperta di graffi profondi e stemmi ormai irriconoscibili. Mantiene sempre una postura impeccabile e parla con calma, come se pesasse ogni parola.\nMotivazione/Segreto: Cerca disperatamente il sovrano a cui un tempo giurò fedeltà, ignaro che questi sia morto da secoli. Porta con sé una reliquia che molti ordini sono disposti a uccidere pur di ottenere.\nUtilità per il Giocatore: Può addestrare nelle tecniche di combattimento, scortare durante missioni pericolose e riconoscere antichi simboli nobiliari."
+      "[Thalia Erbaverde] - Erborista\nAspetto e Atteggiamento: Una giovane donna con lunghi capelli castani intrecciati con foglie e piccoli fiori. Ha mani sempre macchiate di linfa e parla con entusiasmo di ogni pianta che incontra.\nMotivazione/Segreto: È alla ricerca del Fiore dell'Alba, una pianta leggendaria che potrebbe guarire qualsiasi malattia.\nUtilità per il Giocatore: Prepara pozioni, antidoti, veleni naturali e identifica piante rare.",
+      "[Brom Barilferro] - Oste\nAspetto e Atteggiamento: Un nano robusto dal naso rosso e dalla barba intrecciata con anelli di rame. Accoglie ogni cliente con una pinta già pronta e una battuta sempre diversa.\nMotivazione/Segreto: La sua locanda è costruita sopra un'antica cripta nanica che tiene nascosta a tutti.\nUtilità per il Giocatore: Fornisce informazioni sui viaggiatori, offre camere sicure e mette in contatto con avventurieri in cerca di compagnia."
     ],
     "🗺️ Luoghi della Mappa": [
-      "[Monastero di Rocca Silente]\nAtmosfera: Arroccato sulle montagne, il monastero è avvolto da una quiete quasi irreale. Il vento fa vibrare le campane di bronzo e l'aria profuma di pergamena antica, cera e neve.\nPunti di Interesse:\nArchivio delle Mille Pergamene\nGiardino delle Statue Vive\nPericoli e Creature: Monaci corrotti dalla magia, spiriti guardiani, gargoyle dormienti e trappole sacre.\nSpunto Narrativo: I monaci custodiscono un libro che cambia contenuto ogni alba, predicendo eventi futuri con inquietante precisione.",
-      "[Isola delle Maree Eterne]\nAtmosfera: Onde turchesi si infrangono contro alte scogliere ricoperte di licheni argentati. Il profumo salmastro del mare si mescola a quello dei pini marittimi, mentre il richiamo dei gabbiani nasconde strani canti provenienti dalle profondità.\nPunti di Interesse:\nFaro delle Maree\nGrotta del Leviatano\nPericoli e Creature: Sirene, kraken minori, pirati maledetti, granchi corazzati e correnti marine incantate.\nSpunto Narrativo: Ogni equinozio emerge un sentiero di pietra sul mare che conduce a un tempio visibile solo per poche ore.",
       "[Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità.",
-      "[Villaggio di Corvoscuro]\nAtmosfera: Casette di legno annerito sorgono ai margini di una vallata avvolta dalla nebbia. I camini fumano costantemente e il gracchiare dei corvi accompagna il lento scorrere del tempo.\nPunti di Interesse:\nLocanda del Corvo Nero\nVecchio Cimitero delle Lanterne\nPericoli e Creature: Licantropi, spettri erranti, corvi demoniaci, stregoni erranti e maledizioni familiari.\nSpunto Narrativo: Ogni famiglia del villaggio nasconde una stanza murata che nessuno osa aprire da generazioni."
+      "[Picco di Drakmor]\nAtmosfera: Scogliere innevate si innalzano sopra un mare di nuvole, illuminate dal bagliore rossastro di antiche vene laviche. Il vento ulula tra le rocce come un coro di draghi dimenticati e l'aria sa di ghiaccio e cenere.\nPunti di Interesse:\nFortezza del Drago Spezzato\nTempio delle Fiamme Eterne\nPericoli e Creature: Grifoni selvatici, viverne, elementali del fuoco e del ghiaccio, valanghe improvvise e cultisti al servizio di un antico drago.\nSpunto Narrativo: Ogni cento anni il cielo sopra la vetta si apre mostrando una costellazione sconosciuta che indica l'ingresso di un santuario perduto.",
+      "[Forgia di Thar-Gor]\nAtmosfera: Fiumi di lava scorrono tra giganteschi ponti di ferro annerito. Martelli invisibili risuonano nel vuoto e l'aria è calda, pesante e impregnata di metallo fuso.\nPunti di Interesse:\nSala delle Incudini Eterne\nCamera del Cuore Magmatico\nPericoli e Creature: Golem di ferro, salamandre di fuoco, elementali del magma, esplosioni vulcaniche e automi dimenticati.\nSpunto Narrativo: Si narra che l'ultima arma forgiata qui sia in grado di spezzare qualsiasi incantesimo, ma il suo fabbro è scomparso da secoli.",
+      "[Cattedrale delle Stelle Cadute]\nAtmosfera: Una maestosa cattedrale in rovina giace sotto un cielo sempre crepuscolare. Frammenti di meteoriti brillano tra le navate distrutte e l'aria vibra di una magia antichissima.\nPunti di Interesse:\nAltare Celeste\nCripta degli Astronomi\nPericoli e Creature: Angeli decaduti, spiriti astrali, costrutti di cristallo, anomalie gravitazionali e magie instabili.\nSpunto Narrativo: Ogni stella cadente che colpisce la cattedrale risveglia per una notte un antico custode disposto a rispondere a una sola domanda."
     ],
     "🎒 Il Protagonista e Oggetti (Personaggio)": [
-      "[Il Protagonista e Inventario]\n[Varek il Corvo]\nRazza e Classe: Tiefling Stregone\nEtà: 35 anni\nAllineamento: Neutrale\nBackground: Figlio della Maledizione. La tua magia deriva da un antico patto stipulato dai tuoi antenati.\nPersonalità: Freddo, enigmatico e calcolatore.\nAbilità Distintive: Magia oscura, illusioni, maledizioni.\nPregio: Mantiene sempre il controllo.\nDifetto: Fatica a provare empatia.\nObiettivo: Spezzare il patto che grava sulla sua stirpe.\nSegreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.\nEquipaggiamento: Falcetto Rituale, Pozione di Mana, Scudo Sacro,  Bastone d'ossidiana, tomo maledetto, anello runico, amuleto demoniaco.\nStatistiche (Generate coi Dadi):\n- FORZA: 6 (colpire duro, sollevare, spingere)\n- DESTREZZA: 14 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 12 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 12 (resistenza fisica, salute)\nPunti Ferita: 100/100",
-      "[Falcetto Rituale]\nTipo: Arma Magica\nDescrizione: Una lama curva usata anticamente in cerimonie sacre, ancora intrisa di un'energia che sembra reagire alla volontà di chi la impugna.\nEffetto Ludico: Arma magica ibrida, efficace sia in combattimento ravvicinato che nella canalizzazione di piccoli incantesimi.",
+      "[Il Protagonista e Inventario]\n[Lyra l'Ombra]\nRazza e Classe: Elfa Ladra\nEtà: 121 anni\nAllineamento: Caotico Neutrale\nBackground: Fuggiasca. Hai rubato qualcosa di inestimabile a una persona molto potente e ora sei costantemente in movimento.\nPersonalità: Ironica, intelligente e sempre pronta ad avere un piano di riserva.\nAbilità Distintive: Scassinatrice, infiltrazione, borseggio, acrobazia.\nPregio: Si adatta rapidamente a qualsiasi situazione.\nDifetto: Fatica a fidarsi perfino dei propri alleati.\nObiettivo: Vendere il manufatto rubato senza essere trovata.\nSegreto: L'oggetto rubato sembra comunicare con lei nei sogni.\nEquipaggiamento: Pozione di Mana, Kit Medico, Mazza Ferrata,  Due pugnali, fiala di veleno, bombe fumogene.\nStatistiche (Generate coi Dadi):\n- FORZA: 7 (colpire duro, sollevare, spingere)\n- DESTREZZA: 9 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 6 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 18 (resistenza fisica, salute)\nPunti Ferita: 100/100",
       "[Pozione di Mana]\nTipo: Oggetto Curativo\nDescrizione: Un liquido azzurro e frizzante che scalda la gola e rischiara la mente, restituendo lucidità a chi lo beve nel pieno di uno scontro.\nEffetto Ludico: Ripristina una piccola quantità di Punti Ferita, utile come rimedio rapido a basso costo.",
-      "[Scudo Sacro]\nTipo: Accessorio Difensivo\nDescrizione: Uno scudo consacrato, decorato con simboli religiosi ormai sbiaditi. Chi lo porta giura di sentirsi protetto da una presenza silenziosa.\nEffetto Ludico: Oggetto difensivo, riduce la probabilità di subire danno pieno dagli attacchi nemici."
+      "[Kit Medico]\nTipo: Oggetto Curativo\nDescrizione: Un rotolo di bende, unguenti e strumenti essenziali per stabilizzare una ferita nel bel mezzo del cammino.\nEffetto Ludico: Cura una quantità moderata di Punti Ferita, riutilizzabile durante l'avventura.",
+      "[Mazza Ferrata]\nTipo: Arma da Mischia\nDescrizione: Una mazza dalla testa rinforzata in ferro battuto, pesante abbastanza da spezzare ossa e armature con un solo colpo ben assestato.\nEffetto Ludico: Arma pesante da mischia, che privilegia la forza bruta sulla precisione."
     ],
     "🎯 Percorso e Tappe Obbligatorie": [
-      "[👑 Tappa 6 (BOSS FINALE E OBIETTIVO SUPREMO): OVEST - Golem di Basalto]\n📍 **Luogo / Zona:** Villaggio di Corvoscuro (OVEST)\n👑 Boss Finale: **Golem di Basalto**\n\n🎯 **Cosa devi fare:** Sconfiggi il Boss Finale Golem di Basalto a Villaggio di Corvoscuro\n\n⚡ **Stato:** ⏳ In Corso / Obiettivo Attuale"
+      "[👑 Tappa 6 (BOSS FINALE E OBIETTIVO SUPREMO): OVEST - Sirena Abissale]\n📍 **Luogo / Zona:** Cattedrale delle Stelle Cadute (OVEST)\n👑 Boss Finale: **Sirena Abissale**\n\n🎯 **Cosa devi fare:** Sconfiggi il Boss Finale Sirena Abissale a Cattedrale delle Stelle Cadute\n\n⚡ **Stato:** ⏳ In Corso / Obiettivo Attuale"
     ]
   },
-  "personaggio": "[Varek il Corvo]\nRazza e Classe: Tiefling Stregone\nEtà: 35 anni\nAllineamento: Neutrale\nBackground: Figlio della Maledizione. La tua magia deriva da un antico patto stipulato dai tuoi antenati.\nPersonalità: Freddo, enigmatico e calcolatore.\nAbilità Distintive: Magia oscura, illusioni, maledizioni.\nPregio: Mantiene sempre il controllo.\nDifetto: Fatica a provare empatia.\nObiettivo: Spezzare il patto che grava sulla sua stirpe.\nSegreto: Ogni incantesimo rafforza lentamente il demone legato alla sua anima.\nEquipaggiamento: Falcetto Rituale, Pozione di Mana, Scudo Sacro,  Bastone d'ossidiana, tomo maledetto, anello runico, amuleto demoniaco.\nStatistiche (Generate coi Dadi):\n- FORZA: 6 (colpire duro, sollevare, spingere)\n- DESTREZZA: 14 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 12 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 12 (resistenza fisica, salute)\nPunti Ferita: 100/100",
-  "mappa": "[CENTRO]: [Monastero di Rocca Silente]\nAtmosfera: Arroccato sulle montagne, il monastero è avvolto da una quiete quasi irreale. Il vento fa vibrare le campane di bronzo e l'aria profuma di pergamena antica, cera e neve.\nPunti di Interesse:\nArchivio delle Mille Pergamene\nGiardino delle Statue Vive\nPericoli e Creature: Monaci corrotti dalla magia, spiriti guardiani, gargoyle dormienti e trappole sacre.\nSpunto Narrativo: I monaci custodiscono un libro che cambia contenuto ogni alba, predicendo eventi futuri con inquietante precisione. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Brom Barilferro - Oste | 🌿 Zona Sicura)\n    [NORD]: [Isola delle Maree Eterne]\nAtmosfera: Onde turchesi si infrangono contro alte scogliere ricoperte di licheni argentati. Il profumo salmastro del mare si mescola a quello dei pini marittimi, mentre il richiamo dei gabbiani nasconde strani canti provenienti dalle profondità.\nPunti di Interesse:\nFaro delle Maree\nGrotta del Leviatano\nPericoli e Creature: Sirene, kraken minori, pirati maledetti, granchi corazzati e correnti marine incantate.\nSpunto Narrativo: Ogni equinozio emerge un sentiero di pietra sul mare che conduce a un tempio visibile solo per poche ore. <-- (🧑 NPC residente: Caelis Ventoquieto - Bardo | ⚔️ Pericolo: Idra delle Paludi)\n    [EST]: [Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità. <-- (🧑 NPC residente: Neria dell'Eclisse - Maga Errante | 🌿 Zona Sicura)\n    [OVEST]: [Villaggio di Corvoscuro]\nAtmosfera: Casette di legno annerito sorgono ai margini di una vallata avvolta dalla nebbia. I camini fumano costantemente e il gracchiare dei corvi accompagna il lento scorrere del tempo.\nPunti di Interesse:\nLocanda del Corvo Nero\nVecchio Cimitero delle Lanterne\nPericoli e Creature: Licantropi, spettri erranti, corvi demoniaci, stregoni erranti e maledizioni familiari.\nSpunto Narrativo: Ogni famiglia del villaggio nasconde una stanza murata che nessuno osa aprire da generazioni. <-- (🧑 NPC residente: Aldren Corvoscuro - Cavaliere Errante | ⚔️ 👑 BOSS FINALE: Golem di Basalto)",
+  "personaggio": "[Lyra l'Ombra]\nRazza e Classe: Elfa Ladra\nEtà: 121 anni\nAllineamento: Caotico Neutrale\nBackground: Fuggiasca. Hai rubato qualcosa di inestimabile a una persona molto potente e ora sei costantemente in movimento.\nPersonalità: Ironica, intelligente e sempre pronta ad avere un piano di riserva.\nAbilità Distintive: Scassinatrice, infiltrazione, borseggio, acrobazia.\nPregio: Si adatta rapidamente a qualsiasi situazione.\nDifetto: Fatica a fidarsi perfino dei propri alleati.\nObiettivo: Vendere il manufatto rubato senza essere trovata.\nSegreto: L'oggetto rubato sembra comunicare con lei nei sogni.\nEquipaggiamento: Pozione di Mana, Kit Medico, Mazza Ferrata,  Due pugnali, fiala di veleno, bombe fumogene.\nStatistiche (Generate coi Dadi):\n- FORZA: 7 (colpire duro, sollevare, spingere)\n- DESTREZZA: 9 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 6 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 18 (resistenza fisica, salute)\nPunti Ferita: 100/100",
+  "mappa": "[CENTRO]: [Foresta di Sylvaris]\nAtmosfera: Una foschia argentata danza tra tronchi giganteschi coperti di muschio luminescente. L'aria profuma di resina e fiori selvatici, mentre canti lontani sembrano provenire dagli alberi stessi.\nPunti di Interesse:\nLago degli Spiriti Riflessi\nCerchio delle Pietre Cantanti\nPericoli e Creature: Lupi eterei, driadi diffidenti, ragni di cristallo, funghi allucinogeni e sentieri che cambiano posizione con il tramonto.\nSpunto Narrativo: Si dice che il cuore della foresta custodisca un albero capace di esaudire un solo desiderio ogni secolo, ma nessuno è mai tornato raccontando la verità. <-- (Tu sei qui: Punto di Partenza) <-- (🧑 NPC residente: Aldren Corvoscuro - Cavaliere Errante | 🌿 Zona Sicura)\n    [NORD]: [Picco di Drakmor]\nAtmosfera: Scogliere innevate si innalzano sopra un mare di nuvole, illuminate dal bagliore rossastro di antiche vene laviche. Il vento ulula tra le rocce come un coro di draghi dimenticati e l'aria sa di ghiaccio e cenere.\nPunti di Interesse:\nFortezza del Drago Spezzato\nTempio delle Fiamme Eterne\nPericoli e Creature: Grifoni selvatici, viverne, elementali del fuoco e del ghiaccio, valanghe improvvise e cultisti al servizio di un antico drago.\nSpunto Narrativo: Ogni cento anni il cielo sopra la vetta si apre mostrando una costellazione sconosciuta che indica l'ingresso di un santuario perduto. <-- (🧑 NPC residente: Caelis Ventoquieto - Bardo | ⚔️ Pericolo: Mimic del Tesoriere)\n    [EST]: [Forgia di Thar-Gor]\nAtmosfera: Fiumi di lava scorrono tra giganteschi ponti di ferro annerito. Martelli invisibili risuonano nel vuoto e l'aria è calda, pesante e impregnata di metallo fuso.\nPunti di Interesse:\nSala delle Incudini Eterne\nCamera del Cuore Magmatico\nPericoli e Creature: Golem di ferro, salamandre di fuoco, elementali del magma, esplosioni vulcaniche e automi dimenticati.\nSpunto Narrativo: Si narra che l'ultima arma forgiata qui sia in grado di spezzare qualsiasi incantesimo, ma il suo fabbro è scomparso da secoli. <-- (🧑 NPC residente: Thalia Erbaverde - Erborista | 🌿 Zona Sicura)\n    [OVEST]: [Cattedrale delle Stelle Cadute]\nAtmosfera: Una maestosa cattedrale in rovina giace sotto un cielo sempre crepuscolare. Frammenti di meteoriti brillano tra le navate distrutte e l'aria vibra di una magia antichissima.\nPunti di Interesse:\nAltare Celeste\nCripta degli Astronomi\nPericoli e Creature: Angeli decaduti, spiriti astrali, costrutti di cristallo, anomalie gravitazionali e magie instabili.\nSpunto Narrativo: Ogni stella cadente che colpisce la cattedrale risveglia per una notte un antico custode disposto a rispondere a una sola domanda. <-- (🧑 NPC residente: Brom Barilferro - Oste | ⚔️ 👑 BOSS FINALE: Sirena Abissale)",
   "tema": "dark-fantasy",
   "difficolta": "easy",
-  "hp": 55,
+  "hp": 36,
   "combat": {
-    "enemy_name": "Idra Delle Paludi",
+    "enemy_name": "Mimic Del Tesoriere",
     "enemy_hp": 0,
-    "enemy_max_hp": 78,
-    "enemy_ac": 15,
-    "enemy_atk": 7,
-    "enemy_dmg_min": 8,
-    "enemy_dmg_max": 14,
-    "loot": "Sangue rigenerante, squame di drago minore, denti velenosi, sacca biliare",
+    "enemy_max_hp": 46,
+    "enemy_ac": 14,
+    "enemy_atk": 5,
+    "enemy_dmg_min": 5,
+    "enemy_dmg_max": 10,
+    "loot": "Denti affilatissimi, saliva adesiva, monete e oggetti",
     "active": false,
     "is_boss": false
   },
   "posizione_attuale": {
     "zona_tag": "OVEST",
-    "nome_luogo": ": [Villaggio di Corvoscuro]",
+    "nome_luogo": ": [Cattedrale delle Stelle Cadute]",
     "is_zona_sicura": false,
     "nemico_zona": null
   },
   "nemici_sconfitti": [
-    "Idra Delle Paludi"
+    "Mimic Del Tesoriere"
   ],
   "progressione": [
-    "1. [CENTRO] Parla con Brom Barilferro - Oste a Monastero di Rocca Silente (coinvolge: Brom Barilferro - Oste)",
-    "2. [NORD] Incontra e collabora con Caelis Ventoquieto - Bardo a Isola delle Maree Eterne (coinvolge: Caelis Ventoquieto - Bardo)",
-    "3. [NORD] Affronta e sconfiggi Idra delle Paludi a Isola delle Maree Eterne (coinvolge: Idra delle Paludi)",
-    "4. [EST] Incontra e collabora con Neria dell'Eclisse - Maga Errante a Foresta di Sylvaris (coinvolge: Neria dell'Eclisse - Maga Errante)",
-    "5. [OVEST] Raggiungi Villaggio di Corvoscuro e consulta Aldren Corvoscuro - Cavaliere Errante (coinvolge: Aldren Corvoscuro - Cavaliere Errante)",
-    "6. [OVEST] Sconfiggi il Boss Finale Golem di Basalto a Villaggio di Corvoscuro (coinvolge: Golem di Basalto)"
+    "1. [CENTRO] Parla con Aldren Corvoscuro - Cavaliere Errante a Foresta di Sylvaris (coinvolge: Aldren Corvoscuro - Cavaliere Errante)",
+    "2. [NORD] Incontra e collabora con Caelis Ventoquieto - Bardo a Picco di Drakmor (coinvolge: Caelis Ventoquieto - Bardo)",
+    "3. [NORD] Affronta e sconfiggi Mimic del Tesoriere a Picco di Drakmor (coinvolge: Mimic del Tesoriere)",
+    "4. [EST] Incontra e collabora con Thalia Erbaverde - Erborista a Forgia di Thar-Gor (coinvolge: Thalia Erbaverde - Erborista)",
+    "5. [OVEST] Raggiungi Cattedrale delle Stelle Cadute e consulta Brom Barilferro - Oste (coinvolge: Brom Barilferro - Oste)",
+    "6. [OVEST] Sconfiggi il Boss Finale Sirena Abissale a Cattedrale delle Stelle Cadute (coinvolge: Sirena Abissale)"
   ],
   "tappe_strutturate": [
     {
       "id": 1,
       "zona_tag": "CENTRO",
-      "nome_luogo": "Monastero di Rocca Silente",
-      "personaggio": "Brom Barilferro - Oste",
-      "obiettivo": "Parla con Brom Barilferro - Oste a Monastero di Rocca Silente",
+      "nome_luogo": "Foresta di Sylvaris",
+      "personaggio": "Aldren Corvoscuro - Cavaliere Errante",
+      "obiettivo": "Parla con Aldren Corvoscuro - Cavaliere Errante a Foresta di Sylvaris",
       "completato": true,
       "is_boss": false,
       "tipo": "npc"
@@ -336,9 +276,9 @@
     {
       "id": 2,
       "zona_tag": "NORD",
-      "nome_luogo": "Isola delle Maree Eterne",
+      "nome_luogo": "Picco di Drakmor",
       "personaggio": "Caelis Ventoquieto - Bardo",
-      "obiettivo": "Incontra e collabora con Caelis Ventoquieto - Bardo a Isola delle Maree Eterne",
+      "obiettivo": "Incontra e collabora con Caelis Ventoquieto - Bardo a Picco di Drakmor",
       "completato": true,
       "is_boss": false,
       "tipo": "npc"
@@ -346,9 +286,9 @@
     {
       "id": 3,
       "zona_tag": "NORD",
-      "nome_luogo": "Isola delle Maree Eterne",
-      "personaggio": "Idra delle Paludi",
-      "obiettivo": "Affronta e sconfiggi Idra delle Paludi a Isola delle Maree Eterne",
+      "nome_luogo": "Picco di Drakmor",
+      "personaggio": "Mimic del Tesoriere",
+      "obiettivo": "Affronta e sconfiggi Mimic del Tesoriere a Picco di Drakmor",
       "completato": true,
       "is_boss": false,
       "tipo": "combattimento"
@@ -356,9 +296,9 @@
     {
       "id": 4,
       "zona_tag": "EST",
-      "nome_luogo": "Foresta di Sylvaris",
-      "personaggio": "Neria dell'Eclisse - Maga Errante",
-      "obiettivo": "Incontra e collabora con Neria dell'Eclisse - Maga Errante a Foresta di Sylvaris",
+      "nome_luogo": "Forgia di Thar-Gor",
+      "personaggio": "Thalia Erbaverde - Erborista",
+      "obiettivo": "Incontra e collabora con Thalia Erbaverde - Erborista a Forgia di Thar-Gor",
       "completato": true,
       "is_boss": false,
       "tipo": "npc"
@@ -366,9 +306,9 @@
     {
       "id": 5,
       "zona_tag": "OVEST",
-      "nome_luogo": "Villaggio di Corvoscuro",
-      "personaggio": "Aldren Corvoscuro - Cavaliere Errante",
-      "obiettivo": "Raggiungi Villaggio di Corvoscuro e consulta Aldren Corvoscuro - Cavaliere Errante",
+      "nome_luogo": "Cattedrale delle Stelle Cadute",
+      "personaggio": "Brom Barilferro - Oste",
+      "obiettivo": "Raggiungi Cattedrale delle Stelle Cadute e consulta Brom Barilferro - Oste",
       "completato": true,
       "is_boss": false,
       "tipo": "npc"
@@ -376,9 +316,9 @@
     {
       "id": 6,
       "zona_tag": "OVEST",
-      "nome_luogo": "Villaggio di Corvoscuro",
-      "personaggio": "Golem di Basalto",
-      "obiettivo": "Sconfiggi il Boss Finale Golem di Basalto a Villaggio di Corvoscuro",
+      "nome_luogo": "Cattedrale delle Stelle Cadute",
+      "personaggio": "Sirena Abissale",
+      "obiettivo": "Sconfiggi il Boss Finale Sirena Abissale a Cattedrale delle Stelle Cadute",
       "completato": false,
       "is_boss": true,
       "tipo": "boss"
