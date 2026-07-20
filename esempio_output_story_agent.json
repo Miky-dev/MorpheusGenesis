@@ -1,0 +1,120 @@
+{
+    "chat_history": [
+        {
+            "role": "system",
+            "content": "Agisci come un Dungeon Master esperto di giochi di ruolo testuali e narrazione collaborativa.\n\n=== AMBIENTAZIONE E TONO (DARK-FANTASY) ===\nDark Fantasy: regni corrotti dall'oscurità, magia proibita, atmosfera cupa e minacciosa. I colori dominanti sono il nero, il porpora e il rosso sangue.\n\n=== LIVELLO DI DIFFICOLTÀ (NORMAL) ===\nAvventura: L'IA si comporta da arbitro neutrale, seguendo le classiche regole di D&D. Sfide bilanciate e narrazione standard e realistica.\n\n=== LA SCHEDA DEL GIOCATORE CON OGGETTI DI PARTENZA ===\n[Kaelen il Ramingo]\nRazza e Classe: Umano Ranger\nEtà: 29 anni\nAllineamento: Neutrale Buono\nBackground: Sopravvissuto. Il tuo villaggio è stato distrutto da creature mostruose e porti le cicatrici (fisiche e mentali) di quella notte.\nPersonalità: Taciturno, paziente e incredibilmente osservatore. Si fida delle azioni più che delle parole.\nAbilità Distintive: Maestro delle imboscate, tracciatore esperto, eccellente arciere.\nPregio: Non abbandona mai chi considera un alleato.\nDifetto: Gli incubi del passato lo rendono diffidente verso gli sconosciuti.\nObiettivo: Scoprire chi ha guidato l'attacco che distrusse il suo villaggio.\nSegreto: Conserva una zanna della creatura che sterminò la sua famiglia, capace di reagire alla presenza dei suoi simili.\nEquipaggiamento: Bracciali Rinforzati, Pozione di Rigenerazione Elfica, Arco Lungo,  Arco lungo, spada corta, coltello da caccia, mantello mimetico.\nStatistiche (Generate coi Dadi):\n- FORZA: 5 (colpire duro, sollevare, spingere)\n- DESTREZZA: 3 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 13 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 7 (resistenza fisica, salute)\nPunti Ferita: 100/100\n\n=== GEOGRAFIA E POSIZIONI (LA MAPPA MULTI-AGENTE) ===\nIl mondo di gioco della campagna è composto esattamente da 4 località interconnesse:\n      [NORD] Giardino di Aeloria <-- (🧑 NPC residente: Aldren Corvoscuro | ⚔️ Pericolo: Spettro del Giuramento)\n[OVEST] Villaggio di Corvoscuro   <-- (🧑 NPC residente: Selene Velombra | 🌿 Zona Sicura)\n[EST] La Città delle Cinque Porte <-- (🧑 NPC residente: Brom Barilferro | 🌿 Zona Sicura)\n               [CENTRO] Isola delle Maree Eterne <-- (🧑 NPC residente: Marek il Sussurratore | 👑 BOSS FINALE: Drago delle Tempeste)\n\nATTENZIONE FONDAMENTALE SUL BOSS FINALE E SUI NUMERI:\n1. IL BOSS FINALE DA SCONFIGGERE PER COMPLETARE IL GIOCO È: **Drago delle Tempeste**.\n2. Nella mappa ci sono ESATTAMENTE 4 località/città, 4 NPC e 2 Nemici/Mostri.\n\n=== PROGRESSIONE LINEARE OBBLIGATORIA ===\nZone disponibili: CENTRO, NORD, EST, OVEST\nNPC disponibili: Aldren Corvoscuro, Selene Velombra, Brom Barilferro, Marek il Sussurratore\nNemici disponibili: Spettro del Giuramento, Drago delle Tempeste\n\n=== REGOLE SUI DADI, AZIONI E GIOCO DI RUOLO ===\n- Un tiro di 1 è un Fallimento Critico (disastroso ma narrativamente interessante).\n- Un tiro di 20 è un Successo Critico (spettacolare ed eroico).\n- Tiri da 2 a 10 tendono a fallire o riuscire con costo, da 11 a 19 tendono ad avere successo.\n\n=== REGOLE DI RISPOSTA ===\nRispondi SEMPRE con pura narrazione immersiva in seconda persona. NON usare MAI tag tecnici, meta-commenti o formattazione speciale nelle risposte. Scrivi solo la storia, le azioni dei personaggi e i dialoghi.\nIMPORTANTE - LUNGHEZZA: Sii completo ma CONCISO e BREVE. Le risposte devono essere di massimo 2-3 brevi paragrafi (circa 100-150 parole totali). Evita descrizioni prolisse o inutili lungaggini; la narrazione deve essere dinamica, incalzante e diretta.\n"
+        },
+        {
+            "role": "assistant",
+            "content": "L'Isola delle Maree Eterne, avvolta da nebbie nere e acque ribollenti, è il cuore oscuro di questo regno. Al suo centro dimora il Drago delle Tempeste, una creatura primordiale che scaglia fulmini e tempeste, minacciando ogni terra circostante con la sua furia inarrestabile.\n\nTu sei Kaelen il Ramingo, ranger umano segnato dalle cicatrici di un villaggio bruciato. Con l'arco lungo, la spada corta, i bracciali rinforzati, il mantello mimetico e la preziosa zanna della bestia che un tempo annientò la tua famiglia, ti avventuri alla ricerca di chi ha guidato quell'orribile attacco.\n\nIl crepuscolo tinge di rosso il cielo sopra il Villaggio di Corvoscuro, e un fumo denso sale dalle rovine. Una figura incappucciata ti indica un sentiero che porta verso il Nord, dove si aggira lo Spettro del Giuramento. Decidi se seguirlo subito o cercare prima l'aiuto di Selene Velombra."
+        }
+    ],
+    "diario": {
+        "👑 Boss Finale e Nemici (Bestiario)": [
+            "Drago delle Tempeste è il temibile boss finale dell'Isola delle Maree Eterne.",
+            "[Drago delle Tempeste]\nDescrizione e Pericolosità: Un gigantesco drago dalle scaglie blu acciaio attraversate da scariche elettriche. Il battito delle sue ali scatena venti devastanti e fulmini che inceneriscono interi gruppi di avventurieri.\nComportamento: Difende il proprio territorio dall'alto, colpendo con fulmini prima di piombare sulle prede.\nPunto Debole: Durante il volo accumula enormi quantità di energia elettrica; costringerlo ad atterrare lo rende molto meno pericoloso.\nPossibile Bottino (Loot): Scaglie draconiche, artigli, cuore del fulmine, tesoro accumulato nel covo."
+        ],
+        "📜 Personaggi Incontrati (NPC)": [
+            "[Aldren Corvoscuro] - Cavaliere Errante\nAspetto e Atteggiamento: Indossa un'armatura consumata dal tempo, ricoperta di graffi profondi e stemmi ormai irriconoscibili. Mantiene sempre una postura impeccabile e parla con calma, come se pesasse ogni parola.\nMotivazione/Segreto: Cerca disperatamente il sovrano a cui un tempo giurò fedeltà, ignaro che questi sia morto da secoli. Porta con sé una reliquia che molti ordini sono disposti a uccidere pur di ottenere.\nUtilità per il Giocatore: Può addestrare nelle tecniche di combattimento, scortare durante missioni pericolose e riconoscere antichi simboli nobiliari.",
+            "[Selene Velombra] - Ranger\nAspetto e Atteggiamento: Un'elfa dai capelli corvini e dagli occhi verde smeraldo, sempre accompagnata da un grande falco. Osserva ogni dettaglio dell'ambiente prima di parlare.\nMotivazione/Segreto: È sulle tracce di una creatura che ha distrutto il suo villaggio. In realtà conosce un antico sentiero che conduce al regno delle fate, ma ne custodisce gelosamente l'accesso.\nUtilità per il Giocatore: Guida attraverso foreste e montagne, individua tracce, evita imboscate e insegna tecniche di sopravvivenza.",
+            "[Brom Barilferro] - Oste\nAspetto e Atteggiamento: Un nano robusto dal naso rosso e dalla barba intrecciata con anelli di rame. Accoglie ogni cliente con una pinta già pronta e una battuta sempre diversa.\nMotivazione/Segreto: La sua locanda è costruita sopra un'antica cripta nanica che tiene nascosta a tutti.\nUtilità per il Giocatore: Fornisce informazioni sui viaggiatori, offre camere sicure e mette in contatto con avventurieri in cerca di compagnia.",
+            "[Marek il Sussurratore] - Informatore\nAspetto e Atteggiamento: Magro e sempre avvolto in un mantello scuro, compare e scompare tra la folla senza fare rumore. Parla sottovoce e conclude ogni frase con un sorriso enigmatico.\nMotivazione/Segreto: Vende informazioni al miglior offerente, ma sta segretamente raccogliendo prove contro una potente confraternita criminale.\nUtilità per il Giocatore: Rivela pettegolezzi, posizioni di bersagli, passaggi nascosti e missioni secondarie."
+        ],
+        "🗺️ Luoghi della Mappa": [
+            "[Isola delle Maree Eterne]\nAtmosfera: Onde turchesi si infrangono contro alte scogliere ricoperte di licheni argentati. Il profumo salmastro del mare si mescola a quello dei pini marittimi, mentre il richiamo dei gabbiani nasconde strani canti provenienti dalle profondità.\nPunti di Interesse:\nFaro delle Maree\nGrotta del Leviatano\nPericoli e Creature: Sirene, kraken minori, pirati maledetti, granchi corazzati e correnti marine incantate.\nSpunto Narrativo: Ogni equinozio emerge un sentiero di pietra sul mare che conduce a un tempio visibile solo per poche ore.",
+            "[Giardino di Aeloria]\nAtmosfera: Fiori giganteschi diffondono una luce soffusa che trasforma la notte in un eterno tramonto. L'aria è satura di profumi dolci e il ronzio di insetti luminosi crea una melodia ipnotica.\nPunti di Interesse:\nSerra della Regina Fatata\nFontana dei Petali Eterni\nPericoli e Creature: Fate ingannatrici, api giganti, mandragore, piante carnivore e pollini che alterano la memoria.\nSpunto Narrativo: Si racconta che nel giardino sbocci un unico fiore capace di riportare in vita un'anima perduta, ma appassisce appena viene osservato.",
+            "[La Città delle Cinque Porte]\nAtmosfera: Le mura di pietra nera riflettono la luce tremolante delle torce, mentre l'odore di legna bruciata, spezie e pioggia impregna le strette vie acciottolate. Campane lontane scandiscono le ore e il brusio del mercato si mescola ai sussurri di antiche leggende.\nPunti di Interesse:\nMercato delle Ombre\nTorre dell'Astrologo Reale\nPericoli e Creature: Ladri della Gilda Nera, mutaforma infiltrati tra i cittadini, gargoyle animati durante la notte e magie proibite nascoste nei sotterranei.\nSpunto Narrativo: Ogni luna nuova uno degli antichi portoni cittadini si apre da solo, ma nessuno ricorda cosa si trovi oltre la soglia.",
+            "[Villaggio di Corvoscuro]\nAtmosfera: Casette di legno annerito sorgono ai margini di una vallata avvolta dalla nebbia. I camini fumano costantemente e il gracchiare dei corvi accompagna il lento scorrere del tempo.\nPunti di Interesse:\nLocanda del Corvo Nero\nVecchio Cimitero delle Lanterne\nPericoli e Creature: Licantropi, spettri erranti, corvi demoniaci, stregoni erranti e maledizioni familiari.\nSpunto Narrativo: Ogni famiglia del villaggio nasconde una stanza murata che nessuno osa aprire da generazioni."
+        ],
+        "🎒 Il Protagonista e Oggetti (Personaggio)": [
+            "[Il Protagonista e Inventario]\n[Kaelen il Ramingo]\nRazza e Classe: Umano Ranger\nEtà: 29 anni\nAllineamento: Neutrale Buono\nBackground: Sopravvissuto. Il tuo villaggio è stato distrutto da creature mostruose e porti le cicatrici (fisiche e mentali) di quella notte.\nPersonalità: Taciturno, paziente e incredibilmente osservatore. Si fida delle azioni più che delle parole.\nAbilità Distintive: Maestro delle imboscate, tracciatore esperto, eccellente arciere.\nPregio: Non abbandona mai chi considera un alleato.\nDifetto: Gli incubi del passato lo rendono diffidente verso gli sconosciuti.\nObiettivo: Scoprire chi ha guidato l'attacco che distrusse il suo villaggio.\nSegreto: Conserva una zanna della creatura che sterminò la sua famiglia, capace di reagire alla presenza dei suoi simili.\nEquipaggiamento: Bracciali Rinforzati, Pozione di Rigenerazione Elfica, Arco Lungo,  Arco lungo, spada corta, coltello da caccia, mantello mimetico.\nStatistiche (Generate coi Dadi):\n- FORZA: 5 (colpire duro, sollevare, spingere)\n- DESTREZZA: 3 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 13 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 7 (resistenza fisica, salute)\nPunti Ferita: 100/100",
+            "[Bracciali Rinforzati]\nTipo: Accessorio Difensivo\nDescrizione: Un paio di bracciali in cuoio borchiato, pensati per parare colpi di lama e attutire l'impatto delle armi contundenti.\nEffetto Ludico: Accessorio difensivo leggero, un piccolo margine di protezione che non ostacola la mobilità.",
+            "[Pozione di Rigenerazione Elfica]\nTipo: Oggetto Curativo\nDescrizione: Un liquido dai riflessi verde smeraldo, distillato secondo un'antica ricetta elfica. Il suo sapore ricorda la resina di pino e la rugiada del mattino.\nEffetto Ludico: Cura una quantità elevata di Punti Ferita, tra le pozioni curative più efficaci disponibili.",
+            "[Arco Lungo]\nTipo: Arma da Distanza\nDescrizione: Un arco alto quanto un uomo, intagliato in legno di tasso e rinforzato con nervo animale. Le frecce scoccate fischiano nell'aria con una precisione quasi innaturale.\nEffetto Ludico: Arma da attacco a distanza, particolarmente efficace nelle mani di chi si affida alla Destrezza."
+        ],
+        "🎯 Percorso e Tappe Obbligatorie": [
+            "[Tappa 1: CENTRO - Aldren Corvoscuro - Cavaliere Errante]\n📍 **Luogo / Zona:** Isola delle Maree Eterne <— (Tu sei qui: Punto di Partenza) (CENTRO)\n👤 NPC Alleato/Informatore: **Aldren Corvoscuro - Cavaliere Errante**\n📖 **Punto della Narrazione:** Parla con Aldren Corvoscuro - Cavaliere Errante a Isola delle Maree Eterne <— (Tu sei qui: Punto di Partenza)\n⚡ **Stato Tappa:** ⏳ In Corso / Obiettivo Attuale"
+        ]
+    },
+    "mappa_mondo": "      [NORD] Giardino di Aeloria <-- (🧑 NPC residente: Aldren Corvoscuro | ⚔️ Pericolo: Spettro del Giuramento)\n[OVEST] Villaggio di Corvoscuro   <-- (🧑 NPC residente: Selene Velombra | 🌿 Zona Sicura)\n[EST] La Città delle Cinque Porte <-- (🧑 NPC residente: Brom Barilferro | 🌿 Zona Sicura)\n               [CENTRO] Isola delle Maree Eterne <-- (🧑 NPC residente: Marek il Sussurratore | 👑 BOSS FINALE: Drago delle Tempeste)",
+    "prologo": "L'Isola delle Maree Eterne, avvolta da nebbie nere e acque ribollenti, è il cuore oscuro di questo regno. Al suo centro dimora il Drago delle Tempeste, una creatura primordiale che scaglia fulmini e tempeste, minacciando ogni terra circostante con la sua furia inarrestabile.\n\nTu sei Kaelen il Ramingo, ranger umano segnato dalle cicatrici di un villaggio bruciato. Con l'arco lungo, la spada corta, i bracciali rinforzati, il mantello mimetico e la preziosa zanna della bestia che un tempo annientò la tua famiglia, ti avventuri alla ricerca di chi ha guidato quell'orribile attacco.",
+    "azione_iniziale": "Il crepuscolo tinge di rosso il cielo sopra il Villaggio di Corvoscuro, e un fumo denso sale dalle rovine. Una figura incappucciata ti indica un sentiero che porta verso il Nord, dove si aggira lo Spettro del Giuramento. Decidi se seguirlo subito o cercare prima l'aiuto di Selene Velombra.",
+    "personaggio_arricchito": "[Kaelen il Ramingo]\nRazza e Classe: Umano Ranger\nEtà: 29 anni\nAllineamento: Neutrale Buono\nBackground: Sopravvissuto. Il tuo villaggio è stato distrutto da creature mostruose e porti le cicatrici (fisiche e mentali) di quella notte.\nPersonalità: Taciturno, paziente e incredibilmente osservatore. Si fida delle azioni più che delle parole.\nAbilità Distintive: Maestro delle imboscate, tracciatore esperto, eccellente arciere.\nPregio: Non abbandona mai chi considera un alleato.\nDifetto: Gli incubi del passato lo rendono diffidente verso gli sconosciuti.\nObiettivo: Scoprire chi ha guidato l'attacco che distrusse il suo villaggio.\nSegreto: Conserva una zanna della creatura che sterminò la sua famiglia, capace di reagire alla presenza dei suoi simili.\nEquipaggiamento: Bracciali Rinforzati, Pozione di Rigenerazione Elfica, Arco Lungo,  Arco lungo, spada corta, coltello da caccia, mantello mimetico.\nStatistiche (Generate coi Dadi):\n- FORZA: 5 (colpire duro, sollevare, spingere)\n- DESTREZZA: 3 (agilità, furtività, schivare, armi a distanza)\n- INTELLIGENZA: 13 (magia, indagare, capire meccanismi)\n- COSTITUZIONE: 7 (resistenza fisica, salute)\nPunti Ferita: 100/100",
+    "progressione": [
+        "1. [CENTRO] Parla con Aldren Corvoscuro - Cavaliere Errante a Isola delle Maree Eterne <— (Tu sei qui: Punto di Partenza) (coinvolge: Aldren Corvoscuro - Cavaliere Errante)",
+        "2. [CENTRO] Sconfiggi Spettro del Giuramento a Isola delle Maree Eterne <— (Tu sei qui: Punto di Partenza) (coinvolge: Spettro del Giuramento)",
+        "3. [NORD] Incontra e collabora con Selene Velombra - Ranger a Giardino di Aeloria (coinvolge: Selene Velombra - Ranger)",
+        "4. [EST] Incontra e collabora con Brom Barilferro - Oste a La Città delle Cinque Porte (coinvolge: Brom Barilferro - Oste)",
+        "5. [OVEST] Raggiungi Villaggio di Corvoscuro e consulta Marek il Sussurratore - Informatore (coinvolge: Marek il Sussurratore - Informatore)",
+        "6. [OVEST] Sconfiggi il Boss Finale Drago delle Tempeste a Villaggio di Corvoscuro (coinvolge: Drago delle Tempeste)"
+    ],
+    "tappe_strutturate": [
+        {
+            "id": 1,
+            "zona_tag": "CENTRO",
+            "nome_luogo": "Isola delle Maree Eterne <— (Tu sei qui: Punto di Partenza)",
+            "personaggio": "Aldren Corvoscuro - Cavaliere Errante",
+            "obiettivo": "Parla con Aldren Corvoscuro - Cavaliere Errante a Isola delle Maree Eterne <— (Tu sei qui: Punto di Partenza)",
+            "completato": false,
+            "is_boss": false,
+            "tipo": "npc"
+        },
+        {
+            "id": 2,
+            "zona_tag": "CENTRO",
+            "nome_luogo": "Isola delle Maree Eterne <— (Tu sei qui: Punto di Partenza)",
+            "personaggio": "Spettro del Giuramento",
+            "obiettivo": "Sconfiggi Spettro del Giuramento a Isola delle Maree Eterne <— (Tu sei qui: Punto di Partenza)",
+            "completato": false,
+            "is_boss": false,
+            "tipo": "combattimento"
+        },
+        {
+            "id": 3,
+            "zona_tag": "NORD",
+            "nome_luogo": "Giardino di Aeloria",
+            "personaggio": "Selene Velombra - Ranger",
+            "obiettivo": "Incontra e collabora con Selene Velombra - Ranger a Giardino di Aeloria",
+            "completato": false,
+            "is_boss": false,
+            "tipo": "npc"
+        },
+        {
+            "id": 4,
+            "zona_tag": "EST",
+            "nome_luogo": "La Città delle Cinque Porte",
+            "personaggio": "Brom Barilferro - Oste",
+            "obiettivo": "Incontra e collabora con Brom Barilferro - Oste a La Città delle Cinque Porte",
+            "completato": false,
+            "is_boss": false,
+            "tipo": "npc"
+        },
+        {
+            "id": 5,
+            "zona_tag": "OVEST",
+            "nome_luogo": "Villaggio di Corvoscuro",
+            "personaggio": "Marek il Sussurratore - Informatore",
+            "obiettivo": "Raggiungi Villaggio di Corvoscuro e consulta Marek il Sussurratore - Informatore",
+            "completato": false,
+            "is_boss": false,
+            "tipo": "npc"
+        },
+        {
+            "id": 6,
+            "zona_tag": "OVEST",
+            "nome_luogo": "Villaggio di Corvoscuro",
+            "personaggio": "Drago delle Tempeste",
+            "obiettivo": "Sconfiggi il Boss Finale Drago delle Tempeste a Villaggio di Corvoscuro",
+            "completato": false,
+            "is_boss": true,
+            "tipo": "boss"
+        }
+    ],
+    "statistiche_agenti": {
+        "tot_ambientazioni": 4,
+        "tot_npc": 4,
+        "tot_cattivi": 2,
+        "boss_finale": "Drago delle Tempeste",
+        "map_size": "small"
+    }
+}
